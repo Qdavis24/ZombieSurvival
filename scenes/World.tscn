@@ -15,8 +15,7 @@ background_mode = 2
 sky = SubResource("Sky_kqs1s")
 glow_enabled = true
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.0285
-volumetric_fog_albedo = Color(0.72274804, 0.33650962, 0, 1)
+volumetric_fog_albedo = Color(0.39721224, 0.16331294, 0, 1)
 
 [node name="Node3D" type="Node3D"]
 
