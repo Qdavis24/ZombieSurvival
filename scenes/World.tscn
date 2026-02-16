@@ -1,18 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://2ivtsrerae4q"]
+[gd_scene load_steps=6 format=3 uid="uid://2ivtsrerae4q"]
 
+[ext_resource type="Texture2D" uid="uid://6ga2vw53igvh" path="res://assets/hdri/qwantani_moon_noon_puresky_1k.hdr" id="1_32lhk"]
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/brackeys-proto-controller-main/proto_controller/proto_controller.tscn" id="1_kqs1s"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_io8um"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7g83o"]
+panorama = ExtResource("1_32lhk")
+energy_multiplier = 0.05
 
 [sub_resource type="Sky" id="Sky_kqs1s"]
-sky_material = SubResource("ProceduralSkyMaterial_io8um")
+sky_material = SubResource("PanoramaSkyMaterial_7g83o")
 
 [sub_resource type="Environment" id="Environment_32lhk"]
 background_mode = 2
 sky = SubResource("Sky_kqs1s")
-tonemap_mode = 2
 glow_enabled = true
 
 [node name="Node3D" type="Node3D"]
@@ -21,7 +21,7 @@ glow_enabled = true
 environment = SubResource("Environment_32lhk")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+transform = Transform3D(0.6718116, 0.6418362, -0.36975065, -0.07231338, 0.5536217, 0.82962275, 0.7371838, -0.5306122, 0.4183428, 0, 0, 0)
 shadow_enabled = true
 
 [node name="Floor" type="CSGBox3D" parent="."]
