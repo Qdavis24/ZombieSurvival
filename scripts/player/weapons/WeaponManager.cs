@@ -1,0 +1,37 @@
+using Godot;
+
+public partial class WeaponManager : Node
+{
+    [Export] private NodePath _weaponSocketPath;
+    [Export] private PackedScene _startingWeapon;
+
+    private Node3D _weaponSocket;
+    private WeaponBase _current;
+    private Camera3D _camera;
+
+    public override void _Ready()
+    {
+        _weaponSocket = GetNode<Node3D>(_weaponSocketPath);
+
+        _camera = GetParent()
+            .GetNode<Node3D>("Head")
+            .GetNode<Camera3D>("Camera3D");
+
+        Equip(_startingWeapon);
+    }
+
+    private void Equip(PackedScene weaponScene)
+    {
+        _current?.QueueFree();
+
+        _current = weaponScene.Instantiate<WeaponBase>();
+        _weaponSocket.AddChild(_current);
+        _current.Initialize(_camera);
+    }
+
+    public override void _Process(double delta)
+    {
+        bool trigger = Input.IsActionPressed("fire");
+        _current?.TryFire(trigger);
+    }
+}

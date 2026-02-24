@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://2ivtsrerae4q"]
 
 [ext_resource type="Texture2D" uid="uid://6ga2vw53igvh" path="res://assets/hdri/qwantani_moon_noon_puresky_1k.hdr" id="1_32lhk"]
-[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/brackeys-proto-controller-main/proto_controller/proto_controller.tscn" id="1_kqs1s"]
+[ext_resource type="PackedScene" uid="uid://cfjp3bppwm4i8" path="res://scenes/player/PlayerController.tscn" id="2_32lhk"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7g83o"]
 panorama = ExtResource("1_32lhk")
@@ -66,5 +66,4 @@ size = Vector3(1, 2.1815186, 11.543518)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13997841, 1.0900431, -25.383778)
 size = Vector3(21.219727, 2.1815186, 2.153717)
 
-[node name="ProtoController" parent="." instance=ExtResource("1_kqs1s")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.056027412, 1.9073486e-06, -0.043288708)
+[node name="PlayerController" parent="." instance=ExtResource("2_32lhk")]

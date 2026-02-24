@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://cfjp3bppwm4i8"]
+
+[ext_resource type="Script" uid="uid://dasyaiv33oybx" path="res://scripts/player/PlayerController.cs" id="1_etyb6"]
+[ext_resource type="Script" uid="uid://4uxtcbw88ior" path="res://scripts/player/weapons/WeaponManager.cs" id="2_h2fbm"]
+[ext_resource type="PackedScene" uid="uid://00wy8mcfk7sk" path="res://scenes/player/weapons/pistol/Pistol.tscn" id="3_23doe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2fbm"]
+albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_23doe"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6ev1f"]
+radius = 0.4
+height = 1.8
+
+[node name="PlayerController" type="CharacterBody3D"]
+script = ExtResource("1_etyb6")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+material_override = SubResource("StandardMaterial3D_h2fbm")
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_23doe")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_6ev1f")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+fov = 90.0
+
+[node name="ViewModelRoot" type="Node3D" parent="Head/Camera3D"]
+
+[node name="WeaponSocket" type="Node3D" parent="Head/Camera3D/ViewModelRoot"]
+
+[node name="WeaponManager" type="Node" parent="."]
+script = ExtResource("2_h2fbm")
+_weaponSocketPath = NodePath("../Head/Camera3D/ViewModelRoot/WeaponSocket")
+_startingWeapon = ExtResource("3_23doe")
