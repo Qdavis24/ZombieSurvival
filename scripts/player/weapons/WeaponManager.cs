@@ -31,7 +31,13 @@ public partial class WeaponManager : Node
 
     public override void _Process(double delta)
     {
-        bool trigger = Input.IsActionPressed("fire");
-        _current?.TryFire(trigger);
+        bool aimHeld = Input.IsActionPressed("aim");
+        _current?.SetAimState(aimHeld);
+
+        bool isMovingForward = Input.IsActionPressed("move_forward");
+        _current?.SetMovementState(isMovingForward);
+
+        bool triggerHeld = Input.IsActionPressed("fire");
+        _current?.TryFire(triggerHeld);
     }
 }

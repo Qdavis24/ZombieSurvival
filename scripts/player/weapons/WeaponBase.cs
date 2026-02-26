@@ -1,22 +1,82 @@
+using System;
 using Godot;
 
 public partial class WeaponBase : Node3D
 {
     [Export] private float _roundsPerMinute = 600f;
     [Export] private float _hipSpreadDegrees = 2.0f;
+    [Export] private float _animBlendTime = 0.5f;
 
     private double _cooldown;
 
     private Camera3D _camera;
+    private AnimationPlayer _anim;
+
+    private bool _isAiming;
+    private bool _isShooting;
+    private bool _isTransitioning;
+    private bool _aimStateChangeQueued; // true if changing from ads to hip or hip to ads
+    private bool _queuedAimState; // true = ads, false = hip
+    private bool _isWalkingForward;
 
     public void Initialize(Camera3D camera)
     {
         _camera = camera;
     }
 
+    public override void _Ready()
+    {
+        // Required path naming (see Pistol.tscn)
+        _anim = GetNode<AnimationPlayer>("Rig/AnimationPlayer");
+
+        // Required animations for our weapon rigs
+        RequireAnimation("hip_idle");
+        RequireAnimation("ads_idle");
+        RequireAnimation("hip_shoot");
+        RequireAnimation("ads_shoot");
+        RequireAnimation("transition_hiptoads");
+        RequireAnimation("walk");
+
+        _anim.AnimationFinished += OnAnimationFinished;
+
+        PlayIdleForAimState();
+    }
+
     public override void _Process(double delta)
     {
         _cooldown -= delta;
+    }
+
+    public void SetAimState(bool aimHeld)
+    {
+        if (_isAiming == aimHeld)
+            return;
+
+        // If we're in the middle of a shoot animation, queue the aim change and apply it right after shooting finishes.
+        if (_isShooting)
+        {
+            _aimStateChangeQueued = true;
+            _queuedAimState = aimHeld;
+            return;
+        }
+
+        _isAiming = aimHeld;
+
+        PlayTransitionForAimState();
+    }
+
+    public void SetMovementState(bool isMoving)
+    {
+        if (_isWalkingForward == isMoving)
+            return;
+
+        _isWalkingForward = isMoving;
+
+        // Don't interrupt shooting or transitions.
+        if (_isShooting || _isTransitioning)
+            return;
+
+        PlayIdleForAimState();
     }
 
     public void TryFire(bool triggerPressed)
@@ -32,10 +92,12 @@ public partial class WeaponBase : Node3D
     {
         if (_camera == null) return;
 
+        PlayShootForAimState();
+
         var from = _camera.GlobalTransform.Origin;
         var direction = -_camera.GlobalTransform.Basis.Z;
 
-        // Apply hip spread
+        // Apply hip spread or recoil spread or whatever
         direction = ApplySpread(direction);
 
         var to = from + direction * 1000f;
@@ -51,8 +113,82 @@ public partial class WeaponBase : Node3D
         }
     }
 
+    private void PlayIdleForAimState()
+    {
+        if (_isShooting || _isTransitioning)
+            return;
+
+        // Walk animation plays only in hip state for now
+        if (_isWalkingForward && !_isAiming)
+        {
+            if (_anim.CurrentAnimation != "walk")
+                _anim.Play("walk", _animBlendTime);
+            return;
+        }
+
+        StringName idle = _isAiming ? "ads_idle" : "hip_idle";
+        if (_anim.CurrentAnimation != idle)
+            _anim.Play(idle, _animBlendTime);
+    }
+
+    private void PlayShootForAimState()
+    {
+        StringName shoot = _isAiming ? "ads_shoot" : "hip_shoot";
+        if (_anim.HasAnimation(shoot))
+        {
+            // Shooting should interrupt any transition visuals.
+            _isTransitioning = false;
+            _isShooting = true;
+            _anim.Play(shoot);
+        }
+    }
+
+    private void PlayTransitionForAimState()
+    {
+        _isTransitioning = true;
+
+        if (_isAiming)
+        {
+            _anim.Play("transition_hiptoads");
+        }
+        else
+        {
+            _anim.PlayBackwards("transition_hiptoads");
+        }
+    }
+
+    private void OnAnimationFinished(StringName animName)
+    {
+        if (animName == "transition_hiptoads")
+        {
+            _isTransitioning = false;
+            PlayIdleForAimState();
+            return;
+        }
+
+        if (animName == "hip_shoot" || animName == "ads_shoot")
+        {
+            _isShooting = false;
+
+            // If an aim change happened during shooting, apply it now and play the transition.
+            if (_aimStateChangeQueued)
+            {
+                _aimStateChangeQueued = false;
+                _isAiming = _queuedAimState;
+
+                PlayTransitionForAimState();
+
+                return;
+            }
+
+            PlayIdleForAimState();
+        }
+    }
+
     private Vector3 ApplySpread(Vector3 dir)
     {
+        if (_isAiming) return dir; // Apply no spread if aiming in
+
         float spreadRad = Mathf.DegToRad(_hipSpreadDegrees);
 
         var randomYaw = (float)GD.RandRange(-spreadRad, spreadRad);
@@ -62,5 +198,14 @@ public partial class WeaponBase : Node3D
                   * new Basis(Vector3.Right, randomPitch);
 
         return (basis * dir).Normalized();
+    }
+
+    private void RequireAnimation(StringName name)
+    {
+        if (_anim == null)
+            throw new InvalidOperationException($"AnimationPlayer is null on weapon '{Name}'.");
+
+        if (!_anim.HasAnimation(name))
+            throw new InvalidOperationException($"Weapon '{Name}' is missing required animation '{name}'.");
     }
 }

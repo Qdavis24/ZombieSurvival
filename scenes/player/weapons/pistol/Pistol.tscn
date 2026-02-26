@@ -1,6 +1,50 @@
-[gd_scene load_steps=2 format=3 uid="uid://00wy8mcfk7sk"]
+[gd_scene load_steps=3 format=3 uid="uid://00wy8mcfk7sk"]
 
 [ext_resource type="Script" uid="uid://dbyhmp7kvgdqb" path="res://scripts/player/weapons/WeaponBase.cs" id="1_at3be"]
+[ext_resource type="PackedScene" uid="uid://rriqna2q6bj4" path="res://assets/models/player/weapons/pistol.glb" id="2_2ru15"]
 
 [node name="Pistol" type="Node3D"]
 script = ExtResource("1_at3be")
+
+[node name="Rig" parent="." instance=ExtResource("2_2ru15")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.035, 0)
+
+[node name="Skeleton3D" parent="Rig/HumanArms" index="0"]
+bones/1/rotation = Quaternion(-0.097685605, -0.6158409, 0.7811766, 0.030992743)
+bones/2/rotation = Quaternion(-0.31080273, 0.00012550944, 0.04338969, 0.9494836)
+bones/3/rotation = Quaternion(0.098757364, 0.002608953, -0.05485081, 0.99359536)
+bones/16/position = Vector3(-0.01543857, 0.050772514, -0.06847544)
+bones/16/rotation = Quaternion(-0.38551298, -0.11996209, 0.12781553, 0.90589845)
+bones/17/rotation = Quaternion(0.14506699, -0.18596737, -0.24836855, 0.93951315)
+bones/18/rotation = Quaternion(0.32514924, 0.14372875, 0.0046151495, 0.934665)
+bones/19/position = Vector3(0.20820053, 0.03654517, 0.032239273)
+bones/19/rotation = Quaternion(-0.019373357, 0.6702921, -0.74147105, 0.023537427)
+bones/20/rotation = Quaternion(-0.18994701, -0.0027996625, -0.19453345, 0.9623248)
+bones/21/rotation = Quaternion(0.13473037, 0.013845011, 0.19550641, 0.97130495)
+bones/22/position = Vector3(-0.006748348, 0.1572714, 0.05986468)
+bones/22/rotation = Quaternion(0.1772419, 2.35498e-07, 1.3197719e-07, 0.98416734)
+bones/23/rotation = Quaternion(-0.118719354, -0.07079362, -0.5231339, 0.8409667)
+bones/24/rotation = Quaternion(-0.010618871, -0.0047042677, -0.38815963, 0.92151904)
+bones/25/rotation = Quaternion(0.04960975, 1.18611446e-07, 3.3785447e-08, 0.9987687)
+bones/26/rotation = Quaternion(-0.020144755, -0.012018223, -0.5085977, 0.8606848)
+bones/27/rotation = Quaternion(-0.0065786424, -0.0028587934, -0.41131684, 0.9114643)
+bones/29/rotation = Quaternion(0.023424296, 0.013968072, -0.51197296, 0.85856855)
+bones/30/rotation = Quaternion(4.504189e-09, -4.3791108e-08, -0.40504074, 0.91429865)
+bones/32/rotation = Quaternion(0.03875005, 0.00030746395, -0.0065693804, 0.9992273)
+bones/34/rotation = Quaternion(-0.69864887, -0.109673746, -0.36179757, 0.607424)
+bones/36/rotation = Quaternion(0.41820192, 0.008868448, -0.11185563, 0.90139717)
+bones/37/position = Vector3(0.052274194, 0.110910155, 0.06672112)
+bones/37/rotation = Quaternion(-0.41630965, -0.5654551, 0.42217147, 0.57333934)
+bones/38/position = Vector3(-0.042682674, 0.21726467, 0.0066152797)
+bones/41/position = Vector3(0.0065568257, -0.0011420071, 2.641835e-09)
+bones/42/position = Vector3(-0.3544138, -0.7289385, 0.11108968)
+bones/43/position = Vector3(-0.083123565, 0.053988814, -0.7408445)
+bones/43/rotation = Quaternion(-0.36493078, -0.6818896, 0.5222335, 0.35933885)
+bones/44/position = Vector3(0.31116408, -0.71841985, 0.31990647)
+bones/45/position = Vector3(0.05332744, 0.10090399, -0.7133391)
+bones/45/rotation = Quaternion(-0.49916998, 0.5015031, -0.49849594, 0.50082505)
+
+[node name="AnimationPlayer" parent="Rig" index="2"]
+autoplay = "ads_idle"
+
+[editable path="Rig"]
