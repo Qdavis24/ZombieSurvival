@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyvl6eqd24usj"]
+
+[ext_resource type="Script" uid="uid://c052lgr684hwr" path="res://scripts/HitResolver.cs" id="1_mmtgg"]
+
+[node name="HitResolver" type="Node"]
+script = ExtResource("1_mmtgg")
