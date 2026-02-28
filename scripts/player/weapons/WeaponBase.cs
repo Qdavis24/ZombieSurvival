@@ -6,11 +6,13 @@ public partial class WeaponBase : Node3D
     [Export] private float _roundsPerMinute = 600f;
     [Export] private float _hipSpreadDegrees = 2.0f;
     [Export] private float _animBlendTime = 0.5f;
+    [Export] private float _damage = 25f;
 
     private double _cooldown;
 
     private Camera3D _camera;
     private AnimationPlayer _anim;
+    private HitResolver _hitResolver;
 
     private bool _isAiming;
     private bool _isShooting;
@@ -19,9 +21,10 @@ public partial class WeaponBase : Node3D
     private bool _queuedAimState; // true = ads, false = hip
     private bool _isWalkingForward;
 
-    public void Initialize(Camera3D camera)
+    public void Initialize(Camera3D camera, HitResolver hitResolver)
     {
         _camera = camera;
+        _hitResolver = hitResolver;
     }
 
     public override void _Ready()
@@ -109,7 +112,15 @@ public partial class WeaponBase : Node3D
 
         if (result.Count > 0)
         {
-            GD.Print("Hit: ", result["collider"]);
+            if (_hitResolver == null)
+                throw new InvalidOperationException($"HitResolver is null on weapon '{Name}'. Ensure WeaponManager passes it into Initialize().");
+
+            var collider = (Node)result["collider"];
+            var point = (Vector3)result["position"];
+            var normal = (Vector3)result["normal"];
+
+            var hitInfo = new HitInfo(collider, point, normal, direction, _damage);
+            _hitResolver.HandleHit(hitInfo);
         }
     }
 

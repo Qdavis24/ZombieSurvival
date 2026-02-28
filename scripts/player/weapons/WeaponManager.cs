@@ -4,10 +4,13 @@ public partial class WeaponManager : Node
 {
     [Export] private NodePath _weaponSocketPath;
     [Export] private PackedScene _startingWeapon;
+    
+    private const string HitResolverPath = "../../HitResolver";
 
     private Node3D _weaponSocket;
     private WeaponBase _current;
     private Camera3D _camera;
+    private HitResolver _hitResolver;
 
     public override void _Ready()
     {
@@ -16,6 +19,8 @@ public partial class WeaponManager : Node
         _camera = GetParent()
             .GetNode<Node3D>("Head")
             .GetNode<Camera3D>("Camera3D");
+
+        _hitResolver = GetNode<HitResolver>(HitResolverPath);
 
         Equip(_startingWeapon);
     }
@@ -26,7 +31,7 @@ public partial class WeaponManager : Node
 
         _current = weaponScene.Instantiate<WeaponBase>();
         _weaponSocket.AddChild(_current);
-        _current.Initialize(_camera);
+        _current.Initialize(_camera, _hitResolver);
     }
 
     public override void _Process(double delta)
