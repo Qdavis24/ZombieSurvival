@@ -7,6 +7,7 @@ public partial class WeaponBase : Node3D
     [Export] private float _hipSpreadDegrees = 2.0f;
     [Export] private float _animBlendTime = 0.5f;
     [Export] private float _damage = 25f;
+    [Export] private float _force = 3f;
 
     private double _cooldown;
 
@@ -119,7 +120,7 @@ public partial class WeaponBase : Node3D
             var point = (Vector3)result["position"];
             var normal = (Vector3)result["normal"];
 
-            var hitInfo = new HitInfo(collider, point, normal, direction, _damage);
+            var hitInfo = new HitInfo(collider, point, normal, direction, _damage, _force);
             _hitResolver.HandleHit(hitInfo);
         }
     }
