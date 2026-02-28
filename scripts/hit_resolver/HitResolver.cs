@@ -8,38 +8,34 @@ public partial class HitResolver : Node
     public void HandleHit(HitInfo hit)
     {
         
-        Node zombieRoot = FindZombieRoot(hit.Collider);
+        Node firsHit = hit.Collider;
         
-        if (zombieRoot != null)
+        if (hit.Collider.IsInGroup("damage"))
         {
-            // SET UP TO WORK WITH REAL ZOMBIE
+            var bone = (PhysicalBone) hit.Collider;
+            if (bone != null)
+            {
+                bone.TakeDamage(hit.Damage, hit.Direction, hit.Force);
+            }
             
-            // var health = zombieRoot.GetNodeOrNull<Health>("Health");
-            // if (health != null)
-            // {
-            //     health.TakeDamage(hit.Damage);
-            // }
-            //
-            // return;
+            return;
         }
 
         SpawnBulletHole(hit);
     }
 
-    private Node FindZombieRoot(Node start)
-    {
-        Node current = start;
-
-        while (current != null)
-        {
-            if (current.IsInGroup("zombie"))
-                return current;
-
-            current = current.GetParent();
-        }
-
-        return null;
-    }
+    // private Node FindZombieRoot(Node start)
+    // {
+    //     Node current = start;
+    //
+    //     while (current != null)
+    //     {
+    //         if (current.IsInGroup("damage"))
+    //             return current;
+    //     }
+    //
+    //     return null;
+    // }
 
     private void SpawnBulletHole(HitInfo hit)
     {

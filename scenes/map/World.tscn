@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://2ivtsrerae4q"]
+[gd_scene format=3 uid="uid://2ivtsrerae4q"]
 
-[ext_resource type="Texture2D" uid="uid://6ga2vw53igvh" path="res://assets/hdri/qwantani_moon_noon_puresky_1k.hdr" id="1_32lhk"]
+[ext_resource type="Texture2D" uid="uid://v1qnb1gkfp46" path="res://assets/hdri/qwantani_moon_noon_puresky_1k.hdr" id="1_32lhk"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7g83o"]
 panorama = ExtResource("1_32lhk")
@@ -16,51 +16,55 @@ glow_enabled = true
 volumetric_fog_enabled = true
 volumetric_fog_albedo = Color(0.39721224, 0.16331294, 0, 1)
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" unique_id=1803875491]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1208351504]
 environment = SubResource("Environment_32lhk")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=92304437]
 transform = Transform3D(0.6718116, 0.6418362, -0.36975065, -0.07231338, 0.5536217, 0.82962275, 0.7371838, -0.5306122, 0.4183428, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Floor" type="CSGBox3D" parent="."]
+[node name="Floor" type="CSGBox3D" parent="." unique_id=1151748776]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, -9.657471)
 use_collision = true
+collision_layer = 5
+collision_mask = 5
 size = Vector3(20, 0.5, 29.314941)
 
-[node name="Walls" type="CSGCombiner3D" parent="."]
+[node name="Walls" type="CSGCombiner3D" parent="." unique_id=1233253355]
 use_collision = true
+collision_layer = 5
+collision_mask = 5
 
-[node name="Wall" type="CSGBox3D" parent="Walls"]
+[node name="Wall" type="CSGBox3D" parent="Walls" unique_id=2048568619]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.45247, 5.34939)
 size = Vector3(20, 10, 1)
 
-[node name="AlleyWall2" type="CSGBox3D" parent="Walls"]
+[node name="AlleyWall2" type="CSGBox3D" parent="Walls" unique_id=729488119]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.967993, 4.3316708, -10.0640545)
 size = Vector3(8, 10, 10)
 
-[node name="AlleyWall1" type="CSGBox3D" parent="Walls"]
+[node name="AlleyWall1" type="CSGBox3D" parent="Walls" unique_id=1042938600]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.989357, 4.3316708, -10.0640545)
 size = Vector3(8, 10, 10)
 
-[node name="Blockade" type="CSGBox3D" parent="Walls"]
+[node name="Blockade" type="CSGBox3D" parent="Walls" unique_id=697564392]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.199915, 1.0900431, 0.20492554)
 size = Vector3(1, 2.1815186, 11.543518)
 
-[node name="Blockade2" type="CSGBox3D" parent="Walls"]
+[node name="Blockade2" type="CSGBox3D" parent="Walls" unique_id=344328127]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.399095, 1.0900431, 0.20492554)
 size = Vector3(1, 2.1815186, 11.543518)
 
-[node name="Blockade3" type="CSGBox3D" parent="Walls"]
+[node name="Blockade3" type="CSGBox3D" parent="Walls" unique_id=1302054624]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.199915, 1.0900431, -18.842033)
 size = Vector3(1, 2.1815186, 11.543518)
 
-[node name="Blockade4" type="CSGBox3D" parent="Walls"]
+[node name="Blockade4" type="CSGBox3D" parent="Walls" unique_id=382132752]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.969885, 1.0900431, -18.842033)
 size = Vector3(1, 2.1815186, 11.543518)
 
-[node name="Blockade5" type="CSGBox3D" parent="Walls"]
+[node name="Blockade5" type="CSGBox3D" parent="Walls" unique_id=1535607243]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13997841, 1.0900431, -25.383778)
 size = Vector3(21.219727, 2.1815186, 2.153717)

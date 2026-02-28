@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://s8o7ag6ytq5l"]
+
+[ext_resource type="Script" uid="uid://rmjcvbkb7wqs" path="res://scripts/zombie_package/LimbContainer.cs" id="1_erd1f"]
+[ext_resource type="PackedScene" uid="uid://bara7vjj11d3d" path="res://scenes/zombie/hinge_joint.tscn" id="2_jdet1"]
+
+[node name="LimbContainer" type="Node3D" unique_id=732005778 node_paths=PackedStringArray("_timer")]
+script = ExtResource("1_erd1f")
+_timer = NodePath("Timer")
+Hinge = ExtResource("2_jdet1")
+
+[node name="Timer" type="Timer" parent="." unique_id=1878666729]
+wait_time = 100.0
+one_shot = true
