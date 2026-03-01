@@ -5,7 +5,7 @@ public partial class PlayerController : CharacterBody3D
 {
 	private Node3D _head;
 
-	[Export] private float _mouseSensitivity = 0.0025f;
+	[Export] private float _mouseSensitivity = 0.0020f;
 	[Export] private float _moveSpeed = 6.0f;
 	[Export] private float _accel = 14.0f;
 	[Export] private float _gravity = 24.0f;
