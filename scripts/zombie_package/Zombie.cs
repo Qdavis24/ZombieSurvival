@@ -49,7 +49,7 @@ public partial class Zombie : Node3D
         }
 
        
-        _skeleton.SetBonePoseScale(boneIdxs[0], Vector3.One * 0.01f);
+        _skeleton.SetBonePoseScale(boneIdxs[0], Vector3.One * 0.01f); // shrink armature bone to "remove" the mesh
         
 
         bodyParts[0].ApplyImpulse(dir * force); // apply impulse to the root of the limb
