@@ -34,6 +34,11 @@ public partial class PlayerController : CharacterBody3D
 			}
 		}
 
+		if (Input.MouseMode == Input.MouseModeEnum.Visible && @event is InputEventMouseButton mouseButton)
+		{
+			Input.MouseMode = Input.MouseModeEnum.Captured;
+		}
+
 		if (Input.MouseMode == Input.MouseModeEnum.Captured && @event is InputEventMouseMotion mouseMotion)
 		{
 			_yaw -= mouseMotion.Relative.X * _mouseSensitivity;
