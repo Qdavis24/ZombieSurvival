@@ -2,9 +2,10 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Zombie : Node3D
+public partial class Zombie : CharacterBody3D
 {
-    [Export] private PhysicalBoneSimulator3D _physicalBones;
+    [Export] private Node3D _target;
+    [Export] private float _speed = 2f;
     [Export] private Skeleton3D _skeleton;
     [Export] private PhysicalBoneSimulator3D _physicalBoneSimulator;
     [Export] private PackedScene _limbContainerPackedScene;
@@ -13,11 +14,24 @@ public partial class Zombie : Node3D
     {
         foreach (Node child in _physicalBoneSimulator.GetChildren())
         {
-            if (child is PhysicalBone physicalBone)
+            if (child is DismemberableBone physicalBone)
             {
                 physicalBone.Destroyed += DismemberBone;
             }
         }
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        var dir = Vector3.Zero;
+        if (_target != null)
+        {
+            dir = _target.GlobalPosition - _physicalBoneSimulator.GlobalPosition;
+            
+        }
+
+        Velocity = dir * _speed;
+        MoveAndSlide();
     }
 
     public void DismemberBone(Godot.Collections.Array<PackedScene> packedScenes, Godot.Collections.Array<int> boneIdxs,
