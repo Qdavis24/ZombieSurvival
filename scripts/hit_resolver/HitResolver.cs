@@ -12,7 +12,7 @@ public partial class HitResolver : Node
         
         if (hit.Collider.IsInGroup("damage"))
         {
-            var bone = (PhysicalBone) hit.Collider;
+            var bone = (DismemberableBone) hit.Collider;
             if (bone != null)
             {
                 bone.TakeDamage(hit.Damage, hit.Direction, hit.Force);
@@ -23,19 +23,6 @@ public partial class HitResolver : Node
 
         SpawnBulletHole(hit);
     }
-
-    // private Node FindZombieRoot(Node start)
-    // {
-    //     Node current = start;
-    //
-    //     while (current != null)
-    //     {
-    //         if (current.IsInGroup("damage"))
-    //             return current;
-    //     }
-    //
-    //     return null;
-    // }
 
     private void SpawnBulletHole(HitInfo hit)
     {
