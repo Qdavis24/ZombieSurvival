@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using Vector3 = Godot.Vector3;
 
-public partial class PhysicalBone : PhysicalBone3D
+public partial class DismemberableBone : PhysicalBone3D
 {
     [Signal]
     public delegate void DestroyedEventHandler(Godot.Collections.Array<PackedScene> packedScenes,
@@ -12,7 +12,7 @@ public partial class PhysicalBone : PhysicalBone3D
 
     [Export] public PackedScene BodyPartPackedScene;
 
-    [Export] public PhysicalBone ChildBone;
+    [Export] public DismemberableBone ChildBone;
 
     [Export] private bool _shouldDie;
 
