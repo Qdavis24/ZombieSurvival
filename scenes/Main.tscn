@@ -25,5 +25,6 @@ transform = Transform3D(-0.08439092, 0, -0.9964327, 0, 1, 0, 0.9964327, 0, -0.08
 [node name="World" parent="." unique_id=1895663263 instance=ExtResource("1_rvslj")]
 
 [node name="PlayerController" parent="." unique_id=1525013530 instance=ExtResource("2_0bbpv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.94396)
 
 [node name="HitResolver" parent="." unique_id=1327183731 instance=ExtResource("3_0bbpv")]

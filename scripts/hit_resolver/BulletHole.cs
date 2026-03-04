@@ -10,15 +10,34 @@ public partial class BulletHole : MeshInstance3D
     {
         var meshInstance = this;
 
-        if (meshInstance.MaterialOverride is not StandardMaterial3D material)
+        StandardMaterial3D material = null;
+
+        if (meshInstance.MaterialOverride is StandardMaterial3D mo)
         {
-            GD.PushError("BulletHole requires a StandardMaterial3D as MaterialOverride.");
+            material = mo;
+        }
+        else
+        {
+            var active = meshInstance.GetActiveMaterial(0);
+            material = active as StandardMaterial3D;
+        }
+
+        if (material == null)
+        {
+            GD.PushError("BulletHole requires a StandardMaterial3D either as MaterialOverride or on Mesh surface 0.");
             return;
         }
 
-        // Duplicate material so we don't modify the shared resource
-        material = (StandardMaterial3D)material.Duplicate();
-        meshInstance.MaterialOverride = material;
+        // Duplicate material so we don't modify a shared resource.
+        var duplicated = (StandardMaterial3D)material.Duplicate();
+
+        // Re-assign to the same slot it came from.
+        if (meshInstance.MaterialOverride is StandardMaterial3D)
+            meshInstance.MaterialOverride = duplicated;
+        else
+            meshInstance.SetSurfaceOverrideMaterial(0, duplicated);
+
+        material = duplicated;
 
         material.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
 

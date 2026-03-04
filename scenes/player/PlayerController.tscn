@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cfjp3bppwm4i8"]
+[gd_scene format=3 uid="uid://cfjp3bppwm4i8"]
 
 [ext_resource type="Script" uid="uid://dasyaiv33oybx" path="res://scripts/player/PlayerController.cs" id="1_etyb6"]
 [ext_resource type="Script" uid="uid://4uxtcbw88ior" path="res://scripts/player/weapons/WeaponManager.cs" id="2_h2fbm"]
@@ -16,39 +16,39 @@ height = 1.8
 radius = 0.4
 height = 1.8
 
-[node name="PlayerController" type="CharacterBody3D"]
+[node name="PlayerController" type="CharacterBody3D" unique_id=1073413131]
 script = ExtResource("1_etyb6")
 
-[node name="Mesh" type="MeshInstance3D" parent="."]
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=1270238325]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 material_override = SubResource("StandardMaterial3D_h2fbm")
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_23doe")
 
-[node name="CollisionShape" type="CollisionShape3D" parent="."]
+[node name="CollisionShape" type="CollisionShape3D" parent="." unique_id=362240290]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_6ev1f")
 
-[node name="Head" type="Node3D" parent="."]
+[node name="Head" type="Node3D" parent="." unique_id=65361696]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
-[node name="Camera3D" type="Camera3D" parent="Head"]
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=2120398616]
 fov = 90.0
 
-[node name="ViewModelRoot" type="Node3D" parent="Head/Camera3D"]
+[node name="ViewModelRoot" type="Node3D" parent="Head/Camera3D" unique_id=229712718]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.75, 0)
 
-[node name="WeaponSocket" type="Node3D" parent="Head/Camera3D/ViewModelRoot"]
+[node name="WeaponSocket" type="Node3D" parent="Head/Camera3D/ViewModelRoot" unique_id=11148851]
 
-[node name="WeaponManager" type="Node" parent="."]
+[node name="WeaponManager" type="Node" parent="." unique_id=649505302]
 script = ExtResource("2_h2fbm")
 _weaponSocketPath = NodePath("../Head/Camera3D/ViewModelRoot/WeaponSocket")
 _startingWeapon = ExtResource("3_23doe")
 
-[node name="CENTERED" type="CanvasLayer" parent="."]
+[node name="CENTERED" type="CanvasLayer" parent="." unique_id=681009954]
 visible = false
 
-[node name="TextureRect" type="TextureRect" parent="CENTERED"]
+[node name="TextureRect" type="TextureRect" parent="CENTERED" unique_id=57526006]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
