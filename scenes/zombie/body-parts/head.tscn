@@ -42,11 +42,10 @@ radius = 0.123966254
 [node name="head" type="RigidBody3D" unique_id=392420237]
 
 [node name="head" type="MeshInstance3D" parent="." unique_id=143284487]
-transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0)
 mesh = SubResource("ArrayMesh_ntml5")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("1_fard4")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1860671857]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.021178037, -0.16516292, 0.0028103292)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.021178037, 0.14568579, 0.0028103292)
 shape = SubResource("SphereShape3D_kodlr")
