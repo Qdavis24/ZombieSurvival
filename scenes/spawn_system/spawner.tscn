@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dnuwr0qeacme6"]
+
+[ext_resource type="Script" uid="uid://bda13aokyjtdb" path="res://scripts/spawn_system/Spawner.cs" id="1_ra5uc"]
+[ext_resource type="PackedScene" uid="uid://de3k7xefpki6y" path="res://scenes/zombie/zombie.tscn" id="2_oi6bh"]
+
+[node name="Spawner" type="Node3D" unique_id=1877162586 node_paths=PackedStringArray("_spawnTimer")]
+script = ExtResource("1_ra5uc")
+_zombiePackedScene = ExtResource("2_oi6bh")
+_spawnTimer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="." unique_id=1021909080]
+wait_time = 40.0

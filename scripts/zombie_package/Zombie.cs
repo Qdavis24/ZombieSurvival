@@ -5,10 +5,16 @@ using System.Collections.Generic;
 public partial class Zombie : CharacterBody3D
 {
     [Export] private Node3D _target;
+    [Export] private NavigationAgent3D _navAgent;
     [Export] private float _speed = 2f;
     [Export] private Skeleton3D _skeleton;
     [Export] private PhysicalBoneSimulator3D _physicalBoneSimulator;
     [Export] private PackedScene _limbContainerPackedScene;
+
+    public void Init(Node3D target)
+    {
+        _target = target;
+    }
 
     public override void _Ready()
     {
@@ -24,10 +30,13 @@ public partial class Zombie : CharacterBody3D
     public override void _PhysicsProcess(double delta)
     {
         var dir = Vector3.Zero;
+        var targetPos = Vector3.Zero;
         if (_target != null)
         {
-            dir = _target.GlobalPosition - _physicalBoneSimulator.GlobalPosition;
-            
+            _navAgent.SetTargetPosition(_target.GetPosition());
+            targetPos = _navAgent.GetNextPathPosition();
+            dir = (targetPos - GlobalTransform.Origin).Normalized();
+            LookAt(GlobalTransform.Origin - dir*3f, Vector3.Up);
         }
 
         Velocity = dir * _speed;
