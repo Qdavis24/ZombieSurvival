@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Numerics;
+using Vector3 = Godot.Vector3;
 
 public partial class HitResolver : Node
 {
@@ -7,17 +9,16 @@ public partial class HitResolver : Node
 
     public void HandleHit(HitInfo hit)
     {
-        
         Node firsHit = hit.Collider;
-        
+
         if (hit.Collider.IsInGroup("damage"))
         {
-            var bone = (DismemberableBone) hit.Collider;
+            var bone = (DismemberableBone)hit.Collider;
             if (bone != null)
             {
                 bone.TakeDamage(hit.Damage, hit.Direction, hit.Force);
             }
-            
+
             return;
         }
 
@@ -34,8 +35,11 @@ public partial class HitResolver : Node
 
         Vector3 pos = hit.Point + hit.Normal * 0.01f;
 
-        Basis basis = Basis.LookingAt(-hit.Normal, Vector3.Up);
-
+        Vector3 up = Mathf.Abs(hit.Normal.Dot(Vector3.Up)) > 0.9999f // figure out rotation axis by determining which axis is not co linear with normal
+            ? Vector3.Forward
+            : Vector3.Up;
+        Basis basis = Basis.LookingAt(-hit.Normal, up);
+        
         hole.GlobalTransform = new Transform3D(basis, pos);
 
         AddChild(hole);
