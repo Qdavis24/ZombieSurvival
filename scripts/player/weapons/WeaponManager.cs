@@ -5,6 +5,9 @@ public partial class WeaponManager : Node
     [Export] private NodePath _weaponSocketPath;
     [Export] private PackedScene _startingWeapon;
     
+    [Export] private float _defaultHipFov = 90f;
+    [Export] private float _fovLerpSpeed = 80f;
+    
     private const string HitResolverPath = "../../HitResolver";
 
     private Node3D _weaponSocket;
@@ -38,6 +41,8 @@ public partial class WeaponManager : Node
     {
         bool aimHeld = Input.IsActionPressed("aim");
         _current?.SetAimState(aimHeld);
+        float targetFov = _current != null ? _current.GetTargetFov() : _defaultHipFov;
+        _camera.Fov = Mathf.MoveToward(_camera.Fov, targetFov, (float)(_fovLerpSpeed * delta));
 
         bool isMovingForward = Input.IsActionPressed("move_forward");
         _current?.SetMovementState(isMovingForward);

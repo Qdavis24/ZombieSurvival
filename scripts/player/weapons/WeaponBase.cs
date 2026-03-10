@@ -8,6 +8,8 @@ public partial class WeaponBase : Node3D
     [Export] private float _animBlendTime = 0.3f;
     [Export] private float _damage = 100f;
     [Export] private float _force = 6f;
+    [Export] private float _aimFov = 75f;
+    [Export] private float _hipFov = 90f;
 
     private double _cooldown;
 
@@ -15,7 +17,7 @@ public partial class WeaponBase : Node3D
     private AnimationPlayer _anim;
     private HitResolver _hitResolver;
 
-    private bool _isAiming;
+    private bool _isAiming = false;
     private bool _isShooting;
     private bool _isTransitioning;
     private bool _aimStateChangeQueued; // true if changing from ads to hip or hip to ads
@@ -67,6 +69,11 @@ public partial class WeaponBase : Node3D
         _isAiming = aimHeld;
 
         PlayTransitionForAimState();
+    }
+
+    public float GetTargetFov()
+    {
+        return _isAiming ? _aimFov : _hipFov;
     }
 
     public void SetMovementState(bool isMoving)
@@ -168,7 +175,8 @@ public partial class WeaponBase : Node3D
             // NOTE: if I add a "transition_adstohip then I can just do a simple Play
             // so I have to do this for now
             
-            //_anim.PlayBackwards("transition_hiptoads");
+            _anim.PlayBackwards("transition_hiptoads");
+            return;
             
             // BUT because the backwards has some awkward pacing I need to skip the animation a bit
             
