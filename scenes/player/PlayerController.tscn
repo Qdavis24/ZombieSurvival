@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cfjp3bppwm4i8"]
 
 [ext_resource type="Script" uid="uid://dasyaiv33oybx" path="res://scripts/player/PlayerController.cs" id="1_etyb6"]
+[ext_resource type="Script" uid="uid://c7dgejf7dcfu" path="res://scripts/player/Camera.cs" id="2_08ru5"]
 [ext_resource type="Script" uid="uid://4uxtcbw88ior" path="res://scripts/player/weapons/WeaponManager.cs" id="2_h2fbm"]
 [ext_resource type="PackedScene" uid="uid://00wy8mcfk7sk" path="res://scenes/player/weapons/pistol/Pistol.tscn" id="3_23doe"]
 [ext_resource type="Texture2D" uid="uid://drfjgngruviny" path="res://icon.svg" id="4_6ev1f"]
@@ -34,15 +35,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head" unique_id=2120398616]
 fov = 90.0
+script = ExtResource("2_08ru5")
 
-[node name="ViewModelRoot" type="Node3D" parent="Head/Camera3D" unique_id=229712718]
+[node name="WeaponSocket" type="Node3D" parent="Head/Camera3D" unique_id=11148851]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.75, 0)
-
-[node name="WeaponSocket" type="Node3D" parent="Head/Camera3D/ViewModelRoot" unique_id=11148851]
 
 [node name="WeaponManager" type="Node" parent="." unique_id=649505302]
 script = ExtResource("2_h2fbm")
-_weaponSocketPath = NodePath("../Head/Camera3D/ViewModelRoot/WeaponSocket")
+_weaponSocketPath = NodePath("../Head/Camera3D/WeaponSocket")
 _startingWeapon = ExtResource("3_23doe")
 
 [node name="CENTERED" type="CanvasLayer" parent="." unique_id=681009954]

@@ -3,6 +3,13 @@ using Godot;
 
 public partial class WeaponBase : Node3D
 {
+    [Signal] public delegate void FiredEventHandler(
+        float shakeDuration,
+        float shakeStrength,
+        float pitchKickDegrees,
+        float yawKickDegrees
+    );
+    
     [Export] private float _roundsPerMinute = 600f;
     [Export] private float _hipSpreadDegrees = 2.0f;
     [Export] private float _animBlendTime = 0.3f;
@@ -10,6 +17,11 @@ public partial class WeaponBase : Node3D
     [Export] private float _force = 6f;
     [Export] private float _aimFov = 75f;
     [Export] private float _hipFov = 90f;
+
+    [Export] private float _cameraShakeDuration = 0.05f;
+    [Export] private float _cameraShakeStrength = 0.05f;
+    [Export] private float _cameraPitchKickDegrees = -1f;
+    [Export] private float _cameraYawKickDegrees = 0.08f;
 
     private double _cooldown;
 
@@ -104,6 +116,13 @@ public partial class WeaponBase : Node3D
         if (_camera == null) return;
 
         PlayShootForAimState();
+        EmitSignal(
+            SignalName.Fired,
+            _cameraShakeDuration,
+            _cameraShakeStrength,
+            _cameraPitchKickDegrees,
+            _cameraYawKickDegrees
+        );
 
         var from = _camera.GlobalTransform.Origin;
         var direction = -_camera.GlobalTransform.Basis.Z;

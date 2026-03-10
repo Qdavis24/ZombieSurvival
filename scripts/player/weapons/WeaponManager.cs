@@ -12,7 +12,7 @@ public partial class WeaponManager : Node
 
     private Node3D _weaponSocket;
     private WeaponBase _current;
-    private Camera3D _camera;
+    private Camera _camera;
     private HitResolver _hitResolver;
 
     public override void _Ready()
@@ -21,7 +21,7 @@ public partial class WeaponManager : Node
 
         _camera = GetParent()
             .GetNode<Node3D>("Head")
-            .GetNode<Camera3D>("Camera3D");
+            .GetNode<Camera>("Camera3D");
 
         _hitResolver = GetNode<HitResolver>(HitResolverPath);
 
@@ -35,6 +35,7 @@ public partial class WeaponManager : Node
         _current = weaponScene.Instantiate<WeaponBase>();
         _weaponSocket.AddChild(_current);
         _current.Initialize(_camera, _hitResolver);
+        _current.Fired += _camera.OnWeaponFired; // Listen to shots for recoil
     }
 
     public override void _Process(double delta)
