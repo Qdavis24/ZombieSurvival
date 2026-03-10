@@ -1,26 +1,10 @@
 [gd_scene format=3 uid="uid://cna8ggeowvm4c"]
 
-[ext_resource type="PackedScene" uid="uid://bomb6cttnd8yy" path="res://scenes/zombie/female_zombie_limbs-test.tscn" id="1_rarhs"]
 [ext_resource type="PackedScene" uid="uid://2ivtsrerae4q" path="res://scenes/map/World.tscn" id="1_rvslj"]
 [ext_resource type="PackedScene" uid="uid://cfjp3bppwm4i8" path="res://scenes/player/PlayerController.tscn" id="2_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://cyvl6eqd24usj" path="res://scenes/hit_resolver/HitResolver.tscn" id="3_0bbpv"]
 
 [node name="Main" type="Node" unique_id=1676837023]
-
-[node name="female-zombie-limbs" parent="." unique_id=938568471 instance=ExtResource("1_rarhs")]
-transform = Transform3D(-0.08439092, 0, -0.9964327, 0, 1, 0, 0.9964327, 0, -0.08439092, 0, 0, -7.5950294)
-
-[node name="female-zombie-limbs2" parent="." unique_id=1108914744 instance=ExtResource("1_rarhs")]
-transform = Transform3D(-0.08439092, 0, -0.9964327, 0, 1, 0, 0.9964327, 0, -0.08439092, 0.8463347, -0.0430125, -9.400284)
-
-[node name="female-zombie-limbs3" parent="." unique_id=2103165461 instance=ExtResource("1_rarhs")]
-transform = Transform3D(-0.08439092, 0, -0.9964327, 0, 1, 0, 0.9964327, 0, -0.08439092, -1.2614338, -0.10337973, -11.5704365)
-
-[node name="female-zombie-limbs4" parent="." unique_id=1395063429 instance=ExtResource("1_rarhs")]
-transform = Transform3D(-0.08439092, 0, -0.9964327, 0, 1, 0, 0.9964327, 0, -0.08439092, 0.106950164, -0.09997243, -10.778065)
-
-[node name="female-zombie-limbs5" parent="." unique_id=1777167647 instance=ExtResource("1_rarhs")]
-transform = Transform3D(-0.08439092, 0, -0.9964327, 0, 1, 0, 0.9964327, 0, -0.08439092, 0.9656453, -0.09997243, -13.6101)
 
 [node name="World" parent="." unique_id=1895663263 instance=ExtResource("1_rvslj")]
 
