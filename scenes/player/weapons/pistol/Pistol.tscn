@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://00wy8mcfk7sk"]
 
 [ext_resource type="Script" uid="uid://dbyhmp7kvgdqb" path="res://scripts/player/weapons/WeaponBase.cs" id="1_at3be"]
-[ext_resource type="PackedScene" uid="uid://c1ty0v6nsbaqb" path="res://assets/models/player/weapons/pistol.glb" id="2_2ru15"]
+[ext_resource type="PackedScene" uid="uid://lxo0s2le5bpt" path="res://assets/models/player/weapons/pistol.glb" id="2_2ru15"]
 
 [node name="Pistol" type="Node3D" unique_id=1586866769]
 script = ExtResource("1_at3be")
 
-[node name="Rig" parent="." unique_id=690774900 instance=ExtResource("2_2ru15")]
+[node name="Rig" parent="." unique_id=1764677985 instance=ExtResource("2_2ru15")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.035, 0)
 
-[node name="Skeleton3D" parent="Rig/HumanArms" parent_id_path=PackedInt32Array(690774900, 2041522993) index="0" unique_id=1571810872]
+[node name="Skeleton3D" parent="Rig/HumanArms" parent_id_path=PackedInt32Array(1764677985, 594707245) index="0" unique_id=1091939461]
 bones/1/rotation = Quaternion(-0.16093569, 0.021975297, 0.97987026, 0.11606483)
 bones/2/rotation = Quaternion(-0.64638734, 0.00010018142, 0.090239026, 0.75765455)
 bones/3/rotation = Quaternion(-0.20369145, 0.010269963, -0.16698143, 0.96463555)
@@ -34,36 +34,39 @@ bones/26/rotation = Quaternion(-0.020144755, -0.012018218, -0.5085977, 0.8606847
 bones/27/rotation = Quaternion(-0.0065786443, -0.0028587978, -0.41131684, 0.9114643)
 bones/29/rotation = Quaternion(0.023424296, 0.013968075, -0.511973, 0.8585685)
 bones/30/rotation = Quaternion(9.533621e-09, -3.831602e-08, -0.4050407, 0.91429865)
-bones/32/rotation = Quaternion(0.03875004, 0.0003074691, -0.00656938, 0.9992273)
+bones/32/rotation = Quaternion(0.038748175, 0.00048903894, -0.011251448, 0.9991856)
 bones/34/rotation = Quaternion(-0.69864887, -0.109673746, -0.36179757, 0.607424)
 bones/36/rotation = Quaternion(0.4182018, 0.008868431, -0.111855604, 0.9013972)
 bones/37/position = Vector3(0.052274235, 0.11091012, 0.06672123)
 bones/37/rotation = Quaternion(-0.41630965, -0.5654551, 0.42217147, 0.57333934)
 bones/38/position = Vector3(-0.042682767, 0.21726476, 0.006615362)
-bones/41/position = Vector3(0.0065568737, -0.0011419742, 4.8567685e-08)
-bones/42/position = Vector3(-0.3544138, -0.7289385, 0.11108968)
-bones/43/position = Vector3(-0.14310825, -0.4782225, -0.35709366)
-bones/43/rotation = Quaternion(-0.36493078, -0.6818896, 0.5222335, 0.35933885)
-bones/44/position = Vector3(0.31116408, -0.71841985, 0.31990647)
-bones/45/position = Vector3(0.28816473, 0.040632606, -0.60902745)
-bones/45/rotation = Quaternion(-0.49916998, 0.5015031, -0.49849594, 0.50082505)
+bones/42/position = Vector3(0.0065568737, -0.0011419742, 4.8567685e-08)
+bones/43/position = Vector3(-0.3544138, -0.7289385, 0.11108968)
+bones/44/position = Vector3(-0.14310825, -0.4782225, -0.35709366)
+bones/44/rotation = Quaternion(-0.36493078, -0.6818896, 0.5222335, 0.35933885)
+bones/45/position = Vector3(0.31116408, -0.71841985, 0.31990647)
+bones/46/position = Vector3(0.28816473, 0.040632606, -0.60902745)
+bones/46/rotation = Quaternion(-0.49916998, 0.5015031, -0.49849594, 0.50082505)
 
-[node name="ArmMesh" parent="Rig/HumanArms/Skeleton3D" index="0" unique_id=1635575851]
+[node name="ArmMesh" parent="Rig/HumanArms/Skeleton3D" index="0" unique_id=859805870]
 cast_shadow = 0
 
-[node name="PBarrell" parent="Rig/HumanArms/Skeleton3D" index="1" unique_id=1701508987]
+[node name="PBarrell" parent="Rig/HumanArms/Skeleton3D" index="1" unique_id=408092526]
 cast_shadow = 0
 
-[node name="PHandle" parent="Rig/HumanArms/Skeleton3D" index="2" unique_id=1008226744]
+[node name="PHandle" parent="Rig/HumanArms/Skeleton3D" index="2" unique_id=1876646377]
 cast_shadow = 0
 
-[node name="PMag" parent="Rig/HumanArms/Skeleton3D" index="3" unique_id=1316971695]
+[node name="PMag" parent="Rig/HumanArms/Skeleton3D" index="3" unique_id=163397452]
 cast_shadow = 0
 
-[node name="PSlide" parent="Rig/HumanArms/Skeleton3D" index="4" unique_id=1896250499]
+[node name="PSlide" parent="Rig/HumanArms/Skeleton3D" index="4" unique_id=597832853]
 cast_shadow = 0
 
-[node name="Scale Reference" parent="Rig" index="1" unique_id=847349331]
+[node name="Scale Reference" parent="Rig" index="1" unique_id=563226904]
 cast_shadow = 0
+
+[node name="AnimationPlayer" parent="Rig" index="2" unique_id=1088220052]
+autoplay = &"hip_idle"
 
 [editable path="Rig"]
