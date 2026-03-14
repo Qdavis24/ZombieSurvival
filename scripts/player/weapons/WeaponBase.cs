@@ -9,10 +9,26 @@ public partial class WeaponBase : Node3D
         float pitchKickDegrees,
         float yawKickDegrees
     );
+    // PISTOL
+    // [Export] private float _roundsPerMinute = 200f;
+    // [Export] private float _hipSpreadDegrees = 2.0f;
+    // [Export] private float _animBlendTime = 0.3f;
+    // [Export] private float _damage = 100f;
+    // [Export] private float _force = 6f;
+    // [Export] private float _aimFov = 75f;
+    // [Export] private float _hipFov = 90f;
+    //
+    // [Export] private float _cameraShakeDuration = 0.05f;
+    // [Export] private float _cameraShakeStrength = 0.05f;
+    // [Export] private float _cameraPitchKickDegrees = -1f;
+    // [Export] private float _cameraYawKickDegrees = 0.08f;
     
-    [Export] private float _roundsPerMinute = 200f;
+    
+    
+    // RIFLE
+    [Export] private float _roundsPerMinute = 300f;
     [Export] private float _hipSpreadDegrees = 2.0f;
-    [Export] private float _animBlendTime = 0.3f;
+    [Export] private float _animBlendTime = 0.22f;
     [Export] private float _damage = 100f;
     [Export] private float _force = 6f;
     [Export] private float _aimFov = 75f;
@@ -134,7 +150,7 @@ public partial class WeaponBase : Node3D
             _cameraPitchKickDegrees,
             _cameraYawKickDegrees
         );
-        ShowMuzzleFlash();
+        //ShowMuzzleFlash();
 
         var from = _camera.GlobalTransform.Origin;
         var direction = -_camera.GlobalTransform.Basis.Z;
