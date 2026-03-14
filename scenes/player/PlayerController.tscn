@@ -22,6 +22,7 @@ script = ExtResource("1_etyb6")
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1270238325]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_h2fbm")
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_23doe")

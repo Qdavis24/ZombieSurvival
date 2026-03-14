@@ -47,7 +47,8 @@ public partial class WeaponManager : Node
 
         bool isMovingForward = Input.IsActionPressed("move_forward");
         _current?.SetMovementState(isMovingForward);
-
+        _camera.SetMovementState(isMovingForward);
+        
         bool triggerHeld = Input.IsActionPressed("fire");
         _current?.TryFire(triggerHeld);
     }

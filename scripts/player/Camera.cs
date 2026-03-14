@@ -6,6 +6,12 @@ public partial class Camera : Camera3D
     [Export] private float _shakeReturnSpeed = 20.0f;
     [Export] private float _randomShakePitchMultiplier = 0.35f;
     [Export] private float _randomShakeYawMultiplier = 0.35f;
+    
+    [Export] private float _bobAmplitude = 0.05f;
+    [Export] private float _bobSpeed = 10f;
+
+    private float _bobTime = 0f;
+    private bool _isMoving = false;
 
     private Vector2 _kickOffsetDegrees = Vector2.Zero;
     private Vector2 _shakeOffsetDegrees = Vector2.Zero;
@@ -24,6 +30,11 @@ public partial class Camera : Camera3D
 
         _kickOffsetDegrees.X -= pitchKickDegrees;
         _kickOffsetDegrees.Y += yawKickDegrees;
+    }
+    
+    public void SetMovementState(bool moving)
+    {
+        _isMoving = moving;
     }
     
     public override void _Process(double delta)
@@ -46,6 +57,25 @@ public partial class Camera : Camera3D
             _kickOffsetDegrees.X + _shakeOffsetDegrees.X,
             _kickOffsetDegrees.Y + _shakeOffsetDegrees.Y,
             0.0f
+        );
+        
+        
+        // walk bob
+        if (_isMoving)
+        {
+            _bobTime += dt * _bobSpeed;
+        }
+        else
+        {
+            _bobTime = 0f;
+        }
+
+        float bob = Mathf.Sin(_bobTime) * _bobAmplitude;
+
+        Position = new Vector3(
+            0f,
+            bob,
+            0f
         );
     }
 }
