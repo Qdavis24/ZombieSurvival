@@ -8,7 +8,9 @@ public partial class PlayerController : CharacterBody3D
 	[Export] private float _mouseSensitivity = 0.0020f;
 	[Export] private float _moveSpeed = 6.0f;
 	[Export] private float _accel = 14.0f;
-	[Export] private float _gravity = 24.0f;
+	// [Export] private float _gravity = 24.0f;
+	[Export] private float _gravity = 20.0f;
+	[Export] private float _jumpVelocity = 6.0f;
 	
 	private float _yaw; // left and right
 	private float _pitch; // up and down
@@ -67,10 +69,18 @@ public partial class PlayerController : CharacterBody3D
 		horizontal = horizontal.Lerp(target, _accel * dt);
 
 		var yVel = Velocity.Y;
-		if (!IsOnFloor())
-			yVel -= _gravity * dt;
+
+		if (IsOnFloor())
+		{
+			if (Input.IsActionJustPressed("jump"))
+				yVel = _jumpVelocity;
+			else
+				yVel = 0f;
+		}
 		else
-			yVel = 0f;
+		{
+			yVel -= _gravity * dt;
+		}
 
 		Velocity = new Vector3(horizontal.X, yVel, horizontal.Z);
 		MoveAndSlide();
