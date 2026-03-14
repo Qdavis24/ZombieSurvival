@@ -10,7 +10,7 @@ public partial class WeaponBase : Node3D
         float yawKickDegrees
     );
     
-    [Export] private float _roundsPerMinute = 600f;
+    [Export] private float _roundsPerMinute = 200f;
     [Export] private float _hipSpreadDegrees = 2.0f;
     [Export] private float _animBlendTime = 0.3f;
     [Export] private float _damage = 100f;
@@ -93,6 +93,11 @@ public partial class WeaponBase : Node3D
         return _isAiming ? _aimFov : _hipFov;
     }
 
+    private float GetShotInterval()
+    {
+        return 60.0f / _roundsPerMinute;
+    }
+
     public void SetMovementState(bool isMoving)
     {
         if (_isWalkingForward == isMoving)
@@ -111,9 +116,10 @@ public partial class WeaponBase : Node3D
     {
         if (!triggerPressed) return;
         if (_cooldown > 0) return;
+        if (_isShooting) return;
 
         Fire();
-        _cooldown = 60.0 / _roundsPerMinute;
+        _cooldown = GetShotInterval();
     }
 
     private void Fire()
@@ -186,10 +192,17 @@ public partial class WeaponBase : Node3D
         StringName shoot = _isAiming ? "ads_shoot" : "hip_shoot";
         if (_anim.HasAnimation(shoot))
         {
+            var animation = _anim.GetAnimation(shoot);
+
+            float shotInterval = GetShotInterval();
+            float playbackSpeed = shotInterval > 0.0f
+                ? (float)(animation.Length / shotInterval)
+                : 1.0f;
+
             // Shooting should interrupt any transition visuals.
             _isTransitioning = false;
             _isShooting = true;
-            _anim.Play(shoot);
+            _anim.Play(shoot, customSpeed: playbackSpeed);
         }
     }
 
