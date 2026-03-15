@@ -5,6 +5,8 @@
 
 [node name="Rifle" type="Node3D" unique_id=866969985]
 script = ExtResource("1_cxf1s")
+_roundsPerMinute = 300.0
+_animBlendTime = 0.22
 
 [node name="Rig" parent="." unique_id=218115223 instance=ExtResource("2_cxf1s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.035, 0)

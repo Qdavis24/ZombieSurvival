@@ -9,45 +9,32 @@ public partial class WeaponBase : Node3D
         float pitchKickDegrees,
         float yawKickDegrees
     );
-    // PISTOL
-    // [Export] private float _roundsPerMinute = 200f;
-    // [Export] private float _hipSpreadDegrees = 2.0f;
-    // [Export] private float _animBlendTime = 0.3f;
-    // [Export] private float _damage = 100f;
-    // [Export] private float _force = 6f;
-    // [Export] private float _aimFov = 75f;
-    // [Export] private float _hipFov = 90f;
-    //
-    // [Export] private float _cameraShakeDuration = 0.05f;
-    // [Export] private float _cameraShakeStrength = 0.05f;
-    // [Export] private float _cameraPitchKickDegrees = -1f;
-    // [Export] private float _cameraYawKickDegrees = 0.08f;
     
-    
-    
-    // RIFLE
-    [Export] private float _roundsPerMinute = 300f;
+    // Default values for pistol
+    [ExportGroup("Stats")]
+    [Export] private float _roundsPerMinute = 200f;
     [Export] private float _hipSpreadDegrees = 2.0f;
-    [Export] private float _animBlendTime = 0.22f;
     [Export] private float _damage = 100f;
     [Export] private float _force = 6f;
+    
+    [ExportGroup("Camera")]
     [Export] private float _aimFov = 75f;
     [Export] private float _hipFov = 90f;
-
     [Export] private float _cameraShakeDuration = 0.05f;
     [Export] private float _cameraShakeStrength = 0.05f;
     [Export] private float _cameraPitchKickDegrees = -1f;
     [Export] private float _cameraYawKickDegrees = 0.08f;
     
+    [ExportGroup("Misc")]
+    [Export] private float _animBlendTime = 0.3f;
     [Export] private NodePath _muzzleFlashPath;
+    
     private GpuParticles3D _muzzleFlash;
-
-    private double _cooldown;
-
     private Camera3D _camera;
     private AnimationPlayer _anim;
     private HitResolver _hitResolver;
 
+    private double _cooldown;
     private bool _isAiming = false;
     private bool _isShooting;
     private bool _isTransitioning;
@@ -63,7 +50,7 @@ public partial class WeaponBase : Node3D
 
     public override void _Ready()
     {
-        // Required path naming (see Pistol.tscn)
+        // Required node naming (see Pistol.tscn)
         _anim = GetNode<AnimationPlayer>("Rig/AnimationPlayer");
         
         _muzzleFlash = GetNode<GpuParticles3D>(_muzzleFlashPath);
@@ -232,24 +219,7 @@ public partial class WeaponBase : Node3D
         }
         else
         {
-            // NOTE: if I add a "transition_adstohip then I can just do a simple Play
-            // so I have to do this for now
-            
             _anim.PlayBackwards("transition_hiptoads");
-            return;
-            
-            // BUT because the backwards has some awkward pacing I need to skip the animation a bit
-            
-            _anim.Play("transition_hiptoads", 0.0f, -1.0f, fromEnd: true);
-            var anim = _anim.GetAnimation("transition_hiptoads");
-            if (anim != null)
-            {
-                double len = anim.Length;
-                double startPos = Math.Clamp(len - 0.3, 0.0, len);
-
-                // Seek immediately so visuals update on this same frame.
-                _anim.Seek(startPos, true);
-            }
         }
     }
 
