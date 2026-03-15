@@ -95,7 +95,4 @@ draw_pass_1 = SubResource("BoxMesh_p313x")
 [node name="Scale Reference" parent="Rig" index="1" unique_id=563226904]
 cast_shadow = 0
 
-[node name="AnimationPlayer" parent="Rig" index="2" unique_id=1088220052]
-autoplay = &"hip_idle"
-
 [editable path="Rig"]

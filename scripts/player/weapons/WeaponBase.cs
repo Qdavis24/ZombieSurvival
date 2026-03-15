@@ -137,7 +137,7 @@ public partial class WeaponBase : Node3D
             _cameraPitchKickDegrees,
             _cameraYawKickDegrees
         );
-        //ShowMuzzleFlash();
+        ShowMuzzleFlash();
 
         var from = _camera.GlobalTransform.Origin;
         var direction = -_camera.GlobalTransform.Basis.Z;

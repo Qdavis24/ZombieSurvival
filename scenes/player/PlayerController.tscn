@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://4uxtcbw88ior" path="res://scripts/player/weapons/WeaponManager.cs" id="2_h2fbm"]
 [ext_resource type="Texture2D" uid="uid://drfjgngruviny" path="res://icon.svg" id="4_6ev1f"]
 [ext_resource type="PackedScene" uid="uid://cvfgj38xc7dac" path="res://scenes/player/weapons/rifle/Rifle.tscn" id="4_08ru5"]
+[ext_resource type="PackedScene" uid="uid://00wy8mcfk7sk" path="res://scenes/player/weapons/pistol/Pistol.tscn" id="5_anuhh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2fbm"]
 albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
@@ -45,6 +46,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.75, 0)
 script = ExtResource("2_h2fbm")
 _weaponSocketPath = NodePath("../Head/Camera3D/WeaponSocket")
 _startingWeapon = ExtResource("4_08ru5")
+_weapons = Array[PackedScene]([ExtResource("5_anuhh"), ExtResource("4_08ru5")])
 
 [node name="CENTERED" type="CanvasLayer" parent="." unique_id=681009954]
 visible = false
