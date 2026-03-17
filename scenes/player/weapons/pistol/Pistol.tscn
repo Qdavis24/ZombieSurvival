@@ -2,14 +2,16 @@
 
 [ext_resource type="Script" uid="uid://dbyhmp7kvgdqb" path="res://scripts/player/weapons/WeaponBase.cs" id="1_at3be"]
 [ext_resource type="PackedScene" uid="uid://c1ty0v6nsbaqb" path="res://assets/models/player/weapons/pistol.glb" id="2_2ru15"]
+[ext_resource type="PackedScene" uid="uid://erpp137vqg0w" path="res://scenes/player/weapons/pistol/pistol_muzzle_flash.tscn" id="2_p313x"]
 
-[node name="Pistol" type="Node3D" unique_id=1586866769]
+[node name="Pistol" type="Node3D" unique_id=1586866769 node_paths=PackedStringArray("_muzzleFlash")]
 script = ExtResource("1_at3be")
+_muzzleFlash = NodePath("Rig/HumanArms/Skeleton3D/BoneAttachment3D/PistolMuzzleFlash")
 
 [node name="Rig" parent="." unique_id=690774900 instance=ExtResource("2_2ru15")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.035, 0)
 
-[node name="Skeleton3D" parent="Rig/HumanArms" parent_id_path=PackedInt32Array(690774900, 2041522993) index="0" unique_id=1571810872]
+[node name="Skeleton3D" parent="Rig/HumanArms" parent_id_path=PackedInt32Array(690774900, 1033332903) index="0" unique_id=659456857]
 bones/1/rotation = Quaternion(-0.16093569, 0.021975297, 0.97987026, 0.11606483)
 bones/2/rotation = Quaternion(-0.64638734, 0.00010018142, 0.090239026, 0.75765455)
 bones/3/rotation = Quaternion(-0.20369145, 0.010269963, -0.16698143, 0.96463555)
@@ -48,22 +50,31 @@ bones/44/position = Vector3(0.31116408, -0.71841985, 0.31990647)
 bones/45/position = Vector3(0.28816473, 0.040632606, -0.60902745)
 bones/45/rotation = Quaternion(-0.49916998, 0.5015031, -0.49849594, 0.50082505)
 
-[node name="ArmMesh" parent="Rig/HumanArms/Skeleton3D" index="0" unique_id=1635575851]
+[node name="ArmMesh" parent="Rig/HumanArms/Skeleton3D" index="0" unique_id=2030418558]
 cast_shadow = 0
 
-[node name="PBarrell" parent="Rig/HumanArms/Skeleton3D" index="1" unique_id=1701508987]
+[node name="PBarrell" parent="Rig/HumanArms/Skeleton3D" index="1" unique_id=1133599422]
 cast_shadow = 0
 
-[node name="PHandle" parent="Rig/HumanArms/Skeleton3D" index="2" unique_id=1008226744]
+[node name="PHandle" parent="Rig/HumanArms/Skeleton3D" index="2" unique_id=1712917197]
 cast_shadow = 0
 
-[node name="PMag" parent="Rig/HumanArms/Skeleton3D" index="3" unique_id=1316971695]
+[node name="PMag" parent="Rig/HumanArms/Skeleton3D" index="3" unique_id=1916327749]
 cast_shadow = 0
 
-[node name="PSlide" parent="Rig/HumanArms/Skeleton3D" index="4" unique_id=1896250499]
+[node name="PSlide" parent="Rig/HumanArms/Skeleton3D" index="4" unique_id=1608568650]
 cast_shadow = 0
 
-[node name="Scale Reference" parent="Rig" index="1" unique_id=847349331]
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Rig/HumanArms/Skeleton3D" index="5" unique_id=1817288907]
+transform = Transform3D(-0.9855858, -0.047502995, 0.1623688, -0.16241285, -0.00295603, -0.9867184, 0.047352027, -0.9988665, -0.00480178, 0.2252334, 1.6843652, -0.77615994)
+bone_name = "Barrell"
+bone_idx = 40
+
+[node name="PistolMuzzleFlash" parent="Rig/HumanArms/Skeleton3D/BoneAttachment3D" unique_id=121254955 instance=ExtResource("2_p313x")]
+transform = Transform3D(1.0000001, 0, -4.209869e-08, 7.450581e-09, 1, -9.313226e-10, 2.2555469e-08, 4.656613e-10, 0.99999994, -0.022615016, 0.47705066, 0.002293229)
+
+[node name="Scale Reference" parent="Rig" index="1" unique_id=1950582644]
 cast_shadow = 0
 
 [editable path="Rig"]
+[editable path="Rig/HumanArms/Skeleton3D/BoneAttachment3D/PistolMuzzleFlash"]
