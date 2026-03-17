@@ -6,8 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://cyvl6eqd24usj" path="res://scenes/hit_resolver/HitResolver.tscn" id="4_s0yep"]
 
 [node name="TestingNavMeshMain" type="Node3D" unique_id=1906095306]
+transform = Transform3D(0.99890417, -0.02079399, 0.04192899, 0.021435104, 0.9996592, -0.014899298, -0.04160489, 0.015781721, 0.9990095, 0, 0, 0)
 
 [node name="Node3D" parent="." unique_id=1803875491 instance=ExtResource("1_rlmg0")]
+
+[node name="Walls" parent="Node3D/NavigationRegion3D" parent_id_path=PackedInt32Array(1803875491, 1865754256) index="0" unique_id=1233253355]
+collision_layer = 13
+collision_mask = 13
 
 [node name="PlayerController" parent="." unique_id=1073413131 instance=ExtResource("2_s0yep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6407409, 4.1583242)
@@ -15,12 +20,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6407409, 4.1583242)
 [node name="HitResolver" parent="." unique_id=856120325 instance=ExtResource("4_s0yep")]
 
 [node name="Spawner" parent="." unique_id=1877162586 node_paths=PackedStringArray("_target") instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.397797, 0.74139607, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.398, 0, 0)
 _target = NodePath("../PlayerController")
+_numPerWave = 20
+_offset = 5.0
 
 [node name="Spawner2" parent="." unique_id=325073974 node_paths=PackedStringArray("_target") instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7557845, 0.85200906, 2.1305785)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.756, 0, 2.131)
 _target = NodePath("../PlayerController")
+_numPerWave = 20
+_offset = 5.0
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=588417280]
 transform = Transform3D(0.5737051, -0.25616118, 0.7779743, 0, 0.9498357, 0.31274942, -0.819062, -0.17942594, 0.5449255, 5.6767917, 5.68738, 6.9424763)
