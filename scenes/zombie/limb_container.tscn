@@ -9,5 +9,5 @@ _timer = NodePath("Timer")
 Hinge = ExtResource("2_jdet1")
 
 [node name="Timer" type="Timer" parent="." unique_id=1878666729]
-wait_time = 100.0
+wait_time = 15.0
 one_shot = true
