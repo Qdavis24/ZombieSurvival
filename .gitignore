@@ -22,5 +22,7 @@ mono_crash.*.json
 
 .idea
 *.import 
+# random rider specific file that does not need to be tracked below
+*.sln.DotSettings
 
 export_presets.cfg
