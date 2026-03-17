@@ -4,12 +4,17 @@ using System.Collections.Generic;
 
 public partial class Zombie : CharacterBody3D
 {
-    [Export] private Node3D _target;
     [Export] private NavigationAgent3D _navAgent;
     [Export] private float _speed = 2f;
+    [Export] private Timer _simulationRunTimer;
     [Export] private Skeleton3D _skeleton;
     [Export] private PhysicalBoneSimulator3D _physicalBoneSimulator;
     [Export] private PackedScene _limbContainerPackedScene;
+    [Export] private CollisionShape3D _collisionShape;
+    [Export] private PackedScene _blood;
+
+    private Node3D _target;
+    private bool _isDead;
 
     public void Init(Node3D target)
     {
@@ -18,6 +23,8 @@ public partial class Zombie : CharacterBody3D
 
     public override void _Ready()
     {
+        _simulationRunTimer.Timeout += QueueFree;
+
         foreach (Node child in _physicalBoneSimulator.GetChildren())
         {
             if (child is DismemberableBone physicalBone)
@@ -29,33 +36,33 @@ public partial class Zombie : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
-        var dir = Vector3.Zero;
-        var targetPos = Vector3.Zero;
-        if (_target != null)
-        {
-            _navAgent.SetTargetPosition(_target.GetPosition());
-            targetPos = _navAgent.GetNextPathPosition();
-            dir = (targetPos - GlobalTransform.Origin).Normalized();
-            LookAt(GlobalTransform.Origin - dir*3f, Vector3.Up);
-        }
+        if (_target == null || _isDead) return;
 
+        _navAgent.SetTargetPosition(_target.GetPosition());
+        var targetPos = _navAgent.GetNextPathPosition();
+        var dir = (targetPos - GlobalTransform.Origin).Normalized();
+        if (Mathf.Abs(Basis.Z.Dot(dir)) < .99f)
+            LookAt(GlobalTransform.Origin + dir * 3f, Vector3.Up, useModelFront: true);
         Velocity = dir * _speed;
         MoveAndSlide();
     }
 
-    public void DismemberBone(Godot.Collections.Array<PackedScene> packedScenes, Godot.Collections.Array<int> boneIdxs,
+    private void DismemberBone(Godot.Collections.Array<DismemberableBone> destroyedDismemberableBones,
         Vector3 dir, float force, bool shouldDie)
     {
         var bodyParts = new List<RigidBody3D>();
 
         var limbContainer = _limbContainerPackedScene.Instantiate<LimbContainer>();
         GetTree().Root.AddChild(limbContainer);
-
-        for (int i = 0; i < boneIdxs.Count; i++) // add the limbs to the scene tree and hinge them
+        Vector3 bloodPosition = Vector3.Zero;
+        for (int i = 0; i < destroyedDismemberableBones.Count; i++) // add the limbs to the scene tree and hinge them
         {
-            var boneGlobalTransform = _skeleton.GlobalTransform * _skeleton.GetBoneGlobalPose(boneIdxs[i]);
-
-            var bodyPart = packedScenes[i].Instantiate<RigidBody3D>();
+            var boneGlobalTransform = _isDead
+                ? destroyedDismemberableBones[i].GlobalTransform
+                : _skeleton.GlobalTransform * _skeleton.GetBoneGlobalPose(destroyedDismemberableBones[i].BoneIdx);
+            if (i == 0)
+                bloodPosition = boneGlobalTransform.Origin;
+            var bodyPart = destroyedDismemberableBones[i].BodyPartPackedScene.Instantiate<RigidBody3D>();
             limbContainer.AddChild(bodyPart);
             bodyPart.GlobalTransform = boneGlobalTransform;
 
@@ -71,15 +78,21 @@ public partial class Zombie : CharacterBody3D
             }
         }
 
-       
-        _skeleton.SetBonePoseScale(boneIdxs[0], Vector3.One * 0.01f); // shrink armature bone to "remove" the mesh
+        _skeleton.SetBonePoseScale(destroyedDismemberableBones[0].BoneIdx,
+            Vector3.One * 0.01f); // shrink armature at root bone to "remove" the mesh
+
+        bodyParts[0].ApplyImpulse(new Vector3(dir.X, .5f, dir.Z).Normalized() * force); // apply impulse to the root of the limb
+        var blood = _blood.Instantiate<GpuParticles3D>();
         
+        GetTree().Root.AddChild(blood);
+        blood.GlobalPosition = bloodPosition;
 
-        bodyParts[0].ApplyImpulse(dir * force); // apply impulse to the root of the limb
-
-        if (shouldDie)
+        if (shouldDie && !_isDead)
         {
+            _collisionShape.QueueFree();
+            _isDead = true;
             _physicalBoneSimulator.PhysicalBonesStartSimulation();
+            _simulationRunTimer.Start();
         }
     }
 }

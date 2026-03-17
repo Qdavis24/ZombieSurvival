@@ -7,8 +7,8 @@ using Vector3 = Godot.Vector3;
 public partial class DismemberableBone : PhysicalBone3D
 {
     [Signal]
-    public delegate void DestroyedEventHandler(Godot.Collections.Array<PackedScene> packedScenes,
-        Godot.Collections.Array<int> boneIdxs, Vector3 dir, float force, bool shouldDie);
+    public delegate void DestroyedEventHandler(Godot.Collections.Array<DismemberableBone> destroyedDismemberableBones,
+        Vector3 dir, float force, bool shouldDie);
 
     [Export] public PackedScene BodyPartPackedScene;
 
@@ -16,22 +16,19 @@ public partial class DismemberableBone : PhysicalBone3D
 
     [Export] private bool _shouldDie;
 
-    private Godot.Collections.Array<PackedScene> _packedScenes;
-    private Godot.Collections.Array<int> _boneIdxs;
-
+    public int BoneIdx;
+    
     private float _health = 100f;
-    
-    
 
-    private void Cleanup()
+    public override void _Ready()
     {
-        QueueFree();
-        var currBone = ChildBone;
-        while (currBone != null)
-        {
-            currBone.QueueFree();
-            currBone = currBone.ChildBone;
-        }
+        BoneIdx = GetBoneId();
+    }
+
+
+    private void Cleanup(Godot.Collections.Array<DismemberableBone> destroyedDismemberableBones)
+    {
+        foreach (var dBone in destroyedDismemberableBones) dBone.QueueFree();
     }
 
 
@@ -41,32 +38,28 @@ public partial class DismemberableBone : PhysicalBone3D
 
         if (_health <= 0f)
         {
-            CollectBoneChain();
             Die(dir, force);
         }
     }
 
     private void Die(Vector3 dir, float force)
     {
-        EmitSignalDestroyed(_packedScenes, _boneIdxs, dir, force, _shouldDie);
-        Cleanup();
+        var destroyedDismemberableBones = CollectBoneChain();
+        EmitSignalDestroyed(destroyedDismemberableBones, dir, force, _shouldDie);
+        Cleanup(destroyedDismemberableBones);
     }
 
-    private void CollectBoneChain()
+    public Godot.Collections.Array<DismemberableBone> CollectBoneChain()
     {
-        var boneIdxs = new Godot.Collections.Array<int>();
-        var packedScenes = new Godot.Collections.Array<PackedScene>();
+        var destroyedDismemberableBones = new Godot.Collections.Array<DismemberableBone>();
 
         var currBone = this;
         while (currBone != null && IsInstanceValid(currBone))
         {
-            boneIdxs.Add(currBone.GetBoneId());
-            packedScenes.Add(currBone.BodyPartPackedScene);
+            destroyedDismemberableBones.Add(currBone);
             currBone = currBone.ChildBone;
         }
 
-        _boneIdxs = boneIdxs;
-        _packedScenes = packedScenes;
-
+        return destroyedDismemberableBones;
     }
 }
