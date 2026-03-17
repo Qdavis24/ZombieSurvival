@@ -7,7 +7,9 @@ public partial class WeaponBase : Node3D
     [Export] private float _hipSpreadDegrees = 2.0f;
     [Export] private float _animBlendTime = 0.3f;
     [Export] private float _damage = 100f;
-    [Export] private float _force = 6f;
+    [Export] private float _force = 2f;
+    
+    [Export] private MuzzleFlash _muzzleFlash;
 
     private double _cooldown;
 
@@ -97,6 +99,11 @@ public partial class WeaponBase : Node3D
         if (_camera == null) return;
 
         PlayShootForAimState();
+        
+        // muzzleflash
+        _muzzleFlash.Deactivate();
+        _muzzleFlash.Activate();
+        
 
         var from = _camera.GlobalTransform.Origin;
         var direction = -_camera.GlobalTransform.Basis.Z;

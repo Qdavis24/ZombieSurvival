@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://erpp137vqg0w"]
+
+[ext_resource type="Texture2D" uid="uid://m2lwre05c4b2" path="res://assets/models/player/scorch_01.png" id="1_nnikd"]
+[ext_resource type="Script" uid="uid://b2vujowynij5h" path="res://scripts/player/weapons/MuzzleFlash.cs" id="2_uadlf"]
+
+[sub_resource type="Curve" id="Curve_uadlf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_nd350"]
+curve = SubResource("Curve_uadlf")
+
+[sub_resource type="Curve" id="Curve_gb0dt"]
+_data = [Vector2(0, 0.5794184), 0.0, 0.0, 0, 0, Vector2(0.994152, 0.9731544), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_oh15a"]
+curve = SubResource("Curve_gb0dt")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cynef"]
+lifetime_randomness = 0.1
+spread = 180.0
+initial_velocity_min = 3.5
+initial_velocity_max = 4.0
+gravity = Vector3(0, 0, 0)
+damping_min = 20.0
+damping_max = 30.000002
+scale_curve = SubResource("CurveTexture_oh15a")
+alpha_curve = SubResource("CurveTexture_nd350")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gweej"]
+transparency = 1
+blend_mode = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 1, 0.24313726, 1)
+albedo_texture = ExtResource("1_nnikd")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_4ilgc"]
+material = SubResource("StandardMaterial3D_gweej")
+size = Vector2(0.5, 0.5)
+
+[node name="PistolMuzzleFlash" type="GPUParticles3D" unique_id=121254955 node_paths=PackedStringArray("_light")]
+emitting = false
+amount = 200
+lifetime = 0.09999999999999999
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_cynef")
+draw_pass_1 = SubResource("QuadMesh_4ilgc")
+script = ExtResource("2_uadlf")
+_light = NodePath("OmniLight3D")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=622532408]
+shadow_enabled = true
