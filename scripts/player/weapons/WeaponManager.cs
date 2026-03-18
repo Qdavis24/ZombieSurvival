@@ -2,47 +2,238 @@ using Godot;
 
 public partial class WeaponManager : Node
 {
+    private sealed class WeaponSlot
+    {
+        public PackedScene Scene;
+        public bool Unlocked;
+        public int CurrentAmmo;
+        public int ReserveAmmo;
+
+        public WeaponSlot(PackedScene scene, int currentAmmo, int reserveAmmo)
+        {
+            Scene = scene;
+            CurrentAmmo = currentAmmo;
+            ReserveAmmo = reserveAmmo;
+        }
+    }
+
+    [Export] private NodePath _playerControllerPath;
     [Export] private NodePath _weaponSocketPath;
-    [Export] private PackedScene _startingWeapon;
+    [Export] private PackedScene[] _weaponScenes;
+    [Export] private int[] _startingReserveAmmo;
+    private WeaponSlot[] _weaponSlots;
+    private int _currentWeaponIndex = 0;
+    private bool _isSwapping = false;
+    
+    [Export] private float _defaultHipFov = 90f;
+    [Export] private float _fovLerpSpeed = 80f;
     
     private const string HitResolverPath = "../../HitResolver";
 
+    private PlayerController _playerController;
     private Node3D _weaponSocket;
     private WeaponBase _current;
-    private Camera3D _camera;
+    private Camera _camera;
     private HitResolver _hitResolver;
+    private HUD _hud;
 
     public override void _Ready()
     {
         _weaponSocket = GetNode<Node3D>(_weaponSocketPath);
+        _playerController = GetNode<PlayerController>(_playerControllerPath);
+        _hud = GetTree().CurrentScene.GetNodeOrNull<HUD>("Hud")
+            ?? GetTree().CurrentScene.GetNodeOrNull<HUD>("HUD");
 
         _camera = GetParent()
             .GetNode<Node3D>("Head")
-            .GetNode<Camera3D>("Camera3D");
+            .GetNode<Camera>("Camera3D");
 
         _hitResolver = GetNode<HitResolver>(HitResolverPath);
 
-        Equip(_startingWeapon);
+        if (_weaponScenes != null && _weaponScenes.Length > 0)
+        {
+            _weaponSlots = new WeaponSlot[_weaponScenes.Length];
+
+            for (int i = 0; i < _weaponScenes.Length; i++)
+            {
+                var scene = _weaponScenes[i];
+                if (scene == null)
+                    continue;
+
+                var previewWeapon = scene.Instantiate<WeaponBase>();
+                int magazineSize = previewWeapon.MagazineSize;
+                int reserveAmmo = (_startingReserveAmmo != null && i < _startingReserveAmmo.Length)
+                    ? _startingReserveAmmo[i]
+                    : 0;
+
+                _weaponSlots[i] = new WeaponSlot(scene, magazineSize, reserveAmmo)
+                {
+                    Unlocked = i == 0 || i == 1
+                };
+
+                previewWeapon.QueueFree();
+            }
+
+            _currentWeaponIndex = 0;
+            Equip(_currentWeaponIndex);
+        }
     }
 
-    private void Equip(PackedScene weaponScene)
+    private void Equip(int weaponIndex)
     {
+        if (_weaponSlots == null || weaponIndex < 0 || weaponIndex >= _weaponSlots.Length)
+            return;
+
+        var slot = _weaponSlots[weaponIndex];
+        if (slot == null || slot.Scene == null)
+            return;
+
+        if (_current != null)
+        {
+            _current.Fired -= _camera.OnWeaponFired;
+            _current.Fired -= _playerController.OnWeaponFired;
+            _current.AmmoChanged -= OnCurrentWeaponAmmoChanged;
+        }
+
         _current?.QueueFree();
 
-        _current = weaponScene.Instantiate<WeaponBase>();
+        _current = slot.Scene.Instantiate<WeaponBase>();
         _weaponSocket.AddChild(_current);
-        _current.Initialize(_camera, _hitResolver);
+        _current.Initialize(_camera, _hitResolver, slot.CurrentAmmo, slot.ReserveAmmo);
+        _current.Fired += _camera.OnWeaponFired;
+        _current.Fired += _playerController.OnWeaponFired;
+        _current.AmmoChanged += OnCurrentWeaponAmmoChanged;
+
+        RefreshHudAmmo();
+        CallDeferred(nameof(RefreshHudAmmo));
+    }
+
+    private void OnCurrentWeaponAmmoChanged(int currentAmmo, int reserveAmmo)
+    {
+        if (_weaponSlots != null && _currentWeaponIndex >= 0 && _currentWeaponIndex < _weaponSlots.Length)
+        {
+            var slot = _weaponSlots[_currentWeaponIndex];
+            if (slot != null)
+            {
+                slot.CurrentAmmo = currentAmmo;
+                slot.ReserveAmmo = reserveAmmo;
+            }
+        }
+
+        _hud?.SetAmmo(currentAmmo, reserveAmmo);
+    }
+
+    private void RefreshHudAmmo()
+    {
+        if (_hud == null || _current == null)
+            return;
+
+        _hud.SetAmmo(_current.CurrentAmmo, _current.ReserveAmmo);
+    }
+
+    private AnimationPlayer GetWeaponAnimationPlayer(WeaponBase weapon)
+    {
+        return weapon?.FindChild("AnimationPlayer", true, false) as AnimationPlayer;
+    }
+
+    private async void SwapToWeaponIndex(int newIndex)
+    {
+        if (_isSwapping) return;
+        if (_weaponSlots == null || _weaponSlots.Length == 0) return;
+        if (newIndex < 0 || newIndex >= _weaponSlots.Length) return;
+        if (_weaponSlots[newIndex] == null || !_weaponSlots[newIndex].Unlocked) return;
+        if (newIndex == _currentWeaponIndex) return;
+
+        _isSwapping = true;
+
+        if (_current != null)
+        {
+            var currentAnim = GetWeaponAnimationPlayer(_current);
+            if (currentAnim != null && currentAnim.HasAnimation("transition_swap"))
+            {
+                _current.SetAimState(false);
+                // Stow animation
+                currentAnim.Play("transition_swap");
+                await ToSignal(currentAnim, AnimationPlayer.SignalName.AnimationFinished);
+            }
+        }
+
+        _currentWeaponIndex = newIndex;
+        Equip(_currentWeaponIndex);
+
+        if (_current != null)
+        {
+            var newAnim = GetWeaponAnimationPlayer(_current);
+            if (newAnim != null && newAnim.HasAnimation("transition_swap"))
+            {
+                // Force the weapon into the stowed pose immediately so it doesn't flash idle
+                newAnim.Play("transition_swap");
+                newAnim.Seek(newAnim.CurrentAnimationLength, true);
+
+                // Animation of equip (playing stow animation backwards)
+                newAnim.Play("transition_swap", customSpeed: -1.0f, fromEnd: true);
+                await ToSignal(newAnim, AnimationPlayer.SignalName.AnimationFinished);
+            }
+        }
+
+        _isSwapping = false;
+    }
+
+    private int FindNextUnlockedWeaponIndex(int direction)
+    {
+        if (_weaponSlots == null || _weaponSlots.Length == 0)
+            return -1;
+
+        int index = _currentWeaponIndex;
+        for (int i = 0; i < _weaponSlots.Length; i++)
+        {
+            index += direction;
+            if (index >= _weaponSlots.Length)
+                index = 0;
+            else if (index < 0)
+                index = _weaponSlots.Length - 1;
+
+            if (_weaponSlots[index] != null && _weaponSlots[index].Unlocked)
+                return index;
+        }
+
+        return _currentWeaponIndex;
     }
 
     public override void _Process(double delta)
     {
-        bool aimHeld = Input.IsActionPressed("aim");
-        _current?.SetAimState(aimHeld);
+        // Swap weapon
+        if (!_isSwapping && _weaponSlots != null && _weaponSlots.Length > 0)
+        {
+            if (Input.IsActionJustPressed("weapon_swap_down"))
+            {
+                int nextIndex = FindNextUnlockedWeaponIndex(1);
+                SwapToWeaponIndex(nextIndex);
+            }
 
-        bool isMovingForward = Input.IsActionPressed("move_forward");
-        _current?.SetMovementState(isMovingForward);
+            if (Input.IsActionJustPressed("weapon_swap_up"))
+            {
+                int nextIndex = FindNextUnlockedWeaponIndex(-1);
+                SwapToWeaponIndex(nextIndex);
+            }
+        }
 
-        bool triggerHeld = Input.IsActionPressed("fire");
-        _current?.TryFire(triggerHeld);
+        if (!_isSwapping)
+        {
+            bool aimHeld = Input.IsActionPressed("aim");
+            _current?.SetAimState(aimHeld);
+            float targetFov = _current != null ? _current.GetTargetFov() : _defaultHipFov;
+            _camera.Fov = Mathf.MoveToward(_camera.Fov, targetFov, (float)(_fovLerpSpeed * delta));
+
+            bool isMovingForward = Input.IsActionPressed("move_forward");
+            _current?.SetMovementState(isMovingForward);
+            _camera.SetMovementState(isMovingForward);
+        
+            if (Input.IsActionJustPressed("reload"))
+                _current?.Call("TryReload");
+
+            bool triggerHeld = Input.IsActionPressed("fire");
+            _current?.TryFire(triggerHeld);
+        }
     }
 }

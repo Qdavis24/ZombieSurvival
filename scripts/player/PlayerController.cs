@@ -8,11 +8,41 @@ public partial class PlayerController : CharacterBody3D
 	[Export] private float _mouseSensitivity = 0.0020f;
 	[Export] private float _moveSpeed = 6.0f;
 	[Export] private float _accel = 14.0f;
-	[Export] private float _gravity = 24.0f;
+	// [Export] private float _gravity = 24.0f;
+	[Export] private float _gravity = 20.0f;
+	[Export] private float _jumpVelocity = 6.0f;
 	
 	private float _yaw; // left and right
 	private float _pitch; // up and down
 	
+	public void OnWeaponFired(
+		float shakeDuration,
+		float shakeStrength,
+		float pitchKickDegrees,
+		float yawKickDegrees,
+		bool manualRecoil
+	)
+	{
+		if (manualRecoil)
+		{
+			AddPitchRecoil(Mathf.DegToRad(pitchKickDegrees));
+		}
+	}	
+	
+	private void ApplyLookRotation()
+	{
+		_pitch = Mathf.Clamp(_pitch, -Mathf.Pi / 2f, Mathf.Pi / 2f);
+
+		Rotation = new Vector3(0f, _yaw, 0f);
+		_head.Rotation = new Vector3(_pitch, 0f, 0f);
+	}
+
+	private void AddPitchRecoil(float recoilRadians)
+	{
+		_pitch -= recoilRadians;
+		ApplyLookRotation();
+	}
+
 	public override void _Ready()
 	{
 		_head = GetNode<Node3D>("Head");
@@ -43,11 +73,7 @@ public partial class PlayerController : CharacterBody3D
 		{
 			_yaw -= mouseMotion.Relative.X * _mouseSensitivity;
 			_pitch -= mouseMotion.Relative.Y * _mouseSensitivity;
-			
-			_pitch = Mathf.Clamp(_pitch, -Mathf.Pi / 2f, Mathf.Pi / 2f);
-			
-			Rotation = new Vector3(0f, _yaw, 0f);
-			_head.Rotation = new Vector3(_pitch, 0f, 0f);
+			ApplyLookRotation();
 		}
 		
 	}
@@ -67,10 +93,18 @@ public partial class PlayerController : CharacterBody3D
 		horizontal = horizontal.Lerp(target, _accel * dt);
 
 		var yVel = Velocity.Y;
-		if (!IsOnFloor())
-			yVel -= _gravity * dt;
+
+		if (IsOnFloor())
+		{
+			if (Input.IsActionJustPressed("jump"))
+				yVel = _jumpVelocity;
+			else
+				yVel = 0f;
+		}
 		else
-			yVel = 0f;
+		{
+			yVel -= _gravity * dt;
+		}
 
 		Velocity = new Vector3(horizontal.X, yVel, horizontal.Z);
 		MoveAndSlide();

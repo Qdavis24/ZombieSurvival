@@ -3,42 +3,82 @@ using Godot;
 
 public partial class WeaponBase : Node3D
 {
-    [Export] private float _roundsPerMinute = 600f;
-    [Export] private float _hipSpreadDegrees = 2.0f;
-    [Export] private float _animBlendTime = 0.3f;
-    [Export] private float _damage = 100f;
-    [Export] private float _force = 2f;
+    [Signal] public delegate void FiredEventHandler(
+        float shakeDuration,
+        float shakeStrength,
+        float pitchKickDegrees,
+        float yawKickDegrees,
+        bool manualRecoil
+    );
+    [Signal] public delegate void AmmoChangedEventHandler(int currentAmmo, int reserveAmmo);
     
-    [Export] private MuzzleFlash _muzzleFlash;
-
-    private double _cooldown;
-
+    // Default values for pistol
+    [ExportGroup("Stats")]
+    [Export] private float _roundsPerMinute = 200f;
+    [Export] private float _hipSpreadDegrees = 2.0f;
+    [Export] private float _damage = 100f;
+    [Export] private float _force = 6f;
+    [Export] private int _magazineSize = 12;
+    
+    [ExportGroup("Camera And Recoil")]
+    [Export] private float _aimFov = 75f;
+    [Export] private float _hipFov = 90f;
+    [Export] private bool _manualRecoil = false;
+    [Export] private float _cameraShakeDuration = 0.05f;
+    [Export] private float _cameraShakeStrength = 0.05f;
+    [Export] private float _cameraPitchKickDegrees = -1f;
+    [Export] private float _cameraYawKickDegrees = 0.08f;
+    
+    [ExportGroup("Misc")]
+    [Export] private float _animBlendTime = 0.3f;
+    [Export] private NodePath _muzzleFlashPath;
+    
+    private GpuParticles3D _muzzleFlash;
     private Camera3D _camera;
     private AnimationPlayer _anim;
     private HitResolver _hitResolver;
 
-    private bool _isAiming;
+    private double _cooldown;
+    private bool _isAiming = false;
     private bool _isShooting;
     private bool _isTransitioning;
     private bool _aimStateChangeQueued; // true if changing from ads to hip or hip to ads
     private bool _queuedAimState; // true = ads, false = hip
     private bool _isWalkingForward;
+    private bool _isReloading;
+    private int _currentAmmo;
+    private int _reserveAmmo;
 
-    public void Initialize(Camera3D camera, HitResolver hitResolver)
+    public void Initialize(Camera3D camera, HitResolver hitResolver, int currentAmmo, int reserveAmmo)
     {
         _camera = camera;
         _hitResolver = hitResolver;
+        _currentAmmo = currentAmmo;
+        _reserveAmmo = reserveAmmo;
+        NotifyAmmoChanged();
+    }
+
+    public int CurrentAmmo => _currentAmmo;
+    public int ReserveAmmo => _reserveAmmo;
+    public int MagazineSize => _magazineSize;
+
+    private void NotifyAmmoChanged()
+    {
+        EmitSignal(SignalName.AmmoChanged, _currentAmmo, _reserveAmmo);
     }
 
     public override void _Ready()
     {
-        // Required path naming (see Pistol.tscn)
+        // Required node naming (see Pistol.tscn)
         _anim = GetNode<AnimationPlayer>("Rig/AnimationPlayer");
+        
+        _muzzleFlash = GetNode<GpuParticles3D>(_muzzleFlashPath);
 
         // Required animations for our weapon rigs
         RequireAnimation("hip_idle");
         RequireAnimation("ads_idle");
         RequireAnimation("hip_shoot");
+        RequireAnimation("hip_reload");
         RequireAnimation("ads_shoot");
         RequireAnimation("transition_hiptoads");
         RequireAnimation("walk");
@@ -59,7 +99,7 @@ public partial class WeaponBase : Node3D
             return;
 
         // If we're in the middle of a shoot animation, queue the aim change and apply it right after shooting finishes.
-        if (_isShooting)
+        if (_isShooting || _isReloading)
         {
             _aimStateChangeQueued = true;
             _queuedAimState = aimHeld;
@@ -71,6 +111,16 @@ public partial class WeaponBase : Node3D
         PlayTransitionForAimState();
     }
 
+    public float GetTargetFov()
+    {
+        return _isAiming ? _aimFov : _hipFov;
+    }
+
+    private float GetShotInterval()
+    {
+        return 60.0f / _roundsPerMinute;
+    }
+
     public void SetMovementState(bool isMoving)
     {
         if (_isWalkingForward == isMoving)
@@ -78,8 +128,8 @@ public partial class WeaponBase : Node3D
 
         _isWalkingForward = isMoving;
 
-        // Don't interrupt shooting or transitions.
-        if (_isShooting || _isTransitioning)
+        // Don't interrupt shooting, transitions, or reloading.
+        if (_isShooting || _isTransitioning || _isReloading)
             return;
 
         PlayIdleForAimState();
@@ -89,9 +139,23 @@ public partial class WeaponBase : Node3D
     {
         if (!triggerPressed) return;
         if (_cooldown > 0) return;
+        if (_isShooting || _isReloading) return;
+        if (_currentAmmo <= 0) return;
 
         Fire();
-        _cooldown = 60.0 / _roundsPerMinute;
+        _cooldown = GetShotInterval();
+    }
+
+    public void TryReload()
+    {
+        if (_isReloading) return;
+        if (_isShooting) return;
+        if (_currentAmmo >= _magazineSize) return;
+        if (_reserveAmmo <= 0) return;
+
+        _isReloading = true;
+        _isTransitioning = false;
+        _anim.Play("hip_reload", _animBlendTime);
     }
 
     private void Fire()
@@ -99,11 +163,18 @@ public partial class WeaponBase : Node3D
         if (_camera == null) return;
 
         PlayShootForAimState();
-        
-        // muzzleflash
-        
-        _muzzleFlash.Activate();
-        
+        EmitSignal(
+            SignalName.Fired,
+            _cameraShakeDuration,
+            _cameraShakeStrength,
+            _cameraPitchKickDegrees,
+            _cameraYawKickDegrees,
+            _manualRecoil
+        );
+        ShowMuzzleFlash();
+
+        _currentAmmo--;
+        NotifyAmmoChanged();
 
         var from = _camera.GlobalTransform.Origin;
         var direction = -_camera.GlobalTransform.Basis.Z;
@@ -115,7 +186,6 @@ public partial class WeaponBase : Node3D
 
         var spaceState = GetWorld3D().DirectSpaceState;
         var query = PhysicsRayQueryParameters3D.Create(from, to);
-        query.CollisionMask = 8;
 
         var result = spaceState.IntersectRay(query);
 
@@ -132,10 +202,16 @@ public partial class WeaponBase : Node3D
             _hitResolver.HandleHit(hitInfo);
         }
     }
+    
+    private async void ShowMuzzleFlash()
+    {
+        _muzzleFlash.Restart();
+        _muzzleFlash.Emitting = true;
+    }
 
     private void PlayIdleForAimState()
     {
-        if (_isShooting || _isTransitioning)
+        if (_isShooting || _isTransitioning || _isReloading)
             return;
 
         // Walk animation plays only in hip state for now
@@ -156,10 +232,17 @@ public partial class WeaponBase : Node3D
         StringName shoot = _isAiming ? "ads_shoot" : "hip_shoot";
         if (_anim.HasAnimation(shoot))
         {
+            var animation = _anim.GetAnimation(shoot);
+
+            float shotInterval = GetShotInterval();
+            float playbackSpeed = shotInterval > 0.0f
+                ? (float)(animation.Length / shotInterval)
+                : 1.0f;
+
             // Shooting should interrupt any transition visuals.
             _isTransitioning = false;
             _isShooting = true;
-            _anim.Play(shoot);
+            _anim.Play(shoot, customSpeed: playbackSpeed);
         }
     }
 
@@ -173,28 +256,35 @@ public partial class WeaponBase : Node3D
         }
         else
         {
-            // NOTE: if I add a "transition_adstohip then I can just do a simple Play
-            // so I have to do this for now
-            
-            //_anim.PlayBackwards("transition_hiptoads");
-            
-            // BUT because the backwards has some awkward pacing I need to skip the animation a bit
-            
-            _anim.Play("transition_hiptoads", 0.0f, -1.0f, fromEnd: true);
-            var anim = _anim.GetAnimation("transition_hiptoads");
-            if (anim != null)
-            {
-                double len = anim.Length;
-                double startPos = Math.Clamp(len - 0.3, 0.0, len);
-
-                // Seek immediately so visuals update on this same frame.
-                _anim.Seek(startPos, true);
-            }
+            _anim.PlayBackwards("transition_hiptoads");
         }
     }
 
     private void OnAnimationFinished(StringName animName)
     {
+        if (animName == "hip_reload")
+        {
+            _isReloading = false;
+
+            int ammoNeeded = _magazineSize - _currentAmmo;
+            int ammoToLoad = Math.Min(ammoNeeded, _reserveAmmo);
+
+            _currentAmmo += ammoToLoad;
+            _reserveAmmo -= ammoToLoad;
+            NotifyAmmoChanged();
+
+            if (_aimStateChangeQueued)
+            {
+                _aimStateChangeQueued = false;
+                _isAiming = _queuedAimState;
+                PlayTransitionForAimState();
+                return;
+            }
+
+            PlayIdleForAimState();
+            return;
+        }
+
         if (animName == "transition_hiptoads")
         {
             _isTransitioning = false;
