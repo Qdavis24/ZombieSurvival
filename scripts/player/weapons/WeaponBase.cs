@@ -101,7 +101,7 @@ public partial class WeaponBase : Node3D
         PlayShootForAimState();
         
         // muzzleflash
-        _muzzleFlash.Deactivate();
+        
         _muzzleFlash.Activate();
         
 
