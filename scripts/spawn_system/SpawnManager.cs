@@ -19,11 +19,13 @@ public partial class SpawnManager : Node
     private int _numZombiesSpawned;
 
     private SpawnerStats _stats;
-    
+
+    private Node3D _zombTarget;
+
     public override void _Ready()
     {
         _spawnInterval.Timeout += TriggerSpawns;
-        
+
         foreach (var child in GetChildren())
         {
             if (child is Spawner spawner)
@@ -48,11 +50,13 @@ public partial class SpawnManager : Node
     public void Init(SpawnerStats stats, Node3D zombieTarget, ZombieStats zombieStats)
     {
         _stats = stats;
+        _zombTarget = zombieTarget;
         foreach (var spawner in _spawners)
         {
             spawner.InitZombieStats(zombieStats);
             spawner.InitZombieTarget(zombieTarget);
         }
+
         Reset();
     }
 
@@ -65,8 +69,14 @@ public partial class SpawnManager : Node
 
     private void TriggerSpawns()
     {
-        foreach (var spawner in _spawners)
+        _spawners.Sort((a, b) => (a.GlobalPosition - _zombTarget.GlobalPosition).Length()
+            .CompareTo((b.GlobalPosition - _zombTarget.GlobalPosition).Length())); // sort by closest to player
+        
+        for (int i = 0; i < _spawners.Count/2; i++)
         {
+            var spawner = _spawners[i];
+            var distanceToTarget = (spawner.GlobalPosition - _zombTarget.GlobalPosition).Length();
+
             if (_numZombiesAlive < _stats.NumZombiesAliveLimit && _numZombiesSpawned < _stats.NumZombiesLimit)
             {
                 spawner.SpawnZombie();
@@ -74,5 +84,6 @@ public partial class SpawnManager : Node
                 _numZombiesAlive++;
             }
         }
+
     }
 }
