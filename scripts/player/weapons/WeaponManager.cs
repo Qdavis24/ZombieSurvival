@@ -229,6 +229,9 @@ public partial class WeaponManager : Node
             _current?.SetMovementState(isMovingForward);
             _camera.SetMovementState(isMovingForward);
         
+            if (Input.IsActionJustPressed("reload"))
+                _current?.Call("TryReload");
+
             bool triggerHeld = Input.IsActionPressed("fire");
             _current?.TryFire(triggerHeld);
         }

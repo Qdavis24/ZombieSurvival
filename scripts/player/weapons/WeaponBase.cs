@@ -45,6 +45,7 @@ public partial class WeaponBase : Node3D
     private bool _aimStateChangeQueued; // true if changing from ads to hip or hip to ads
     private bool _queuedAimState; // true = ads, false = hip
     private bool _isWalkingForward;
+    private bool _isReloading;
     private int _currentAmmo;
     private int _reserveAmmo;
 
@@ -77,6 +78,7 @@ public partial class WeaponBase : Node3D
         RequireAnimation("hip_idle");
         RequireAnimation("ads_idle");
         RequireAnimation("hip_shoot");
+        RequireAnimation("hip_reload");
         RequireAnimation("ads_shoot");
         RequireAnimation("transition_hiptoads");
         RequireAnimation("walk");
@@ -97,7 +99,7 @@ public partial class WeaponBase : Node3D
             return;
 
         // If we're in the middle of a shoot animation, queue the aim change and apply it right after shooting finishes.
-        if (_isShooting)
+        if (_isShooting || _isReloading)
         {
             _aimStateChangeQueued = true;
             _queuedAimState = aimHeld;
@@ -126,8 +128,8 @@ public partial class WeaponBase : Node3D
 
         _isWalkingForward = isMoving;
 
-        // Don't interrupt shooting or transitions.
-        if (_isShooting || _isTransitioning)
+        // Don't interrupt shooting, transitions, or reloading.
+        if (_isShooting || _isTransitioning || _isReloading)
             return;
 
         PlayIdleForAimState();
@@ -137,11 +139,23 @@ public partial class WeaponBase : Node3D
     {
         if (!triggerPressed) return;
         if (_cooldown > 0) return;
-        if (_isShooting) return;
+        if (_isShooting || _isReloading) return;
         if (_currentAmmo <= 0) return;
 
         Fire();
         _cooldown = GetShotInterval();
+    }
+
+    public void TryReload()
+    {
+        if (_isReloading) return;
+        if (_isShooting) return;
+        if (_currentAmmo >= _magazineSize) return;
+        if (_reserveAmmo <= 0) return;
+
+        _isReloading = true;
+        _isTransitioning = false;
+        _anim.Play("hip_reload", _animBlendTime);
     }
 
     private void Fire()
@@ -197,7 +211,7 @@ public partial class WeaponBase : Node3D
 
     private void PlayIdleForAimState()
     {
-        if (_isShooting || _isTransitioning)
+        if (_isShooting || _isTransitioning || _isReloading)
             return;
 
         // Walk animation plays only in hip state for now
@@ -248,6 +262,29 @@ public partial class WeaponBase : Node3D
 
     private void OnAnimationFinished(StringName animName)
     {
+        if (animName == "hip_reload")
+        {
+            _isReloading = false;
+
+            int ammoNeeded = _magazineSize - _currentAmmo;
+            int ammoToLoad = Math.Min(ammoNeeded, _reserveAmmo);
+
+            _currentAmmo += ammoToLoad;
+            _reserveAmmo -= ammoToLoad;
+            NotifyAmmoChanged();
+
+            if (_aimStateChangeQueued)
+            {
+                _aimStateChangeQueued = false;
+                _isAiming = _queuedAimState;
+                PlayTransitionForAimState();
+                return;
+            }
+
+            PlayIdleForAimState();
+            return;
+        }
+
         if (animName == "transition_hiptoads")
         {
             _isTransitioning = false;
