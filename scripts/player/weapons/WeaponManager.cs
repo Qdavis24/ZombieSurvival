@@ -2,10 +2,26 @@ using Godot;
 
 public partial class WeaponManager : Node
 {
+    private sealed class WeaponSlot
+    {
+        public PackedScene Scene;
+        public bool Unlocked;
+        public int CurrentAmmo;
+        public int ReserveAmmo;
+
+        public WeaponSlot(PackedScene scene, int currentAmmo, int reserveAmmo)
+        {
+            Scene = scene;
+            CurrentAmmo = currentAmmo;
+            ReserveAmmo = reserveAmmo;
+        }
+    }
+
     [Export] private NodePath _playerControllerPath;
     [Export] private NodePath _weaponSocketPath;
-    [Export] private PackedScene[] _weapons; // All possible weapons
-    private bool[] _weaponUnlocked; // Tracks which weapons the player has unlocked
+    [Export] private PackedScene[] _weaponScenes;
+    [Export] private int[] _startingReserveAmmo;
+    private WeaponSlot[] _weaponSlots;
     private int _currentWeaponIndex = 0;
     private bool _isSwapping = false;
     
@@ -19,11 +35,14 @@ public partial class WeaponManager : Node
     private WeaponBase _current;
     private Camera _camera;
     private HitResolver _hitResolver;
+    private HUD _hud;
 
     public override void _Ready()
     {
         _weaponSocket = GetNode<Node3D>(_weaponSocketPath);
         _playerController = GetNode<PlayerController>(_playerControllerPath);
+        _hud = GetTree().CurrentScene.GetNodeOrNull<HUD>("Hud")
+            ?? GetTree().CurrentScene.GetNodeOrNull<HUD>("HUD");
 
         _camera = GetParent()
             .GetNode<Node3D>("Head")
@@ -31,37 +50,85 @@ public partial class WeaponManager : Node
 
         _hitResolver = GetNode<HitResolver>(HitResolverPath);
 
-        // Initialize unlock state for weapons
-        if (_weapons != null)
+        if (_weaponScenes != null && _weaponScenes.Length > 0)
         {
-            _weaponUnlocked = new bool[_weapons.Length];
-            if (_weaponUnlocked.Length > 0)
-                _weaponUnlocked[0] = true; // First weapon unlocked by default
-        }
-        _weaponUnlocked[1] = true; // First weapon unlocked by default
+            _weaponSlots = new WeaponSlot[_weaponScenes.Length];
 
-        if (_weapons != null && _weapons.Length > 0)
-        {
+            for (int i = 0; i < _weaponScenes.Length; i++)
+            {
+                var scene = _weaponScenes[i];
+                if (scene == null)
+                    continue;
+
+                var previewWeapon = scene.Instantiate<WeaponBase>();
+                int magazineSize = previewWeapon.MagazineSize;
+                int reserveAmmo = (_startingReserveAmmo != null && i < _startingReserveAmmo.Length)
+                    ? _startingReserveAmmo[i]
+                    : 0;
+
+                _weaponSlots[i] = new WeaponSlot(scene, magazineSize, reserveAmmo)
+                {
+                    Unlocked = i == 0 || i == 1
+                };
+
+                previewWeapon.QueueFree();
+            }
+
             _currentWeaponIndex = 0;
-            Equip(_weapons[_currentWeaponIndex]);
+            Equip(_currentWeaponIndex);
         }
     }
 
-    private void Equip(PackedScene weaponScene)
+    private void Equip(int weaponIndex)
     {
+        if (_weaponSlots == null || weaponIndex < 0 || weaponIndex >= _weaponSlots.Length)
+            return;
+
+        var slot = _weaponSlots[weaponIndex];
+        if (slot == null || slot.Scene == null)
+            return;
+
         if (_current != null)
         {
             _current.Fired -= _camera.OnWeaponFired;
             _current.Fired -= _playerController.OnWeaponFired;
+            _current.AmmoChanged -= OnCurrentWeaponAmmoChanged;
         }
 
         _current?.QueueFree();
 
-        _current = weaponScene.Instantiate<WeaponBase>();
+        _current = slot.Scene.Instantiate<WeaponBase>();
         _weaponSocket.AddChild(_current);
-        _current.Initialize(_camera, _hitResolver);
-        _current.Fired += _camera.OnWeaponFired; // Listen to shots for recoil
-        _current.Fired += _playerController.OnWeaponFired; // Listen to shots for recoil
+        _current.Initialize(_camera, _hitResolver, slot.CurrentAmmo, slot.ReserveAmmo);
+        _current.Fired += _camera.OnWeaponFired;
+        _current.Fired += _playerController.OnWeaponFired;
+        _current.AmmoChanged += OnCurrentWeaponAmmoChanged;
+
+        RefreshHudAmmo();
+        CallDeferred(nameof(RefreshHudAmmo));
+    }
+
+    private void OnCurrentWeaponAmmoChanged(int currentAmmo, int reserveAmmo)
+    {
+        if (_weaponSlots != null && _currentWeaponIndex >= 0 && _currentWeaponIndex < _weaponSlots.Length)
+        {
+            var slot = _weaponSlots[_currentWeaponIndex];
+            if (slot != null)
+            {
+                slot.CurrentAmmo = currentAmmo;
+                slot.ReserveAmmo = reserveAmmo;
+            }
+        }
+
+        _hud?.SetAmmo(currentAmmo, reserveAmmo);
+    }
+
+    private void RefreshHudAmmo()
+    {
+        if (_hud == null || _current == null)
+            return;
+
+        _hud.SetAmmo(_current.CurrentAmmo, _current.ReserveAmmo);
     }
 
     private AnimationPlayer GetWeaponAnimationPlayer(WeaponBase weapon)
@@ -72,9 +139,9 @@ public partial class WeaponManager : Node
     private async void SwapToWeaponIndex(int newIndex)
     {
         if (_isSwapping) return;
-        if (_weapons == null || _weapons.Length == 0) return;
-        if (newIndex < 0 || newIndex >= _weapons.Length) return;
-        if (!_weaponUnlocked[newIndex]) return;
+        if (_weaponSlots == null || _weaponSlots.Length == 0) return;
+        if (newIndex < 0 || newIndex >= _weaponSlots.Length) return;
+        if (_weaponSlots[newIndex] == null || !_weaponSlots[newIndex].Unlocked) return;
         if (newIndex == _currentWeaponIndex) return;
 
         _isSwapping = true;
@@ -92,7 +159,7 @@ public partial class WeaponManager : Node
         }
 
         _currentWeaponIndex = newIndex;
-        Equip(_weapons[_currentWeaponIndex]);
+        Equip(_currentWeaponIndex);
 
         if (_current != null)
         {
@@ -114,19 +181,19 @@ public partial class WeaponManager : Node
 
     private int FindNextUnlockedWeaponIndex(int direction)
     {
-        if (_weapons == null || _weapons.Length == 0)
+        if (_weaponSlots == null || _weaponSlots.Length == 0)
             return -1;
 
         int index = _currentWeaponIndex;
-        for (int i = 0; i < _weapons.Length; i++)
+        for (int i = 0; i < _weaponSlots.Length; i++)
         {
             index += direction;
-            if (index >= _weapons.Length)
+            if (index >= _weaponSlots.Length)
                 index = 0;
             else if (index < 0)
-                index = _weapons.Length - 1;
+                index = _weaponSlots.Length - 1;
 
-            if (_weaponUnlocked[index])
+            if (_weaponSlots[index] != null && _weaponSlots[index].Unlocked)
                 return index;
         }
 
@@ -136,7 +203,7 @@ public partial class WeaponManager : Node
     public override void _Process(double delta)
     {
         // Swap weapon
-        if (!_isSwapping && _weapons != null && _weapons.Length > 0)
+        if (!_isSwapping && _weaponSlots != null && _weaponSlots.Length > 0)
         {
             if (Input.IsActionJustPressed("weapon_swap_down"))
             {

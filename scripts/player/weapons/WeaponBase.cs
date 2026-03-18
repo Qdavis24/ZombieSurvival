@@ -10,6 +10,7 @@ public partial class WeaponBase : Node3D
         float yawKickDegrees,
         bool manualRecoil
     );
+    [Signal] public delegate void AmmoChangedEventHandler(int currentAmmo, int reserveAmmo);
     
     // Default values for pistol
     [ExportGroup("Stats")]
@@ -17,6 +18,7 @@ public partial class WeaponBase : Node3D
     [Export] private float _hipSpreadDegrees = 2.0f;
     [Export] private float _damage = 100f;
     [Export] private float _force = 6f;
+    [Export] private int _magazineSize = 12;
     
     [ExportGroup("Camera And Recoil")]
     [Export] private float _aimFov = 75f;
@@ -43,11 +45,25 @@ public partial class WeaponBase : Node3D
     private bool _aimStateChangeQueued; // true if changing from ads to hip or hip to ads
     private bool _queuedAimState; // true = ads, false = hip
     private bool _isWalkingForward;
+    private int _currentAmmo;
+    private int _reserveAmmo;
 
-    public void Initialize(Camera3D camera, HitResolver hitResolver)
+    public void Initialize(Camera3D camera, HitResolver hitResolver, int currentAmmo, int reserveAmmo)
     {
         _camera = camera;
         _hitResolver = hitResolver;
+        _currentAmmo = currentAmmo;
+        _reserveAmmo = reserveAmmo;
+        NotifyAmmoChanged();
+    }
+
+    public int CurrentAmmo => _currentAmmo;
+    public int ReserveAmmo => _reserveAmmo;
+    public int MagazineSize => _magazineSize;
+
+    private void NotifyAmmoChanged()
+    {
+        EmitSignal(SignalName.AmmoChanged, _currentAmmo, _reserveAmmo);
     }
 
     public override void _Ready()
@@ -122,6 +138,7 @@ public partial class WeaponBase : Node3D
         if (!triggerPressed) return;
         if (_cooldown > 0) return;
         if (_isShooting) return;
+        if (_currentAmmo <= 0) return;
 
         Fire();
         _cooldown = GetShotInterval();
@@ -141,6 +158,9 @@ public partial class WeaponBase : Node3D
             _manualRecoil
         );
         ShowMuzzleFlash();
+
+        _currentAmmo--;
+        NotifyAmmoChanged();
 
         var from = _camera.GlobalTransform.Origin;
         var direction = -_camera.GlobalTransform.Basis.Z;

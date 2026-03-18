@@ -46,7 +46,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.75, 0)
 script = ExtResource("2_h2fbm")
 _playerControllerPath = NodePath("..")
 _weaponSocketPath = NodePath("../Head/Camera3D/WeaponSocket")
-_weapons = Array[PackedScene]([ExtResource("5_anuhh"), ExtResource("4_08ru5")])
+_weaponScenes = Array[PackedScene]([ExtResource("5_anuhh"), ExtResource("4_08ru5")])
+_startingReserveAmmo = PackedInt32Array(48, 96)
 
 [node name="CENTERED" type="CanvasLayer" parent="." unique_id=681009954]
 visible = false
