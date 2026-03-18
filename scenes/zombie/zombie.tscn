@@ -706,12 +706,12 @@ transform = Transform3D(0.9988572, 0.04396846, 0.01883693, -0.043872498, 0.99902
 shape = SubResource("CapsuleShape3D_a5kb4")
 
 [node name="Physical Bone upper_leg_l" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" unique_id=64643754 node_paths=PackedStringArray("ChildBone") groups=["damage"]]
-transform = Transform3D(0.8115458, -0.087143965, -0.5777539, 0.5795319, 0.24597438, 0.7769424, 0.07440681, -0.96535105, 0.25012216, 0.03630149, 0.63578963, -0.15029715)
+transform = Transform3D(0.8115458, -0.087143965, -0.5777539, 0.5795319, 0.24597438, 0.7769424, 0.07440681, -0.96535105, 0.25012216, 0.03612741, 0.6357919, -0.15028027)
 collision_layer = 8
 collision_mask = 8
 joint_type = 2
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.728928e-07, 9.012385e-06, 0.22039458)
-body_offset = Transform3D(1, -6.417278e-06, 7.599592e-06, 7.5101852e-06, -8.137431e-06, -1.0000002, 6.419141e-06, 0.9999995, -8.168165e-06, -1.847744e-06, 0.22039464, -7.212162e-06)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00013887371, 9.576868e-06, 0.22028801)
+body_offset = Transform3D(1, -6.417278e-06, 7.599592e-06, 7.5101852e-06, -8.137431e-06, -1.0000002, 6.419141e-06, 0.9999995, -8.168165e-06, -0.00014054775, 0.22028807, -7.778406e-06)
 mass = 0.3
 linear_damp = 2.0
 angular_damp = 2.0
@@ -814,6 +814,7 @@ autoplay = &"walk"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1494010712]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8399048, 0)
 shape = SubResource("CapsuleShape3D_ocgsw")
+disabled = true
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1380560577]
 

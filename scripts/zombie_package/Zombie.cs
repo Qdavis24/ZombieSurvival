@@ -2,10 +2,13 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+namespace ZombieSurvival.scripts.zombie_package;
+
 public partial class Zombie : CharacterBody3D
 {
+    [Signal] public delegate void DeadEventHandler();
+    
     [Export] private NavigationAgent3D _navAgent;
-    [Export] private float _speed = 2f;
     [Export] private Timer _simulationRunTimer;
     [Export] private Skeleton3D _skeleton;
     [Export] private PhysicalBoneSimulator3D _physicalBoneSimulator;
@@ -16,9 +19,14 @@ public partial class Zombie : CharacterBody3D
     private Node3D _target;
     private bool _isDead;
 
-    public void Init(Node3D target)
+    private float _speed;
+    private float _health;
+    
+    public void Init(Node3D target, ZombieStats stats)
     {
         _target = target;
+        _health = stats.Health;
+        _speed = stats.Speed;
     }
 
     public override void _Ready()
@@ -36,7 +44,11 @@ public partial class Zombie : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
-        if (_target == null || _isDead) return;
+        if (_target == null || _isDead)
+        {
+ 
+            return;
+        }
 
         _navAgent.SetTargetPosition(_target.GetPosition());
         var targetPos = _navAgent.GetNextPathPosition();
@@ -93,6 +105,7 @@ public partial class Zombie : CharacterBody3D
             _isDead = true;
             _physicalBoneSimulator.PhysicalBonesStartSimulation();
             _simulationRunTimer.Start();
+            EmitSignalDead();
         }
     }
 }
