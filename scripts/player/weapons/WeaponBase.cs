@@ -31,9 +31,9 @@ public partial class WeaponBase : Node3D
     
     [ExportGroup("Misc")]
     [Export] private float _animBlendTime = 0.3f;
-    [Export] private NodePath _muzzleFlashPath;
+
+    [Export] private MuzzleFlash _muzzleFlash;
     
-    private GpuParticles3D _muzzleFlash;
     private Camera3D _camera;
     private AnimationPlayer _anim;
     private HitResolver _hitResolver;
@@ -71,8 +71,6 @@ public partial class WeaponBase : Node3D
     {
         // Required node naming (see Pistol.tscn)
         _anim = GetNode<AnimationPlayer>("Rig/AnimationPlayer");
-        
-        _muzzleFlash = GetNode<GpuParticles3D>(_muzzleFlashPath);
 
         // Required animations for our weapon rigs
         RequireAnimation("hip_idle");
@@ -171,7 +169,7 @@ public partial class WeaponBase : Node3D
             _cameraYawKickDegrees,
             _manualRecoil
         );
-        ShowMuzzleFlash();
+        _muzzleFlash.Activate();
 
         _currentAmmo--;
         NotifyAmmoChanged();
@@ -203,12 +201,6 @@ public partial class WeaponBase : Node3D
         }
     }
     
-    private async void ShowMuzzleFlash()
-    {
-        _muzzleFlash.Restart();
-        _muzzleFlash.Emitting = true;
-    }
-
     private void PlayIdleForAimState()
     {
         if (_isShooting || _isTransitioning || _isReloading)

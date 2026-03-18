@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dasyaiv33oybx" path="res://scripts/player/PlayerController.cs" id="1_etyb6"]
 [ext_resource type="Script" uid="uid://c7dgejf7dcfu" path="res://scripts/player/Camera.cs" id="2_08ru5"]
 [ext_resource type="Script" uid="uid://4uxtcbw88ior" path="res://scripts/player/weapons/WeaponManager.cs" id="2_h2fbm"]
-[ext_resource type="Texture2D" uid="uid://drfjgngruviny" path="res://icon.svg" id="4_6ev1f"]
+[ext_resource type="Texture2D" uid="uid://cope1k8ks707y" path="res://icon.svg" id="4_6ev1f"]
 [ext_resource type="PackedScene" uid="uid://cvfgj38xc7dac" path="res://scenes/player/weapons/rifle/Rifle.tscn" id="4_08ru5"]
 [ext_resource type="PackedScene" uid="uid://00wy8mcfk7sk" path="res://scenes/player/weapons/pistol/Pistol.tscn" id="5_anuhh"]
 
