@@ -22,7 +22,8 @@ public partial class Camera : Camera3D
         float shakeDuration,
         float shakeStrength,
         float pitchKickDegrees,
-        float yawKickDegrees
+        float yawKickDegrees,
+        bool manualRecoil
     )
     {
         _shakeTimeRemaining = Mathf.Max(_shakeTimeRemaining, shakeDuration);

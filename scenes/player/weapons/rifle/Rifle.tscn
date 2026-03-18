@@ -19,7 +19,8 @@ size = Vector3(0.1, 0.04, 0.04)
 [node name="Rifle" type="Node3D" unique_id=866969985]
 script = ExtResource("1_cxf1s")
 _roundsPerMinute = 300.0
-_cameraShakeStrength = 0.1
+_manualRecoil = true
+_cameraPitchKickDegrees = -0.3
 _animBlendTime = 0.22
 _muzzleFlashPath = NodePath("Rig/HumanArms/Skeleton3D/BoneAttachment3D/GPUParticles3D")
 

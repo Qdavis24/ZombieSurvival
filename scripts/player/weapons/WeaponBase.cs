@@ -7,7 +7,8 @@ public partial class WeaponBase : Node3D
         float shakeDuration,
         float shakeStrength,
         float pitchKickDegrees,
-        float yawKickDegrees
+        float yawKickDegrees,
+        bool manualRecoil
     );
     
     // Default values for pistol
@@ -17,9 +18,10 @@ public partial class WeaponBase : Node3D
     [Export] private float _damage = 100f;
     [Export] private float _force = 6f;
     
-    [ExportGroup("Camera")]
+    [ExportGroup("Camera And Recoil")]
     [Export] private float _aimFov = 75f;
     [Export] private float _hipFov = 90f;
+    [Export] private bool _manualRecoil = false;
     [Export] private float _cameraShakeDuration = 0.05f;
     [Export] private float _cameraShakeStrength = 0.05f;
     [Export] private float _cameraPitchKickDegrees = -1f;
@@ -135,7 +137,8 @@ public partial class WeaponBase : Node3D
             _cameraShakeDuration,
             _cameraShakeStrength,
             _cameraPitchKickDegrees,
-            _cameraYawKickDegrees
+            _cameraYawKickDegrees,
+            _manualRecoil
         );
         ShowMuzzleFlash();
 

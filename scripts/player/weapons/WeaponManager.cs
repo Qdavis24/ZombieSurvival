@@ -2,6 +2,7 @@ using Godot;
 
 public partial class WeaponManager : Node
 {
+    [Export] private NodePath _playerControllerPath;
     [Export] private NodePath _weaponSocketPath;
     [Export] private PackedScene[] _weapons; // All possible weapons
     private bool[] _weaponUnlocked; // Tracks which weapons the player has unlocked
@@ -13,6 +14,7 @@ public partial class WeaponManager : Node
     
     private const string HitResolverPath = "../../HitResolver";
 
+    private PlayerController _playerController;
     private Node3D _weaponSocket;
     private WeaponBase _current;
     private Camera _camera;
@@ -21,6 +23,7 @@ public partial class WeaponManager : Node
     public override void _Ready()
     {
         _weaponSocket = GetNode<Node3D>(_weaponSocketPath);
+        _playerController = GetNode<PlayerController>(_playerControllerPath);
 
         _camera = GetParent()
             .GetNode<Node3D>("Head")
@@ -47,7 +50,10 @@ public partial class WeaponManager : Node
     private void Equip(PackedScene weaponScene)
     {
         if (_current != null)
+        {
             _current.Fired -= _camera.OnWeaponFired;
+            _current.Fired -= _playerController.OnWeaponFired;
+        }
 
         _current?.QueueFree();
 
@@ -55,6 +61,7 @@ public partial class WeaponManager : Node
         _weaponSocket.AddChild(_current);
         _current.Initialize(_camera, _hitResolver);
         _current.Fired += _camera.OnWeaponFired; // Listen to shots for recoil
+        _current.Fired += _playerController.OnWeaponFired; // Listen to shots for recoil
     }
 
     private AnimationPlayer GetWeaponAnimationPlayer(WeaponBase weapon)

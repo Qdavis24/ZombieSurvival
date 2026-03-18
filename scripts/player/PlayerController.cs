@@ -15,6 +15,34 @@ public partial class PlayerController : CharacterBody3D
 	private float _yaw; // left and right
 	private float _pitch; // up and down
 	
+	public void OnWeaponFired(
+		float shakeDuration,
+		float shakeStrength,
+		float pitchKickDegrees,
+		float yawKickDegrees,
+		bool manualRecoil
+	)
+	{
+		if (manualRecoil)
+		{
+			AddPitchRecoil(Mathf.DegToRad(pitchKickDegrees));
+		}
+	}	
+	
+	private void ApplyLookRotation()
+	{
+		_pitch = Mathf.Clamp(_pitch, -Mathf.Pi / 2f, Mathf.Pi / 2f);
+
+		Rotation = new Vector3(0f, _yaw, 0f);
+		_head.Rotation = new Vector3(_pitch, 0f, 0f);
+	}
+
+	private void AddPitchRecoil(float recoilRadians)
+	{
+		_pitch -= recoilRadians;
+		ApplyLookRotation();
+	}
+
 	public override void _Ready()
 	{
 		_head = GetNode<Node3D>("Head");
@@ -45,11 +73,7 @@ public partial class PlayerController : CharacterBody3D
 		{
 			_yaw -= mouseMotion.Relative.X * _mouseSensitivity;
 			_pitch -= mouseMotion.Relative.Y * _mouseSensitivity;
-			
-			_pitch = Mathf.Clamp(_pitch, -Mathf.Pi / 2f, Mathf.Pi / 2f);
-			
-			Rotation = new Vector3(0f, _yaw, 0f);
-			_head.Rotation = new Vector3(_pitch, 0f, 0f);
+			ApplyLookRotation();
 		}
 		
 	}
