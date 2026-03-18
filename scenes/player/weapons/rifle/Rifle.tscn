@@ -1,19 +1,19 @@
 [gd_scene format=3 uid="uid://cvfgj38xc7dac"]
 
 [ext_resource type="Script" uid="uid://dbyhmp7kvgdqb" path="res://scripts/player/weapons/WeaponBase.cs" id="1_cxf1s"]
-[ext_resource type="PackedScene" uid="uid://c2l3biyjtkjv" path="res://assets/models/player/weapons/rifle.glb" id="2_cxf1s"]
+[ext_resource type="PackedScene" uid="uid://dsgkm7iixsc4l" path="res://assets/models/player/weapons/new_rifle.glb" id="2_cxf1s"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cxf1s"]
 gravity = Vector3(0, 0, 0)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ru15"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gfsj7"]
 transparency = 1
 albedo_color = Color(0.9254902, 0.9137255, 0, 0.67058825)
 emission_enabled = true
 emission = Color(1, 1, 0, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_gfsj7"]
-material = SubResource("StandardMaterial3D_2ru15")
+[sub_resource type="BoxMesh" id="BoxMesh_nq7j5"]
+material = SubResource("StandardMaterial3D_gfsj7")
 size = Vector3(0.1, 0.04, 0.04)
 
 [node name="Rifle" type="Node3D" unique_id=866969985]
@@ -22,69 +22,29 @@ _roundsPerMinute = 300.0
 _manualRecoil = true
 _cameraPitchKickDegrees = -0.3
 _animBlendTime = 0.22
-_muzzleFlashPath = NodePath("Rig/HumanArms/Skeleton3D/BoneAttachment3D/GPUParticles3D")
+_muzzleFlashPath = NodePath("Rig/HumanArms/Skeleton3D/BoneAttachment3D2/GPUParticles3D")
 
-[node name="Rig" parent="." unique_id=606797728 instance=ExtResource("2_cxf1s")]
+[node name="Rig" parent="." unique_id=1243614659 instance=ExtResource("2_cxf1s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.035, 0)
 
-[node name="Skeleton3D" parent="Rig/HumanArms" parent_id_path=PackedInt32Array(606797728, 603405557) index="0" unique_id=1692687257]
-bones/1/rotation = Quaternion(-0.2058763, -0.60321915, 0.76701206, -0.073716335)
-bones/2/rotation = Quaternion(-0.3238807, 0.00012493483, 0.045215413, 0.9450169)
-bones/3/rotation = Quaternion(0.31647575, -0.734557, -0.013397977, 0.60007477)
-bones/4/rotation = Quaternion(0.12996209, -0.26559016, 0.5937601, 0.74834543)
-bones/7/rotation = Quaternion(-0.21429816, -0.15042968, 0.4469563, 0.8553813)
-bones/10/rotation = Quaternion(-0.23926489, -0.15451314, 0.36387202, 0.88683444)
-bones/13/rotation = Quaternion(-0.2460926, -0.050318114, 0.32442045, 0.9119529)
-bones/16/position = Vector3(-0.024302065, 0.04985226, -0.0599414)
-bones/16/rotation = Quaternion(-0.63067883, 0.13614759, 0.4086572, 0.64552873)
-bones/17/rotation = Quaternion(0.33130383, 0.08043764, 0.087169334, 0.93603903)
-bones/18/rotation = Quaternion(0.112567246, -0.008212571, -0.02979942, 0.9931632)
-bones/19/position = Vector3(0.21312506, 0.0010881958, 3.0193072e-09)
-bones/19/rotation = Quaternion(0.08813357, -0.04283456, -0.91078216, 0.40109044)
-bones/20/rotation = Quaternion(-0.9436572, -4.009157e-05, -0.13173947, 0.30357173)
-bones/21/rotation = Quaternion(0.36228767, 0.2304618, 0.17535631, 0.8859376)
-bones/22/position = Vector3(0.014911076, 0.15322699, 0.060319625)
-bones/22/rotation = Quaternion(0.16780022, 0.05707692, -0.31692845, 0.93174124)
-bones/23/rotation = Quaternion(-0.13822451, -3.3492395e-08, -0.018600883, 0.99022627)
-bones/24/rotation = Quaternion(-0.011548538, -0.0012334225, -0.08791847, 0.99605995)
-bones/25/rotation = Quaternion(0.049173556, 0.0065641725, -0.1321509, 0.9899874)
-bones/26/rotation = Quaternion(-0.023457365, -4.8507995e-06, 0.003982884, 0.999717)
-bones/27/rotation = Quaternion(-0.0071727587, 5.0867813e-05, -0.006886243, 0.9999506)
-bones/29/rotation = Quaternion(0.027272804, 6.679454e-10, 2.171319e-08, 0.9996281)
-bones/30/rotation = Quaternion(-1.7753337e-09, 6.730545e-10, -2.2409972e-09, 1)
-bones/31/rotation = Quaternion(-0.06748092, 0.00057178765, 0.003554804, 0.99771404)
-bones/32/rotation = Quaternion(0.038750052, 0.00030745435, -0.006569383, 0.9992273)
-bones/34/rotation = Quaternion(-0.36203, 0.020588396, -0.45028964, 0.81593484)
-bones/35/rotation = Quaternion(0.28303185, -0.15783943, -0.047071002, 0.944862)
-bones/36/rotation = Quaternion(0.07679233, 0.09672879, 0.23426478, 0.9642959)
-bones/37/position = Vector3(-0.44183868, -0.51182926, 0.303406)
-bones/38/position = Vector3(0.13044941, 0.04959643, -0.66545993)
-bones/38/rotation = Quaternion(-0.043637592, -0.40463498, 0.75245476, -0.5178593)
-bones/39/position = Vector3(0.9034498, -0.8792144, 0.65019846)
-bones/40/position = Vector3(0.21644825, 1.4112594, -0.3065942)
-bones/40/rotation = Quaternion(-0.110193565, 0.699833, -0.10221003, 0.6983154)
-bones/44/position = Vector3(0.2937345, 0.122871526, -5.0589588e-05)
-bones/45/position = Vector3(0.2769981, 1.4382459, -0.22449422)
-bones/45/rotation = Quaternion(-0.44879407, 0.52933717, -0.54295033, 0.4728541)
-
-[node name="PBarrell" parent="Rig/HumanArms/Skeleton3D" index="3" unique_id=70870046]
+[node name="PBarrell" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 326445719) index="3" unique_id=452129971]
 visible = false
 
-[node name="PHandle" parent="Rig/HumanArms/Skeleton3D" index="4" unique_id=2131526273]
+[node name="PHandle" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 326445719) index="4" unique_id=1884333579]
 visible = false
 
-[node name="PMag" parent="Rig/HumanArms/Skeleton3D" index="5" unique_id=1065709896]
+[node name="PMag" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 326445719) index="5" unique_id=1197546931]
 visible = false
 
-[node name="PSlide" parent="Rig/HumanArms/Skeleton3D" index="6" unique_id=1269787635]
+[node name="PSlide" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 326445719) index="6" unique_id=1274445657]
 visible = false
 
-[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Rig/HumanArms/Skeleton3D" index="7" unique_id=1397234656]
-transform = Transform3D(-0.999999, 1.077031e-05, -0.0014691219, 0.0014691261, -3.8594007e-05, -0.99999887, -1.0849777e-05, -1, 3.8586557e-05, 0.21572584, 1.6201553, -1.3557322)
+[node name="BoneAttachment3D2" type="BoneAttachment3D" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 326445719) index="7" unique_id=638777053]
+transform = Transform3D(3.768946e-08, 0.9999999, 1.6346574e-05, -0.99999994, 9.202631e-08, 1.4377292e-07, 1.3154931e-08, -1.6339123e-05, 0.99999994, 2.1635847, 1.4437386, -0.14403468)
 bone_name = "MUZZLE"
 bone_idx = 42
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="Rig/HumanArms/Skeleton3D/BoneAttachment3D" unique_id=1854824220]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Rig/HumanArms/Skeleton3D/BoneAttachment3D2" unique_id=367414988]
 transform = Transform3D(1.0000006, 5.820766e-10, -1.6723334e-08, 1.1641532e-10, 1, 2.3283064e-09, 8.772099e-08, 0, 1.0000001, -1.3828278e-05, 0.027428985, 0.0001320839)
 emitting = false
 amount = 4
@@ -92,16 +52,15 @@ lifetime = 0.01
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_cxf1s")
-draw_pass_1 = SubResource("BoxMesh_gfsj7")
+draw_pass_1 = SubResource("BoxMesh_nq7j5")
 
-[node name="AKREFERENCESIDE" parent="Rig" index="1" unique_id=618799666]
-transform = Transform3D(1.4257766e-08, -0.32617965, -1.4257766e-08, 0, 1.4257766e-08, -0.32617965, -0.32617965, -1.4257766e-08, -6.232267e-16, 2.4455173, 1.4779537, -2.4286065)
+[node name="AKREFERENCESIDE" parent="Rig" index="1" unique_id=504279868]
 visible = false
 
-[node name="Torus" parent="Rig" index="2" unique_id=1174064635]
+[node name="Torus" parent="Rig" index="2" unique_id=334688290]
 visible = false
 
-[node name="Scale Reference" parent="Rig" index="3" unique_id=1540583618]
+[node name="Scale Reference" parent="Rig" index="3" unique_id=1687738368]
 visible = false
 
 [editable path="Rig"]
