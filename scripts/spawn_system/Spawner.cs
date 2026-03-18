@@ -19,7 +19,6 @@ public partial class Spawner : Node3D
     {
         var zomb = _zombiePackedScene.Instantiate<Zombie>();
         zomb.Dead += EmitSignalZombieDied;
-        GD.Print(_zombTarget == null);
         zomb.Init(_zombTarget, _zombStats);
         AddChild(zomb);
         zomb.GlobalTransform = GlobalTransform * new Transform3D(

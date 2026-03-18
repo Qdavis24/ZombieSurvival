@@ -36,11 +36,11 @@ public partial class SpawnManager : Node
 
     private void OnZombieDied()
     {
-        GD.Print("SM died hook");
         _numZombiesAlive--;
         if (_numZombiesAlive == 0 && _numZombiesSpawned == _stats.NumZombiesLimit) // depleted
         {
             EmitSignalSpawnersDepleted();
+            _spawnInterval.Stop();
         }
     }
 
@@ -48,7 +48,6 @@ public partial class SpawnManager : Node
     public void Init(SpawnerStats stats, Node3D zombieTarget, ZombieStats zombieStats)
     {
         _stats = stats;
-        GD.Print(_spawners.Count);
         foreach (var spawner in _spawners)
         {
             spawner.InitZombieStats(zombieStats);
