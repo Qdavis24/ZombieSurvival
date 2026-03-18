@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://cfjp3bppwm4i8" path="res://scenes/player/PlayerController.tscn" id="2_s0yep"]
 [ext_resource type="PackedScene" uid="uid://dnuwr0qeacme6" path="res://scenes/spawn_system/spawner.tscn" id="4_0wksg"]
 [ext_resource type="PackedScene" uid="uid://cyvl6eqd24usj" path="res://scenes/hit_resolver/HitResolver.tscn" id="4_s0yep"]
+[ext_resource type="PackedScene" uid="uid://bsv1t5k144bht" path="res://scenes/spawn_system/SpawnManager.tscn" id="5_0wksg"]
+[ext_resource type="Script" uid="uid://djavsc2rmyqdj" path="res://scripts/GameManager.cs" id="5_lsbak"]
 
 [node name="TestingNavMeshMain" type="Node3D" unique_id=1906095306]
 transform = Transform3D(0.99890417, -0.02079399, 0.04192899, 0.021435104, 0.9996592, -0.014899298, -0.04160489, 0.015781721, 0.9990095, 0, 0, 0)
@@ -19,16 +21,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6407409, 4.1583242)
 
 [node name="HitResolver" parent="." unique_id=856120325 instance=ExtResource("4_s0yep")]
 
-[node name="Spawner" parent="." unique_id=1877162586 node_paths=PackedStringArray("_target") instance=ExtResource("4_0wksg")]
+[node name="Spawner" parent="." unique_id=1877162586 instance=ExtResource("4_0wksg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.398, 0, 0)
-_target = NodePath("../PlayerController")
-_numPerWave = 20
 _offset = 5.0
 
-[node name="Spawner2" parent="." unique_id=325073974 node_paths=PackedStringArray("_target") instance=ExtResource("4_0wksg")]
+[node name="Spawner2" parent="." unique_id=325073974 instance=ExtResource("4_0wksg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.756, 0, 2.131)
-_target = NodePath("../PlayerController")
-_numPerWave = 20
 _offset = 5.0
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=588417280]
@@ -38,5 +36,22 @@ light_energy = 3.0
 shadow_enabled = true
 spot_range = 15.838
 spot_angle = 84.2
+
+[node name="gamemanager" type="Node" parent="." unique_id=769958140 node_paths=PackedStringArray("_spawnManager", "_player")]
+script = ExtResource("5_lsbak")
+_spawnManager = NodePath("SpawnManager")
+_player = NodePath("../PlayerController")
+
+[node name="SpawnManager" parent="gamemanager" unique_id=1325009269 node_paths=PackedStringArray("_spawnInterval") instance=ExtResource("5_0wksg")]
+_spawnInterval = NodePath("Timer")
+
+[node name="Spawner" parent="gamemanager/SpawnManager" unique_id=1398547602 instance=ExtResource("4_0wksg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.971925, 0, 6.626673)
+
+[node name="Spawner2" parent="gamemanager/SpawnManager" unique_id=223217783 instance=ExtResource("4_0wksg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7253795, 0, -4.761194)
+
+[node name="Timer" type="Timer" parent="gamemanager/SpawnManager" unique_id=199377666]
+wait_time = 2.0
 
 [editable path="Node3D"]
