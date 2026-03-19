@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cvt0aomoxtces"]
+
+[ext_resource type="Script" uid="uid://blfbmu6p2hoot" path="res://scripts/round_system/RoundManager.cs" id="1_bkdqf"]
+[ext_resource type="PackedScene" uid="uid://blyndidyq1qlo" path="res://scenes/difficulty_system/difficulty_manager.tscn" id="2_q117e"]
+[ext_resource type="PackedScene" uid="uid://bsv1t5k144bht" path="res://scenes/spawn_system/SpawnManager.tscn" id="3_akpdm"]
+
+[node name="RoundManager" type="Node" unique_id=397079504 node_paths=PackedStringArray("_spawnManager", "_difficultyManager")]
+script = ExtResource("1_bkdqf")
+_spawnManager = NodePath("SpawnManager")
+_difficultyManager = NodePath("DifficultyManager")
+
+[node name="DifficultyManager" parent="." unique_id=1702326334 instance=ExtResource("2_q117e")]
+_zombieSpeedScaleAmount = 1.1
+_zombieHealthScaleAmount = 1.1
+_numZombiesAliveLimitScaleAmount = 1.5
+_numZombiesRoundLimitScaleAmount = 1.5
+_startingZombieSpeed = 3.0
+_startingZombieHealth = 50.0
+_startingNumZombiesAliveLimit = 5
+_startingNumZombiesRoundLimit = 30
+
+[node name="SpawnManager" parent="." unique_id=1325009269 instance=ExtResource("3_akpdm")]

@@ -39,25 +39,44 @@ public partial class SpawnManager : Node
     private void OnZombieDied()
     {
         _numZombiesAlive--;
-        if (_numZombiesAlive == 0 && _numZombiesSpawned == _stats.NumZombiesLimit) // depleted
+        if (_numZombiesAlive == 0 && _numZombiesSpawned == _stats.NumZombiesRoundLimit) // depleted
         {
             EmitSignalSpawnersDepleted();
+            GD.Print("Round Over");
             _spawnInterval.Stop();
         }
     }
 
 
-    public void Init(SpawnerStats stats, Node3D zombieTarget, ZombieStats zombieStats)
+    public void InitStats(float zombieSpeed, float zombieHealth, int numZombiesAliveLimit, int numZombiesRoundLimit)
     {
-        _stats = stats;
-        _zombTarget = zombieTarget;
+        _stats = new SpawnerStats
+        {
+            NumZombiesAliveLimit =  numZombiesAliveLimit,
+            NumZombiesRoundLimit = numZombiesRoundLimit
+        };
+
+        var zombStats = new ZombieStats
+        {
+            Health = zombieHealth,
+            Speed = zombieSpeed
+        };
+        
         foreach (var spawner in _spawners)
         {
-            spawner.InitZombieStats(zombieStats);
-            spawner.InitZombieTarget(zombieTarget);
+            spawner.InitZombieStats(zombStats);
         }
 
         Reset();
+    }
+
+    public void InitTarget(Node3D zombieTarget)
+    {
+        _zombTarget = zombieTarget;
+        foreach (var spawner in _spawners)
+        {
+            spawner.InitZombieTarget(zombieTarget);
+        }
     }
 
     private void Reset()
@@ -71,19 +90,18 @@ public partial class SpawnManager : Node
     {
         _spawners.Sort((a, b) => (a.GlobalPosition - _zombTarget.GlobalPosition).Length()
             .CompareTo((b.GlobalPosition - _zombTarget.GlobalPosition).Length())); // sort by closest to player
-        
-        for (int i = 0; i < _spawners.Count/2; i++)
+
+        for (int i = 0; i < _spawners.Count / 2; i++)
         {
             var spawner = _spawners[i];
             var distanceToTarget = (spawner.GlobalPosition - _zombTarget.GlobalPosition).Length();
 
-            if (_numZombiesAlive < _stats.NumZombiesAliveLimit && _numZombiesSpawned < _stats.NumZombiesLimit)
+            if (_numZombiesAlive < _stats.NumZombiesAliveLimit && _numZombiesSpawned < _stats.NumZombiesRoundLimit)
             {
                 spawner.SpawnZombie();
                 _numZombiesSpawned++;
                 _numZombiesAlive++;
             }
         }
-
     }
 }

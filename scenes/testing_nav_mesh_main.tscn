@@ -4,13 +4,24 @@
 [ext_resource type="PackedScene" uid="uid://cfjp3bppwm4i8" path="res://scenes/player/PlayerController.tscn" id="2_s0yep"]
 [ext_resource type="PackedScene" uid="uid://dnuwr0qeacme6" path="res://scenes/spawn_system/spawner.tscn" id="4_0wksg"]
 [ext_resource type="PackedScene" uid="uid://cyvl6eqd24usj" path="res://scenes/hit_resolver/HitResolver.tscn" id="4_s0yep"]
-[ext_resource type="PackedScene" uid="uid://bsv1t5k144bht" path="res://scenes/spawn_system/SpawnManager.tscn" id="5_0wksg"]
-[ext_resource type="Script" uid="uid://djavsc2rmyqdj" path="res://scripts/GameManager.cs" id="5_lsbak"]
+[ext_resource type="PackedScene" uid="uid://cvt0aomoxtces" path="res://scenes/round_system/round_system.tscn" id="5_0wksg"]
 
 [node name="TestingNavMeshMain" type="Node3D" unique_id=1906095306]
 transform = Transform3D(0.99890417, -0.02079399, 0.04192899, 0.021435104, 0.9996592, -0.014899298, -0.04160489, 0.015781721, 0.9990095, 0, 0, 0)
 
 [node name="Node3D" parent="." unique_id=1803875491 instance=ExtResource("1_rlmg0")]
+
+[node name="DirectionalLight3D" parent="Node3D" index="1" unique_id=92304437]
+visible = false
+light_energy = 12.571
+light_volumetric_fog_energy = 0.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Node3D" unique_id=1245886515]
+transform = Transform3D(1.0000001, -1.3387762e-09, 1.4901161e-08, 3.4924597e-10, 1.0000001, 0, 0, 0, 1.0000001, 0.092755, 4.3257732, -0.06447294)
+light_energy = 16.0
+light_indirect_energy = 8.352
+light_size = 0.962
+omni_range = 4096.0
 
 [node name="Walls" parent="Node3D/NavigationRegion3D" parent_id_path=PackedInt32Array(1803875491, 1865754256) index="0" unique_id=1233253355]
 collision_layer = 13
@@ -37,21 +48,19 @@ shadow_enabled = true
 spot_range = 15.838
 spot_angle = 84.2
 
-[node name="gamemanager" type="Node" parent="." unique_id=769958140 node_paths=PackedStringArray("_spawnManager", "_player")]
-script = ExtResource("5_lsbak")
-_spawnManager = NodePath("SpawnManager")
+[node name="RoundManager" parent="." unique_id=397079504 node_paths=PackedStringArray("_player") instance=ExtResource("5_0wksg")]
 _player = NodePath("../PlayerController")
 
-[node name="SpawnManager" parent="gamemanager" unique_id=1325009269 node_paths=PackedStringArray("_spawnInterval") instance=ExtResource("5_0wksg")]
-_spawnInterval = NodePath("Timer")
+[node name="DifficultyManager" parent="RoundManager" index="0" unique_id=1702326334]
+_startingZombieSpeed = 1.0
 
-[node name="Spawner" parent="gamemanager/SpawnManager" unique_id=1398547602 instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.971925, 0, 6.626673)
+[node name="Spawner" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="1" unique_id=942961392 instance=ExtResource("4_0wksg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2253485, 0, 6.120675)
 
-[node name="Spawner2" parent="gamemanager/SpawnManager" unique_id=223217783 instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7253795, 0, -4.761194)
-
-[node name="Timer" type="Timer" parent="gamemanager/SpawnManager" unique_id=199377666]
-wait_time = 2.0
+[node name="Spawner2" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="2" unique_id=2123943745 instance=ExtResource("4_0wksg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.855404, 0, -5.6074543)
 
 [editable path="Node3D"]
+[editable path="RoundManager"]
+[editable path="RoundManager/DifficultyManager"]
+[editable path="RoundManager/SpawnManager"]

@@ -2,5 +2,9 @@
 
 [ext_resource type="Script" uid="uid://ccm43hgx5hilg" path="res://scripts/spawn_system/SpawnManager.cs" id="1_0yidi"]
 
-[node name="SpawnManager" type="Node" unique_id=1325009269]
+[node name="SpawnManager" type="Node" unique_id=1325009269 node_paths=PackedStringArray("_spawnInterval")]
 script = ExtResource("1_0yidi")
+_spawnInterval = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="." unique_id=655829589]
+wait_time = 5.0

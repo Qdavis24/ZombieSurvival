@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://blyndidyq1qlo"]
+
+[ext_resource type="Script" uid="uid://ba16osohyt84m" path="res://scripts/difficulty_system/DifficultyManager.cs" id="1_8x527"]
+
+[node name="DifficultyManager" type="Node" unique_id=1702326334]
+script = ExtResource("1_8x527")
