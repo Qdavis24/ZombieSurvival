@@ -184,6 +184,7 @@ public partial class WeaponBase : Node3D
 
         var spaceState = GetWorld3D().DirectSpaceState;
         var query = PhysicsRayQueryParameters3D.Create(from, to);
+        query.CollisionMask = 8;
 
         var result = spaceState.IntersectRay(query);
 

@@ -41,6 +41,8 @@ radius = 0.037597656
 height = 0.32588196
 
 [node name="UpperArmL" type="RigidBody3D" unique_id=1141430117]
+mass = 2.0
+linear_damp = 3.0
 
 [node name="upper_arm_l" type="MeshInstance3D" parent="." unique_id=472034049]
 transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0)

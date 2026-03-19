@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Numerics;
+using ZombieSurvival.scripts.zombie_package;
 using Vector3 = Godot.Vector3;
 
 public partial class HitResolver : Node
@@ -10,13 +11,13 @@ public partial class HitResolver : Node
     public void HandleHit(HitInfo hit)
     {
         Node firsHit = hit.Collider;
-
+        GD.Print($"Hit collider = {hit.Collider.Name}");
         if (hit.Collider.IsInGroup("damage"))
         {
-            var bone = (DismemberableBone)hit.Collider;
-            if (bone != null)
+            var damageObject = (IDamageable)hit.Collider;
+            if (damageObject != null)
             {
-                bone.TakeDamage(hit.Damage, hit.Direction, hit.Force);
+                damageObject.TakeDamage(hit.Damage, hit.Point, hit.Direction, hit.Force);
             }
 
             return;

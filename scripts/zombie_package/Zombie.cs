@@ -6,8 +6,27 @@ namespace ZombieSurvival.scripts.zombie_package;
 
 public partial class Zombie : CharacterBody3D
 {
-    [Signal] public delegate void DeadEventHandler();
-    
+    [Signal]
+    public delegate void DeadEventHandler();
+
+    [ExportCategory("Limb Health Ratios")] [Export]
+    private float _headHealthRatio;
+
+    [Export] private float _upperArmHealthRatio;
+    [Export] private float _lowerArmHealthRatio;
+    [Export] private float _upperLegHealthRatio;
+    [Export] private float _lowerLegHealthRatio;
+    [Export] private float _torsoHealthRatio;
+
+    [ExportCategory("Limb Damage Multipliers")] [Export]
+    private float _headDamageMultiplier;
+
+    [Export] private float _upperArmDamageMultiplier;
+    [Export] private float _lowerArmDamageMultiplier;
+    [Export] private float _upperLegDamageMultiplier;
+    [Export] private float _lowerLegDamageMultiplier;
+    [Export] private float _torsoDamageMultiplier;
+
     [Export] private NavigationAgent3D _navAgent;
     [Export] private Timer _simulationRunTimer;
     [Export] private Skeleton3D _skeleton;
@@ -21,7 +40,11 @@ public partial class Zombie : CharacterBody3D
 
     private float _speed;
     private float _health;
-    
+
+    private List<BodyPart> _limbs = new();
+    private Dictionary<Limb, float> _damageMultipliers;
+    private Dictionary<Limb, float> _healthRatios;
+
     public void Init(Node3D target, ZombieStats stats)
     {
         _target = target;
@@ -31,14 +54,43 @@ public partial class Zombie : CharacterBody3D
 
     public override void _Ready()
     {
+        _damageMultipliers = new()
+        {
+            { Limb.Head, _headDamageMultiplier },
+            { Limb.UpperArm, _upperArmDamageMultiplier },
+            { Limb.LowerArm, _lowerArmDamageMultiplier },
+            { Limb.UpperLeg, _upperLegDamageMultiplier },
+            { Limb.LowerLeg, _lowerLegDamageMultiplier },
+            { Limb.Torso, _torsoDamageMultiplier }
+        };
+
+        _healthRatios = new()
+        {
+            { Limb.Head, _headHealthRatio },
+            { Limb.UpperArm, _upperArmHealthRatio },
+            { Limb.LowerArm, _lowerArmHealthRatio },
+            { Limb.UpperLeg, _upperLegHealthRatio },
+            { Limb.LowerLeg, _lowerLegHealthRatio },
+            { Limb.Torso, _torsoHealthRatio }
+        };
+
         _simulationRunTimer.Timeout += QueueFree;
 
-        foreach (Node child in _physicalBoneSimulator.GetChildren())
+        foreach (var child in _physicalBoneSimulator.GetChildren())
         {
-            if (child is DismemberableBone physicalBone)
-            {
-                physicalBone.Destroyed += DismemberBone;
-            }
+            if (child is not BodyPart bodyPart) return;
+
+            bodyPart.Destroyed += OnBodyPartDestroyed;
+            bodyPart.TookDamage += OnBodyPartTookDamage;
+            _limbs.Add(bodyPart);
+
+            if (bodyPart is DismemberableBodyPart dismemberableBodyPart)
+                dismemberableBodyPart.Dismember += OnDismemberBodyPart;
+        }
+        
+        foreach (var limb in _limbs)
+        {
+            limb.Init(_health * _healthRatios[limb.Type], _damageMultipliers[limb.Type]);
         }
     }
 
@@ -46,7 +98,6 @@ public partial class Zombie : CharacterBody3D
     {
         if (_target == null || _isDead)
         {
- 
             return;
         }
 
@@ -59,25 +110,43 @@ public partial class Zombie : CharacterBody3D
         MoveAndSlide();
     }
 
-    private void DismemberBone(Godot.Collections.Array<DismemberableBone> destroyedDismemberableBones,
-        Vector3 dir, float force, bool shouldDie)
+    private void OnBodyPartTookDamage(Vector3 hitGlobalPos, Vector3 hitDir, float force, float amount)
+    {
+        var blood = _blood.Instantiate<GpuParticles3D>();
+
+        GetTree().Root.AddChild(blood);
+        blood.GlobalPosition = hitGlobalPos;
+        
+        _health -= amount;
+        if (_health <= 0f && !_isDead)
+        {
+            Die();
+        }
+    }
+    private void OnBodyPartDestroyed(Vector3 dir, float force, bool shouldDie)
+    {
+        if (shouldDie && !_isDead)
+        {
+            Die();
+        }
+    }
+
+    private void OnDismemberBodyPart(Godot.Collections.Array<DismemberableBodyPart> destroyedDismemberableBodyParts,
+        Vector3 dir, float force)
     {
         var bodyParts = new List<RigidBody3D>();
-
         var limbContainer = _limbContainerPackedScene.Instantiate<LimbContainer>();
         GetTree().Root.AddChild(limbContainer);
-        Vector3 bloodPosition = Vector3.Zero;
-        for (int i = 0; i < destroyedDismemberableBones.Count; i++) // add the limbs to the scene tree and hinge them
+        
+        for (int i = 0; i < destroyedDismemberableBodyParts.Count; i++) // add the limbs to the scene tree and hinge them
         {
             var boneGlobalTransform = _isDead
-                ? destroyedDismemberableBones[i].GlobalTransform
-                : _skeleton.GlobalTransform * _skeleton.GetBoneGlobalPose(destroyedDismemberableBones[i].BoneIdx);
-            if (i == 0)
-                bloodPosition = boneGlobalTransform.Origin;
-            var bodyPart = destroyedDismemberableBones[i].BodyPartPackedScene.Instantiate<RigidBody3D>();
+                ? destroyedDismemberableBodyParts[i].GlobalTransform
+                : _skeleton.GlobalTransform * _skeleton.GetBoneGlobalPose(destroyedDismemberableBodyParts[i].BoneIdx);
+            
+            var bodyPart = destroyedDismemberableBodyParts[i].BodyPartPackedScene.Instantiate<RigidBody3D>();
             limbContainer.AddChild(bodyPart);
             bodyPart.GlobalTransform = boneGlobalTransform;
-
             bodyParts.Add(bodyPart);
 
             if (i > 0)
@@ -90,22 +159,19 @@ public partial class Zombie : CharacterBody3D
             }
         }
 
-        _skeleton.SetBonePoseScale(destroyedDismemberableBones[0].BoneIdx,
+        _skeleton.SetBonePoseScale(destroyedDismemberableBodyParts[0].BoneIdx,
             Vector3.One * 0.01f); // shrink armature at root bone to "remove" the mesh
 
-        bodyParts[0].ApplyImpulse(new Vector3(dir.X, .5f, dir.Z).Normalized() * force); // apply impulse to the root of the limb
-        var blood = _blood.Instantiate<GpuParticles3D>();
-        
-        GetTree().Root.AddChild(blood);
-        blood.GlobalPosition = bloodPosition;
+        bodyParts[0]
+            .ApplyImpulse(new Vector3(dir.X, .5f, dir.Z).Normalized() * force); // apply impulse to the root of the limb
+    }
 
-        if (shouldDie && !_isDead)
-        {
-            _collisionShape.QueueFree();
-            _isDead = true;
-            _physicalBoneSimulator.PhysicalBonesStartSimulation();
-            _simulationRunTimer.Start();
-            EmitSignalDead();
-        }
+    private void Die()
+    {
+        _collisionShape.QueueFree();
+        _isDead = true;
+        _physicalBoneSimulator.PhysicalBonesStartSimulation();
+        _simulationRunTimer.Start();
+        EmitSignalDead();
     }
 }
