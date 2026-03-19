@@ -16,8 +16,8 @@ public partial class WeaponBase : Node3D
     [ExportGroup("Stats")]
     [Export] private float _roundsPerMinute = 200f;
     [Export] private float _hipSpreadDegrees = 2.0f;
-    [Export] private float _damage = 100f;
-    [Export] private float _force = 6f;
+    [Export] protected float _damage = 100f;
+    [Export] protected float _force = 6f;
     [Export] private int _magazineSize = 12;
     
     [ExportGroup("Camera And Recoil")]
@@ -156,6 +156,10 @@ public partial class WeaponBase : Node3D
         _anim.Play("hip_reload", _animBlendTime);
     }
 
+    protected virtual void PlayReloadAnimation(float blendTime)
+    {
+    }
+
     private void Fire()
     {
         if (_camera == null) return;
@@ -177,14 +181,21 @@ public partial class WeaponBase : Node3D
         var from = _camera.GlobalTransform.Origin;
         var direction = -_camera.GlobalTransform.Basis.Z;
 
-        // Apply hip spread or recoil spread or whatever
-        direction = ApplySpread(direction);
+        ResolveShot(from, direction);
+    }
 
+    protected virtual void ResolveShot(Vector3 from, Vector3 direction)
+    {
+        // Apply hip spread or recoil spread or whatever
+        if (!_isAiming)
+        {
+            direction = ApplySpread(direction);
+        }
+        
         var to = from + direction * 1000f;
 
         var spaceState = GetWorld3D().DirectSpaceState;
         var query = PhysicsRayQueryParameters3D.Create(from, to);
-
         var result = spaceState.IntersectRay(query);
 
         if (result.Count > 0)
@@ -303,10 +314,8 @@ public partial class WeaponBase : Node3D
         }
     }
 
-    private Vector3 ApplySpread(Vector3 dir)
+    protected Vector3 ApplySpreadBROKEN(Vector3 dir)
     {
-        if (_isAiming) return dir; // Apply no spread if aiming in
-
         float spreadRad = Mathf.DegToRad(_hipSpreadDegrees);
 
         var randomYaw = (float)GD.RandRange(-spreadRad, spreadRad);
@@ -316,6 +325,23 @@ public partial class WeaponBase : Node3D
                   * new Basis(Vector3.Right, randomPitch);
 
         return (basis * dir).Normalized();
+    }
+    
+    protected Vector3 ApplySpread(Vector3 dir)
+    {
+        float spreadRad = Mathf.DegToRad(_hipSpreadDegrees);
+
+        float randomYaw = (float)GD.RandRange(-spreadRad, spreadRad);
+        float randomPitch = (float)GD.RandRange(-spreadRad, spreadRad);
+
+        Vector3 forward = dir.Normalized();
+        Vector3 right = forward.Cross(Vector3.Up).Normalized();
+        Vector3 up = right.Cross(forward).Normalized();
+
+        Basis yawBasis = new Basis(up, randomYaw);
+        Basis pitchBasis = new Basis(right, randomPitch);
+
+        return (yawBasis * pitchBasis * forward).Normalized();
     }
 
     private void RequireAnimation(StringName name)
