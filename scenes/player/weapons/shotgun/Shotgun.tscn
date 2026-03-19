@@ -7,12 +7,14 @@
 [node name="Shotgun" type="Node3D" unique_id=1462810560 node_paths=PackedStringArray("_muzzleFlash")]
 script = ExtResource("1_3i4rd")
 _roundsPerMinute = 60.0
+_magazineSize = 5
+_cameraShakeStrength = 0.2
 _cameraPitchKickDegrees = -3.0
 _cameraYawKickDegrees = -0.15
 _muzzleFlash = NodePath("Rig/HumanArms/Skeleton3D/BoneAttachment3D/PistolMuzzleFlash")
 
 [node name="Rig" parent="." unique_id=136523554 instance=ExtResource("2_3i4rd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.035, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, 0)
 
 [node name="Skeleton3D" parent="Rig/HumanArms" parent_id_path=PackedInt32Array(136523554, 154166648) index="0" unique_id=1428574033]
 bones/3/rotation = Quaternion(0.04669751, 0.0008469804, -0.008069408, 0.9988762)

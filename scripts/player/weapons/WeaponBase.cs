@@ -62,7 +62,47 @@ public partial class WeaponBase : Node3D
     public int ReserveAmmo => _reserveAmmo;
     public int MagazineSize => _magazineSize;
 
-    private void NotifyAmmoChanged()
+    protected AnimationPlayer Anim => _anim;
+    protected float AnimBlendTime => _animBlendTime;
+    protected bool IsAiming => _isAiming;
+    protected bool IsReloading => _isReloading;
+
+    protected void BeginReloadState()
+    {
+        _isReloading = true;
+        _isTransitioning = false;
+    }
+
+    protected bool TryLoadOneRoundIntoMagazine()
+    {
+        if (_currentAmmo >= _magazineSize)
+            return false;
+
+        if (_reserveAmmo <= 0)
+            return false;
+
+        _currentAmmo++;
+        _reserveAmmo--;
+        NotifyAmmoChanged();
+        return true;
+    }
+
+    protected void FinishReloadState()
+    {
+        _isReloading = false;
+
+        if (_aimStateChangeQueued)
+        {
+            _aimStateChangeQueued = false;
+            _isAiming = _queuedAimState;
+            PlayTransitionForAimState();
+            return;
+        }
+
+        PlayIdleForAimState();
+    }
+
+    protected void NotifyAmmoChanged()
     {
         EmitSignal(SignalName.AmmoChanged, _currentAmmo, _reserveAmmo);
     }
@@ -97,10 +137,18 @@ public partial class WeaponBase : Node3D
             return;
 
         // If we're in the middle of a shoot animation, queue the aim change and apply it right after shooting finishes.
-        if (_isShooting || _isReloading)
+        if (_isShooting)
         {
             _aimStateChangeQueued = true;
             _queuedAimState = aimHeld;
+            return;
+        }
+
+        if (_isReloading)
+        {
+            _aimStateChangeQueued = true;
+            _queuedAimState = aimHeld;
+            RequestReloadCancel();
             return;
         }
 
@@ -137,7 +185,12 @@ public partial class WeaponBase : Node3D
     {
         if (!triggerPressed) return;
         if (_cooldown > 0) return;
-        if (_isShooting || _isReloading) return;
+        if (_isShooting) return;
+        if (_isReloading)
+        {
+            RequestReloadCancel();
+            return;
+        }
         if (_currentAmmo <= 0) return;
 
         Fire();
@@ -151,12 +204,16 @@ public partial class WeaponBase : Node3D
         if (_currentAmmo >= _magazineSize) return;
         if (_reserveAmmo <= 0) return;
 
-        _isReloading = true;
-        _isTransitioning = false;
+        StartReload();
+    }
+
+    protected virtual void StartReload()
+    {
+        BeginReloadState();
         _anim.Play("hip_reload", _animBlendTime);
     }
 
-    protected virtual void PlayReloadAnimation(float blendTime)
+    protected virtual void RequestReloadCancel()
     {
     }
 
@@ -230,6 +287,22 @@ public partial class WeaponBase : Node3D
             _anim.Play(idle, _animBlendTime);
     }
 
+    protected virtual bool HandleReloadAnimationFinished(StringName animName)
+    {
+        if (animName != "hip_reload")
+            return false;
+
+        int ammoNeeded = _magazineSize - _currentAmmo;
+        int ammoToLoad = Math.Min(ammoNeeded, _reserveAmmo);
+
+        _currentAmmo += ammoToLoad;
+        _reserveAmmo -= ammoToLoad;
+        NotifyAmmoChanged();
+
+        FinishReloadState();
+        return true;
+    }
+
     private void PlayShootForAimState()
     {
         StringName shoot = _isAiming ? "ads_shoot" : "hip_shoot";
@@ -265,28 +338,8 @@ public partial class WeaponBase : Node3D
 
     private void OnAnimationFinished(StringName animName)
     {
-        if (animName == "hip_reload")
-        {
-            _isReloading = false;
-
-            int ammoNeeded = _magazineSize - _currentAmmo;
-            int ammoToLoad = Math.Min(ammoNeeded, _reserveAmmo);
-
-            _currentAmmo += ammoToLoad;
-            _reserveAmmo -= ammoToLoad;
-            NotifyAmmoChanged();
-
-            if (_aimStateChangeQueued)
-            {
-                _aimStateChangeQueued = false;
-                _isAiming = _queuedAimState;
-                PlayTransitionForAimState();
-                return;
-            }
-
-            PlayIdleForAimState();
+        if (HandleReloadAnimationFinished(animName))
             return;
-        }
 
         if (animName == "transition_hiptoads")
         {
