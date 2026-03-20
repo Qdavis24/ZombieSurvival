@@ -17,38 +17,28 @@ public partial class WeaponManager : Node
         }
     }
 
-    [Export] private NodePath _playerControllerPath;
-    [Export] private NodePath _weaponSocketPath;
+    [Export] private Node3D _weaponSocket;
     [Export] private PackedScene[] _weaponScenes;
     [Export] private int[] _startingReserveAmmo;
     private WeaponSlot[] _weaponSlots;
     private int _currentWeaponIndex = 0;
     private bool _isSwapping = false;
     
+    [Export] private PlayerController _playerController;
+    [Export] private Camera _camera;
+    
     [Export] private float _defaultHipFov = 90f;
     [Export] private float _fovLerpSpeed = 80f;
     
-    private const string HitResolverPath = "../../HitResolver";
-
-    private PlayerController _playerController;
-    private Node3D _weaponSocket;
-    private WeaponBase _current;
-    private Camera _camera;
     private HitResolver _hitResolver;
-    private HUD _hud;
+    private Hud _hud;
+    
+    private WeaponBase _current;
 
     public override void _Ready()
     {
-        _weaponSocket = GetNode<Node3D>(_weaponSocketPath);
-        _playerController = GetNode<PlayerController>(_playerControllerPath);
-        _hud = GetTree().CurrentScene.GetNodeOrNull<HUD>("Hud")
-            ?? GetTree().CurrentScene.GetNodeOrNull<HUD>("HUD");
-
-        _camera = GetParent()
-            .GetNode<Node3D>("Head")
-            .GetNode<Camera>("Camera3D");
-
-        _hitResolver = GetNode<HitResolver>(HitResolverPath);
+        _hud = GetTree().CurrentScene.GetNodeOrNull<Hud>("Hud");
+        _hitResolver = GetTree().CurrentScene.GetNodeOrNull<HitResolver>("HitResolver");
 
         if (_weaponScenes != null && _weaponScenes.Length > 0)
         {
@@ -68,6 +58,7 @@ public partial class WeaponManager : Node
 
                 _weaponSlots[i] = new WeaponSlot(scene, magazineSize, reserveAmmo)
                 {
+                    // Unlocked = i == 0 // final version just pistol unlocked
                     Unlocked = i == 0 || i == 1 || i == 2
                 };
 

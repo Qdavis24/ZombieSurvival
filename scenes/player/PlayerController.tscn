@@ -43,12 +43,13 @@ script = ExtResource("2_08ru5")
 [node name="WeaponSocket" type="Node3D" parent="Head/Camera3D" unique_id=11148851]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.75, 0)
 
-[node name="WeaponManager" type="Node" parent="." unique_id=649505302]
+[node name="WeaponManager" type="Node" parent="." unique_id=649505302 node_paths=PackedStringArray("_weaponSocket", "_playerController", "_camera")]
 script = ExtResource("2_h2fbm")
-_playerControllerPath = NodePath("..")
-_weaponSocketPath = NodePath("../Head/Camera3D/WeaponSocket")
+_weaponSocket = NodePath("../Head/Camera3D/WeaponSocket")
 _weaponScenes = Array[PackedScene]([ExtResource("5_anuhh"), ExtResource("4_08ru5"), ExtResource("6_60odj")])
 _startingReserveAmmo = PackedInt32Array(48, 96, 24)
+_playerController = NodePath("..")
+_camera = NodePath("../Head/Camera3D")
 
 [node name="CENTERED" type="CanvasLayer" parent="." unique_id=681009954]
 visible = false

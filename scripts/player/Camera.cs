@@ -2,21 +2,24 @@ using Godot;
 
 public partial class Camera : Camera3D
 {
+    [ExportGroup("Recoil")]
     [Export] private float _kickReturnSpeed = 14.0f;
     [Export] private float _shakeReturnSpeed = 20.0f;
     [Export] private float _randomShakePitchMultiplier = 0.35f;
     [Export] private float _randomShakeYawMultiplier = 0.35f;
     
+    private Vector2 _kickOffsetDegrees = Vector2.Zero;
+    private Vector2 _shakeOffsetDegrees = Vector2.Zero;
+    private float _shakeTimeRemaining = 0.0f;
+    private float _shakeStrength = 0.0f;
+    
+    [ExportGroup("Walk Camera Bob")]
     [Export] private float _bobAmplitude = 0.05f;
     [Export] private float _bobSpeed = 10f;
 
     private float _bobTime = 0f;
     private bool _isMoving = false;
 
-    private Vector2 _kickOffsetDegrees = Vector2.Zero;
-    private Vector2 _shakeOffsetDegrees = Vector2.Zero;
-    private float _shakeTimeRemaining = 0.0f;
-    private float _shakeStrength = 0.0f;
 
     public void OnWeaponFired(
         float shakeDuration,
@@ -42,6 +45,7 @@ public partial class Camera : Camera3D
     {
         float dt = (float)delta;
 
+        // Recoil kick and shake (permanent recoil handled in player controller)
         _kickOffsetDegrees = _kickOffsetDegrees.MoveToward(Vector2.Zero, _kickReturnSpeed * dt);
         _shakeOffsetDegrees = _shakeOffsetDegrees.MoveToward(Vector2.Zero, _shakeReturnSpeed * dt);
 
@@ -61,7 +65,7 @@ public partial class Camera : Camera3D
         );
         
         
-        // walk bob
+        // Walk camera bob
         if (_isMoving)
         {
             _bobTime += dt * _bobSpeed;
