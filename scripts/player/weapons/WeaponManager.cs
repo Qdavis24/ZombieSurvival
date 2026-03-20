@@ -59,7 +59,7 @@ public partial class WeaponManager : Node
                 _weaponSlots[i] = new WeaponSlot(scene, magazineSize, reserveAmmo)
                 {
                     // Unlocked = i == 0 // final version just pistol unlocked
-                    Unlocked = i == 0 || i == 1 || i == 2
+                    Unlocked = i == 0 || i == 1 || i == 2 || i == 3
                 };
 
                 previewWeapon.QueueFree();
