@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://cjng820s0s2d"]
+
+[ext_resource type="Script" uid="uid://dsg1yds3jtqik" path="res://scripts/player/weapons/grenade/Grenade.cs" id="1_ax4gn"]
+[ext_resource type="PackedScene" uid="uid://5q4d8liiht13" path="res://assets/models/player/weapons/grenade_throwing.glb" id="1_lkmmb"]
+[ext_resource type="PackedScene" uid="uid://rchj2cww7afb" path="res://scenes/player/weapons/grenade/GrenadeProjectile.tscn" id="2_70d18"]
+
+[node name="Grenade" type="Node3D" unique_id=2011014017 node_paths=PackedStringArray("_throwSpawnPoint", "_animPlayer", "_grenadeAnimMesh", "_grenadeRingAnimMesh")]
+script = ExtResource("1_ax4gn")
+_grenadeProjectileScene = ExtResource("2_70d18")
+_throwSpawnPoint = NodePath("Marker3D")
+_animPlayer = NodePath("Rig/AnimationPlayer")
+_grenadeAnimMesh = NodePath("Rig/HumanArms/Skeleton3D/grenade")
+_grenadeRingAnimMesh = NodePath("Rig/HumanArms/Skeleton3D/grenade_ring")
+_grenadeThrowMomentDelay = 1.0
+
+[node name="Rig" parent="." unique_id=723177255 instance=ExtResource("1_lkmmb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.035, 0)
+
+[node name="Skeleton3D" parent="Rig/HumanArms" parent_id_path=PackedInt32Array(723177255, 1291068089) index="0" unique_id=680250230]
+bones/1/position = Vector3(-0.21312506, 0.020278389, -0.04797538)
+bones/1/rotation = Quaternion(-0.17016183, 0.27279136, 0.9333309, 0.15975977)
+bones/2/rotation = Quaternion(-0.4962433, 0.000114397146, 0.06927816, 0.865415)
+bones/3/rotation = Quaternion(0.056977134, -0.23160751, 0.16439979, 0.9571229)
+bones/4/rotation = Quaternion(0.08384199, -0.27322152, 0.69900125, 0.6555286)
+bones/7/rotation = Quaternion(-0.21429819, -0.15042971, 0.44695637, 0.85538125)
+bones/10/rotation = Quaternion(-0.2788444, -0.058032796, 0.658699, 0.6964148)
+bones/13/rotation = Quaternion(-0.2511811, -0.0012488925, 0.49640477, 0.8309567)
+bones/16/rotation = Quaternion(-0.4806075, 0.14206104, 0.4295583, 0.75120884)
+bones/17/rotation = Quaternion(0.3313038, 0.08043764, 0.08716934, 0.93603903)
+bones/19/position = Vector3(0.21312506, -0.0027499618, 0.1688734)
+bones/19/rotation = Quaternion(-0.3020371, -0.08547117, -0.927196, 0.20439136)
+bones/20/rotation = Quaternion(-0.4715288, -0.000116227195, -0.06582787, 0.8793903)
+bones/21/rotation = Quaternion(-0.040046297, 0.34013683, -0.047076605, 0.93834275)
+bones/22/rotation = Quaternion(0.17122613, 0.045785435, -0.25422987, 0.9507642)
+bones/23/rotation = Quaternion(-0.1382046, -0.0023518642, -0.03544631, 0.9897664)
+bones/25/rotation = Quaternion(0.044569828, -0.021787543, 0.4386339, 0.89729553)
+bones/26/rotation = Quaternion(-0.020554168, -0.011303896, -0.4780905, 0.8779974)
+bones/27/rotation = Quaternion(-0.0067096953, -0.0025363504, -0.36662638, 0.93034065)
+bones/28/rotation = Quaternion(-0.027236493, -0.0014069059, -0.051573534, 0.9982968)
+bones/29/rotation = Quaternion(0.027273202, 6.338704e-05, -0.002307606, 0.9996254)
+bones/30/rotation = Quaternion(-1.730978e-07, -3.4384882e-08, -0.36925223, 0.9293292)
+bones/31/rotation = Quaternion(-0.06544323, -0.016467286, -0.2482127, 0.9663522)
+bones/32/rotation = Quaternion(0.037446503, 0.009971116, -0.25580248, 0.9659521)
+bones/34/rotation = Quaternion(-0.3828929, 0.01950728, -0.43490314, 0.8147832)
+bones/35/rotation = Quaternion(0.28303188, -0.15783939, -0.04707099, 0.94486195)
+bones/36/rotation = Quaternion(0.27472952, 0.23428068, 0.19772701, 0.9113399)
+bones/37/position = Vector3(-0.44183868, -0.51182926, 0.303406)
+bones/38/position = Vector3(-0.3197134, -0.658616, -0.037161093)
+bones/38/rotation = Quaternion(-0.4630263, -0.19707502, 0.8545507, -0.1284962)
+bones/39/position = Vector3(0.9034498, -0.8792144, 0.65019846)
+bones/40/position = Vector3(0.26385945, 0.8371171, -0.052649464)
+bones/40/rotation = Quaternion(-0.63751036, 0.37777093, -0.66819054, 0.06626598)
+bones/41/position = Vector3(0.14352602, 0.7182904, -0.124308884)
+bones/41/rotation = Quaternion(-0.36743233, 0.2602513, -0.27365512, 0.84992695)
+bones/42/position = Vector3(-0.049498484, 0.07756377, 0.004835219)
+
+[node name="Torus" parent="Rig" index="1" unique_id=255082171]
+visible = false
+
+[node name="Empty" parent="Rig" index="2" unique_id=2128592389]
+visible = false
+
+[node name="Scale Reference" parent="Rig" index="3" unique_id=2064832013]
+visible = false
+
+[node name="AnimationPlayer" parent="Rig" index="4" unique_id=1846392575]
+autoplay = &"grenade_throw"
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=249475587]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25534794, 1.653168, -1.1675416)
+
+[editable path="Rig"]
