@@ -57,6 +57,7 @@ _light = NodePath("OmniLight3D")
 _lightTimer = NodePath("Timer")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=622532408]
+visible = false
 shadow_enabled = true
 
 [node name="Timer" type="Timer" parent="." unique_id=1197797289]

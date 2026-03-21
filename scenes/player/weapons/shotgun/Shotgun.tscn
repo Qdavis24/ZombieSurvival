@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://btwlqwo5gkmud"]
 
-[ext_resource type="Script" uid="uid://ces8k7fo8wyg0" path="res://scripts/player/weapons/pistol/ShotgunWeapon.cs" id="1_3i4rd"]
+[ext_resource type="Script" uid="uid://ces8k7fo8wyg0" path="res://scripts/player/weapons/shotgun/ShotgunWeapon.cs" id="1_3i4rd"]
 [ext_resource type="PackedScene" uid="uid://biq2wqtoa5x1y" path="res://assets/models/player/weapons/shotgun_shaded.glb" id="2_3i4rd"]
 [ext_resource type="PackedScene" uid="uid://erpp137vqg0w" path="res://scenes/player/weapons/pistol/pistol_muzzle_flash.tscn" id="3_ytgbc"]
 
