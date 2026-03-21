@@ -3,9 +3,12 @@
 [ext_resource type="Script" uid="uid://dasyaiv33oybx" path="res://scripts/player/PlayerController.cs" id="1_etyb6"]
 [ext_resource type="Script" uid="uid://c7dgejf7dcfu" path="res://scripts/player/Camera.cs" id="2_08ru5"]
 [ext_resource type="Script" uid="uid://4uxtcbw88ior" path="res://scripts/player/weapons/WeaponManager.cs" id="2_h2fbm"]
-[ext_resource type="Texture2D" uid="uid://cope1k8ks707y" path="res://icon.svg" id="4_6ev1f"]
+[ext_resource type="Texture2D" uid="uid://drfjgngruviny" path="res://icon.svg" id="4_6ev1f"]
 [ext_resource type="PackedScene" uid="uid://cvfgj38xc7dac" path="res://scenes/player/weapons/rifle/Rifle.tscn" id="4_08ru5"]
 [ext_resource type="PackedScene" uid="uid://00wy8mcfk7sk" path="res://scenes/player/weapons/pistol/Pistol.tscn" id="5_anuhh"]
+[ext_resource type="PackedScene" uid="uid://btwlqwo5gkmud" path="res://scenes/player/weapons/shotgun/Shotgun.tscn" id="6_60odj"]
+[ext_resource type="PackedScene" uid="uid://m4alwsdaumah" path="res://scenes/player/weapons/rpg/Rpg.tscn" id="7_tfrk6"]
+[ext_resource type="PackedScene" uid="uid://cjng820s0s2d" path="res://scenes/player/weapons/grenade/Grenade.tscn" id="8_wtdo7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2fbm"]
 albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
@@ -42,12 +45,14 @@ script = ExtResource("2_08ru5")
 [node name="WeaponSocket" type="Node3D" parent="Head/Camera3D" unique_id=11148851]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.75, 0)
 
-[node name="WeaponManager" type="Node" parent="." unique_id=649505302]
+[node name="WeaponManager" type="Node" parent="." unique_id=649505302 node_paths=PackedStringArray("_weaponSocket", "_playerController", "_camera")]
 script = ExtResource("2_h2fbm")
-_playerControllerPath = NodePath("..")
-_weaponSocketPath = NodePath("../Head/Camera3D/WeaponSocket")
-_weaponScenes = Array[PackedScene]([ExtResource("5_anuhh"), ExtResource("4_08ru5")])
-_startingReserveAmmo = PackedInt32Array(48, 96)
+_weaponSocket = NodePath("../Head/Camera3D/WeaponSocket")
+_weaponScenes = Array[PackedScene]([ExtResource("5_anuhh"), ExtResource("4_08ru5"), ExtResource("6_60odj"), ExtResource("7_tfrk6")])
+_startingReserveAmmo = PackedInt32Array(48, 96, 24, 12)
+_playerController = NodePath("..")
+_camera = NodePath("../Head/Camera3D")
+_grenadeThrowScene = ExtResource("8_wtdo7")
 
 [node name="CENTERED" type="CanvasLayer" parent="." unique_id=681009954]
 visible = false

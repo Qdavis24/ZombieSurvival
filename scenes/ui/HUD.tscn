@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://dh0j7uwlkf840"]
 
-[ext_resource type="Script" uid="uid://ci3yjb1ocdeji" path="res://scripts/ui/HUD.cs" id="1_ig75s"]
+[ext_resource type="Script" uid="uid://ci3yjb1ocdeji" path="res://scripts/ui/Hud.cs" id="1_ig75s"]
 [ext_resource type="Theme" uid="uid://djrvn0o5wdyef" path="res://scenes/ui/ammo_theme.tres" id="1_kw0id"]
 [ext_resource type="Texture2D" uid="uid://rgqmapm5fkd3" path="res://scenes/ui/ammo.png" id="2_atyv1"]
 [ext_resource type="Texture2D" uid="uid://dmlvagxly8mge" path="res://scenes/ui/grenade.png" id="3_6ll6g"]
 
-[node name="Hud" type="CanvasLayer" unique_id=665882280]
+[node name="Hud" type="CanvasLayer" unique_id=665882280 node_paths=PackedStringArray("_currentAmmoLabel", "_reserveAmmoLabel")]
 script = ExtResource("1_ig75s")
+_currentAmmoLabel = NodePath("AmmoUI/VBoxContainer/Ammo/HBoxContainer/CurrentAmmoLabel")
+_reserveAmmoLabel = NodePath("AmmoUI/VBoxContainer/Ammo/HBoxContainer/ReserveAmmoLabel")
 
 [node name="AmmoUI" type="MarginContainer" parent="." unique_id=972441222]
 anchors_preset = 3

@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://rchj2cww7afb"]
+
+[ext_resource type="Script" uid="uid://6jkytum01jbk" path="res://scripts/player/weapons/grenade/GrenadeProjectile.cs" id="1_be2i6"]
+[ext_resource type="PackedScene" uid="uid://bglofbtwk3r2e" path="res://assets/models/player/weapons/grenade_projectile.glb" id="1_tw3rq"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_be2i6"]
+bounce = 0.3
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_be2i6"]
+radius = 0.10030295
+
+[node name="GrenadeProjectile" type="RigidBody3D" unique_id=1972303479]
+physics_material_override = SubResource("PhysicsMaterial_be2i6")
+continuous_cd = true
+script = ExtResource("1_be2i6")
+_throwSpeed = 19.0
+_fuseTime = 2.0
+
+[node name="grenade_projectile" parent="." unique_id=461641730 instance=ExtResource("1_tw3rq")]
+transform = Transform3D(0.8443279, -0.5358268, 0, 0.5358268, 0.8443279, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="grenade" parent="grenade_projectile" index="0" unique_id=1153235754]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.002359e-17, -0.007793188, -0.0045142174)
+
+[node name="Scale Reference" parent="grenade_projectile" index="1" unique_id=842917342]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=240595665]
+shape = SubResource("SphereShape3D_be2i6")
+
+[editable path="grenade_projectile"]

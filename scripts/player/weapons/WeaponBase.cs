@@ -16,8 +16,8 @@ public partial class WeaponBase : Node3D
     [ExportGroup("Stats")]
     [Export] private float _roundsPerMinute = 200f;
     [Export] private float _hipSpreadDegrees = 2.0f;
-    [Export] private float _damage = 100f;
-    [Export] private float _force = 6f;
+    [Export] protected float _damage = 100f;
+    [Export] protected float _force = 6f;
     [Export] private int _magazineSize = 12;
     
     [ExportGroup("Camera And Recoil")]
@@ -62,7 +62,47 @@ public partial class WeaponBase : Node3D
     public int ReserveAmmo => _reserveAmmo;
     public int MagazineSize => _magazineSize;
 
-    private void NotifyAmmoChanged()
+    protected AnimationPlayer Anim => _anim;
+    protected float AnimBlendTime => _animBlendTime;
+    protected bool IsAiming => _isAiming;
+    protected bool IsReloading => _isReloading;
+
+    protected void BeginReloadState()
+    {
+        _isReloading = true;
+        _isTransitioning = false;
+    }
+
+    protected bool TryLoadOneRoundIntoMagazine()
+    {
+        if (_currentAmmo >= _magazineSize)
+            return false;
+
+        if (_reserveAmmo <= 0)
+            return false;
+
+        _currentAmmo++;
+        _reserveAmmo--;
+        NotifyAmmoChanged();
+        return true;
+    }
+
+    protected void FinishReloadState()
+    {
+        _isReloading = false;
+
+        if (_aimStateChangeQueued)
+        {
+            _aimStateChangeQueued = false;
+            _isAiming = _queuedAimState;
+            PlayTransitionForAimState();
+            return;
+        }
+
+        PlayIdleForAimState();
+    }
+
+    protected void NotifyAmmoChanged()
     {
         EmitSignal(SignalName.AmmoChanged, _currentAmmo, _reserveAmmo);
     }
@@ -97,10 +137,18 @@ public partial class WeaponBase : Node3D
             return;
 
         // If we're in the middle of a shoot animation, queue the aim change and apply it right after shooting finishes.
-        if (_isShooting || _isReloading)
+        if (_isShooting)
         {
             _aimStateChangeQueued = true;
             _queuedAimState = aimHeld;
+            return;
+        }
+
+        if (_isReloading)
+        {
+            _aimStateChangeQueued = true;
+            _queuedAimState = aimHeld;
+            RequestReloadCancel();
             return;
         }
 
@@ -137,7 +185,12 @@ public partial class WeaponBase : Node3D
     {
         if (!triggerPressed) return;
         if (_cooldown > 0) return;
-        if (_isShooting || _isReloading) return;
+        if (_isShooting) return;
+        if (_isReloading)
+        {
+            RequestReloadCancel();
+            return;
+        }
         if (_currentAmmo <= 0) return;
 
         Fire();
@@ -151,9 +204,17 @@ public partial class WeaponBase : Node3D
         if (_currentAmmo >= _magazineSize) return;
         if (_reserveAmmo <= 0) return;
 
-        _isReloading = true;
-        _isTransitioning = false;
+        StartReload();
+    }
+
+    protected virtual void StartReload()
+    {
+        BeginReloadState();
         _anim.Play("hip_reload", _animBlendTime);
+    }
+
+    protected virtual void RequestReloadCancel()
+    {
     }
 
     private void Fire()
@@ -177,15 +238,21 @@ public partial class WeaponBase : Node3D
         var from = _camera.GlobalTransform.Origin;
         var direction = -_camera.GlobalTransform.Basis.Z;
 
-        // Apply hip spread or recoil spread or whatever
-        direction = ApplySpread(direction);
+        ResolveShot(from, direction);
+    }
 
+    protected virtual void ResolveShot(Vector3 from, Vector3 direction)
+    {
+        // Apply hip spread or recoil spread or whatever
+        if (!_isAiming)
+        {
+            direction = ApplySpread(direction);
+        }
+        
         var to = from + direction * 1000f;
 
         var spaceState = GetWorld3D().DirectSpaceState;
         var query = PhysicsRayQueryParameters3D.Create(from, to);
-        query.CollisionMask = 8;
-
         var result = spaceState.IntersectRay(query);
 
         if (result.Count > 0)
@@ -218,6 +285,22 @@ public partial class WeaponBase : Node3D
         StringName idle = _isAiming ? "ads_idle" : "hip_idle";
         if (_anim.CurrentAnimation != idle)
             _anim.Play(idle, _animBlendTime);
+    }
+
+    protected virtual bool HandleReloadAnimationFinished(StringName animName)
+    {
+        if (animName != "hip_reload")
+            return false;
+
+        int ammoNeeded = _magazineSize - _currentAmmo;
+        int ammoToLoad = Math.Min(ammoNeeded, _reserveAmmo);
+
+        _currentAmmo += ammoToLoad;
+        _reserveAmmo -= ammoToLoad;
+        NotifyAmmoChanged();
+
+        FinishReloadState();
+        return true;
     }
 
     private void PlayShootForAimState()
@@ -255,28 +338,8 @@ public partial class WeaponBase : Node3D
 
     private void OnAnimationFinished(StringName animName)
     {
-        if (animName == "hip_reload")
-        {
-            _isReloading = false;
-
-            int ammoNeeded = _magazineSize - _currentAmmo;
-            int ammoToLoad = Math.Min(ammoNeeded, _reserveAmmo);
-
-            _currentAmmo += ammoToLoad;
-            _reserveAmmo -= ammoToLoad;
-            NotifyAmmoChanged();
-
-            if (_aimStateChangeQueued)
-            {
-                _aimStateChangeQueued = false;
-                _isAiming = _queuedAimState;
-                PlayTransitionForAimState();
-                return;
-            }
-
-            PlayIdleForAimState();
+        if (HandleReloadAnimationFinished(animName))
             return;
-        }
 
         if (animName == "transition_hiptoads")
         {
@@ -304,10 +367,8 @@ public partial class WeaponBase : Node3D
         }
     }
 
-    private Vector3 ApplySpread(Vector3 dir)
+    protected Vector3 ApplySpreadBROKEN(Vector3 dir)
     {
-        if (_isAiming) return dir; // Apply no spread if aiming in
-
         float spreadRad = Mathf.DegToRad(_hipSpreadDegrees);
 
         var randomYaw = (float)GD.RandRange(-spreadRad, spreadRad);
@@ -317,6 +378,23 @@ public partial class WeaponBase : Node3D
                   * new Basis(Vector3.Right, randomPitch);
 
         return (basis * dir).Normalized();
+    }
+    
+    protected Vector3 ApplySpread(Vector3 dir)
+    {
+        float spreadRad = Mathf.DegToRad(_hipSpreadDegrees);
+
+        float randomYaw = (float)GD.RandRange(-spreadRad, spreadRad);
+        float randomPitch = (float)GD.RandRange(-spreadRad, spreadRad);
+
+        Vector3 forward = dir.Normalized();
+        Vector3 right = forward.Cross(Vector3.Up).Normalized();
+        Vector3 up = right.Cross(forward).Normalized();
+
+        Basis yawBasis = new Basis(up, randomYaw);
+        Basis pitchBasis = new Basis(right, randomPitch);
+
+        return (yawBasis * pitchBasis * forward).Normalized();
     }
 
     private void RequireAnimation(StringName name)
