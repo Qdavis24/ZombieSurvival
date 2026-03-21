@@ -17,8 +17,8 @@ light_energy = 12.571
 light_volumetric_fog_energy = 0.0
 
 [node name="Walls" parent="Node3D/NavigationRegion3D" parent_id_path=PackedInt32Array(1803875491, 1865754256) index="0" unique_id=1233253355]
-collision_layer = 13
-collision_mask = 13
+collision_layer = 15
+collision_mask = 15
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Node3D" unique_id=1245886515]
 transform = Transform3D(1.0000001, -1.3387762e-09, 1.4901161e-08, 3.4924597e-10, 1.0000001, 0, 0, 0, 1.0000001, 0.092755, 4.3257732, -0.06447294)

@@ -3,6 +3,8 @@ using System;
 using ZombieSurvival.scripts.difficulty_system;
 using ZombieSurvival.scripts.spawn_system;
 
+namespace ZombieSurvival.scripts.round_system;
+
 public partial class RoundManager : Node
 {
     [Signal]

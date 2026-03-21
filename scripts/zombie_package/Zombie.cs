@@ -164,7 +164,6 @@ public partial class Zombie : CharacterBody3D
 
         _skeleton.SetBonePoseScale(destroyedDismemberableBodyParts[0].BoneIdx,
             Vector3.One * 0.01f); // shrink armature at root bone to "remove" the mesh
-
         bodyParts[0]
             .ApplyImpulse(new Vector3(dir.X, .5f, dir.Z).Normalized() * force); // apply impulse to the root of the limb
     }

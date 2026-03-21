@@ -1,7 +1,8 @@
 using Godot;
 using System;
+using ZombieSurvival.scripts.inventory_system;
 
-public partial class PlayerController : CharacterBody3D
+public partial class PlayerController : CharacterBody3D, IInventoryOwner
 {
 	private Node3D _head;
 
@@ -14,6 +15,8 @@ public partial class PlayerController : CharacterBody3D
 	
 	private float _yaw; // left and right
 	private float _pitch; // up and down
+
+	[Export] public Inventory Inventory { get; private set; }
 	
 	public void OnWeaponFired(
 		float shakeDuration,
