@@ -5,7 +5,7 @@ namespace ZombieSurvival.scripts.difficulty_system;
 public partial class DifficultyManager : Node
 {
     [Signal]
-    public delegate void difficultyScaledEventHandler(float zombieSpeed, float zombieHealth, int numZombiesAliveLimit, int numZombiesRoundLimit);
+    public delegate void DifficultyScaledEventHandler(float zombieSpeed, float zombieHealth, int numZombiesAliveLimit, int numZombiesRoundLimit);
     
     public (int numZombiesAliveLimit, int numZombiesRoundLimit) CurrentSpawnerDifficulty => 
         (_currentNumZombiesAliveLimit, _currentNumZombiesRoundLimit);
@@ -58,7 +58,7 @@ public partial class DifficultyManager : Node
         _currentNumZombiesAliveLimit = (int)Math.Clamp(_currentNumZombiesAliveLimit * _numZombiesAliveLimitScaleAmount, 0, _maxNumZombiesAliveLimit);
         _currentNumZombiesRoundLimit = (int)Math.Clamp(_currentNumZombiesRoundLimit * _numZombiesRoundLimitScaleAmount, 0, _maxNumZombiesRoundLimit);
         
-        EmitSignaldifficultyScaled(_currentZombieSpeed, _currentZombieHealth, _currentNumZombiesAliveLimit, _currentNumZombiesRoundLimit);
+        EmitSignalDifficultyScaled(_currentZombieSpeed, _currentZombieHealth, _currentNumZombiesAliveLimit, _currentNumZombiesRoundLimit);
     }
     
 }

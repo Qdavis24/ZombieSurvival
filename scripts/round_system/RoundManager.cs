@@ -24,7 +24,7 @@ public partial class RoundManager : Node
             _difficultyManager.CurrentNumZombiesAliveLimit, _difficultyManager.CurrentNumZombiesRoundLimit);
         
         _spawnManager.SpawnersDepleted += RoundOver;
-        _difficultyManager.difficultyScaled += _spawnManager.InitStats;
+        _difficultyManager.DifficultyScaled += _spawnManager.InitStats;
     }
 
     private void RoundOver()

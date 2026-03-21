@@ -11,7 +11,6 @@ public partial class HitResolver : Node
     public void HandleHit(HitInfo hit)
     {
         Node firsHit = hit.Collider;
-        GD.Print($"Hit collider = {hit.Collider.Name}");
         if (hit.Collider.IsInGroup("damage"))
         {
             var damageObject = (IDamageable)hit.Collider;

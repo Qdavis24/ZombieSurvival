@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://erpp137vqg0w"]
 
-[ext_resource type="Texture2D" uid="uid://m2lwre05c4b2" path="res://assets/models/player/scorch_01.png" id="1_nnikd"]
+[ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/models/player/scorch_01.png" id="1_nnikd"]
 [ext_resource type="Script" uid="uid://b2vujowynij5h" path="res://scripts/player/weapons/MuzzleFlash.cs" id="2_uadlf"]
 
 [sub_resource type="Curve" id="Curve_uadlf"]
@@ -45,7 +45,6 @@ material = SubResource("StandardMaterial3D_gweej")
 size = Vector2(0.5, 0.5)
 
 [node name="PistolMuzzleFlash" type="GPUParticles3D" unique_id=121254955 node_paths=PackedStringArray("_light", "_lightTimer")]
-visible = false
 emitting = false
 amount = 200
 lifetime = 0.1

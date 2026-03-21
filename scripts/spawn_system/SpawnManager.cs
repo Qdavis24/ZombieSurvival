@@ -41,9 +41,9 @@ public partial class SpawnManager : Node
         _numZombiesAlive--;
         if (_numZombiesAlive == 0 && _numZombiesSpawned == _stats.NumZombiesRoundLimit) // depleted
         {
-            EmitSignalSpawnersDepleted();
             GD.Print("Round Over");
             _spawnInterval.Stop();
+            EmitSignalSpawnersDepleted();
         }
     }
 
@@ -81,13 +81,14 @@ public partial class SpawnManager : Node
 
     private void Reset()
     {
-        _spawnInterval.Start();
         _numZombiesAlive = 0;
         _numZombiesSpawned = 0;
+        _spawnInterval.Start();
     }
 
     private void TriggerSpawns()
     {
+        GD.Print(_numZombiesAlive, _numZombiesSpawned, _stats.NumZombiesAliveLimit, _stats.NumZombiesRoundLimit);
         _spawners.Sort((a, b) => (a.GlobalPosition - _zombTarget.GlobalPosition).Length()
             .CompareTo((b.GlobalPosition - _zombTarget.GlobalPosition).Length())); // sort by closest to player
 

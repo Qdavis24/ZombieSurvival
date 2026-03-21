@@ -5,7 +5,7 @@ using System.Numerics;
 using ZombieSurvival.scripts.zombie_package;
 using Vector3 = Godot.Vector3;
 
-public partial class DismemberableBodyPart : BodyPart, IDamageable
+public partial class DismemberableBodyPart : BodyPart
 {
     [Signal]
     public delegate void DismemberEventHandler(

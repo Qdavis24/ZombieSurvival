@@ -16,15 +16,14 @@ public partial class BodyPart : PhysicalBone3D, IDamageable
     public delegate void TookDamageEventHandler(Vector3 hitPosition, Vector3 dir, float force, float amount);
 
     [Export] public Limb Type;
+    [Export] private bool _shouldDie;
 
     public int BoneIdx;
 
     private float _health;
 
     private float _damageMultiplier;
-
-    private bool _shouldDie;
-
+    
     public override void _Ready()
     {
         BoneIdx = GetBoneId();
@@ -40,7 +39,6 @@ public partial class BodyPart : PhysicalBone3D, IDamageable
     public void TakeDamage(float damage, Vector3 hitGlobalPosition, Vector3 hitDir, float force)
     {
         _health -= damage;
-        GD.Print("health");
         EmitSignalTookDamage(hitGlobalPosition, hitDir, force, damage*_damageMultiplier);
         
         if (_health <= 0f)

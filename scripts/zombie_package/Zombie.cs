@@ -87,7 +87,7 @@ public partial class Zombie : CharacterBody3D
             if (bodyPart is DismemberableBodyPart dismemberableBodyPart)
                 dismemberableBodyPart.Dismember += OnDismemberBodyPart;
         }
-        
+
         foreach (var limb in _limbs)
         {
             limb.Init(_health * _healthRatios[limb.Type], _damageMultipliers[limb.Type]);
@@ -116,13 +116,14 @@ public partial class Zombie : CharacterBody3D
 
         GetTree().Root.AddChild(blood);
         blood.GlobalPosition = hitGlobalPos;
-        
+
         _health -= amount;
         if (_health <= 0f && !_isDead)
         {
             Die();
         }
     }
+
     private void OnBodyPartDestroyed(Vector3 dir, float force, bool shouldDie)
     {
         if (shouldDie && !_isDead)
@@ -137,13 +138,15 @@ public partial class Zombie : CharacterBody3D
         var bodyParts = new List<RigidBody3D>();
         var limbContainer = _limbContainerPackedScene.Instantiate<LimbContainer>();
         GetTree().Root.AddChild(limbContainer);
-        
-        for (int i = 0; i < destroyedDismemberableBodyParts.Count; i++) // add the limbs to the scene tree and hinge them
+
+        for (int i = 0;
+             i < destroyedDismemberableBodyParts.Count;
+             i++) // add the limbs to the scene tree and hinge them
         {
             var boneGlobalTransform = _isDead
                 ? destroyedDismemberableBodyParts[i].GlobalTransform
                 : _skeleton.GlobalTransform * _skeleton.GetBoneGlobalPose(destroyedDismemberableBodyParts[i].BoneIdx);
-            
+
             var bodyPart = destroyedDismemberableBodyParts[i].BodyPartPackedScene.Instantiate<RigidBody3D>();
             limbContainer.AddChild(bodyPart);
             bodyPart.GlobalTransform = boneGlobalTransform;
