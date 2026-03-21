@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://dtxx54opy5t17"]
+
+[ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="1_vb6pq"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1825430013]
+
+[node name="Panel" type="Panel" parent="." unique_id=1347633763]
+offset_right = 1924.0
+offset_bottom = 1087.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel" unique_id=513944118]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer" unique_id=140926437]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer" unique_id=504997431]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_vb6pq")
+theme_override_font_sizes/font_size = 100
+text = "Paused"
+
+[node name="Button" type="Button" parent="Panel/HBoxContainer/VBoxContainer" unique_id=5427995]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_vb6pq")
+theme_override_font_sizes/font_size = 40
+text = "Quit Game"
+
+[node name="Button2" type="Button" parent="Panel/HBoxContainer/VBoxContainer" unique_id=468963473]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_vb6pq")
+theme_override_font_sizes/font_size = 40
+text = "Options"
