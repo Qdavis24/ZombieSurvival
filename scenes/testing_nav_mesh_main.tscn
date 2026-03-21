@@ -16,16 +16,16 @@ visible = false
 light_energy = 12.571
 light_volumetric_fog_energy = 0.0
 
+[node name="Walls" parent="Node3D/NavigationRegion3D" parent_id_path=PackedInt32Array(1803875491, 1865754256) index="0" unique_id=1233253355]
+collision_layer = 13
+collision_mask = 13
+
 [node name="OmniLight3D" type="OmniLight3D" parent="Node3D" unique_id=1245886515]
 transform = Transform3D(1.0000001, -1.3387762e-09, 1.4901161e-08, 3.4924597e-10, 1.0000001, 0, 0, 0, 1.0000001, 0.092755, 4.3257732, -0.06447294)
 light_energy = 16.0
 light_indirect_energy = 8.352
 light_size = 0.962
 omni_range = 4096.0
-
-[node name="Walls" parent="Node3D/NavigationRegion3D" parent_id_path=PackedInt32Array(1803875491, 1865754256) index="0" unique_id=1233253355]
-collision_layer = 13
-collision_mask = 13
 
 [node name="PlayerController" parent="." unique_id=1073413131 instance=ExtResource("2_s0yep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6407409, 4.1583242)
@@ -52,7 +52,16 @@ spot_angle = 84.2
 _player = NodePath("../PlayerController")
 
 [node name="DifficultyManager" parent="RoundManager" index="0" unique_id=1702326334]
+_zombieSpawnTimerIntervalScaleAmount = 0.5
+_maxZombieSpeed = 5.0
+_maxZombieHealth = 500.0
+_maxNumZombiesAliveLimit = 100
+_maxNumZombiesRoundLimit = 700
+_zombieSpawnTimerIntervalLimit = 1.0
 _startingZombieSpeed = 1.0
+_startingZombieHealth = 500.0
+_startingNumZombiesRoundLimit = 10
+_startingZombieSpawnTimerInterval = 5.0
 
 [node name="Spawner" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="1" unique_id=942961392 instance=ExtResource("4_0wksg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2253485, 0, 6.120675)

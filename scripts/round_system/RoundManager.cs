@@ -21,7 +21,7 @@ public partial class RoundManager : Node
     {
         _spawnManager.InitTarget(_player);
         _spawnManager.InitStats(_difficultyManager.CurrentZombieSpeed, _difficultyManager.CurrentZombieHealth,
-            _difficultyManager.CurrentNumZombiesAliveLimit, _difficultyManager.CurrentNumZombiesRoundLimit);
+            _difficultyManager.CurrentNumZombiesAliveLimit, _difficultyManager.CurrentNumZombiesRoundLimit, _difficultyManager.CurrentZombieSpawnTimerInterval);
         
         _spawnManager.SpawnersDepleted += RoundOver;
         _difficultyManager.DifficultyScaled += _spawnManager.InitStats;

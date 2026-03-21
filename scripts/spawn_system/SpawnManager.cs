@@ -41,18 +41,19 @@ public partial class SpawnManager : Node
         _numZombiesAlive--;
         if (_numZombiesAlive == 0 && _numZombiesSpawned == _stats.NumZombiesRoundLimit) // depleted
         {
-            GD.Print("Round Over");
             _spawnInterval.Stop();
             EmitSignalSpawnersDepleted();
         }
     }
 
 
-    public void InitStats(float zombieSpeed, float zombieHealth, int numZombiesAliveLimit, int numZombiesRoundLimit)
+    public void InitStats(float zombieSpeed, float zombieHealth, int numZombiesAliveLimit, int numZombiesRoundLimit,
+        float zombieSpawnTimerInterval)
     {
         _stats = new SpawnerStats
         {
-            NumZombiesAliveLimit =  numZombiesAliveLimit,
+            ZombieSpawnTimerInterval = zombieSpawnTimerInterval,
+            NumZombiesAliveLimit = numZombiesAliveLimit,
             NumZombiesRoundLimit = numZombiesRoundLimit
         };
 
@@ -61,11 +62,12 @@ public partial class SpawnManager : Node
             Health = zombieHealth,
             Speed = zombieSpeed
         };
-        
+
         foreach (var spawner in _spawners)
         {
             spawner.InitZombieStats(zombStats);
         }
+        
 
         Reset();
     }
@@ -83,19 +85,18 @@ public partial class SpawnManager : Node
     {
         _numZombiesAlive = 0;
         _numZombiesSpawned = 0;
+        _spawnInterval.WaitTime = _stats.ZombieSpawnTimerInterval;
         _spawnInterval.Start();
     }
 
     private void TriggerSpawns()
     {
-        GD.Print(_numZombiesAlive, _numZombiesSpawned, _stats.NumZombiesAliveLimit, _stats.NumZombiesRoundLimit);
-        _spawners.Sort((a, b) => (a.GlobalPosition - _zombTarget.GlobalPosition).Length()
-            .CompareTo((b.GlobalPosition - _zombTarget.GlobalPosition).Length())); // sort by closest to player
+        //_spawners.Sort((a, b) => (a.GlobalPosition - _zombTarget.GlobalPosition).Length()
+//            .CompareTo((b.GlobalPosition - _zombTarget.GlobalPosition).Length())); // sort by closest to player MAYBE KEEP IDK
 
-        for (int i = 0; i < _spawners.Count / 2; i++)
+        for (int i = 0; i < _spawners.Count; i++)
         {
             var spawner = _spawners[i];
-            var distanceToTarget = (spawner.GlobalPosition - _zombTarget.GlobalPosition).Length();
 
             if (_numZombiesAlive < _stats.NumZombiesAliveLimit && _numZombiesSpawned < _stats.NumZombiesRoundLimit)
             {
