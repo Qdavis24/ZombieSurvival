@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using System.Numerics;
-using ZombieSurvival.scripts.zombie_package;
+using ZombieSurvival.scripts.damage_system;
 using Vector3 = Godot.Vector3;
 
 public partial class HitResolver : Node

@@ -1,5 +1,7 @@
 using Godot;
+using ZombieSurvival.scripts.player.weapons.grenade;
 
+namespace ZombieSurvival.scripts.player.weapons;
 public partial class WeaponManager : Node
 {
     private sealed class WeaponSlot

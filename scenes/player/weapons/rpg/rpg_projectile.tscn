@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dr8whnbpfr8ne"]
+
+[ext_resource type="Script" uid="uid://xgy8cdxiioa" path="res://scripts/player/weapons/rpg/RpgProjectile.cs" id="1_cy1dq"]
+[ext_resource type="PackedScene" uid="uid://bgahoc7tcshfd" path="res://assets/models/player/weapons/rocket.glb" id="2_guj67"]
+[ext_resource type="PackedScene" uid="uid://wpwy380xp0yw" path="res://scenes/player/weapons/Explosion.tscn" id="2_wggeo"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wggeo"]
+radius = 0.08105469
+height = 0.99964905
+
+[node name="RpgProjectile" type="RigidBody3D" unique_id=655407951]
+collision_layer = 15
+collision_mask = 15
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_cy1dq")
+_explodeScene = ExtResource("2_wggeo")
+
+[node name="rocket" parent="." unique_id=859410569 instance=ExtResource("2_guj67")]
+
+[node name="explosive" parent="rocket" index="0" unique_id=981183474]
+transform = Transform3D(-1.3280157, 0, 0.0042881183, 0, 1.3280227, 0, -0.0042881183, 0, -1.3280157, 0, 0.012926072, 0.017569184)
+
+[node name="Scale Reference" parent="rocket" index="1" unique_id=104146994]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=413384460]
+transform = Transform3D(1, 0, 0, 0, 0.0039618667, -0.99999213, 0, 0.99999213, 0.0039618667, 0, 0.010357825, 0.08785179)
+shape = SubResource("CapsuleShape3D_wggeo")
+
+[editable path="rocket"]

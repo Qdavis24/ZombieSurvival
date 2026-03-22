@@ -2,6 +2,7 @@ using Godot;
 using System.Threading.Tasks;
 using System;
 
+namespace ZombieSurvival.scripts.player.weapons.grenade;
 public partial class Grenade : Node3D
 {
 	[Export] private PackedScene _grenadeProjectileScene;
@@ -10,6 +11,8 @@ public partial class Grenade : Node3D
 	[Export] private MeshInstance3D _grenadeAnimMesh;
 	[Export] private MeshInstance3D _grenadeRingAnimMesh;
 	[Export] private float _grenadeThrowMomentDelay = 0.5f;
+	[Export] private float _damage;
+	[Export] private float _force;
 	
 	public async Task ThrowGrenade()
 	{
@@ -26,7 +29,8 @@ public partial class Grenade : Node3D
 	private void SpawnThrownGrenade()
 	{
 		var grenade = _grenadeProjectileScene.Instantiate<GrenadeProjectile>();
-		GetTree().CurrentScene.AddChild(grenade);
+		grenade.Init(_damage, _force);
+		Containers.Instance.Projectiles.AddChild(grenade);
 		
 		grenade.GlobalTransform = _throwSpawnPoint.GlobalTransform;
 
