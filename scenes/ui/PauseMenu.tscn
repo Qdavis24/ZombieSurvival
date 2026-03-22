@@ -24,14 +24,14 @@ alignment = 1
 [node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer" unique_id=504997431]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_vb6pq")
-theme_override_font_sizes/font_size = 100
+theme_override_font_sizes/font_size = 150
 text = "Paused"
 
 [node name="Button" type="Button" parent="Panel/HBoxContainer/VBoxContainer" unique_id=5427995]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_vb6pq")
 theme_override_font_sizes/font_size = 40
-text = "Quit Game"
+text = "Quit To Main Menu"
 
 [node name="Button2" type="Button" parent="Panel/HBoxContainer/VBoxContainer" unique_id=468963473]
 layout_mode = 2
