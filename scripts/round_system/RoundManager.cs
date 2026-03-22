@@ -24,13 +24,18 @@ public partial class RoundManager : Node
             _difficultyManager.CurrentNumZombiesAliveLimit, _difficultyManager.CurrentNumZombiesRoundLimit, _difficultyManager.CurrentZombieSpawnTimerInterval);
         
         _spawnManager.SpawnersDepleted += RoundOver;
-        _difficultyManager.DifficultyScaled += _spawnManager.InitStats;
     }
 
     private void RoundOver()
     {
+        EmitSignalRoundFinished();
         _currRound++;
         GD.Print($"Round number {_currRound}");
         _difficultyManager.ScaleDifficulty();
+        _spawnManager.InitStats(_difficultyManager.CurrentZombieSpeed, _difficultyManager.CurrentZombieHealth,
+            _difficultyManager.CurrentNumZombiesAliveLimit, _difficultyManager.CurrentNumZombiesRoundLimit, _difficultyManager.CurrentZombieSpawnTimerInterval);
+        GD.Print(_difficultyManager.CurrentZombieSpeed, _difficultyManager.CurrentZombieHealth,
+            _difficultyManager.CurrentNumZombiesAliveLimit, _difficultyManager.CurrentNumZombiesRoundLimit, _difficultyManager.CurrentZombieSpawnTimerInterval);
+        EmitSignalRoundStarted();
     }
 }
