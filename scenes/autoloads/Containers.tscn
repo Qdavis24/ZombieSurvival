@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dlab3liuud346"]
+
+[ext_resource type="Script" uid="uid://c8jbf4ndt2vyr" path="res://scripts/Autoloads/Containers.cs" id="1_5x181"]
+
+[node name="Containers" type="Node" unique_id=1390286195]
+script = ExtResource("1_5x181")
+
+[node name="Vfx" type="Node" parent="." unique_id=1423310447]
+
+[node name="Projectiles" type="Node" parent="." unique_id=1551356657]
+
+[node name="Limbs" type="Node" parent="." unique_id=505838424]
