@@ -5,6 +5,8 @@ using System.Numerics;
 using ZombieSurvival.scripts.zombie_package;
 using Vector3 = Godot.Vector3;
 
+namespace ZombieSurvival.scripts.zombie_package;
+
 public partial class DismemberableBodyPart : BodyPart
 {
     [Signal]
@@ -17,11 +19,11 @@ public partial class DismemberableBodyPart : BodyPart
 
     protected override void OnDestroyed(Vector3 dir, float force)
     {
+        if (_destroyed) return;
         var destroyedDismemberableBodyParts = CollectBoneChain();
         EmitSignalDismember(destroyedDismemberableBodyParts, dir, force);
         Cleanup(destroyedDismemberableBodyParts);
-        
-        base.OnDestroyed(dir, force); // this should be last because we want destroyed to execute last
+        base.OnDestroyed(dir, force);
     }
 
     private void Cleanup(Godot.Collections.Array<DismemberableBodyPart> destroyedDismemberableBones)

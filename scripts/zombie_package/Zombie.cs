@@ -78,7 +78,7 @@ public partial class Zombie : CharacterBody3D
 
         foreach (var child in _physicalBoneSimulator.GetChildren())
         {
-            if (child is not BodyPart bodyPart) return;
+            if (child is not BodyPart bodyPart) continue;
 
             bodyPart.Destroyed += OnBodyPartDestroyed;
             bodyPart.TookDamage += OnBodyPartTookDamage;
@@ -110,25 +110,28 @@ public partial class Zombie : CharacterBody3D
         MoveAndSlide();
     }
 
-    private void OnBodyPartTookDamage(Vector3 hitGlobalPos, Vector3 hitDir, float force, float amount)
+    private void OnBodyPartTookDamage(BodyPart bodyPart, Vector3 hitGlobalPos, Vector3 hitDir, float force,
+        float amount)
     {
         var blood = _blood.Instantiate<GpuParticles3D>();
 
-        GetTree().Root.AddChild(blood);
+        Containers.Instance.VFX.AddChild(blood);
         blood.GlobalPosition = hitGlobalPos;
 
         _health -= amount;
         if (_health <= 0f && !_isDead)
-        {
             Die();
-        }
+        
     }
 
-    private void OnBodyPartDestroyed(Vector3 dir, float force, bool shouldDie)
+    private void OnBodyPartDestroyed(BodyPart bodyPart, Vector3 dir, float force, bool shouldDie)
     {
         if (shouldDie && !_isDead)
-        {
             Die();
+
+        if (bodyPart is not DismemberableBodyPart && _isDead)
+        {
+            bodyPart.ApplyImpulse(dir * force);
         }
     }
 
@@ -137,7 +140,7 @@ public partial class Zombie : CharacterBody3D
     {
         var bodyParts = new List<RigidBody3D>();
         var limbContainer = _limbContainerPackedScene.Instantiate<LimbContainer>();
-        GetTree().Root.AddChild(limbContainer);
+        Containers.Instance.Limbs.AddChild(limbContainer);
 
         for (int i = 0;
              i < destroyedDismemberableBodyParts.Count;
@@ -159,6 +162,9 @@ public partial class Zombie : CharacterBody3D
                 hinge.GlobalTransform = boneGlobalTransform;
                 hinge.NodeA = bodyParts[i - 1].GetPath();
                 hinge.NodeB = bodyPart.GetPath();
+                hinge.Set("angular_limit/enable", true);
+                hinge.Set("angular_limit/upper", Mathf.DegToRad(10));
+                hinge.Set("angular_limit/lower", Mathf.DegToRad(-30));
             }
         }
 
