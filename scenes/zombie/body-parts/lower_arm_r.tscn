@@ -41,7 +41,7 @@ height = 0.4187622
 [node name="LowerArmR" type="RigidBody3D" unique_id=1830913314]
 collision_layer = 0
 collision_mask = 10
-mass = 3.0
+mass = 4.0
 continuous_cd = true
 angular_damp = 4.0
 

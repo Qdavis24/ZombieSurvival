@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class LimbContainer : Node3D
+public partial class LimbContainer : Node
 {
 	[Export] private Timer _timer;
 	[Export] public PackedScene Hinge;
