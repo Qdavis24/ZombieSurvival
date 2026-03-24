@@ -144,14 +144,19 @@ public partial class DismemberableBody : Skeleton3D
         if (shouldDismember)
         {
             var rootDetachedBodyPart = SpawnDetachedBodyParts(attachedBodyPart.CollectChain());
-            if (rootDetachedBodyPart != null) rootDetachedBodyPart.ApplyImpulse(dir*force);
+            if (rootDetachedBodyPart != null)
+            {
+                rootDetachedBodyPart.ApplyImpulse(dir*force*_dismemberedBodyPartImpulseScale);
+                attachedBodyPart.MarkDestroyed();
+            }
         }
         else
         {
             attachedBodyPart.ApplyImpulse(dir * force);
+            attachedBodyPart.MarkDestroyed();
         }
         
-        attachedBodyPart.MarkDestroyed();
+        
     }
 
     private RigidBody3D SpawnDetachedBodyParts(List<BodyPart> destroyedAttachedBodyParts)

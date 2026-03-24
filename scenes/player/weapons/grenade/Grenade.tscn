@@ -13,7 +13,7 @@ _grenadeAnimMesh = NodePath("Rig/HumanArms/Skeleton3D/grenade")
 _grenadeRingAnimMesh = NodePath("Rig/HumanArms/Skeleton3D/grenade_ring")
 _grenadeThrowMomentDelay = 1.0
 _damage = 400.0
-_force = 80.0
+_force = 60.0
 
 [node name="Rig" parent="." unique_id=723177255 instance=ExtResource("1_lkmmb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.035, 0)
