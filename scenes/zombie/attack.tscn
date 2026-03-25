@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bgghqwh1u2n5q"]
+
+[ext_resource type="Script" uid="uid://dm0v0qa86f0k3" path="res://scripts/zombie_package/Attack.cs" id="1_7hdol"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_14etj"]
+radius = 0.47955883
+
+[node name="Attack" type="Area3D" unique_id=1537433273 node_paths=PackedStringArray("_hitDuration")]
+script = ExtResource("1_7hdol")
+_hitDuration = NodePath("Timer")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=589290402]
+shape = SubResource("SphereShape3D_14etj")
+
+[node name="Timer" type="Timer" parent="." unique_id=1390243694]
+wait_time = 0.5

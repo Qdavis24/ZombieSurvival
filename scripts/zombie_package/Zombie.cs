@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Collections.Generic;
 using ZombieSurvival.scripts.zombie_package.dismemberment_system;
 
 namespace ZombieSurvival.scripts.zombie_package;
@@ -9,26 +7,24 @@ public partial class Zombie : CharacterBody3D
 {
     [Signal]
     public delegate void DeadEventHandler();
-    
+
     [ExportCategory("Miscellaneous")]
-    [Export] DismemberableBody _dismemberableBody;
+    [Export] private AnimationTree _animationTree;
+    [Export] private float _rotationLerpSpeed = 10f;
+    [Export] private DismemberableBody _dismemberableBody;
     [Export] private NavigationAgent3D _navAgent;
     [Export] private CollisionShape3D _collisionShape;
-    [Export] private float _attackRange = 3f;
-    
+    [Export] private float _attackRange = 1f;
+
+    private AnimationNodeStateMachinePlayback _stateMachine;
+    private Quaternion _targetRotation = Quaternion.Identity;
     private Node3D _target;
     private float _bodyHealth;
     private float _speed;
-    
-    private enum State
-    {
-        Chase,
-        Attack,
-        Dead
-    }
 
+    private enum State { Chase, Attack, Dead }
     private State _state;
-    
+    private State _previousState;
 
     public void Init(Node3D target, ZombieStats stats)
     {
@@ -39,58 +35,85 @@ public partial class Zombie : CharacterBody3D
 
     public override void _Ready()
     {
-        _state = State.Chase;
+        _stateMachine = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
         _dismemberableBody.Init(_bodyHealth);
         _dismemberableBody.Dead += Die;
         _dismemberableBody.SimulationFinished += QueueFree;
+        SetState(State.Chase);
     }
 
     public override void _PhysicsProcess(double delta)
     {
         if (_target == null || _state == State.Dead)
             return;
-        
-        var targetsPosition = _target.GetPosition();
-        
-        if ((targetsPosition - GlobalPosition).Length() < _attackRange)
-            _state = State.Attack;
-        else
-            _state = State.Chase;
+
+        Quaternion = Quaternion.Slerp(_targetRotation, (float)(delta * _rotationLerpSpeed));
+
+        var targetPosition = _target.GetPosition();
+        var distanceToTarget = (targetPosition - GlobalPosition).Length();
+
+        SetState(distanceToTarget < _attackRange ? State.Attack : State.Chase);
 
         switch (_state)
         {
             case State.Chase:
-                MoveTowardTarget(targetsPosition);
+                MoveTowardTarget(targetPosition);
                 break;
             case State.Attack:
-                AttackTarget(targetsPosition);
+                FaceTarget(targetPosition);
                 break;
         }
-        
     }
 
-    private void MoveTowardTarget(Vector3 targetsPosition)
+    private void SetState(State newState)
     {
-        _navAgent.SetTargetPosition(targetsPosition);
+        if (newState == _state) return;
+        _previousState = _state;
+        _state = newState;
+        OnStateEntered(newState);
+    }
+
+    private void OnStateEntered(State state)
+    {
+        switch (state)
+        {
+            case State.Chase:
+                _stateMachine.Travel("walk");
+                break;
+            case State.Attack:
+                _stateMachine.Travel("attack-left");
+                break;
+            case State.Dead:
+                _collisionShape.QueueFree();
+                EmitSignalDead();
+                break;
+        }
+    }
+
+    private void MoveTowardTarget(Vector3 targetPosition)
+    {
+        _navAgent.SetTargetPosition(targetPosition);
         var nextPoint = _navAgent.GetNextPathPosition();
         var dir = (nextPoint - GlobalTransform.Origin).Normalized();
-        if (Mathf.Abs(Basis.Z.Dot(dir)) < .99f)
-            LookAt(GlobalTransform.Origin + dir * 3f, Vector3.Up, useModelFront: true);
+        FaceDirection(dir);
         Velocity = dir * _speed;
         MoveAndSlide();
     }
 
-    private void AttackTarget(Vector3 targetsPosition)
+    private void FaceTarget(Vector3 targetPosition)
     {
-        var dir = (targetsPosition - GlobalTransform.Origin).Normalized();
+        var dir = (targetPosition - GlobalTransform.Origin).Normalized();
+        FaceDirection(dir);
+    }
+
+    private void FaceDirection(Vector3 dir)
+    {
         if (Mathf.Abs(Basis.Z.Dot(dir)) < .99f)
-            LookAt(GlobalTransform.Origin + dir * 3f, Vector3.Up, useModelFront: true);
+            _targetRotation = Transform3D.Identity.LookingAt(-dir, Vector3.Up).Basis.GetRotationQuaternion();
     }
 
     private void Die()
     {
-        _collisionShape.QueueFree();
-        _state = State.Dead;
-        EmitSignalDead();
+        SetState(State.Dead);
     }
 }

@@ -3,12 +3,15 @@
 [ext_resource type="Script" uid="uid://dasyaiv33oybx" path="res://scripts/player/PlayerController.cs" id="1_etyb6"]
 [ext_resource type="Script" uid="uid://c7dgejf7dcfu" path="res://scripts/player/Camera.cs" id="2_08ru5"]
 [ext_resource type="Script" uid="uid://4uxtcbw88ior" path="res://scripts/player/weapons/WeaponManager.cs" id="2_h2fbm"]
-[ext_resource type="Texture2D" uid="uid://drfjgngruviny" path="res://icon.svg" id="4_6ev1f"]
+[ext_resource type="Texture2D" uid="uid://cope1k8ks707y" path="res://icon.svg" id="4_6ev1f"]
 [ext_resource type="PackedScene" uid="uid://cvfgj38xc7dac" path="res://scenes/player/weapons/rifle/Rifle.tscn" id="4_08ru5"]
 [ext_resource type="PackedScene" uid="uid://00wy8mcfk7sk" path="res://scenes/player/weapons/pistol/Pistol.tscn" id="5_anuhh"]
 [ext_resource type="PackedScene" uid="uid://btwlqwo5gkmud" path="res://scenes/player/weapons/shotgun/Shotgun.tscn" id="6_60odj"]
 [ext_resource type="PackedScene" uid="uid://m4alwsdaumah" path="res://scenes/player/weapons/rpg/Rpg.tscn" id="7_tfrk6"]
 [ext_resource type="PackedScene" uid="uid://cjng820s0s2d" path="res://scenes/player/weapons/grenade/Grenade.tscn" id="8_wtdo7"]
+[ext_resource type="Script" uid="uid://8ekxc1y8cxhh" path="res://scripts/player/VfxHud.cs" id="10_8mr67"]
+[ext_resource type="Shader" uid="uid://dhk6778ekh32f" path="res://scenes/player/health_visual_shader.gdshader" id="11_xpgqn"]
+[ext_resource type="Texture2D" uid="uid://bsg165p8bjmje" path="res://assets/models/zombie/blood_particle_tex.png" id="12_qcp1l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2fbm"]
 albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
@@ -21,8 +24,14 @@ height = 1.8
 radius = 0.4
 height = 1.8
 
-[node name="PlayerController" type="CharacterBody3D" unique_id=1073413131]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g4ghg"]
+shader = ExtResource("11_xpgqn")
+shader_parameter/intensity = 0.0
+shader_parameter/hit_flash = 0.0
+
+[node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_vfxHud")]
 script = ExtResource("1_etyb6")
+_vfxHud = NodePath("CanvasLayer")
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1270238325]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -73,3 +82,25 @@ scale = Vector2(0.05, 0.05)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("4_6ev1f")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1950508150 node_paths=PackedStringArray("_vignette", "_bloodSplatter")]
+script = ExtResource("10_8mr67")
+_vignette = NodePath("ColorRect")
+_bloodSplatter = NodePath("TextureRect")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1250240893]
+material = SubResource("ShaderMaterial_g4ghg")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=1004675379]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_qcp1l")

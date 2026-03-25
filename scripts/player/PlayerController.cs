@@ -1,10 +1,11 @@
 using Godot;
 using System;
+using ZombieSurvival.scripts.damage_system;
 
-public partial class PlayerController : CharacterBody3D
+public partial class PlayerController : CharacterBody3D, IDamageable
 {
 	private Node3D _head;
-
+	[Export] private VfxHud _vfxHud;
 	[Export] private float _mouseSensitivity = 0.0020f;
 	[Export] private float _moveSpeed = 6.0f;
 	[Export] private float _accel = 14.0f;
@@ -14,6 +15,9 @@ public partial class PlayerController : CharacterBody3D
 	
 	private float _yaw; // left and right
 	private float _pitch; // up and down
+
+	private float _maxHealth = 200f;
+	private float _health = 200f;
 	
 	public void OnWeaponFired(
 		float shakeDuration,
@@ -47,10 +51,14 @@ public partial class PlayerController : CharacterBody3D
 	{
 		_head = GetNode<Node3D>("Head");
 		
-		Input.MouseMode = Input.MouseModeEnum.Captured;
+		CallDeferred(nameof(SetMouseCapture));
 
 		_yaw = Rotation.Y;
 		_pitch = _head.Rotation.X;
+	}
+	private void SetMouseCapture()
+	{
+		Input.MouseMode = Input.MouseModeEnum.Captured;
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -108,5 +116,12 @@ public partial class PlayerController : CharacterBody3D
 
 		Velocity = new Vector3(horizontal.X, yVel, horizontal.Z);
 		MoveAndSlide();
+	}
+
+	public void TakeDamage(float damage, Vector3 hitGlobalPosition, Vector3 hitDir, float force)
+	{
+		_health -= damage;
+		_vfxHud.ShowHitFlash();
+		_vfxHud.UpdateHealth(_health, _maxHealth);
 	}
 }
