@@ -17,17 +17,21 @@ _deathMenu = NodePath("DeathMenu")
 _hud = NodePath("Hud")
 _popup = NodePath("Popup")
 
-[node name="Popup" parent="." unique_id=580647925 instance=ExtResource("6_1k00l")]
-visible = false
-
-[node name="Hud" parent="." unique_id=665882280 instance=ExtResource("4_y1emd")]
+[node name="PauseMenu" parent="." unique_id=1825430013 instance=ExtResource("3_77bur")]
+layer = 10
 visible = false
 
 [node name="StartMenu" parent="." unique_id=1584193192 instance=ExtResource("2_vd515")]
-visible = false
-
-[node name="PauseMenu" parent="." unique_id=1825430013 instance=ExtResource("3_77bur")]
+layer = 9
 visible = false
 
 [node name="DeathMenu" parent="." unique_id=1710384687 instance=ExtResource("5_y1emd")]
+layer = 8
+visible = false
+
+[node name="Popup" parent="." unique_id=580647925 instance=ExtResource("6_1k00l")]
+layer = 5
+visible = false
+
+[node name="Hud" parent="." unique_id=665882280 instance=ExtResource("4_y1emd")]
 visible = false

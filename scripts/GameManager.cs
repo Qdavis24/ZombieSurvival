@@ -74,6 +74,7 @@ public partial class GameManager : Node
         _gameInstance = _game.Instantiate<Node>();
         AddChild(_gameInstance);
         _isGamePlaying = true;
+        Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 
     private void OnQuitGame()

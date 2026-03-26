@@ -51,20 +51,12 @@ public partial class PlayerController : CharacterBody3D, IDamageable
 	{
 		_head = GetNode<Node3D>("Head");
 
-		// NOTE: did Q add this?
-		CallDeferred(nameof(SetMouseCapture));
-
 		_yaw = Rotation.Y;
 		_pitch = _head.Rotation.X;
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (Input.MouseMode == Input.MouseModeEnum.Visible && @event is InputEventMouseButton mouseButton)
-		{
-			Input.MouseMode = Input.MouseModeEnum.Captured;
-		}
-
 		if (Input.MouseMode == Input.MouseModeEnum.Captured && @event is InputEventMouseMotion mouseMotion)
 		{
 			_yaw -= mouseMotion.Relative.X * _mouseSensitivity;

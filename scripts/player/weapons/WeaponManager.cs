@@ -48,6 +48,7 @@ public partial class WeaponManager : Node
     {
         _uiManager = GetTree().CurrentScene.GetNodeOrNull<UiManager>("UiManager");
         _hitResolver = GetTree().CurrentScene.GetNodeOrNull<HitResolver>("HitResolver");
+        
         _grenadeCount = _startingGrenadeCount;
 
         if (_weaponScenes != null && _weaponScenes.Length > 0)
