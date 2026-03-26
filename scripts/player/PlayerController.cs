@@ -12,13 +12,13 @@ public partial class PlayerController : CharacterBody3D, IDamageable
 	// [Export] private float _gravity = 24.0f;
 	[Export] private float _gravity = 20.0f;
 	[Export] private float _jumpVelocity = 6.0f;
-	
+
 	private float _yaw; // left and right
 	private float _pitch; // up and down
 
 	private float _maxHealth = 200f;
 	private float _health = 200f;
-	
+
 	public void OnWeaponFired(
 		float shakeDuration,
 		float shakeStrength,
@@ -31,8 +31,8 @@ public partial class PlayerController : CharacterBody3D, IDamageable
 		{
 			AddPitchRecoil(Mathf.DegToRad(pitchKickDegrees));
 		}
-	}	
-	
+	}
+
 	private void ApplyLookRotation()
 	{
 		_pitch = Mathf.Clamp(_pitch, -Mathf.Pi / 2f, Mathf.Pi / 2f);
@@ -50,28 +50,16 @@ public partial class PlayerController : CharacterBody3D, IDamageable
 	public override void _Ready()
 	{
 		_head = GetNode<Node3D>("Head");
-		
+
+		// NOTE: did Q add this?
 		CallDeferred(nameof(SetMouseCapture));
 
 		_yaw = Rotation.Y;
 		_pitch = _head.Rotation.X;
 	}
-	private void SetMouseCapture()
-	{
-		Input.MouseMode = Input.MouseModeEnum.Captured;
-	}
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		// TODO: TEMPORARY - delete this if once a pause screen is set up
-		if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo)
-		{
-			if (keyEvent.Keycode == Key.Escape)
-			{
-				Input.MouseMode = Input.MouseModeEnum.Visible;
-			}
-		}
-
 		if (Input.MouseMode == Input.MouseModeEnum.Visible && @event is InputEventMouseButton mouseButton)
 		{
 			Input.MouseMode = Input.MouseModeEnum.Captured;
@@ -83,7 +71,7 @@ public partial class PlayerController : CharacterBody3D, IDamageable
 			_pitch -= mouseMotion.Relative.Y * _mouseSensitivity;
 			ApplyLookRotation();
 		}
-		
+
 	}
 
 	public override void _PhysicsProcess(double delta)

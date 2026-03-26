@@ -2,6 +2,7 @@ using Godot;
 using ZombieSurvival.scripts.player.weapons.grenade;
 
 namespace ZombieSurvival.scripts.player.weapons;
+
 public partial class WeaponManager : Node
 {
     private sealed class WeaponSlot
@@ -25,10 +26,10 @@ public partial class WeaponManager : Node
     private WeaponSlot[] _weaponSlots;
     private int _currentWeaponIndex = 0;
     private bool _isSwapping = false;
-    
+
     [Export] private PlayerController _playerController;
     [Export] private Camera _camera;
-    
+
     [Export] private float _defaultHipFov = 90f;
     [Export] private float _fovLerpSpeed = 80f;
 
@@ -37,15 +38,15 @@ public partial class WeaponManager : Node
     private int _grenadeCount;
     private bool _isThrowingGrenade = false;
     private int _previousWeaponIndex = -1;
-    
+
     private HitResolver _hitResolver;
-    private Hud _hud;
-    
+    private UiManager _uiManager;
+
     private WeaponBase _current;
 
     public override void _Ready()
     {
-        _hud = GetTree().CurrentScene.GetNodeOrNull<Hud>("Hud");
+        _uiManager = GetTree().CurrentScene.GetNodeOrNull<UiManager>("UiManager");
         _hitResolver = GetTree().CurrentScene.GetNodeOrNull<HitResolver>("HitResolver");
         _grenadeCount = _startingGrenadeCount;
 
@@ -120,15 +121,15 @@ public partial class WeaponManager : Node
             }
         }
 
-        _hud?.SetAmmo(currentAmmo, reserveAmmo);
+        _uiManager.HudSetAmmo(_current.CurrentAmmo, _current.ReserveAmmo);
     }
 
     private void RefreshHudAmmo()
     {
-        if (_hud == null || _current == null)
+        if (_uiManager == null || _current == null)
             return;
 
-        _hud.SetAmmo(_current.CurrentAmmo, _current.ReserveAmmo);
+        _uiManager.HudSetAmmo(_current.CurrentAmmo, _current.ReserveAmmo);
     }
 
     private AnimationPlayer GetWeaponAnimationPlayer(WeaponBase weapon)
@@ -170,9 +171,9 @@ public partial class WeaponManager : Node
 
         var grenadeThrowNode = _grenadeThrowScene.Instantiate<Grenade>();
         _weaponSocket.AddChild(grenadeThrowNode);
-        
+
         await grenadeThrowNode.ThrowGrenade();
-        
+
         grenadeThrowNode.QueueFree();
 
         Equip(_previousWeaponIndex);
@@ -290,7 +291,7 @@ public partial class WeaponManager : Node
             bool isMovingForward = Input.IsActionPressed("move_forward");
             _current?.SetMovementState(isMovingForward);
             _camera.SetMovementState(isMovingForward);
-        
+
             if (Input.IsActionJustPressed("reload"))
                 _current?.Call("TryReload");
 
