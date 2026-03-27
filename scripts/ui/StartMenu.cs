@@ -1,18 +1,20 @@
 using Godot;
 using System;
 
-public partial class StartMenu : Node
+public partial class StartMenu : CanvasLayer
 {
-	[Export] private AudioStream _startMenuMusic;
-	
-	// Called when the node enters the scene tree for the first time.
+	[Signal]
+	public delegate void StartGamePressedEventHandler();
+
+	[Export] private Button _startGameButton;
+
 	public override void _Ready()
 	{
-		AudioManager.I.PlayMusic(_startMenuMusic);
+		_startGameButton.Pressed += OnStartGamePressed;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	private void OnStartGamePressed()
 	{
+		EmitSignal(SignalName.StartGamePressed);
 	}
 }

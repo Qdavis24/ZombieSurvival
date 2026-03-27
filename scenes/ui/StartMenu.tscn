@@ -610,8 +610,9 @@ font_color = Color(0.85490507, 0.04420513, 2.8878452e-07, 1)
 shadow_size = 12
 shadow_color = Color(0, 0, 0, 0.5372549)
 
-[node name="StartMenu" type="CanvasLayer" unique_id=1584193192]
+[node name="StartMenu" type="CanvasLayer" unique_id=1584193192 node_paths=PackedStringArray("_startGameButton")]
 script = ExtResource("1_y4veo")
+_startGameButton = NodePath("Panel/VBoxContainer/HBoxContainer/VBoxContainer/Button")
 _startMenuMusic = ExtResource("2_8s1oy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=442801764]

@@ -1,13 +1,15 @@
 [gd_scene format=3 uid="uid://brmqkfto14n3c"]
 
 [ext_resource type="PackedScene" uid="uid://c3roff7wy8drf" path="res://scenes/map/World_navmesh.tscn" id="1_rlmg0"]
+[ext_resource type="PackedScene" uid="uid://c5gxs84x66oh4" path="res://scenes/map/Assets/Building1.tscn" id="2_0wksg"]
 [ext_resource type="PackedScene" uid="uid://cfjp3bppwm4i8" path="res://scenes/player/PlayerController.tscn" id="2_s0yep"]
+[ext_resource type="PackedScene" uid="uid://bafgfpxa34vss" path="res://scenes/map/Assets/Bus.tscn" id="3_lsbak"]
 [ext_resource type="PackedScene" uid="uid://dnuwr0qeacme6" path="res://scenes/spawn_system/spawner.tscn" id="4_0wksg"]
-[ext_resource type="PackedScene" uid="uid://cyvl6eqd24usj" path="res://scenes/hit_resolver/HitResolver.tscn" id="4_s0yep"]
+[ext_resource type="PackedScene" uid="uid://bqy2scgfjaspk" path="res://scenes/map/Assets/Building2.tscn" id="4_03gun"]
 [ext_resource type="PackedScene" uid="uid://cvt0aomoxtces" path="res://scenes/round_system/round_system.tscn" id="5_0wksg"]
 
 [node name="TestingNavMeshMain" type="Node3D" unique_id=1906095306]
-transform = Transform3D(0.99890417, -0.02079399, 0.04192899, 0.021435104, 0.9996592, -0.014899298, -0.04160489, 0.015781721, 0.9990095, 0, 0, 0)
+transform = Transform3D(0.9989043, -0.020793993, 0.041928995, 0.021435108, 0.9996593, -0.0148992995, -0.04160489, 0.015781721, 0.9990095, 0, 0, 0)
 
 [node name="Node3D" parent="." unique_id=1803875491 instance=ExtResource("1_rlmg0")]
 
@@ -20,8 +22,54 @@ light_volumetric_fog_energy = 0.0
 collision_layer = 13
 collision_mask = 13
 
+[node name="Building1" parent="Node3D/NavigationRegion3D/Walls" index="0" unique_id=801496068 instance=ExtResource("2_0wksg")]
+transform = Transform3D(-0.89999986, 0, -7.86805e-08, 0, 0.9, 0, 7.8680486e-08, 0, -0.9, -0.5708313, 0.088222206, 13.64308)
+
+[node name="Wall" parent="Node3D/NavigationRegion3D/Walls" index="26" unique_id=2048568619]
+visible = false
+
+[node name="AlleyWall2" parent="Node3D/NavigationRegion3D/Walls" index="27" unique_id=729488119]
+visible = false
+
+[node name="AlleyWall1" parent="Node3D/NavigationRegion3D/Walls" index="28" unique_id=1042938600]
+visible = false
+
+[node name="AlleyWall3" parent="Node3D/NavigationRegion3D/Walls" index="29" unique_id=1494708274]
+visible = false
+
+[node name="AlleyWall5" parent="Node3D/NavigationRegion3D/Walls" index="31" unique_id=449663289]
+visible = false
+
+[node name="AlleyWall6" parent="Node3D/NavigationRegion3D/Walls" index="32" unique_id=305686383]
+visible = false
+
+[node name="Bus" parent="Node3D/NavigationRegion3D/Walls" index="37" unique_id=1403012753 instance=ExtResource("3_lsbak")]
+transform = Transform3D(-0.53566986, 0.0001606585, -0.12472936, 0.00010511954, 0.54999965, 0.00025697332, 0.124729365, 0.00022643898, -0.5356698, -11.597675, -0.24412534, -2.9491656)
+
+[node name="BUS" parent="Node3D/NavigationRegion3D/Walls" index="38" unique_id=344328127]
+visible = false
+
+[node name="Building2" parent="Node3D/NavigationRegion3D/Walls" index="47" unique_id=1361504271 instance=ExtResource("4_03gun")]
+transform = Transform3D(-6.7055225e-08, -3.4924597e-09, 1.6000004, -5.5879354e-09, 1.599999, -2.0954758e-09, -1.6, 0, -8.195639e-08, -31.547115, 7.969871, -4.1317058)
+
+[node name="Building3" parent="Node3D/NavigationRegion3D/Walls" index="49" unique_id=1159409400 instance=ExtResource("2_0wksg")]
+transform = Transform3D(-0.8999998, 0, -7.868048e-08, 0, 0.9, 0, 7.868048e-08, 0, -0.89999974, 10.935164, -0.121202886, -9.631489)
+
+[node name="Building4" parent="Node3D/NavigationRegion3D/Walls" index="50" unique_id=730763204 instance=ExtResource("4_03gun")]
+transform = Transform3D(-1.6000006, -2.910383e-09, -1.7136335e-07, -1.1292286e-08, 1.5999981, -5.5879354e-09, 1.5646219e-07, 0, -1.6000006, -30.064686, 7.662418, -22.626905)
+
+[node name="Building5" parent="Node3D/NavigationRegion3D/Walls" index="51" unique_id=651953571 instance=ExtResource("2_0wksg")]
+transform = Transform3D(-1.3000007, -1.4319085e-08, -2.2724271e-07, -2.0372681e-08, 1.2999992, 0, 2.1234155e-07, 0, -1.2999992, -37.279247, -0.8493773, 12.5581)
+
+[node name="Building6" parent="Node3D/NavigationRegion3D/Walls" index="52" unique_id=204063170 instance=ExtResource("2_0wksg")]
+transform = Transform3D(-1.4901161e-08, -1.2165401e-08, -0.8000002, 0, 0.9999998, -1.1175871e-08, 0.49999982, -1.8626451e-09, -2.6077032e-08, -5.685619, -0.15514886, -10.044203)
+
+[node name="Building7" parent="Node3D/NavigationRegion3D/Walls" index="53" unique_id=1177059896 instance=ExtResource("2_0wksg")]
+transform = Transform3D(-0.89999986, -1.5716068e-09, -8.195639e-08, -2.561137e-09, 0.9, 0, 8.195639e-08, 0, -0.8999999, 0.9817433, -0.5007063, -23.637081)
+
 [node name="OmniLight3D" type="OmniLight3D" parent="Node3D" unique_id=1245886515]
 transform = Transform3D(1.0000001, -1.3387762e-09, 1.4901161e-08, 3.4924597e-10, 1.0000001, 0, 0, 0, 1.0000001, 0.092755, 4.3257732, -0.06447294)
+visible = false
 light_energy = 16.0
 light_indirect_energy = 8.352
 light_size = 0.962
@@ -29,8 +77,6 @@ omni_range = 4096.0
 
 [node name="PlayerController" parent="." unique_id=1073413131 instance=ExtResource("2_s0yep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6407409, 4.1583242)
-
-[node name="HitResolver" parent="." unique_id=856120325 instance=ExtResource("4_s0yep")]
 
 [node name="Spawner" parent="." unique_id=1877162586 instance=ExtResource("4_0wksg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.398, 0, 0)
@@ -64,10 +110,10 @@ _startingNumZombiesRoundLimit = 10
 _startingZombieSpawnTimerInterval = 5.0
 
 [node name="Spawner" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="1" unique_id=942961392 instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2253485, 0, 6.120675)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2253485, 0.16430509, 6.120675)
 
 [node name="Spawner2" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="2" unique_id=2123943745 instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.855404, 0, -5.6074543)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.855404, 0.40553248, -4.7351832)
 
 [editable path="Node3D"]
 [editable path="RoundManager"]

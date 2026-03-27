@@ -1,17 +1,15 @@
-[gd_scene format=3 uid="uid://cna8ggeowvm4c"]
+[gd_scene format=3 uid="uid://7rc5i3bksypk"]
 
-[ext_resource type="PackedScene" uid="uid://2ivtsrerae4q" path="res://scenes/map/World.tscn" id="1_rvslj"]
-[ext_resource type="PackedScene" uid="uid://cfjp3bppwm4i8" path="res://scenes/player/PlayerController.tscn" id="2_0bbpv"]
-[ext_resource type="PackedScene" uid="uid://cyvl6eqd24usj" path="res://scenes/hit_resolver/HitResolver.tscn" id="3_0bbpv"]
-[ext_resource type="PackedScene" uid="uid://dh0j7uwlkf840" path="res://scenes/ui/Hud.tscn" id="4_rarhs"]
+[ext_resource type="Script" uid="uid://djavsc2rmyqdj" path="res://scripts/GameManager.cs" id="1_elqb8"]
+[ext_resource type="PackedScene" uid="uid://brmqkfto14n3c" path="res://scenes/testing_nav_mesh_main.tscn" id="2_rvslj"]
+[ext_resource type="PackedScene" uid="uid://0keac7gcsnat" path="res://scenes/ui/UiManager.tscn" id="3_0bbpv"]
+[ext_resource type="PackedScene" uid="uid://cyvl6eqd24usj" path="res://scenes/hit_resolver/HitResolver.tscn" id="4_rarhs"]
 
-[node name="Main" type="Node" unique_id=1676837023]
+[node name="Main" type="Node" unique_id=1676837023 node_paths=PackedStringArray("_uiManager")]
+script = ExtResource("1_elqb8")
+_uiManager = NodePath("UiManager")
+_game = ExtResource("2_rvslj")
 
-[node name="World" parent="." unique_id=1895663263 instance=ExtResource("1_rvslj")]
+[node name="UiManager" parent="." unique_id=1223429807 instance=ExtResource("3_0bbpv")]
 
-[node name="PlayerController" parent="." unique_id=1525013530 instance=ExtResource("2_0bbpv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.94396)
-
-[node name="HitResolver" parent="." unique_id=1327183731 instance=ExtResource("3_0bbpv")]
-
-[node name="Hud" parent="." unique_id=665882280 instance=ExtResource("4_rarhs")]
+[node name="HitResolver" parent="." unique_id=345407918 instance=ExtResource("4_rarhs")]

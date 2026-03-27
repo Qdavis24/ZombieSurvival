@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://dtxx54opy5t17"]
 
+[ext_resource type="Script" uid="uid://5dqqq7vp5mja" path="res://scripts/ui/PauseMenu.cs" id="1_7ida2"]
 [ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="1_vb6pq"]
 
-[node name="PauseMenu" type="CanvasLayer" unique_id=1825430013]
+[node name="PauseMenu" type="CanvasLayer" unique_id=1825430013 node_paths=PackedStringArray("_quit")]
+script = ExtResource("1_7ida2")
+_quit = NodePath("Panel/HBoxContainer/VBoxContainer/Quit")
 
 [node name="Panel" type="Panel" parent="." unique_id=1347633763]
 offset_right = 1924.0
@@ -27,7 +30,7 @@ theme_override_fonts/font = ExtResource("1_vb6pq")
 theme_override_font_sizes/font_size = 150
 text = "Paused"
 
-[node name="Button" type="Button" parent="Panel/HBoxContainer/VBoxContainer" unique_id=5427995]
+[node name="Quit" type="Button" parent="Panel/HBoxContainer/VBoxContainer" unique_id=5427995]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_vb6pq")
 theme_override_font_sizes/font_size = 40

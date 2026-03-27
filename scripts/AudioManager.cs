@@ -9,10 +9,12 @@ public partial class AudioManager : Node
 	private bool _footstepPlaying = false;
 	private static bool _explosionCooldown = false;
 	private const float ExplosionCooldownTime = 0.12f; // 120 ms
-	
+
 	private const string SfxBus = "SFX";
-	private const string MusicBus  = "Music";
+	private const string MusicBus = "Music";
 	private const string ExplosionBus = "Explosion";
+
+	private AudioStreamPlayer _musicPlayer;
 
 	public void PlayFootstep(AudioStream stream, Vector2 pos)
 	{
@@ -41,7 +43,7 @@ public partial class AudioManager : Node
 
 		p.Play();
 	}
-	
+
 	public void Play2D(AudioStream stream, Vector2 pos, float volumeDb = -6f, float pitch = 1f)
 	{
 		if (stream == null)
@@ -58,12 +60,12 @@ public partial class AudioManager : Node
 			PitchScale = pitch,
 			Bus = SfxBus
 		};
-		
+
 		AddChild(p);
 		p.Finished += () => p.QueueFree();
 		p.Play();
 	}
-	
+
 	public void PlayFollowing(AudioStream stream, Node2D target, float volumeDb = -6f, float pitch = 1f)
 	{
 		if (stream == null || target == null) return;
@@ -75,7 +77,7 @@ public partial class AudioManager : Node
 			PitchScale = pitch,
 			Bus = SfxBus
 		};
-	
+
 		// Parent to the target so it follows automatically
 		target.AddChild(p);
 		p.Finished += () => p.QueueFree();
@@ -97,7 +99,7 @@ public partial class AudioManager : Node
 		p.Finished += () => p.QueueFree();
 		p.Play();
 	}
-	
+
 	public void PlayFireballExplosion(AudioStream stream, Vector2 pos, float volumeDb = -6f)
 	{
 		if (stream == null) return;
@@ -133,6 +135,12 @@ public partial class AudioManager : Node
 	{
 		if (stream == null) return;
 
+		// Stop existing music immediately before starting the new track
+		if (_musicPlayer != null)
+		{
+			StopMusicImmediate();
+		}
+
 		// Duplicate so enabling loop here does not modify the original resource everywhere else.
 		var musicStream = stream.Duplicate() as AudioStream;
 		if (musicStream == null) return;
@@ -150,17 +158,57 @@ public partial class AudioManager : Node
 				break;
 		}
 
-		var p = new AudioStreamPlayer
+		_musicPlayer = new AudioStreamPlayer
 		{
 			Stream = musicStream,
 			VolumeDb = volumeDb,
 			Bus = MusicBus
 		};
-		
-		AddChild(p);
-		p.Play();
+
+		AddChild(_musicPlayer);
+		_musicPlayer.Play();
 	}
-	
+
+	public async void StopMusic(float fadeDuration = 4.0f)
+	{
+		if (_musicPlayer == null) return;
+
+		// Keep a local reference in case _musicPlayer changes while fading.
+		var player = _musicPlayer;
+
+		if (fadeDuration <= 0f)
+		{
+			StopMusicImmediate();
+			return;
+		}
+
+		var tween = CreateTween();
+		tween.TweenProperty(player, "volume_db", -80f, fadeDuration);
+		await ToSignal(tween, Tween.SignalName.Finished);
+
+		// Only clear the field if this is still the active music player.
+		if (player == _musicPlayer)
+		{
+			player.Stop();
+			player.QueueFree();
+			_musicPlayer = null;
+		}
+		else if (GodotObject.IsInstanceValid(player))
+		{
+			player.Stop();
+			player.QueueFree();
+		}
+	}
+
+	private void StopMusicImmediate()
+	{
+		if (_musicPlayer == null) return;
+
+		_musicPlayer.Stop();
+		_musicPlayer.QueueFree();
+		_musicPlayer = null;
+	}
+
 	public override void _Ready()
 	{
 		ProcessMode = Node.ProcessModeEnum.Always;
