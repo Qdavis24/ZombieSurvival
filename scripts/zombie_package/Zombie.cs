@@ -9,14 +9,12 @@ public partial class Zombie : CharacterBody3D
     public delegate void DeadEventHandler();
 
     [ExportCategory("Miscellaneous")]
-    [Export] private AnimationTree _animationTree;
     [Export] private float _rotationLerpSpeed = 10f;
     [Export] private DismemberableBody _dismemberableBody;
     [Export] private NavigationAgent3D _navAgent;
     [Export] private CollisionShape3D _collisionShape;
     [Export] private float _attackRange = 1f;
-
-    private AnimationNodeStateMachinePlayback _stateMachine;
+    [Export] private AnimationPlayer _animationPlayer;
     private Quaternion _targetRotation = Quaternion.Identity;
     private Node3D _target;
     private float _bodyHealth;
@@ -35,7 +33,6 @@ public partial class Zombie : CharacterBody3D
 
     public override void _Ready()
     {
-        _stateMachine = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
         _dismemberableBody.Init(_bodyHealth);
         _dismemberableBody.Dead += Die;
         _dismemberableBody.SimulationFinished += QueueFree;
@@ -78,10 +75,10 @@ public partial class Zombie : CharacterBody3D
         switch (state)
         {
             case State.Chase:
-                _stateMachine.Travel("walk");
+                _animationPlayer.Play("walk", .2f);
                 break;
             case State.Attack:
-                _stateMachine.Travel("attack-left");
+                _animationPlayer.Play("attack-left", .2f);
                 break;
             case State.Dead:
                 _collisionShape.QueueFree();
