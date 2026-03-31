@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://wpwy380xp0yw"]
+
+[ext_resource type="Script" uid="uid://ny45wnbu0k0r" path="res://scripts/player/weapons/Explosion.cs" id="1_n44nq"]
+[ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/models/player/scorch_01.png" id="2_js8jj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tvel1"]
+radius = 2.4802146
+
+[sub_resource type="Curve" id="Curve_wtns8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_nd350"]
+curve = SubResource("Curve_wtns8")
+
+[sub_resource type="Curve" id="Curve_qje3w"]
+_data = [Vector2(0, 0.5794184), 0.0, 0.0, 0, 0, Vector2(0.994152, 0.9731544), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_oh15a"]
+curve = SubResource("Curve_qje3w")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_no1nk"]
+lifetime_randomness = 0.1
+spread = 180.0
+initial_velocity_min = 3.5
+initial_velocity_max = 4.0
+gravity = Vector3(0, 0, 0)
+damping_min = 4.71
+damping_max = 14.710001
+scale_curve = SubResource("CurveTexture_oh15a")
+alpha_curve = SubResource("CurveTexture_nd350")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8wo7"]
+transparency = 1
+blend_mode = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.59607846, 0.24313726, 1)
+albedo_texture = ExtResource("2_js8jj")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_5hvi3"]
+material = SubResource("StandardMaterial3D_l8wo7")
+size = Vector2(10, 10)
+
+[node name="Explosion" type="Area3D" unique_id=1710752080 node_paths=PackedStringArray("_flash")]
+collision_layer = 9
+collision_mask = 9
+script = ExtResource("1_n44nq")
+_flash = NodePath("ExplosionFlash")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1818941300]
+shape = SubResource("SphereShape3D_tvel1")
+
+[node name="ExplosionFlash" type="GPUParticles3D" parent="." unique_id=867082671]
+emitting = false
+amount = 10
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_no1nk")
+draw_pass_1 = SubResource("QuadMesh_5hvi3")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="ExplosionFlash" unique_id=1546540937]
+shadow_enabled = true
+
+[node name="Timer" type="Timer" parent="ExplosionFlash" unique_id=1184371043]
+one_shot = true

@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://ceenxu0j8cvnk"]
+
+[ext_resource type="Script" uid="uid://bkfa7p7otg3gi" path="res://scripts/ui/DeathMenu.cs" id="1_s2oyt"]
+[ext_resource type="FontFile" uid="uid://b5xps8x8u85bq" path="res://scenes/ui/Clynical Terror.ttf" id="2_8wvje"]
+[ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="3_mdb1e"]
+
+[node name="DeathMenu" type="CanvasLayer" unique_id=1710384687 node_paths=PackedStringArray("_quit")]
+script = ExtResource("1_s2oyt")
+_quit = NodePath("Panel/HBoxContainer/VBoxContainer/Quit")
+
+[node name="Panel" type="Panel" parent="." unique_id=2021444483]
+offset_right = 1924.0
+offset_bottom = 1087.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel" unique_id=1192723470]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer" unique_id=1920108031]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/VBoxContainer" unique_id=403407416]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85490197, 0.043137256, 0, 1)
+theme_override_fonts/font = ExtResource("2_8wvje")
+theme_override_font_sizes/font_size = 150
+text = "You Died"
+
+[node name="Quit" type="Button" parent="Panel/HBoxContainer/VBoxContainer" unique_id=1418108336]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_mdb1e")
+theme_override_font_sizes/font_size = 40
+text = "Quit To Main Menu"

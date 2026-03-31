@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://bqy2scgfjaspk"]
+
+[ext_resource type="PackedScene" uid="uid://dwu7o4uxsft7u" path="res://assets/models/map/Apartment2.2.glb" id="1_pnswi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_va02t"]
+size = Vector3(6.3166656, 10.609314, 8.026794)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_os2l5"]
+size = Vector3(1.1694336, 10.451294, 1.1776123)
+
+[node name="Building2" type="StaticBody3D" unique_id=1361504271]
+
+[node name="Apartment2_2" parent="." unique_id=332474492 instance=ExtResource("1_pnswi")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=599069676]
+transform = Transform3D(1, 0, 0, 0, 0.9999989, 0.0014486228, 0, -0.0014486228, 0.9999989, 0.026298523, -0.002314084, 0.023591995)
+shape = SubResource("BoxShape3D_va02t")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1889750934]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4744823, 0.08431816, -4.493183)
+shape = SubResource("BoxShape3D_os2l5")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="." unique_id=817349050]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.368043, 0.16863632, 4.797449)
+shape = SubResource("BoxShape3D_os2l5")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="." unique_id=793768226]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4867532, 0.08431816, -4.493183)
+shape = SubResource("BoxShape3D_os2l5")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="." unique_id=1325312900]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5179744, 0.08431816, 4.514145)
+shape = SubResource("BoxShape3D_os2l5")

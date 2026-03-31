@@ -41,14 +41,14 @@ radius = 0.07324219
 height = 0.48690224
 
 [node name="UpperLegR" type="RigidBody3D" unique_id=1516347795]
-collision_layer = 10
+collision_layer = 0
 collision_mask = 10
 mass = 7.0
 linear_damp = 1.0
 angular_damp = 4.0
 
 [node name="upper_leg_r" type="MeshInstance3D" parent="." unique_id=1911429816]
-transform = Transform3D(1, 8.742278e-08, 0, 8.742278e-08, -1, -8.742278e-08, 7.642742e-15, -8.742278e-08, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0)
 mesh = SubResource("ArrayMesh_4k2od")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("1_i56hn")

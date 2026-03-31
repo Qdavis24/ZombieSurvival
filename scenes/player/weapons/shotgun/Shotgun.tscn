@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://btwlqwo5gkmud"]
+
+[ext_resource type="Script" uid="uid://ces8k7fo8wyg0" path="res://scripts/player/weapons/shotgun/ShotgunWeapon.cs" id="1_3i4rd"]
+[ext_resource type="PackedScene" uid="uid://biq2wqtoa5x1y" path="res://assets/models/player/weapons/shotgun_shaded.glb" id="2_3i4rd"]
+[ext_resource type="PackedScene" uid="uid://erpp137vqg0w" path="res://scenes/player/weapons/pistol/pistol_muzzle_flash.tscn" id="3_ytgbc"]
+
+[node name="Shotgun" type="Node3D" unique_id=1462810560 node_paths=PackedStringArray("_muzzleFlash")]
+script = ExtResource("1_3i4rd")
+_roundsPerMinute = 60.0
+_force = 30.0
+_magazineSize = 5
+_cameraShakeStrength = 0.2
+_cameraPitchKickDegrees = -3.0
+_cameraYawKickDegrees = -0.15
+_muzzleFlash = NodePath("Rig/HumanArms/Skeleton3D/BoneAttachment3D/PistolMuzzleFlash")
+
+[node name="Rig" parent="." unique_id=136523554 instance=ExtResource("2_3i4rd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, 0)
+
+[node name="Skeleton3D" parent="Rig/HumanArms" parent_id_path=PackedInt32Array(136523554, 318000205) index="0" unique_id=2011153784]
+bones/3/rotation = Quaternion(0.04669751, 0.0008469804, -0.008069408, 0.9988762)
+bones/10/rotation = Quaternion(-0.027272798, -1.191795e-07, 1.8043078e-08, 0.99962807)
+bones/13/rotation = Quaternion(-0.06748094, -0.00057179056, -0.0035548066, 0.9977141)
+bones/21/rotation = Quaternion(0.04669751, -0.0008469804, 0.008069408, 0.9988762)
+bones/26/rotation = Quaternion(-0.023457363, -4.8521565e-06, 0.003982885, 0.99971694)
+bones/28/rotation = Quaternion(-0.027272798, 1.191795e-07, -1.8043078e-08, 0.99962807)
+bones/29/rotation = Quaternion(0.027272806, 4.3959985e-11, 2.2307578e-08, 0.99962807)
+bones/31/rotation = Quaternion(-0.06748094, 0.00057179056, 0.0035548066, 0.9977141)
+bones/38/rotation = Quaternion(9.9748014e-08, -9.9748014e-08, 0.70710677, 0.70710677)
+bones/44/rotation = Quaternion(9.9748014e-08, 9.9748014e-08, -0.70710677, 0.70710677)
+
+[node name="body" parent="Rig/HumanArms/Skeleton3D" index="1" unique_id=816339470]
+visible = false
+
+[node name="mag" parent="Rig/HumanArms/Skeleton3D" index="4" unique_id=28869097]
+visible = false
+
+[node name="SHELL" parent="Rig/HumanArms/Skeleton3D" index="5" unique_id=1903870768]
+visible = false
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Rig/HumanArms/Skeleton3D" index="6" unique_id=1196143389]
+transform = Transform3D(1.2877376e-07, 1.0000001, 1.6489066e-05, -0.9999998, 2.9472176e-08, 3.0588126e-08, 3.792229e-08, -1.6514678e-05, 1, 2.2111044, 1.4392557, -0.14762147)
+bone_name = "MUZZLE"
+bone_idx = 42
+
+[node name="PistolMuzzleFlash" parent="Rig/HumanArms/Skeleton3D/BoneAttachment3D" unique_id=121254955 instance=ExtResource("3_ytgbc")]
+
+[node name="AKREFERENCESIDE" parent="Rig" index="1" unique_id=46785218]
+transform = Transform3D(1.4257766e-08, -0.32617965, -1.4257766e-08, 0, 1.4257766e-08, -0.32617965, -0.32617965, -1.4257766e-08, -6.232267e-16, 2.4455173, 1.4779537, -2.4286065)
+visible = false
+
+[node name="Torus" parent="Rig" index="2" unique_id=1000738385]
+visible = false
+
+[node name="Remington" parent="Rig" index="3" unique_id=528417597]
+visible = false
+
+[node name="Scale Reference" parent="Rig" index="4" unique_id=539673257]
+visible = false
+
+[editable path="Rig"]

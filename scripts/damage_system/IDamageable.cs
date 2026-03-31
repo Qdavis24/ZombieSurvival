@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace ZombieSurvival.scripts.zombie_package;
+namespace ZombieSurvival.scripts.damage_system;
 
 public interface IDamageable
 {

@@ -1,11 +1,12 @@
 using Godot;
 using System;
+using ZombieSurvival.scripts.damage_system;
 using ZombieSurvival.scripts.inventory_system;
 
-public partial class PlayerController : CharacterBody3D, IInventoryOwner
+public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamageable
 {
 	private Node3D _head;
-
+	[Export] private VfxHud _vfxHud;
 	[Export] private float _mouseSensitivity = 0.0020f;
 	[Export] private float _moveSpeed = 6.0f;
 	[Export] private float _accel = 14.0f;
@@ -18,6 +19,10 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner
 
 	[Export] public Inventory Inventory { get; private set; }
 	
+
+	private float _maxHealth = 200f;
+	private float _health = 200f;
+
 	public void OnWeaponFired(
 		float shakeDuration,
 		float shakeStrength,
@@ -49,8 +54,6 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner
 	public override void _Ready()
 	{
 		_head = GetNode<Node3D>("Head");
-		
-		Input.MouseMode = Input.MouseModeEnum.Captured;
 
 		_yaw = Rotation.Y;
 		_pitch = _head.Rotation.X;
@@ -58,20 +61,6 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		// TODO: TEMPORARY - delete this if once a pause screen is set up
-		if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo)
-		{
-			if (keyEvent.Keycode == Key.Escape)
-			{
-				Input.MouseMode = Input.MouseModeEnum.Visible;
-			}
-		}
-
-		if (Input.MouseMode == Input.MouseModeEnum.Visible && @event is InputEventMouseButton mouseButton)
-		{
-			Input.MouseMode = Input.MouseModeEnum.Captured;
-		}
-
 		if (Input.MouseMode == Input.MouseModeEnum.Captured && @event is InputEventMouseMotion mouseMotion)
 		{
 			_yaw -= mouseMotion.Relative.X * _mouseSensitivity;
@@ -111,5 +100,12 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner
 
 		Velocity = new Vector3(horizontal.X, yVel, horizontal.Z);
 		MoveAndSlide();
+	}
+
+	public void TakeDamage(float damage, Vector3 hitGlobalPosition, Vector3 hitDir, float force)
+	{
+		_health -= damage;
+		_vfxHud.ShowHitFlash();
+		_vfxHud.UpdateHealth(_health, _maxHealth);
 	}
 }
