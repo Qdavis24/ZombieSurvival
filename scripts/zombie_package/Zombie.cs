@@ -8,7 +8,7 @@ public partial class Zombie : CharacterBody3D
     [Signal]
     public delegate void DeadEventHandler();
 
-    [ExportCategory("Miscellaneous")]
+    [ExportCategory("Miscellaneous")] 
     [Export] private float _rotationLerpSpeed = 10f;
     [Export] private DismemberableBody _dismemberableBody;
     [Export] private NavigationAgent3D _navAgent;
@@ -33,7 +33,7 @@ public partial class Zombie : CharacterBody3D
 
     public override void _Ready()
     {
-        _dismemberableBody.Init(_bodyHealth);
+        _dismemberableBody.Init(_bodyHealth, _target);
         _dismemberableBody.Dead += Die;
         _dismemberableBody.SimulationFinished += QueueFree;
         SetState(State.Chase);

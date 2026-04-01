@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://erpp137vqg0w"]
 
-[ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/models/player/scorch_01.png" id="1_nnikd"]
+[ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/particle_textures/scorch_01.png" id="1_nnikd"]
 [ext_resource type="Script" uid="uid://b2vujowynij5h" path="res://scripts/player/weapons/MuzzleFlash.cs" id="2_uadlf"]
 
 [sub_resource type="Curve" id="Curve_uadlf"]

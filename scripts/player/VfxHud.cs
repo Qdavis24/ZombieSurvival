@@ -8,6 +8,12 @@ public partial class VfxHud : CanvasLayer
     private ShaderMaterial _vignetteMaterial;
     private Tween _hitTween;
     private Tween _bloodTween;
+    private PlayerController _player;
+
+    public void Init(PlayerController player)
+    {
+        _player = player;
+    }
 
     public override void _Ready()
     {
@@ -15,10 +21,15 @@ public partial class VfxHud : CanvasLayer
         _bloodSplatter.Modulate = new Color(1, 1, 1, 0);
     }
 
-    public void UpdateHealth(float current, float max)
+    public void UpdateHealth()
     {
-        float intensity = 1.0f - (current / max);
+        float intensity = 1.0f - (_player.Health / _player.MaxHealth);
         _vignetteMaterial.SetShaderParameter("intensity", intensity);
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        UpdateHealth();
     }
 
     public void ShowHitFlash()

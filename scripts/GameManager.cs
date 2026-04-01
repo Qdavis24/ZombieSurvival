@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using ZombieSurvival.scripts.inventory_system;
 using ZombieSurvival.scripts.spawn_system;
 using ZombieSurvival.scripts.zombie_package;
 
@@ -11,12 +12,12 @@ public partial class GameManager : Node
     [Export] private PackedScene _game;
     [Export] private SpawnManager _spawnManager;
 
-    [Export] private Node3D _player;
+    [Export] private PlayerController _player;
 
     private bool _isPaused = false;
     private bool _isGamePlaying = false;
 
-    private Node _gameInstance;
+    private Game _gameInstance;
 
     private bool _test;
 
@@ -26,6 +27,11 @@ public partial class GameManager : Node
         Input.MouseMode = Input.MouseModeEnum.Visible;
         _uiManager.StartGame += OnStartGame;
         _uiManager.QuitGame += OnQuitGame;
+    }
+
+    private void HandlePlayerItemAdded(ItemType itemType, int amount)
+    {
+        _uiManager.ShowSuccessfulPickup($"{itemType.ToString()} + {amount}");
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -48,19 +54,19 @@ public partial class GameManager : Node
             }
         }
 
-        if (@event.IsActionPressed("interact") && _isGamePlaying)
-        {
-            if (_test)
-            {
-                _uiManager.ShowSuccessfulPickup();
-                _test = false;
-            }
-            else
-            {
-                _uiManager.ShowPickup();
-                _test = true;
-            }
-        }
+        // if (@event.IsActionPressed("interact") && _isGamePlaying)
+        // {
+        //     if (_test)
+        //     {
+        //         _uiManager.ShowSuccessfulPickup("d");
+        //         _test = false;
+        //     }
+        //     else
+        //     {
+        //         _uiManager.ShowPickup("d");
+        //         _test = true;
+        //     }
+        // }
     }
 
     public void SetRound(int round)
@@ -71,14 +77,17 @@ public partial class GameManager : Node
     private void OnStartGame()
     {
         _isPaused = false;
-        _gameInstance = _game.Instantiate<Node>();
+        _gameInstance = _game.Instantiate<Game>();
         AddChild(_gameInstance);
+        _player = _gameInstance.Player;
+        _player.ItemAdded += HandlePlayerItemAdded;
         _isGamePlaying = true;
         Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 
     private void OnQuitGame()
     {
+        _player.ItemAdded -= HandlePlayerItemAdded;
         _isPaused = false;
         _gameInstance.QueueFree();
         _isGamePlaying = false;

@@ -1,29 +1,136 @@
 [gd_scene format=3 uid="uid://diw46jgb6wloj"]
 
+[ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/particle_textures/scorch_01.png" id="1_fsev3"]
+[ext_resource type="Shader" uid="uid://c660spghxdgb3" path="res://shaders/parasitic_material.gdshader" id="1_gw401"]
+[ext_resource type="Script" uid="uid://b8rkrc3jiwrgy" path="res://scripts/pickups/ParasiticMaterial.cs" id="1_n706s"]
+
+[sub_resource type="Curve" id="Curve_5ywyb"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_y7eqf"]
+curve = SubResource("Curve_5ywyb")
+
+[sub_resource type="Curve" id="Curve_n706s"]
+_data = [Vector2(1e-05, 0.5198864), 0.0, 0.0, 0, 0, Vector2(0.9984848, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_vpoko"]
+curve = SubResource("Curve_n706s")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vk1jv"]
-initial_velocity_min = 1.0
-initial_velocity_max = 2.0
+spread = 180.0
+initial_velocity_min = 0.19999999
+initial_velocity_max = 0.19999999
 gravity = Vector3(0, 0, 0)
-damping_min = 3.512
-damping_max = 4.3380003
+damping_min = 0.25
+damping_max = 0.3
+scale_min = 0.19999999
+scale_curve = SubResource("CurveTexture_vpoko")
+alpha_curve = SubResource("CurveTexture_y7eqf")
 turbulence_noise_strength = 13.75
 turbulence_noise_speed = Vector3(0, 1, 0)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gw401"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y7eqf"]
 transparency = 1
-albedo_color = Color(0, 0, 0, 1)
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.5305071, 0.027183333, 0.12090104, 1)
+albedo_texture = ExtResource("1_fsev3")
 billboard_mode = 3
+billboard_keep_scale = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="QuadMesh" id="QuadMesh_fsev3"]
-material = SubResource("StandardMaterial3D_gw401")
-size = Vector2(0.01, 0.01)
+[sub_resource type="QuadMesh" id="QuadMesh_5vnmr"]
+material = SubResource("StandardMaterial3D_y7eqf")
+size = Vector2(0.25, 0.25)
 
-[node name="ParasiticMaterial" type="GPUParticles3D" unique_id=1168257984]
-amount = 10
-lifetime = 2.0
-trail_enabled = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fsev3"]
+render_priority = 0
+shader = ExtResource("1_gw401")
+shader_parameter/speed = 4.0
+shader_parameter/strength = 0.02
+shader_parameter/albedo_color = Color(0.16470589, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_n706s"]
+material = SubResource("ShaderMaterial_fsev3")
+radius = 0.036
+height = 0.12
+radial_segments = 4
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n706s"]
+radius = 0.047851563
+height = 0.20911407
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_n706s"]
+radius = 0.53270906
+
+[sub_resource type="Curve" id="Curve_5ydf6"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_6es1y"]
+curve = SubResource("Curve_5ydf6")
+
+[sub_resource type="CurveTexture" id="CurveTexture_5ywyb"]
+curve = SubResource("Curve_n706s")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pqc3m"]
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+damping_min = 2.0
+damping_max = 3.0000002
+scale_min = 0.19999999
+scale_curve = SubResource("CurveTexture_5ywyb")
+alpha_curve = SubResource("CurveTexture_6es1y")
+turbulence_noise_strength = 13.75
+turbulence_noise_speed = Vector3(0, 1, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_vpoko"]
+material = SubResource("StandardMaterial3D_y7eqf")
+
+[node name="ParasiticMaterial" type="RigidBody3D" unique_id=720967199 node_paths=PackedStringArray("_blowupParticles", "_pickupParticles", "_despawnTimer", "_pickupRange", "_parasiteMesh")]
+collision_layer = 16
+collision_mask = 16
+continuous_cd = true
+angular_damp = 1.0
+script = ExtResource("1_n706s")
+_blowupParticles = NodePath("blowup")
+_pickupParticles = NodePath("ooze")
+_despawnTimer = NodePath("DespawnTimer")
+_pickupRange = NodePath("PickupRange")
+_parasiteMesh = NodePath("MeshInstance3D")
+
+[node name="ooze" type="GPUParticles3D" parent="." unique_id=1168257984]
+amount = 20
+lifetime = 1.22
 process_material = SubResource("ParticleProcessMaterial_vk1jv")
-draw_pass_1 = SubResource("QuadMesh_fsev3")
+draw_pass_1 = SubResource("QuadMesh_5vnmr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1250565345]
+transform = Transform3D(0.99999994, 0, 0, 0, -4.3711385e-08, 1, 0, -0.99999994, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_n706s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1852710172]
+transform = Transform3D(-0.02968368, 4.3692125e-08, 0.99955934, 0.99955934, 1.297515e-09, 0.02968368, 0, 1, -4.371139e-08, 2.3750796e-10, -0.0008952096, 0.00667163)
+shape = SubResource("CapsuleShape3D_n706s")
+
+[node name="DespawnTimer" type="Timer" parent="." unique_id=435066335]
+wait_time = 30.0
+
+[node name="PickupRange" type="Area3D" parent="." unique_id=1654162574]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickupRange" unique_id=503801985]
+shape = SubResource("SphereShape3D_n706s")
+
+[node name="blowup" type="GPUParticles3D" parent="." unique_id=1448156198]
+emitting = false
+amount = 300
+lifetime = 1.22
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_pqc3m")
+draw_pass_1 = SubResource("QuadMesh_vpoko")

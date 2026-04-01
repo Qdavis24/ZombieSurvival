@@ -17,17 +17,33 @@ public partial class Inventory : Node
 		_items = new();
 	}
 
+	private void SeeInventory()
+	{
+		foreach (var item in _items)
+		{
+			GD.Print(item.Type, item.Amount);
+		}
+	}
+
+	public int GetAmount(ItemType type)
+	{
+		var idx = _items.FindIndex(x => x.Type == type);
+		return idx >= 0 ? _items[idx].Amount : 0;
+	}
+
 	public bool ConsumeItem(ItemType type, int amount)
 	{
 		var idx = _items.FindIndex(x => x.Type == type);
-		if (idx <= 0) return false;
-		if (_items[idx].Amount >= amount) return false;
+		if (idx < 0) return false;
+		if (_items[idx].Amount < amount) return false;
 		_items[idx].Amount -= amount;
 		return true;
 	}
 
 	public void AddItem(ItemType type, int amount)
 	{
+		EmitSignalItemAdded(type, amount);
+		
 		var idx = _items.FindIndex(x => x.Type == type);
 		if (idx >= 0)
 		{
@@ -35,5 +51,6 @@ public partial class Inventory : Node
 			return;
 		}
 		_items.Add(new InventoryItem(type, amount));
+		
 	}
 }

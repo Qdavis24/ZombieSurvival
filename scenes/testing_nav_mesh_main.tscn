@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://brmqkfto14n3c"]
 
+[ext_resource type="Script" uid="uid://j7nqumogkvom" path="res://scripts/Game.cs" id="1_b343u"]
 [ext_resource type="PackedScene" uid="uid://c3roff7wy8drf" path="res://scenes/map/World_navmesh.tscn" id="1_rlmg0"]
 [ext_resource type="PackedScene" uid="uid://c5gxs84x66oh4" path="res://scenes/map/Assets/Building1.tscn" id="2_0wksg"]
 [ext_resource type="PackedScene" uid="uid://cfjp3bppwm4i8" path="res://scenes/player/PlayerController.tscn" id="2_s0yep"]
@@ -7,9 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://dnuwr0qeacme6" path="res://scenes/spawn_system/spawner.tscn" id="4_0wksg"]
 [ext_resource type="PackedScene" uid="uid://bqy2scgfjaspk" path="res://scenes/map/Assets/Building2.tscn" id="4_03gun"]
 [ext_resource type="PackedScene" uid="uid://cvt0aomoxtces" path="res://scenes/round_system/round_system.tscn" id="5_0wksg"]
+[ext_resource type="PackedScene" uid="uid://cpuy8hqpdax45" path="res://scenes/store_system/shotgun_store.tscn" id="9_ytxki"]
 
-[node name="TestingNavMeshMain" type="Node3D" unique_id=1906095306]
+[node name="TestingNavMeshMain" type="Node3D" unique_id=1906095306 node_paths=PackedStringArray("Player")]
 transform = Transform3D(0.9989043, -0.020793993, 0.041928995, 0.021435108, 0.9996593, -0.0148992995, -0.04160489, 0.015781721, 0.9990095, 0, 0, 0)
+script = ExtResource("1_b343u")
+Player = NodePath("PlayerController")
 
 [node name="Node3D" parent="." unique_id=1803875491 instance=ExtResource("1_rlmg0")]
 
@@ -19,8 +23,8 @@ light_energy = 12.571
 light_volumetric_fog_energy = 0.0
 
 [node name="Walls" parent="Node3D/NavigationRegion3D" parent_id_path=PackedInt32Array(1803875491, 1865754256) index="0" unique_id=1233253355]
-collision_layer = 15
-collision_mask = 15
+collision_layer = 31
+collision_mask = 31
 
 [node name="Building1" parent="Node3D/NavigationRegion3D/Walls" index="0" unique_id=801496068 instance=ExtResource("2_0wksg")]
 transform = Transform3D(-0.89999986, 0, -7.86805e-08, 0, 0.9, 0, 7.8680486e-08, 0, -0.9, -0.5708313, 0.088222206, 13.64308)
@@ -114,6 +118,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2253485, 0.16430509, 6.120
 
 [node name="Spawner2" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="2" unique_id=2123943745 instance=ExtResource("4_0wksg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.855404, 0.40553248, -4.7351832)
+
+[node name="ShotgunStore" parent="." unique_id=176065396 instance=ExtResource("9_ytxki")]
+transform = Transform3D(1, -2.561137e-09, 3.3527613e-08, 1.3504177e-08, 0.9999996, 1.8626451e-09, 0, -5.5879354e-09, 0.99999917, 6.7045484, 2.1754122, 7.338958)
 
 [editable path="Node3D"]
 [editable path="RoundManager"]

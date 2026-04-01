@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using ZombieSurvival.scripts.inventory_system;
 
 public partial class WeaponBase : Node3D
 {
@@ -31,6 +32,7 @@ public partial class WeaponBase : Node3D
     
     [ExportGroup("Misc")]
     [Export] private float _animBlendTime = 0.3f;
+    [Export] public ItemType AmmoType;
 
     [Export] private MuzzleFlash _muzzleFlash;
     

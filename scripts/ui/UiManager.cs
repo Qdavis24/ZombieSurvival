@@ -51,9 +51,9 @@ public partial class UiManager : Node
 		EmitSignal(SignalName.StartGame);
 	}
 
-	public void ShowPickup()
+	public void ShowPickup(String pickupText)
 	{
-		_popup.SetPickupText("Shotgun");
+		_popup.SetPickupText(pickupText);
 		_popup.Visible = true;
 	}
 	public void HidePickup()
@@ -61,10 +61,10 @@ public partial class UiManager : Node
 		_popup.Visible = false;
 	}
 
-	public async void ShowSuccessfulPickup()
+	public async void ShowSuccessfulPickup(String pickupText)
 	{
 		_popup.Visible = true;
-		await _popup.SuccessfullyPickedUp("Shotgun");
+		await _popup.SuccessfullyPickedUp(pickupText);
 		_popup.Visible = false;
 	}
 

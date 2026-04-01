@@ -97,8 +97,8 @@ navigation_mesh = SubResource("NavigationMesh_yk6fn")
 
 [node name="Walls" type="CSGCombiner3D" parent="NavigationRegion3D" unique_id=1233253355]
 use_collision = true
-collision_layer = 5
-collision_mask = 5
+collision_layer = 21
+collision_mask = 21
 
 [node name="CAR" type="CSGBox3D" parent="NavigationRegion3D/Walls" unique_id=1721413302]
 transform = Transform3D(0.9612617, 0, 0.27563736, 0, 1, 0, -0.27563736, 0, 0.9612617, -0.694746, 0.5469943, -0.02080214)

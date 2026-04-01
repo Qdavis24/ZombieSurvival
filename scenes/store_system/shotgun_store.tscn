@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cpuy8hqpdax45"]
+
+[ext_resource type="Script" uid="uid://cwojb7fe221j3" path="res://scripts/store_system/AmmoStore.cs" id="1_hew1x"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hew1x"]
+radius = 3.0
+
+[node name="ShotgunStore" type="Node3D" unique_id=176065396 node_paths=PackedStringArray("_buyRange", "_light")]
+script = ExtResource("1_hew1x")
+_buyRange = NodePath("Area3D")
+_storeSellItemType = 3
+_storeSellAmount = 25
+_storeBuyAmount = 10
+_light = NodePath("OmniLight3D")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=488960934]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=913072786]
+shape = SubResource("SphereShape3D_hew1x")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=821625478]
+light_color = Color(1, 1, 0.5176471, 1)
+light_bake_mode = 1

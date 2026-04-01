@@ -5,7 +5,9 @@ using ZombieSurvival.scripts.inventory_system;
 
 public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamageable
 {
+	[Signal] public delegate void ItemAddedEventHandler(ItemType itemType, int amount);
 	private Node3D _head;
+	[Export] private float _healthRegenRate;
 	[Export] private VfxHud _vfxHud;
 	[Export] private float _mouseSensitivity = 0.0020f;
 	[Export] private float _moveSpeed = 6.0f;
@@ -22,6 +24,9 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 	private float _maxHealth = 200f;
 	private float _health = 200f;
+	public float MaxHealth => _maxHealth;
+	public float Health => _health;
+
 
 	public void OnWeaponFired(
 		float shakeDuration,
@@ -57,6 +62,9 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 		_yaw = Rotation.Y;
 		_pitch = _head.Rotation.X;
+		
+		_vfxHud.Init(this);
+		Inventory.ItemAdded += EmitSignalItemAdded;
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -73,6 +81,8 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	public override void _PhysicsProcess(double delta)
 	{
 		var dt = (float)delta;
+		
+		_health = Mathf.Clamp(_health + _healthRegenRate * _maxHealth * dt, 0f, _maxHealth);
 
 		var input = Input.GetVector("move_left", "move_right", "move_forward", "move_back");
 
@@ -106,6 +116,5 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	{
 		_health -= damage;
 		_vfxHud.ShowHitFlash();
-		_vfxHud.UpdateHealth(_health, _maxHealth);
 	}
 }

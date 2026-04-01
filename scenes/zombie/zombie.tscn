@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://oa3vltidsysp" path="res://scenes/zombie/body-parts/lower_arm_l.tscn" id="10_a5kb4"]
 [ext_resource type="PackedScene" uid="uid://j2kmc40i84x" path="res://scenes/zombie/body-parts/upper_arm_r.tscn" id="11_vwmx8"]
 [ext_resource type="PackedScene" uid="uid://c6jewwi5hgotf" path="res://scenes/zombie/body-parts/lower_arm_r.tscn" id="12_bxjsn"]
+[ext_resource type="PackedScene" uid="uid://diw46jgb6wloj" path="res://scenes/zombie/parasitic_material.tscn" id="17_iiuu8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_imofc"]
 
@@ -479,7 +480,6 @@ script = ExtResource("1_6mvc3")
 _dismemberableBody = NodePath("Armature/Skeleton3D")
 _navAgent = NodePath("NavigationAgent3D")
 _collisionShape = NodePath("CollisionShape3D")
-_attackRange = 1.2
 _animationPlayer = NodePath("AnimationPlayer")
 
 [node name="Armature" type="Node3D" parent="." unique_id=1601233901]
@@ -585,6 +585,7 @@ _upperLegDamageMultiplier = 0.5
 _lowerLegDamageMultiplier = 0.5
 _torsoDamageMultiplier = 0.6
 _simulationRunTimer = NodePath("simulationRunTimer")
+_parasiticMaterialPackedScene = ExtResource("17_iiuu8")
 _physicalBoneSimulator = NodePath("PhysicalBoneSimulator3D")
 _limbContainerPackedScene = ExtResource("3_vwmx8")
 _blood = ExtResource("4_bxjsn")
