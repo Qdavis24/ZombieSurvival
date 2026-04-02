@@ -681,6 +681,7 @@ layout_mode = 2
 theme_override_constants/margin_top = 20
 
 [node name="Button2" type="Button" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1203944240]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85490197, 0.043137256, 0, 1)
 theme_override_fonts/font = ExtResource("4_pridf")
