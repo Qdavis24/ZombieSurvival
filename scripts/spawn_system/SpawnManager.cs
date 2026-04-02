@@ -15,8 +15,28 @@ public partial class SpawnManager : Node
 
     private List<Spawner> _spawners = new();
 
-    private int _numZombiesAlive;
     private int _numZombiesSpawned;
+    private int _numZombiesAlive;
+    public int NumZombiesAlive
+    {
+        get => _numZombiesAlive;
+        set
+        {
+            _numZombiesAlive = value;
+            // *** layer sound control ***
+            if (_numZombiesAlive == 0)
+            {
+                AudioManager.I.PlayLayer1();
+                GD.Print(_numZombiesAlive);
+            } else if (_numZombiesAlive >= 5 && _numZombiesAlive <= 15)
+            {
+                AudioManager.I.PlayLayer2();
+            } else if (_numZombiesAlive > 15)
+            {
+                AudioManager.I.PlayLayer3();
+            }
+        }
+    }
 
     private SpawnerStats _stats;
 
@@ -38,7 +58,7 @@ public partial class SpawnManager : Node
 
     private void OnZombieDied()
     {
-        _numZombiesAlive--;
+        NumZombiesAlive--;
         if (_numZombiesAlive == 0 && _numZombiesSpawned == _stats.NumZombiesRoundLimit) // depleted
         {
             _spawnInterval.Stop();
@@ -83,7 +103,7 @@ public partial class SpawnManager : Node
 
     private void Reset()
     {
-        _numZombiesAlive = 0;
+        NumZombiesAlive = 0;
         _numZombiesSpawned = 0;
         _spawnInterval.WaitTime = _stats.ZombieSpawnTimerInterval;
         _spawnInterval.Start();
@@ -98,11 +118,11 @@ public partial class SpawnManager : Node
         {
             var spawner = _spawners[i];
 
-            if (_numZombiesAlive < _stats.NumZombiesAliveLimit && _numZombiesSpawned < _stats.NumZombiesRoundLimit)
+            if (NumZombiesAlive < _stats.NumZombiesAliveLimit && _numZombiesSpawned < _stats.NumZombiesRoundLimit)
             {
                 spawner.SpawnZombie();
                 _numZombiesSpawned++;
-                _numZombiesAlive++;
+                NumZombiesAlive++;
             }
         }
     }

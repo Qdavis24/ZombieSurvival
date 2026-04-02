@@ -31,8 +31,11 @@ public partial class WeaponBase : Node3D
     
     [ExportGroup("Misc")]
     [Export] private float _animBlendTime = 0.3f;
-
     [Export] private MuzzleFlash _muzzleFlash;
+    
+    [ExportGroup("Sound")]
+    [Export] AudioStream _gunshotSound;
+    [Export] AudioStream _reloadSound;
     
     private Camera3D _camera;
     private AnimationPlayer _anim;
@@ -211,6 +214,7 @@ public partial class WeaponBase : Node3D
     {
         BeginReloadState();
         _anim.Play("hip_reload", _animBlendTime);
+        AudioManager.I.PlayUi(_reloadSound);
     }
 
     protected virtual void RequestReloadCancel()
@@ -238,6 +242,7 @@ public partial class WeaponBase : Node3D
         var from = _camera.GlobalTransform.Origin;
         var direction = -_camera.GlobalTransform.Basis.Z;
 
+        AudioManager.I.Play3D(_gunshotSound, from);
         ResolveShot(from, direction);
     }
 
