@@ -10,6 +10,8 @@ public partial class Attack : Area3D
 
     [Export] private Timer _hitDuration;
 
+    [ExportGroup("Sounds")] [Export] private AudioStream _attackSound;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -21,6 +23,7 @@ public partial class Attack : Area3D
     public void Enable()
     {
         _hitDuration.Start();
+        AudioManager.I.PlayFollowing(_attackSound, this);
         SetDeferred(Area3D.PropertyName.Monitorable, true);
         SetDeferred(Area3D.PropertyName.Monitoring, true);
     }

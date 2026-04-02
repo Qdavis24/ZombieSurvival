@@ -16,6 +16,10 @@ public partial class Zombie : CharacterBody3D
     [Export] private CollisionShape3D _collisionShape;
     [Export] private float _attackRange = 1f;
 
+    [ExportGroup("Sounds")] 
+    [Export] private AudioStream _groanSound;
+    private Timer _groanTimer;
+
     private AnimationNodeStateMachinePlayback _stateMachine;
     private Quaternion _targetRotation = Quaternion.Identity;
     private Node3D _target;
@@ -40,6 +44,7 @@ public partial class Zombie : CharacterBody3D
         _dismemberableBody.Dead += Die;
         _dismemberableBody.SimulationFinished += QueueFree;
         SetState(State.Chase);
+        SetupGroanTimer(); // audio
     }
 
     public override void _PhysicsProcess(double delta)
@@ -114,6 +119,38 @@ public partial class Zombie : CharacterBody3D
 
     private void Die()
     {
+        _groanTimer?.Stop(); // audio
         SetState(State.Dead);
+    }
+
+    // Audio
+    private void SetupGroanTimer()
+    {
+        _groanTimer = new Timer
+        {
+            OneShot = true
+        };
+
+        AddChild(_groanTimer);
+        _groanTimer.Timeout += OnGroanTimerTimeout;
+        ScheduleNextGroan();
+    }
+
+    private void OnGroanTimerTimeout()
+    {
+        if (_state == State.Dead || _groanSound == null)
+            return;
+
+        AudioManager.I.PlayFollowing(_groanSound, this, -10f, (float)GD.RandRange(0.9f, 1.1f));
+        ScheduleNextGroan();
+    }
+
+    private void ScheduleNextGroan()
+    {
+        if (_state == State.Dead)
+            return;
+
+        var delay = (float)GD.RandRange(3f, 8f);
+        _groanTimer.Start(delay);
     }
 }
