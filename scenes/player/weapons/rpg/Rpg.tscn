@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://bwmwf0q4mj2jt" path="res://assets/models/player/weapons/rpg.glb" id="1_wor8h"]
 [ext_resource type="PackedScene" uid="uid://dr8whnbpfr8ne" path="res://scenes/player/weapons/rpg/rpg_projectile.tscn" id="2_8ye5n"]
 [ext_resource type="PackedScene" uid="uid://erpp137vqg0w" path="res://scenes/player/weapons/pistol/pistol_muzzle_flash.tscn" id="3_8ye5n"]
-[ext_resource type="AudioStream" uid="uid://pwpjbi8v4w5k" path="res://assets/sound/music/guns/rpg/rpglaunch.wav" id="3_d7ivq"]
-[ext_resource type="AudioStream" uid="uid://dden0yr6755u3" path="res://assets/sound/music/guns/rpg/rpgreload.wav" id="4_3pw1x"]
+[ext_resource type="AudioStream" uid="uid://ba8tucs0bpm4" path="res://assets/sound/music/guns/rpg/rpglaunch.wav" id="3_d7ivq"]
+[ext_resource type="AudioStream" uid="uid://bsu6xttwy8nyj" path="res://assets/sound/music/guns/rpg/rpgreload.wav" id="4_3pw1x"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3pw1x"]
 random_pitch = 1.2599211
@@ -22,6 +22,7 @@ _roundsPerMinute = 100.0
 _damage = 400.0
 _force = 100.0
 _magazineSize = 1
+AmmoType = 6
 _muzzleFlash = NodePath("Rig/HumanArms/Skeleton3D/BoneAttachment3D/PistolMuzzleFlash")
 _gunshotSound = SubResource("AudioStreamRandomizer_3pw1x")
 _reloadSound = ExtResource("4_3pw1x")
@@ -29,7 +30,7 @@ _reloadSound = ExtResource("4_3pw1x")
 [node name="Rig" parent="." unique_id=1624443170 instance=ExtResource("1_wor8h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.035, 0)
 
-[node name="Skeleton3D" parent="Rig/HumanArms" parent_id_path=PackedInt32Array(1624443170, 442501986) index="0" unique_id=1098952407]
+[node name="Skeleton3D" parent="Rig/HumanArms" parent_id_path=PackedInt32Array(1624443170, 340740902) index="0" unique_id=660958667]
 bones/1/position = Vector3(-0.21312506, 0.020278389, -0.04797538)
 bones/1/rotation = Quaternion(-0.23527023, -0.17378992, 0.9562456, 0.006271987)
 bones/2/rotation = Quaternion(-0.8528703, 6.713625e-05, 0.11906516, 0.5083659)
@@ -79,13 +80,13 @@ bone_idx = 44
 [node name="Marker3D" type="Marker3D" parent="Rig/HumanArms/Skeleton3D/BoneAttachment3D" unique_id=919156314]
 transform = Transform3D(1, -2.7179712e-14, 2.6307556e-14, -2.7462179e-14, -0.043392666, 0.9990581, -2.6012556e-14, -0.9990581, -0.043392666, 0, 0, 0)
 
-[node name="Torus" parent="Rig" index="1" unique_id=978347717]
+[node name="Torus" parent="Rig" index="1" unique_id=1571418847]
 visible = false
 
-[node name="Scale Reference" parent="Rig" index="2" unique_id=476765727]
+[node name="Scale Reference" parent="Rig" index="2" unique_id=1121826006]
 visible = false
 
-[node name="AnimationPlayer" parent="Rig" index="3" unique_id=1650865279]
+[node name="AnimationPlayer" parent="Rig" index="3" unique_id=1519431813]
 autoplay = &"hip_idle"
 
 [editable path="Rig"]

@@ -27,7 +27,6 @@ public partial class SpawnManager : Node
             if (_numZombiesAlive == 0)
             {
                 AudioManager.I.PlayLayer1();
-                GD.Print(_numZombiesAlive);
             } else if (_numZombiesAlive >= 5 && _numZombiesAlive <= 15)
             {
                 AudioManager.I.PlayLayer2();

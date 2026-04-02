@@ -2,14 +2,11 @@
 
 [ext_resource type="Script" uid="uid://ci3yjb1ocdeji" path="res://scripts/ui/Hud.cs" id="1_f1iev"]
 [ext_resource type="FontFile" uid="uid://b5xps8x8u85bq" path="res://scenes/ui/Clynical Terror.ttf" id="2_jkjdw"]
-[ext_resource type="Theme" uid="uid://djrvn0o5wdyef" path="res://scenes/ui/ammo_theme.tres" id="3_5wb3c"]
-[ext_resource type="Texture2D" uid="uid://rgqmapm5fkd3" path="res://scenes/ui/ammo.png" id="4_1se2i"]
-[ext_resource type="Texture2D" uid="uid://dmlvagxly8mge" path="res://scenes/ui/grenade.png" id="5_ehre4"]
 
 [node name="Hud" type="CanvasLayer" unique_id=665882280 node_paths=PackedStringArray("_currentAmmoLabel", "_reserveAmmoLabel")]
 script = ExtResource("1_f1iev")
-_currentAmmoLabel = NodePath("Screen/AmmoUI/VBoxContainer/Ammo/HBoxContainer/CurrentAmmoLabel")
-_reserveAmmoLabel = NodePath("Screen/AmmoUI/VBoxContainer/Ammo/HBoxContainer/ReserveAmmoLabel")
+_currentAmmoLabel = NodePath("")
+_reserveAmmoLabel = NodePath("")
 
 [node name="Screen" type="HBoxContainer" parent="." unique_id=595994582]
 anchors_preset = 15
@@ -30,109 +27,3 @@ theme_override_fonts/font = ExtResource("2_jkjdw")
 theme_override_font_sizes/font_size = 33
 text = "I"
 horizontal_alignment = 2
-
-[node name="AmmoUI" type="MarginContainer" parent="Screen" unique_id=972441222]
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 8
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 72
-theme_override_constants/margin_bottom = 32
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Screen/AmmoUI" unique_id=1459878156]
-layout_mode = 2
-
-[node name="ShotgunLabel" type="Label" parent="Screen/AmmoUI/VBoxContainer" unique_id=1665079079]
-visible = false
-layout_mode = 2
-theme = ExtResource("3_5wb3c")
-theme_override_font_sizes/font_size = 20
-text = "Shotgun"
-horizontal_alignment = 1
-
-[node name="RifleLabel" type="Label" parent="Screen/AmmoUI/VBoxContainer" unique_id=187012930]
-visible = false
-layout_mode = 2
-theme = ExtResource("3_5wb3c")
-theme_override_font_sizes/font_size = 29
-text = "Rifle"
-horizontal_alignment = 1
-
-[node name="PistolLabel" type="Label" parent="Screen/AmmoUI/VBoxContainer" unique_id=2138180983]
-visible = false
-layout_mode = 2
-theme = ExtResource("3_5wb3c")
-theme_override_font_sizes/font_size = 29
-text = "Pistol"
-horizontal_alignment = 1
-
-[node name="RpgLabel" type="Label" parent="Screen/AmmoUI/VBoxContainer" unique_id=1314035045]
-visible = false
-layout_mode = 2
-theme = ExtResource("3_5wb3c")
-theme_override_font_sizes/font_size = 29
-text = "RPG"
-horizontal_alignment = 1
-
-[node name="Ammo" type="HBoxContainer" parent="Screen/AmmoUI/VBoxContainer" unique_id=974263624]
-layout_mode = 2
-alignment = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Screen/AmmoUI/VBoxContainer/Ammo" unique_id=865067375]
-layout_mode = 2
-theme_override_constants/margin_bottom = 7
-
-[node name="TextureRect" type="TextureRect" parent="Screen/AmmoUI/VBoxContainer/Ammo/MarginContainer" unique_id=1534252244]
-layout_mode = 2
-texture = ExtResource("4_1se2i")
-expand_mode = 3
-stretch_mode = 4
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/AmmoUI/VBoxContainer/Ammo" unique_id=273650617]
-layout_mode = 2
-
-[node name="CurrentAmmoLabel" type="Label" parent="Screen/AmmoUI/VBoxContainer/Ammo/HBoxContainer" unique_id=1101826684]
-layout_mode = 2
-theme = ExtResource("3_5wb3c")
-text = " 8"
-
-[node name="slash" type="Label" parent="Screen/AmmoUI/VBoxContainer/Ammo/HBoxContainer" unique_id=610990287]
-layout_mode = 2
-theme = ExtResource("3_5wb3c")
-text = "/"
-
-[node name="ReserveAmmoLabel" type="Label" parent="Screen/AmmoUI/VBoxContainer/Ammo/HBoxContainer" unique_id=570076088]
-layout_mode = 2
-theme = ExtResource("3_5wb3c")
-text = "12"
-
-[node name="Grenade" type="HBoxContainer" parent="Screen/AmmoUI/VBoxContainer" unique_id=1657567397]
-visible = false
-layout_mode = 2
-alignment = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Screen/AmmoUI/VBoxContainer/Grenade" unique_id=322617707]
-layout_mode = 2
-theme_override_constants/margin_bottom = 7
-
-[node name="TextureRect" type="TextureRect" parent="Screen/AmmoUI/VBoxContainer/Grenade/MarginContainer" unique_id=1658397599]
-layout_mode = 2
-texture = ExtResource("5_ehre4")
-expand_mode = 3
-stretch_mode = 4
-
-[node name="current" type="Label" parent="Screen/AmmoUI/VBoxContainer/Grenade" unique_id=1701814984]
-layout_mode = 2
-theme = ExtResource("3_5wb3c")
-text = "2"
-
-[node name="slash" type="Label" parent="Screen/AmmoUI/VBoxContainer/Grenade" unique_id=1090665226]
-layout_mode = 2
-theme = ExtResource("3_5wb3c")
-text = "/"
-
-[node name="max" type="Label" parent="Screen/AmmoUI/VBoxContainer/Grenade" unique_id=328524847]
-layout_mode = 2
-theme = ExtResource("3_5wb3c")
-text = "4"

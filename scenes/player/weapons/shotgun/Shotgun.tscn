@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://ces8k7fo8wyg0" path="res://scripts/player/weapons/shotgun/ShotgunWeapon.cs" id="1_3i4rd"]
 [ext_resource type="PackedScene" uid="uid://biq2wqtoa5x1y" path="res://assets/models/player/weapons/shotgun_shaded.glb" id="2_3i4rd"]
-[ext_resource type="AudioStream" uid="uid://lpdnm1b5t4gq" path="res://assets/sound/music/guns/shotgun/shotgunreload.wav" id="2_u8g2y"]
-[ext_resource type="AudioStream" uid="uid://cibusp6qa1vq0" path="res://assets/sound/music/guns/shotgun/shotgun2c.wav" id="3_u8g2y"]
+[ext_resource type="AudioStream" uid="uid://dap6gxr13i17g" path="res://assets/sound/music/guns/shotgun/shotgunreload.wav" id="2_u8g2y"]
+[ext_resource type="AudioStream" uid="uid://d2clt4lgdyyy8" path="res://assets/sound/music/guns/shotgun/shotgun2c.wav" id="3_u8g2y"]
 [ext_resource type="PackedScene" uid="uid://erpp137vqg0w" path="res://scenes/player/weapons/pistol/pistol_muzzle_flash.tscn" id="3_ytgbc"]
-[ext_resource type="AudioStream" uid="uid://c2ja4j8tsjw4y" path="res://assets/sound/music/guns/shotgun/shotgunreloadshell.wav" id="3_yxl01"]
+[ext_resource type="AudioStream" uid="uid://n70greha0gn1" path="res://assets/sound/music/guns/shotgun/shotgunreloadshell.wav" id="3_yxl01"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_u8g2y"]
 streams_count = 1
@@ -21,13 +21,15 @@ _magazineSize = 5
 _cameraShakeStrength = 0.2
 _cameraPitchKickDegrees = -3.0
 _cameraYawKickDegrees = -0.15
+AmmoType = 5
 _muzzleFlash = NodePath("Rig/HumanArms/Skeleton3D/BoneAttachment3D/PistolMuzzleFlash")
 _gunshotSound = ExtResource("3_u8g2y")
+_reloadSound = ExtResource("2_u8g2y")
 
 [node name="Rig" parent="." unique_id=136523554 instance=ExtResource("2_3i4rd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, 0)
 
-[node name="Skeleton3D" parent="Rig/HumanArms" parent_id_path=PackedInt32Array(136523554, 154166648) index="0" unique_id=1428574033]
+[node name="Skeleton3D" parent="Rig/HumanArms" parent_id_path=PackedInt32Array(136523554, 318000205) index="0" unique_id=2011153784]
 bones/3/rotation = Quaternion(0.04669751, 0.0008469804, -0.008069408, 0.9988762)
 bones/10/rotation = Quaternion(-0.027272798, -1.191795e-07, 1.8043078e-08, 0.99962807)
 bones/13/rotation = Quaternion(-0.06748094, -0.00057179056, -0.0035548066, 0.9977141)
@@ -39,13 +41,13 @@ bones/31/rotation = Quaternion(-0.06748094, 0.00057179056, 0.0035548066, 0.99771
 bones/38/rotation = Quaternion(9.9748014e-08, -9.9748014e-08, 0.70710677, 0.70710677)
 bones/44/rotation = Quaternion(9.9748014e-08, 9.9748014e-08, -0.70710677, 0.70710677)
 
-[node name="body" parent="Rig/HumanArms/Skeleton3D" index="1" unique_id=31756673]
+[node name="body" parent="Rig/HumanArms/Skeleton3D" index="1" unique_id=816339470]
 visible = false
 
-[node name="mag" parent="Rig/HumanArms/Skeleton3D" index="4" unique_id=1436112142]
+[node name="mag" parent="Rig/HumanArms/Skeleton3D" index="4" unique_id=28869097]
 visible = false
 
-[node name="SHELL" parent="Rig/HumanArms/Skeleton3D" index="5" unique_id=602544670]
+[node name="SHELL" parent="Rig/HumanArms/Skeleton3D" index="5" unique_id=1903870768]
 visible = false
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Rig/HumanArms/Skeleton3D" index="6" unique_id=1196143389]
@@ -55,17 +57,17 @@ bone_idx = 42
 
 [node name="PistolMuzzleFlash" parent="Rig/HumanArms/Skeleton3D/BoneAttachment3D" unique_id=121254955 instance=ExtResource("3_ytgbc")]
 
-[node name="AKREFERENCESIDE" parent="Rig" index="1" unique_id=1353050920]
+[node name="AKREFERENCESIDE" parent="Rig" index="1" unique_id=46785218]
 transform = Transform3D(1.4257766e-08, -0.32617965, -1.4257766e-08, 0, 1.4257766e-08, -0.32617965, -0.32617965, -1.4257766e-08, -6.232267e-16, 2.4455173, 1.4779537, -2.4286065)
 visible = false
 
-[node name="Torus" parent="Rig" index="2" unique_id=323115374]
+[node name="Torus" parent="Rig" index="2" unique_id=1000738385]
 visible = false
 
-[node name="Remington" parent="Rig" index="3" unique_id=1034642671]
+[node name="Remington" parent="Rig" index="3" unique_id=528417597]
 visible = false
 
-[node name="Scale Reference" parent="Rig" index="4" unique_id=1411389111]
+[node name="Scale Reference" parent="Rig" index="4" unique_id=539673257]
 visible = false
 
 [editable path="Rig"]

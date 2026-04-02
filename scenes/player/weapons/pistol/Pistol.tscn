@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://ba740r357d2xg" path="res://assets/sound/music/guns/1911/pistol1.wav" id="2_fbydl"]
 [ext_resource type="AudioStream" uid="uid://bjc7q6xsih0r6" path="res://assets/sound/music/guns/1911/pistol2.wav" id="3_nimcv"]
 [ext_resource type="PackedScene" uid="uid://erpp137vqg0w" path="res://scenes/player/weapons/pistol/pistol_muzzle_flash.tscn" id="3_p313x"]
-[ext_resource type="AudioStream" uid="uid://uivgilnvafsp" path="res://assets/sound/music/guns/1911/pistolreload.wav" id="4_fbydl"]
+[ext_resource type="AudioStream" uid="uid://wel2g2xj0x5r" path="res://assets/sound/music/guns/1911/pistolreload.wav" id="4_fbydl"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nimcv"]
 random_pitch = 1.122462
@@ -17,6 +17,7 @@ stream_1/stream = ExtResource("3_nimcv")
 [node name="Pistol" type="Node3D" unique_id=1586866769 node_paths=PackedStringArray("_muzzleFlash")]
 script = ExtResource("1_at3be")
 _magazineSize = 7
+AmmoType = 3
 _muzzleFlash = NodePath("Rig/HumanArms/Skeleton3D/BoneAttachment3D/PistolMuzzleFlash")
 _gunshotSound = SubResource("AudioStreamRandomizer_nimcv")
 _reloadSound = ExtResource("4_fbydl")
@@ -24,7 +25,7 @@ _reloadSound = ExtResource("4_fbydl")
 [node name="Rig" parent="." unique_id=879494110 instance=ExtResource("2_2ru15")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.035, 0)
 
-[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(879494110, 320064356) index="5" unique_id=136675663]
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(879494110, 407671108) index="5" unique_id=136675663]
 transform = Transform3D(3.725287e-09, 0.9999997, 1.642423e-05, -0.9999996, -1.4903453e-08, 1.3348037e-07, -2.2435753e-08, -1.6485472e-05, 0.99999976, 1.5132854, 1.449154, -0.14958747)
 bone_name = "MUZZLE"
 bone_idx = 41
@@ -32,7 +33,7 @@ bone_idx = 41
 [node name="PistolMuzzleFlash" parent="Rig/HumanArms/Skeleton3D/BoneAttachment3D" unique_id=121254955 instance=ExtResource("3_p313x")]
 transform = Transform3D(-1.4901257e-08, -1, 1.334807e-07, 0.99999994, 3.7256567e-09, -1.642424e-05, 1.6485481e-05, -2.2435701e-08, 1.0000002, -0.022845984, 0.13404524, -0.072690085)
 
-[node name="Scale Reference" parent="Rig" index="1" unique_id=2079100127]
+[node name="Scale Reference" parent="Rig" index="1" unique_id=144809609]
 visible = false
 
 [editable path="Rig"]

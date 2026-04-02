@@ -2,13 +2,14 @@ using Godot;
 using System;
 using ZombieSurvival.scripts.damage_system;
 using ZombieSurvival.scripts.inventory_system;
+using ZombieSurvival.scripts.player.weapons;
 
 public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamageable
 {
-	[Signal] public delegate void ItemAddedEventHandler(ItemType itemType, int amount);
 	private Node3D _head;
 	[Export] private float _healthRegenRate;
-	[Export] private VfxHud _vfxHud;
+	[Export] private PlayerHud _playerHud;
+	[Export] private WeaponManager _weaponManager;
 	[Export] private float _mouseSensitivity = 0.0020f;
 	[Export] private float _moveSpeed = 6.0f;
 	[Export] private float _accel = 14.0f;
@@ -21,12 +22,20 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 	[Export] public Inventory Inventory { get; private set; }
 	
-
 	private float _maxHealth = 200f;
 	private float _health = 200f;
-	public float MaxHealth => _maxHealth;
-	public float Health => _health;
-
+	private float Health
+	{
+		get => _health;
+		set
+		{
+			var clamped = Mathf.Clamp(value, 0f, _maxHealth);
+			if (clamped < _health)
+				_playerHud.ShowHitFlash();
+			_health = clamped;
+			_playerHud.UpdateHealthIndicator(_health, _maxHealth);
+		}
+	}
 
 	public void OnWeaponFired(
 		float shakeDuration,
@@ -62,9 +71,14 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 		_yaw = Rotation.Y;
 		_pitch = _head.Rotation.X;
-		
-		_vfxHud.Init(this);
-		Inventory.ItemAdded += EmitSignalItemAdded;
+		Inventory.ItemAdded += OnItemAdded;
+		_weaponManager.AmmoChanged += _playerHud.SetAmmo;
+		_health = _maxHealth;
+	}
+
+	private void OnItemAdded(ItemType type, int amount)
+	{
+		_playerHud.ShowSuccessfulPickup($"{type} + {amount}");
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -82,7 +96,9 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	{
 		var dt = (float)delta;
 		
-		_health = Mathf.Clamp(_health + _healthRegenRate * _maxHealth * dt, 0f, _maxHealth);
+		Health += _healthRegenRate * _maxHealth * dt;
+		
+		GD.Print(Health);
 
 		var input = Input.GetVector("move_left", "move_right", "move_forward", "move_back");
 
@@ -114,7 +130,6 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 	public void TakeDamage(float damage, Vector3 hitGlobalPosition, Vector3 hitDir, float force)
 	{
-		_health -= damage;
-		_vfxHud.ShowHitFlash();
+		Health -= damage;
 	}
 }

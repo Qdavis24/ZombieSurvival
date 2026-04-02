@@ -32,7 +32,7 @@ public partial class ShotgunWeapon : WeaponBase
 	{
 		if (animName == "hip_reload_prep")
 		{
-			if (CurrentAmmo >= MagazineSize || ReserveAmmo <= 0)
+			if (CurrentAmmo >= MagazineSize)
 			{
 				Anim.Play("hip_reload_end", AnimBlendTime);
 				AudioManager.I.Play3D(_reloadSound, GlobalPosition, -8f);
@@ -48,9 +48,9 @@ public partial class ShotgunWeapon : WeaponBase
 
 		if (animName == "hip_reload")
 		{
-			TryLoadOneRoundIntoMagazine();
+			bool loaded = TryLoadOneRoundIntoMagazine();
 
-			if (_reloadCancelRequested || CurrentAmmo >= MagazineSize || ReserveAmmo <= 0)
+			if (_reloadCancelRequested || CurrentAmmo >= MagazineSize || !loaded)
 			{
 				Anim.Play("hip_reload_end", AnimBlendTime);
 				AudioManager.I.Play3D(_reloadSound, GlobalPosition, -8f);

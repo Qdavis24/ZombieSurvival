@@ -11,7 +11,7 @@ public partial class WeaponBase : Node3D
         float yawKickDegrees,
         bool manualRecoil
     );
-    [Signal] public delegate void AmmoChangedEventHandler(int currentAmmo, int reserveAmmo);
+    [Signal] public delegate void AmmoChangedEventHandler(int currentAmmo);
     
     // Default values for pistol
     [ExportGroup("Stats")]
@@ -33,7 +33,6 @@ public partial class WeaponBase : Node3D
     [ExportGroup("Misc")]
     [Export] private float _animBlendTime = 0.3f;
     [Export] public ItemType AmmoType;
-
     [Export] private MuzzleFlash _muzzleFlash;
     
     [ExportGroup("Sound")]
@@ -53,19 +52,20 @@ public partial class WeaponBase : Node3D
     private bool _isWalkingForward;
     private bool _isReloading;
     private int _currentAmmo;
-    private int _reserveAmmo;
+    
+    private Func<int, int> _consumeAmmo;
 
-    public void Initialize(Camera3D camera, HitResolver hitResolver, int currentAmmo, int reserveAmmo)
+    public void Initialize(Camera3D camera, HitResolver hitResolver, int currentAmmo)
     {
         _camera = camera;
         _hitResolver = hitResolver;
         _currentAmmo = currentAmmo;
-        _reserveAmmo = reserveAmmo;
         NotifyAmmoChanged();
     }
 
+    public void SetAmmoSource(Func<int, int> consumeAmmo) => _consumeAmmo = consumeAmmo;
+
     public int CurrentAmmo => _currentAmmo;
-    public int ReserveAmmo => _reserveAmmo;
     public int MagazineSize => _magazineSize;
 
     protected AnimationPlayer Anim => _anim;
@@ -84,11 +84,11 @@ public partial class WeaponBase : Node3D
         if (_currentAmmo >= _magazineSize)
             return false;
 
-        if (_reserveAmmo <= 0)
+        int granted = _consumeAmmo?.Invoke(1) ?? 0;
+        if (granted == 0)
             return false;
 
         _currentAmmo++;
-        _reserveAmmo--;
         NotifyAmmoChanged();
         return true;
     }
@@ -110,7 +110,7 @@ public partial class WeaponBase : Node3D
 
     protected void NotifyAmmoChanged()
     {
-        EmitSignal(SignalName.AmmoChanged, _currentAmmo, _reserveAmmo);
+        EmitSignal(SignalName.AmmoChanged, _currentAmmo);
     }
 
     public override void _Ready()
@@ -208,7 +208,6 @@ public partial class WeaponBase : Node3D
         if (_isReloading) return;
         if (_isShooting) return;
         if (_currentAmmo >= _magazineSize) return;
-        if (_reserveAmmo <= 0) return;
 
         StartReload();
     }
@@ -302,10 +301,8 @@ public partial class WeaponBase : Node3D
             return false;
 
         int ammoNeeded = _magazineSize - _currentAmmo;
-        int ammoToLoad = Math.Min(ammoNeeded, _reserveAmmo);
-
-        _currentAmmo += ammoToLoad;
-        _reserveAmmo -= ammoToLoad;
+        int granted = _consumeAmmo?.Invoke(ammoNeeded) ?? 0;
+        _currentAmmo += granted;
         NotifyAmmoChanged();
 
         FinishReloadState();

@@ -8,8 +8,9 @@ radius = 3.0
 [node name="ShotgunStore" type="Node3D" unique_id=176065396 node_paths=PackedStringArray("_buyRange", "_light")]
 script = ExtResource("1_hew1x")
 _buyRange = NodePath("Area3D")
-_storeSellItemType = 3
+_storeSellItemType = 5
 _storeSellAmount = 25
+_storeBuyItemType = 2
 _storeBuyAmount = 10
 _light = NodePath("OmniLight3D")
 

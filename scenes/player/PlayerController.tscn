@@ -3,16 +3,21 @@
 [ext_resource type="Script" uid="uid://dasyaiv33oybx" path="res://scripts/player/PlayerController.cs" id="1_etyb6"]
 [ext_resource type="Script" uid="uid://c7dgejf7dcfu" path="res://scripts/player/Camera.cs" id="2_08ru5"]
 [ext_resource type="Script" uid="uid://4uxtcbw88ior" path="res://scripts/player/weapons/WeaponManager.cs" id="2_h2fbm"]
-[ext_resource type="Texture2D" uid="uid://cope1k8ks707y" path="res://icon.svg" id="4_6ev1f"]
 [ext_resource type="PackedScene" uid="uid://cvfgj38xc7dac" path="res://scenes/player/weapons/rifle/Rifle.tscn" id="4_08ru5"]
 [ext_resource type="PackedScene" uid="uid://00wy8mcfk7sk" path="res://scenes/player/weapons/pistol/Pistol.tscn" id="5_anuhh"]
 [ext_resource type="PackedScene" uid="uid://btwlqwo5gkmud" path="res://scenes/player/weapons/shotgun/Shotgun.tscn" id="6_60odj"]
 [ext_resource type="PackedScene" uid="uid://m4alwsdaumah" path="res://scenes/player/weapons/rpg/Rpg.tscn" id="7_tfrk6"]
 [ext_resource type="PackedScene" uid="uid://cjng820s0s2d" path="res://scenes/player/weapons/grenade/Grenade.tscn" id="8_wtdo7"]
-[ext_resource type="Script" uid="uid://8ekxc1y8cxhh" path="res://scripts/player/VfxHud.cs" id="10_8mr67"]
+[ext_resource type="Script" uid="uid://8ekxc1y8cxhh" path="res://scripts/player/player_hud/PlayerHud.cs" id="9_hmgul"]
+[ext_resource type="Script" uid="uid://dtutdnd7epe8x" path="res://scripts/player/player_hud/HealthIndicator.cs" id="11_hmgul"]
 [ext_resource type="Shader" uid="uid://dhk6778ekh32f" path="res://scenes/player/health_visual_shader.gdshader" id="11_xpgqn"]
 [ext_resource type="Texture2D" uid="uid://bsg165p8bjmje" path="res://assets/particle_textures/blood_particle_tex.png" id="12_qcp1l"]
+[ext_resource type="Script" uid="uid://b42xyipo0jtr8" path="res://scripts/player/player_hud/BloodSplatter.cs" id="13_klk5f"]
 [ext_resource type="PackedScene" uid="uid://bhwaaq5eta4sp" path="res://scenes/inventory_system/Inventory.tscn" id="13_xpgqn"]
+[ext_resource type="Theme" uid="uid://djrvn0o5wdyef" path="res://scenes/ui/ammo_theme.tres" id="14_jlpny"]
+[ext_resource type="Texture2D" uid="uid://qkr7gisrljdt" path="res://scenes/ui/ammo.png" id="15_444fp"]
+[ext_resource type="Texture2D" uid="uid://ds7gkrlq74gh2" path="res://scenes/ui/grenade.png" id="16_4vr2v"]
+[ext_resource type="PackedScene" uid="uid://dii0p3dtncfx3" path="res://scenes/ui/Popup.tscn" id="17_r81m1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2fbm"]
 albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
@@ -30,9 +35,11 @@ shader = ExtResource("11_xpgqn")
 shader_parameter/intensity = 0.0
 shader_parameter/hit_flash = 0.0
 
-[node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_vfxHud", "Inventory")]
+[node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "Inventory")]
 script = ExtResource("1_etyb6")
-_vfxHud = NodePath("CanvasLayer")
+_healthRegenRate = 0.1
+_playerHud = NodePath("PlayerHud")
+_weaponManager = NodePath("WeaponManager")
 Inventory = NodePath("Inventory")
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1270238325]
@@ -64,46 +71,149 @@ _playerController = NodePath("..")
 _camera = NodePath("../Head/Camera3D")
 _grenadeThrowScene = ExtResource("8_wtdo7")
 
-[node name="CENTERED" type="CanvasLayer" parent="." unique_id=681009954]
-visible = false
+[node name="PlayerHud" type="CanvasLayer" parent="." unique_id=1950508150 node_paths=PackedStringArray("_healthIndicator", "_bloodSplatter", "_currentAmmoLabel", "_reserveAmmoLabel", "_playerPopup")]
+script = ExtResource("9_hmgul")
+_healthIndicator = NodePath("HitEffect")
+_bloodSplatter = NodePath("BloodSplatter")
+_currentAmmoLabel = NodePath("AmmoUI/VBoxContainer/Ammo/HBoxContainer/CurrentAmmoLabel")
+_reserveAmmoLabel = NodePath("AmmoUI/VBoxContainer/Ammo/HBoxContainer/ReserveAmmoLabel")
+_playerPopup = NodePath("Popup")
 
-[node name="TextureRect" type="TextureRect" parent="CENTERED" unique_id=57526006]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -5.0
-offset_top = -6.0
-offset_right = 195.0
-offset_bottom = 214.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.05, 0.05)
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("4_6ev1f")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1950508150 node_paths=PackedStringArray("_vignette", "_bloodSplatter")]
-script = ExtResource("10_8mr67")
-_vignette = NodePath("ColorRect")
-_bloodSplatter = NodePath("TextureRect")
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1250240893]
+[node name="HitEffect" type="ColorRect" parent="PlayerHud" unique_id=1250240893]
 material = SubResource("ShaderMaterial_g4ghg")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1, 0, 0, 1)
+color = Color(1, 0, 0, 0)
+script = ExtResource("11_hmgul")
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=1004675379]
+[node name="BloodSplatter" type="TextureRect" parent="PlayerHud" unique_id=1004675379]
+modulate = Color(1, 0, 0, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("12_qcp1l")
+script = ExtResource("13_klk5f")
+
+[node name="AmmoUI" type="MarginContainer" parent="PlayerHud" unique_id=792199847]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -176.0
+offset_top = -88.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 10
+size_flags_vertical = 8
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 72
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerHud/AmmoUI" unique_id=928866451]
+layout_mode = 2
+
+[node name="ShotgunLabel" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer" unique_id=1735955300]
+visible = false
+layout_mode = 2
+theme = ExtResource("14_jlpny")
+theme_override_font_sizes/font_size = 20
+text = "Shotgun"
+horizontal_alignment = 1
+
+[node name="RifleLabel" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer" unique_id=1440502149]
+visible = false
+layout_mode = 2
+theme = ExtResource("14_jlpny")
+theme_override_font_sizes/font_size = 29
+text = "Rifle"
+horizontal_alignment = 1
+
+[node name="PistolLabel" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer" unique_id=1570430985]
+visible = false
+layout_mode = 2
+theme = ExtResource("14_jlpny")
+theme_override_font_sizes/font_size = 29
+text = "Pistol"
+horizontal_alignment = 1
+
+[node name="RpgLabel" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer" unique_id=1284063286]
+visible = false
+layout_mode = 2
+theme = ExtResource("14_jlpny")
+theme_override_font_sizes/font_size = 29
+text = "RPG"
+horizontal_alignment = 1
+
+[node name="Ammo" type="HBoxContainer" parent="PlayerHud/AmmoUI/VBoxContainer" unique_id=1022492745]
+layout_mode = 2
+alignment = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerHud/AmmoUI/VBoxContainer/Ammo" unique_id=411688836]
+layout_mode = 2
+theme_override_constants/margin_bottom = 7
+
+[node name="TextureRect" type="TextureRect" parent="PlayerHud/AmmoUI/VBoxContainer/Ammo/MarginContainer" unique_id=926040673]
+layout_mode = 2
+texture = ExtResource("15_444fp")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerHud/AmmoUI/VBoxContainer/Ammo" unique_id=11811990]
+layout_mode = 2
+
+[node name="CurrentAmmoLabel" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer/Ammo/HBoxContainer" unique_id=138161115]
+layout_mode = 2
+theme = ExtResource("14_jlpny")
+text = " 8"
+
+[node name="slash" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer/Ammo/HBoxContainer" unique_id=1982051813]
+layout_mode = 2
+theme = ExtResource("14_jlpny")
+text = "/"
+
+[node name="ReserveAmmoLabel" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer/Ammo/HBoxContainer" unique_id=777322997]
+layout_mode = 2
+theme = ExtResource("14_jlpny")
+text = "12"
+
+[node name="Grenade" type="HBoxContainer" parent="PlayerHud/AmmoUI/VBoxContainer" unique_id=136844001]
+layout_mode = 2
+alignment = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerHud/AmmoUI/VBoxContainer/Grenade" unique_id=1932368185]
+layout_mode = 2
+theme_override_constants/margin_bottom = 7
+
+[node name="TextureRect" type="TextureRect" parent="PlayerHud/AmmoUI/VBoxContainer/Grenade/MarginContainer" unique_id=1997851579]
+layout_mode = 2
+texture = ExtResource("16_4vr2v")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="current" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer/Grenade" unique_id=1900581714]
+layout_mode = 2
+theme = ExtResource("14_jlpny")
+text = "2"
+
+[node name="slash" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer/Grenade" unique_id=1020627379]
+layout_mode = 2
+theme = ExtResource("14_jlpny")
+text = "/"
+
+[node name="max" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer/Grenade" unique_id=1636670534]
+layout_mode = 2
+theme = ExtResource("14_jlpny")
+text = "4"
+
+[node name="Popup" parent="PlayerHud" unique_id=580647925 instance=ExtResource("17_r81m1")]
+layer = 5
+visible = false
 
 [node name="Inventory" parent="." unique_id=949916564 instance=ExtResource("13_xpgqn")]

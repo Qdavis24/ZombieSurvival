@@ -23,7 +23,6 @@ public partial class Explosion : Area3D
         _flash.Emitting = true;
         
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-        GD.Print("POS", GlobalPosition);
         AudioManager.I.PlayExplosion(_explosionSound, GlobalPosition);
         _flash.Finished += QueueFree;
     }

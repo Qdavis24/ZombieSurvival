@@ -37,11 +37,6 @@ public partial class GameManager : Node
         AudioManager.I.InitLayer3(_layer3);
     }
 
-    private void HandlePlayerItemAdded(ItemType itemType, int amount)
-    {
-        _uiManager.ShowSuccessfulPickup($"{itemType.ToString()} + {amount}");
-    }
-
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event.IsActionPressed("pause") && _isGamePlaying)
@@ -88,14 +83,12 @@ public partial class GameManager : Node
         _gameInstance = _game.Instantiate<Game>();
         AddChild(_gameInstance);
         _player = _gameInstance.Player;
-        _player.ItemAdded += HandlePlayerItemAdded;
         _isGamePlaying = true;
         Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 
     private void OnQuitGame()
     {
-        _player.ItemAdded -= HandlePlayerItemAdded;
         _isPaused = false;
         _gameInstance.QueueFree();
         _isGamePlaying = false;

@@ -1,22 +1,27 @@
+using System;
 using Godot;
+using ZombieSurvival.scripts.inventory_system;
 using ZombieSurvival.scripts.player.weapons.grenade;
 
 namespace ZombieSurvival.scripts.player.weapons;
 
 public partial class WeaponManager : Node
 {
+    [Signal] public delegate void AmmoChangedEventHandler(int currentAmmo, int reserve);
+    [Signal] public delegate void GrenadesChangedEventHandler(int currentGrenades, int reserve);
+
     private sealed class WeaponSlot
     {
         public PackedScene Scene;
         public bool Unlocked;
         public int CurrentAmmo;
-        public int ReserveAmmo;
+        public ItemType AmmoType;
 
-        public WeaponSlot(PackedScene scene, int currentAmmo, int reserveAmmo)
+        public WeaponSlot(PackedScene scene, int currentAmmo, ItemType ammoType)
         {
             Scene = scene;
             CurrentAmmo = currentAmmo;
-            ReserveAmmo = reserveAmmo;
+            AmmoType = ammoType;
         }
     }
 
@@ -40,15 +45,14 @@ public partial class WeaponManager : Node
     private int _previousWeaponIndex = -1;
 
     private HitResolver _hitResolver;
-    private UiManager _uiManager;
 
     private WeaponBase _current;
 
     public override void _Ready()
     {
-        _uiManager = GetTree().CurrentScene.GetNodeOrNull<UiManager>("UiManager");
         _hitResolver = GetTree().CurrentScene.GetNodeOrNull<HitResolver>("HitResolver");
-        
+        _playerController.Inventory.ItemAdded += OnPlayerInventoryItemAdded;
+        _playerController.Inventory.ItemRemoved += OnPlayerInventoryItemRemoved;
         _grenadeCount = _startingGrenadeCount;
 
         if (_weaponScenes != null && _weaponScenes.Length > 0)
@@ -66,12 +70,15 @@ public partial class WeaponManager : Node
                 int reserveAmmo = (_startingReserveAmmo != null && i < _startingReserveAmmo.Length)
                     ? _startingReserveAmmo[i]
                     : 0;
+                ItemType ammoType = previewWeapon.AmmoType;
 
-                _weaponSlots[i] = new WeaponSlot(scene, magazineSize, reserveAmmo)
+                _weaponSlots[i] = new WeaponSlot(scene, magazineSize, ammoType)
                 {
                     // Unlocked = i == 0 // final version just pistol unlocked
                     Unlocked = i == 0 || i == 1 || i == 2 || i == 3
                 };
+
+                _playerController.Inventory.AddItem(ammoType, reserveAmmo);
 
                 previewWeapon.QueueFree();
             }
@@ -79,6 +86,20 @@ public partial class WeaponManager : Node
             _currentWeaponIndex = 0;
             Equip(_currentWeaponIndex);
         }
+    }
+
+    private void OnPlayerInventoryItemAdded(ItemType itemType, int amount)
+    {
+        if (_weaponSlots == null) return;
+        if (_weaponSlots[_currentWeaponIndex].AmmoType == itemType)
+            RefreshHudAmmo();
+    }
+
+    private void OnPlayerInventoryItemRemoved(ItemType itemType, int amount)
+    {
+        if (_weaponSlots == null) return;
+        if (_weaponSlots[_currentWeaponIndex].AmmoType == itemType)
+            RefreshHudAmmo();
     }
 
     private void Equip(int weaponIndex)
@@ -101,7 +122,15 @@ public partial class WeaponManager : Node
 
         _current = slot.Scene.Instantiate<WeaponBase>();
         _weaponSocket.AddChild(_current);
-        _current.Initialize(_camera, _hitResolver, slot.CurrentAmmo, slot.ReserveAmmo);
+        _current.Initialize(_camera, _hitResolver, slot.CurrentAmmo);
+        _current.SetAmmoSource(needed =>
+        {
+            var available = _playerController.Inventory.GetAmount(slot.AmmoType);
+            var granted = Math.Min(needed, available);
+            if (granted > 0)
+                _playerController.Inventory.ConsumeItem(slot.AmmoType, granted);
+            return granted;
+        });
         _current.Fired += _camera.OnWeaponFired;
         _current.Fired += _playerController.OnWeaponFired;
         _current.AmmoChanged += OnCurrentWeaponAmmoChanged;
@@ -110,27 +139,21 @@ public partial class WeaponManager : Node
         CallDeferred(nameof(RefreshHudAmmo));
     }
 
-    private void OnCurrentWeaponAmmoChanged(int currentAmmo, int reserveAmmo)
+    private void OnCurrentWeaponAmmoChanged(int currentAmmo)
     {
         if (_weaponSlots != null && _currentWeaponIndex >= 0 && _currentWeaponIndex < _weaponSlots.Length)
-        {
-            var slot = _weaponSlots[_currentWeaponIndex];
-            if (slot != null)
-            {
-                slot.CurrentAmmo = currentAmmo;
-                slot.ReserveAmmo = reserveAmmo;
-            }
-        }
+            _weaponSlots[_currentWeaponIndex].CurrentAmmo = currentAmmo;
 
-        _uiManager.HudSetAmmo(_current.CurrentAmmo, _current.ReserveAmmo);
+        RefreshHudAmmo();
     }
 
     private void RefreshHudAmmo()
     {
-        if (_uiManager == null || _current == null)
+        if (_current == null || _weaponSlots == null)
             return;
 
-        _uiManager.HudSetAmmo(_current.CurrentAmmo, _current.ReserveAmmo);
+        var reserve = _playerController.Inventory.GetAmount(_weaponSlots[_currentWeaponIndex].AmmoType);
+        EmitSignal(SignalName.AmmoChanged, _current.CurrentAmmo, reserve);
     }
 
     private AnimationPlayer GetWeaponAnimationPlayer(WeaponBase weapon)
@@ -294,7 +317,11 @@ public partial class WeaponManager : Node
             _camera.SetMovementState(isMovingForward);
 
             if (Input.IsActionJustPressed("reload"))
-                _current?.Call("TryReload");
+            {
+                var slot = _weaponSlots?[_currentWeaponIndex];
+                if (_current != null && slot != null && _playerController.Inventory.GetAmount(slot.AmmoType) > 0)
+                    _current.TryReload();
+            }
 
             bool triggerHeld = Input.IsActionPressed("fire");
             _current?.TryFire(triggerHeld);

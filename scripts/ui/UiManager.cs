@@ -15,6 +15,7 @@ public partial class UiManager : Node
 	[Export] private Hud _hud;
 	[Export] private Popup _popup;
 	
+	
 	public override void _Ready()
 	{
 		_startMenu.Visible = true;
@@ -51,23 +52,6 @@ public partial class UiManager : Node
 		EmitSignal(SignalName.StartGame);
 	}
 
-	public void ShowPickup(String pickupText)
-	{
-		_popup.SetPickupText(pickupText);
-		_popup.Visible = true;
-	}
-	public void HidePickup()
-	{
-		_popup.Visible = false;
-	}
-
-	public async void ShowSuccessfulPickup(String pickupText)
-	{
-		_popup.Visible = true;
-		await _popup.SuccessfullyPickedUp(pickupText);
-		_popup.Visible = false;
-	}
-
 	public void ShowPauseMenu()
 	{
 		_pauseMenu.Visible = true;
@@ -81,11 +65,6 @@ public partial class UiManager : Node
 	public void HidePauseMenu()
 	{
 		_pauseMenu.Visible = false;
-	}
-
-	public void HudSetAmmo(int currentAmmo, int reserveAmmo)
-	{
-		_hud.SetAmmo(currentAmmo, reserveAmmo);
 	}
 	
 	public void HudSetRound(int round)
