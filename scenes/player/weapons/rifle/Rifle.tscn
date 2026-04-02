@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dbyhmp7kvgdqb" path="res://scripts/player/weapons/WeaponBase.cs" id="1_cxf1s"]
 [ext_resource type="PackedScene" uid="uid://dsgkm7iixsc4l" path="res://assets/models/player/weapons/new_rifle.glb" id="2_cxf1s"]
-[ext_resource type="AudioStream" uid="uid://bd6mbmm0qwouq" path="res://assets/sound/music/guns/ak47/rifle1.wav" id="2_jc7wx"]
+[ext_resource type="AudioStream" uid="uid://bd6mbmm0qwouq" path="res://assets/sound/guns/ak47/rifle1.wav" id="2_jc7wx"]
 [ext_resource type="PackedScene" uid="uid://erpp137vqg0w" path="res://scenes/player/weapons/pistol/pistol_muzzle_flash.tscn" id="3_gfsj7"]
-[ext_resource type="AudioStream" uid="uid://bgw6cvemi7rsu" path="res://assets/sound/music/guns/ak47/riflereload.wav" id="6_etkhb"]
+[ext_resource type="AudioStream" uid="uid://bgw6cvemi7rsu" path="res://assets/sound/guns/ak47/riflereload.wav" id="6_etkhb"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_d62rd"]
 random_pitch = 1.0594631
