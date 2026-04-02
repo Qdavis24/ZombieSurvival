@@ -9,6 +9,9 @@ public partial class GrenadeProjectile : Projectile
     [Export] private float _fuseTime;
 
     [Export] private PackedScene _explodeScene;
+    
+    [Export] private AudioStream _bounceSound;
+    private bool _canBounceSound = true;
 
     public void Throw(Vector3 throwDirection)
     {
@@ -27,6 +30,8 @@ public partial class GrenadeProjectile : Projectile
     // Called when the node enters the scene tree for the first time.
     public override async void _Ready()
     {
+        BodyEntered += OnBodyEntered;
+        
         await ToSignal(GetTree().CreateTimer(_fuseTime), SceneTreeTimer.SignalName.Timeout);
         Explode();
     }
@@ -38,5 +43,17 @@ public partial class GrenadeProjectile : Projectile
         Containers.Instance.VFX.AddChild(explosion);
         explosion.GlobalPosition = GlobalPosition;
         QueueFree();
+    }
+    
+
+    private async void OnBodyEntered(Node body)
+    {
+        if (!_canBounceSound) return;
+        _canBounceSound = false;
+
+        AudioManager.I.Play3D(_bounceSound, GlobalPosition, -15f);
+
+        await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
+        _canBounceSound = true;
     }
 }

@@ -83,4 +83,11 @@ public partial class Camera : Camera3D
             0f
         );
     }
+
+    public override void _Ready()
+    {
+        GD.Print("Current camera: ", IsCurrent());
+        MakeCurrent();
+        GD.Print("Current camera: ", IsCurrent());
+    }
 }

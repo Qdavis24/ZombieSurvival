@@ -3,6 +3,8 @@ using System;
 
 public partial class ShotgunWeapon : WeaponBase
 {
+	[Export] private AudioStream _reloadSound;
+	[Export] private AudioStream _reloadShellSound;
 	[Export] private int _pelletCount = 8;
 	private bool _reloadCancelRequested;
 
@@ -33,10 +35,12 @@ public partial class ShotgunWeapon : WeaponBase
 			if (CurrentAmmo >= MagazineSize || ReserveAmmo <= 0)
 			{
 				Anim.Play("hip_reload_end", AnimBlendTime);
+				AudioManager.I.Play3D(_reloadSound, GlobalPosition, -8f);
 			}
 			else
 			{
 				Anim.Play("hip_reload", AnimBlendTime);
+				AudioManager.I.Play3D(_reloadShellSound, GlobalPosition, -16f);
 			}
 
 			return true;
@@ -49,10 +53,12 @@ public partial class ShotgunWeapon : WeaponBase
 			if (_reloadCancelRequested || CurrentAmmo >= MagazineSize || ReserveAmmo <= 0)
 			{
 				Anim.Play("hip_reload_end", AnimBlendTime);
+				AudioManager.I.Play3D(_reloadSound, GlobalPosition, -8f);
 			}
 			else
 			{
 				Anim.Play("hip_reload", AnimBlendTime);
+				AudioManager.I.Play3D(_reloadShellSound, GlobalPosition, -16f);
 			}
 
 			return true;

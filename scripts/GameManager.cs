@@ -13,6 +13,10 @@ public partial class GameManager : Node
     [Export] private SpawnManager _spawnManager;
 
     [Export] private PlayerController _player;
+    
+    [Export] private AudioStream _layer1;
+    [Export] private AudioStream _layer2;
+    [Export] private AudioStream _layer3;
 
     private bool _isPaused = false;
     private bool _isGamePlaying = false;
@@ -27,6 +31,10 @@ public partial class GameManager : Node
         Input.MouseMode = Input.MouseModeEnum.Visible;
         _uiManager.StartGame += OnStartGame;
         _uiManager.QuitGame += OnQuitGame;
+        
+        AudioManager.I.InitLayer1(_layer1);
+        AudioManager.I.InitLayer2(_layer2);
+        AudioManager.I.InitLayer3(_layer3);
     }
 
     private void HandlePlayerItemAdded(ItemType itemType, int amount)

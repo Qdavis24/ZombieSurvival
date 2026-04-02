@@ -13,10 +13,12 @@ public partial class Grenade : Node3D
 	[Export] private float _grenadeThrowMomentDelay = 0.5f;
 	[Export] private float _damage;
 	[Export] private float _force;
+	[Export] private AudioStream _throwSound;
 	
 	public async Task ThrowGrenade()
 	{
 		_animPlayer.Play("grenade_throw");
+		AudioManager.I.Play3D(_throwSound, GlobalTransform.Origin);
 		await ToSignal(GetTree().CreateTimer(_grenadeThrowMomentDelay), SceneTreeTimer.SignalName.Timeout);
 		_grenadeAnimMesh.Visible = false;
 		_grenadeRingAnimMesh.Visible = false;

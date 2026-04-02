@@ -5,6 +5,7 @@ using ZombieSurvival.scripts.zombie_package;
 
 public partial class Explosion : Area3D
 {
+    [Export] private AudioStream _explosionSound;
     [Export] private GpuParticles3D _flash;
     private float _damage;
     private float _force;
@@ -16,10 +17,14 @@ public partial class Explosion : Area3D
         _force = force;
     }
     
-    public override void _Ready()
+    public override async void _Ready()
     {
         BodyEntered += OnBodyEntered;
         _flash.Emitting = true;
+        
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        GD.Print("POS", GlobalPosition);
+        AudioManager.I.PlayExplosion(_explosionSound, GlobalPosition);
         _flash.Finished += QueueFree;
     }
 

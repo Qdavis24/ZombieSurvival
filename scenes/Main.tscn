@@ -3,12 +3,18 @@
 [ext_resource type="Script" uid="uid://djavsc2rmyqdj" path="res://scripts/GameManager.cs" id="1_elqb8"]
 [ext_resource type="PackedScene" uid="uid://brmqkfto14n3c" path="res://scenes/testing_nav_mesh_main.tscn" id="2_rvslj"]
 [ext_resource type="PackedScene" uid="uid://0keac7gcsnat" path="res://scenes/ui/UiManager.tscn" id="3_0bbpv"]
+[ext_resource type="AudioStream" uid="uid://dv3l8j7quf0pj" path="res://assets/sound/music/beat1/layer1.ogg" id="3_nxtc6"]
+[ext_resource type="AudioStream" uid="uid://b3h6euorm47sl" path="res://assets/sound/music/beat1/layer2.ogg" id="4_jlsqs"]
 [ext_resource type="PackedScene" uid="uid://cyvl6eqd24usj" path="res://scenes/hit_resolver/HitResolver.tscn" id="4_rarhs"]
+[ext_resource type="AudioStream" uid="uid://cpco4yenfia2g" path="res://assets/sound/music/beat1/layer3.ogg" id="5_q8u5g"]
 
 [node name="Main" type="Node" unique_id=1676837023 node_paths=PackedStringArray("_uiManager")]
 script = ExtResource("1_elqb8")
 _uiManager = NodePath("UiManager")
 _game = ExtResource("2_rvslj")
+_layer1 = ExtResource("3_nxtc6")
+_layer2 = ExtResource("4_jlsqs")
+_layer3 = ExtResource("5_q8u5g")
 
 [node name="UiManager" parent="." unique_id=1223429807 instance=ExtResource("3_0bbpv")]
 

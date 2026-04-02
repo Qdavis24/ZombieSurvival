@@ -13,8 +13,14 @@ public partial class AudioManager : Node
 	private const string SfxBus = "SFX";
 	private const string MusicBus = "Music";
 	private const string ExplosionBus = "Explosion";
+	
+	private float _tween = 3.0f; // fades for layers
 
 	private AudioStreamPlayer _musicPlayer;
+	
+	private AudioStreamPlayer _layer1;
+	private AudioStreamPlayer _layer2;
+	private AudioStreamPlayer _layer3;
 
 	public void PlayFootstep(AudioStream stream, Vector2 pos)
 	{
@@ -44,7 +50,7 @@ public partial class AudioManager : Node
 		p.Play();
 	}
 
-	public void Play2D(AudioStream stream, Vector2 pos, float volumeDb = -6f, float pitch = 1f)
+	public void Play3D(AudioStream stream, Vector3 pos, float volumeDb = -6f, float pitch = 1f)
 	{
 		if (stream == null)
 		{
@@ -52,30 +58,31 @@ public partial class AudioManager : Node
 			return;
 		}
 
-		var p = new AudioStreamPlayer2D
+		var p = new AudioStreamPlayer3D
 		{
 			Stream = stream,
-			GlobalPosition = pos,
 			VolumeDb = volumeDb,
 			PitchScale = pitch,
 			Bus = SfxBus
 		};
 
 		AddChild(p);
+		p.GlobalPosition = pos;
 		p.Finished += () => p.QueueFree();
 		p.Play();
 	}
 
-	public void PlayFollowing(AudioStream stream, Node2D target, float volumeDb = -6f, float pitch = 1f)
+	public void PlayFollowing(AudioStream stream, Node3D target, float volumeDb = -6f, float pitch = 1f)
 	{
 		if (stream == null || target == null) return;
 
-		var p = new AudioStreamPlayer2D
+		var p = new AudioStreamPlayer3D
 		{
 			Stream = stream,
 			VolumeDb = volumeDb,
 			PitchScale = pitch,
-			Bus = SfxBus
+			Bus = SfxBus,
+			Position = Vector3.Zero
 		};
 
 		// Parent to the target so it follows automatically
@@ -83,6 +90,7 @@ public partial class AudioManager : Node
 		p.Finished += () => p.QueueFree();
 		p.Play();
 	}
+	
 	public void PlayUi(AudioStream stream, float volumeDb = -6f, float pitch = 1f)
 	{
 		if (stream == null) return;
@@ -100,7 +108,7 @@ public partial class AudioManager : Node
 		p.Play();
 	}
 
-	public void PlayFireballExplosion(AudioStream stream, Vector2 pos, float volumeDb = -6f)
+	public void PlayExplosion(AudioStream stream, Vector3 pos, float volumeDb = -6f)
 	{
 		if (stream == null) return;
 
@@ -110,7 +118,7 @@ public partial class AudioManager : Node
 
 		_explosionCooldown = true;
 
-		var p = new AudioStreamPlayer
+		var p = new AudioStreamPlayer3D
 		{
 			Stream = stream,
 			VolumeDb = volumeDb,
@@ -118,6 +126,7 @@ public partial class AudioManager : Node
 		};
 
 		AddChild(p);
+		p.GlobalPosition = pos;
 
 		// Let the audio free itself *after it finishes naturally*
 		p.Finished += () => p.QueueFree();
@@ -207,6 +216,82 @@ public partial class AudioManager : Node
 		_musicPlayer.Stop();
 		_musicPlayer.QueueFree();
 		_musicPlayer = null;
+	}
+	
+	
+	public AudioStreamPlayer? PlayMusicLayer(AudioStream stream, float volumeDb = -6f)
+	{
+		if (stream == null) return null;
+
+		// Duplicate so enabling loop here does not modify the original resource everywhere else.
+		var musicStream = stream.Duplicate() as AudioStream;
+		if (musicStream == null) return null;
+
+		switch (musicStream)
+		{
+			case AudioStreamOggVorbis ogg:
+				ogg.Loop = true;
+				break;
+			case AudioStreamMP3 mp3:
+				mp3.Loop = true;
+				break;
+			case AudioStreamWav wav:
+				wav.LoopMode = AudioStreamWav.LoopModeEnum.Forward;
+				break;
+		}
+
+		var mmusicLayerPlayer = new AudioStreamPlayer
+		{
+			Stream = musicStream,
+			VolumeDb = volumeDb,
+			Bus = MusicBus
+		};
+
+		AddChild(mmusicLayerPlayer);
+		mmusicLayerPlayer.Play();
+
+		return mmusicLayerPlayer;
+	}
+
+	public void InitLayer1(AudioStream stream, float volumeDb = -6f)
+	{
+		_layer1 = PlayMusicLayer(stream, -80f);
+	}
+	public void InitLayer2(AudioStream stream, float volumeDb = -6f)
+	{
+		_layer2 = PlayMusicLayer(stream, -80f);
+	}
+	public void InitLayer3(AudioStream stream, float volumeDb = -6f)
+	{
+		_layer3 = PlayMusicLayer(stream, -80f);
+	}
+
+	public void PlayLayer1()
+	{
+		if (_layer1 == null) return;
+
+		var tween = CreateTween();
+		tween.TweenProperty(_layer1, "volume_db", -6f, _tween);
+		tween.TweenProperty(_layer2, "volume_db", -80f, _tween);
+		tween.TweenProperty(_layer3, "volume_db", -80f, _tween);
+	}
+	public void PlayLayer2()
+	{
+		if (_layer2 == null) return;
+
+		var tween = CreateTween();
+		tween.TweenProperty(_layer1, "volume_db", -6f, _tween);
+		tween.TweenProperty(_layer2, "volume_db", -6f, _tween);
+		tween.TweenProperty(_layer3, "volume_db", -80f, _tween);
+	}
+	public void PlayLayer3()
+	{
+		if (_layer3 == null) return;
+
+		var tween = CreateTween();
+		tween.TweenProperty(_layer1, "volume_db", -6f, _tween);
+		tween.TweenProperty(_layer2, "volume_db", -6f, _tween);
+		tween.TweenProperty(_layer3, "volume_db", -6f, _tween);
 	}
 
 	public override void _Ready()
