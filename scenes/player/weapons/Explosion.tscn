@@ -4,11 +4,20 @@
 [ext_resource type="AudioStream" uid="uid://c5sh2xrw472np" path="res://assets/sound/guns/rpg/explosion1.wav" id="2_2st6p"]
 [ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/models/player/scorch_01.png" id="2_js8jj"]
 [ext_resource type="AudioStream" uid="uid://bhw80m76smjcg" path="res://assets/sound/guns/rpg/explosion2.wav" id="3_2st6p"]
+[ext_resource type="AudioStream" uid="uid://bqpseia7vvqv4" path="res://assets/sound/shothits/specialexplosiongore.wav" id="4_poj2o"]
+[ext_resource type="AudioStream" uid="uid://ddc415cfw0jym" path="res://assets/sound/shothits/specialexplosiongore2.wav" id="5_38d5i"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2st6p"]
 streams_count = 2
 stream_0/stream = ExtResource("2_2st6p")
 stream_1/stream = ExtResource("3_2st6p")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kaav3"]
+random_pitch = 1.122462
+random_volume_offset_db = 1.0
+streams_count = 2
+stream_0/stream = ExtResource("4_poj2o")
+stream_1/stream = ExtResource("5_38d5i")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tvel1"]
 radius = 2.4802146
@@ -59,6 +68,7 @@ collision_layer = 9
 collision_mask = 9
 script = ExtResource("1_n44nq")
 _explosionSound = SubResource("AudioStreamRandomizer_2st6p")
+_specialGoreSound = SubResource("AudioStreamRandomizer_kaav3")
 _flash = NodePath("ExplosionFlash")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1818941300]

@@ -42,6 +42,8 @@ public partial class DismemberableBody : Skeleton3D
     [Export] private PackedScene _limbContainerPackedScene;
     [Export] private PackedScene _blood;
 
+    [ExportGroup("Sound")] [Export] private AudioStream _shotHitSound;
+
     private float _health;
     private bool _isDead;
 
@@ -130,6 +132,8 @@ public partial class DismemberableBody : Skeleton3D
 
         Containers.Instance.VFX.AddChild(blood);
         blood.GlobalPosition = hitGlobalPos;
+        
+        AudioManager.I.PlayZombieHit(_shotHitSound, hitGlobalPos, -15f);
 
         _health -= amount;
         if (_health <= 0f && !_isDead)

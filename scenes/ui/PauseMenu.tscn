@@ -3,9 +3,10 @@
 [ext_resource type="Script" uid="uid://5dqqq7vp5mja" path="res://scripts/ui/PauseMenu.cs" id="1_7ida2"]
 [ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="1_vb6pq"]
 
-[node name="PauseMenu" type="CanvasLayer" unique_id=1825430013 node_paths=PackedStringArray("_quit")]
+[node name="PauseMenu" type="CanvasLayer" unique_id=1825430013 node_paths=PackedStringArray("_quit", "_options")]
 script = ExtResource("1_7ida2")
 _quit = NodePath("Panel/HBoxContainer/VBoxContainer/Quit")
+_options = NodePath("Panel/HBoxContainer/VBoxContainer/Options")
 
 [node name="Panel" type="Panel" parent="." unique_id=1347633763]
 offset_right = 1924.0
@@ -36,7 +37,7 @@ theme_override_fonts/font = ExtResource("1_vb6pq")
 theme_override_font_sizes/font_size = 40
 text = "Quit To Main Menu"
 
-[node name="Button2" type="Button" parent="Panel/HBoxContainer/VBoxContainer" unique_id=468963473]
+[node name="Options" type="Button" parent="Panel/HBoxContainer/VBoxContainer" unique_id=468963473]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_vb6pq")
 theme_override_font_sizes/font_size = 40

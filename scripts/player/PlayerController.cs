@@ -13,6 +13,11 @@ public partial class PlayerController : CharacterBody3D, IDamageable
 	[Export] private float _gravity = 20.0f;
 	[Export] private float _jumpVelocity = 6.0f;
 
+	[ExportGroup("Sounds")] 
+	[Export] private AudioStream _footstepSound;
+	[Export] private AudioStream _jumpSound;
+	[Export] private AudioStream _hitSound;
+
 	private float _yaw; // left and right
 	private float _pitch; // up and down
 
@@ -84,10 +89,23 @@ public partial class PlayerController : CharacterBody3D, IDamageable
 
 		if (IsOnFloor())
 		{
+
 			if (Input.IsActionJustPressed("jump"))
+			{
 				yVel = _jumpVelocity;
+			
+				AudioManager.I.Play3D(_jumpSound, GlobalPosition, -15f);	
+			}
 			else
+			{
 				yVel = 0f;
+			
+				// Only play footstep when moving on the ground
+				if (wishDir.Length() > 0.1f)
+				{
+					AudioManager.I.PlayFootstep(_footstepSound, GlobalPosition);
+				}
+			}
 		}
 		else
 		{
@@ -101,6 +119,7 @@ public partial class PlayerController : CharacterBody3D, IDamageable
 	public void TakeDamage(float damage, Vector3 hitGlobalPosition, Vector3 hitDir, float force)
 	{
 		_health -= damage;
+		AudioManager.I.Play3D(_hitSound, GlobalPosition, -15f);
 		_vfxHud.ShowHitFlash();
 		_vfxHud.UpdateHealth(_health, _maxHealth);
 	}

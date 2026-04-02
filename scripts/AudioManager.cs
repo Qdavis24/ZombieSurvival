@@ -7,6 +7,7 @@ public partial class AudioManager : Node
 	public override void _EnterTree() => I = this;
 
 	private bool _footstepPlaying = false;
+	private float _footstepCooldownTime = 0.5f;
 	private static bool _explosionCooldown = false;
 	private const float ExplosionCooldownTime = 0.12f; // 120 ms
 
@@ -14,7 +15,12 @@ public partial class AudioManager : Node
 	private const string MusicBus = "Music";
 	private const string ExplosionBus = "Explosion";
 	
+	private int _maxZombieHitSounds = 4;
+	private int _currentZombieHitSounds = 0;
+	
 	private float _tween = 3.0f; // fades for layers
+	
+	private AudioStream _uiClickStream = GD.Load<AudioStream>("res://assets/sound/ui_click.wav");
 
 	private AudioStreamPlayer _musicPlayer;
 	
@@ -22,28 +28,58 @@ public partial class AudioManager : Node
 	private AudioStreamPlayer _layer2;
 	private AudioStreamPlayer _layer3;
 
-	public void PlayFootstep(AudioStream stream, Vector2 pos)
+	public void PlayFootstep(AudioStream stream, Vector3 pos)
 	{
-		// Skip if the previous step hasn't finished
+		// Skip if still in cooldown or missing sound
 		if (_footstepPlaying || stream == null)
 			return;
 
-		var p = new AudioStreamPlayer2D
+		var p = new AudioStreamPlayer3D
 		{
 			Stream = stream,
-			GlobalPosition = pos,
-			VolumeDb = -6f,
+			VolumeDb = -23f,
 			PitchScale = (float)GD.RandRange(0.9, 1.1),
 			Bus = SfxBus
 		};
 
 		AddChild(p);
+		p.GlobalPosition = pos;
 		_footstepPlaying = true;
+		p.Play();
+		p.Finished += () => p.QueueFree();
 
-		// Reset flag when finished
-		p.Finished += () =>
+		var timer = GetTree().CreateTimer(_footstepCooldownTime);
+		timer.Timeout += () =>
 		{
 			_footstepPlaying = false;
+		};
+	}
+	
+	public void PlayZombieHit(AudioStream stream, Vector3 pos, float volumeDb = -6f)
+	{
+		if (stream == null) return;
+
+		// Limit how many zombie hit sounds can play at once
+		if (_currentZombieHitSounds >= _maxZombieHitSounds)
+			return;
+
+		GD.Print("Played");
+		_currentZombieHitSounds++;
+
+		var p = new AudioStreamPlayer3D
+		{
+			Stream = stream,
+			VolumeDb = volumeDb,
+			PitchScale = (float)GD.RandRange(0.9f, 1.1f),
+			Bus = SfxBus
+		};
+
+		AddChild(p);
+		p.GlobalPosition = pos;
+
+		p.Finished += () =>
+		{
+			_currentZombieHitSounds--;
 			p.QueueFree();
 		};
 
@@ -100,6 +136,23 @@ public partial class AudioManager : Node
 			Stream = stream,
 			VolumeDb = volumeDb,
 			PitchScale = pitch,
+			Bus = SfxBus
+		};
+
+		AddChild(p);
+		p.Finished += () => p.QueueFree();
+		p.Play();
+	}
+
+	public void PlayUiClick(float volumeDb = -10f, float pitch = 1f)
+	{
+		if (_uiClickStream == null) return;
+
+		var p = new AudioStreamPlayer
+		{
+			Stream = _uiClickStream,
+			VolumeDb = volumeDb,
+			PitchScale = (float)GD.RandRange(0.5f, 1.5f),
 			Bus = SfxBus
 		};
 

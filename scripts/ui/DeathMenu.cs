@@ -16,5 +16,6 @@ public partial class DeathMenu : CanvasLayer
 	private void OnQUitButtonPressed()
 	{
 		EmitSignal(SignalName.QuitButtonPressed);
+		AudioManager.I.PlayUiClick();
 	}
 }
