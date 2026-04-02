@@ -10,6 +10,27 @@ public partial class RpgWeapon : WeaponBase
     [Export] private float _rocketHideDelay = 0.1f;
     [Export] private PackedScene _projectile;
     [Export] private Marker3D _barrelMarker;
+    [Export] private bool _startWithRocketVisible = true;
+    private bool _rocketLoaded = true;
+
+    public override void _Ready()
+    {
+        base._Ready();
+
+        _rocketLoaded = _startWithRocketVisible;
+    }
+
+    public void SetRocketLoaded(bool isLoaded)
+    {
+        _rocketLoaded = isLoaded;
+        UpdateRocketVisual();
+    }
+
+    private void UpdateRocketVisual()
+    {
+        if (_rocket != null)
+            _rocket.Visible = _rocketLoaded;
+    }
 
     protected override async void ResolveShot(Vector3 from, Vector3 direction)
     {
@@ -19,7 +40,8 @@ public partial class RpgWeapon : WeaponBase
         if (_rocket != null)
         {
             await ToSignal(GetTree().CreateTimer(_rocketHideDelay), SceneTreeTimer.SignalName.Timeout);
-            _rocket.Visible = false;
+            _rocketLoaded = false;
+            UpdateRocketVisual();
         }
         var proj = _projectile.Instantiate<RpgProjectile>();
         proj.Init(_damage, _force);
@@ -36,7 +58,8 @@ public partial class RpgWeapon : WeaponBase
         if (_rocket != null)
         {
             await ToSignal(GetTree().CreateTimer(_rocketShowDelay), SceneTreeTimer.SignalName.Timeout);
-            _rocket.Visible = true;
+            _rocketLoaded = true;
+            UpdateRocketVisual();
         }
     }
 }

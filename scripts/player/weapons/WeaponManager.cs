@@ -26,6 +26,7 @@ public partial class WeaponManager : Node
     private WeaponSlot[] _weaponSlots;
     private int _currentWeaponIndex = 0;
     private bool _isSwapping = false;
+    private bool _isRocketLoaded = true;
 
     [Export] private PlayerController _playerController;
     [Export] private Camera _camera;
@@ -100,6 +101,10 @@ public partial class WeaponManager : Node
         _current?.QueueFree();
 
         _current = slot.Scene.Instantiate<WeaponBase>();
+        if (_current is RpgWeapon rpg)
+        {
+            rpg.SetRocketLoaded(_isRocketLoaded);
+        }
         _weaponSocket.AddChild(_current);
         _current.Initialize(_camera, _hitResolver, slot.CurrentAmmo, slot.ReserveAmmo);
         _current.Fired += _camera.OnWeaponFired;
@@ -117,6 +122,13 @@ public partial class WeaponManager : Node
             var slot = _weaponSlots[_currentWeaponIndex];
             if (slot != null)
             {
+
+                if (_current is RpgWeapon)
+                {
+                    // Update rocket loaded state
+                    _isRocketLoaded = currentAmmo != 0;
+                }
+                
                 slot.CurrentAmmo = currentAmmo;
                 slot.ReserveAmmo = reserveAmmo;
             }
@@ -193,7 +205,7 @@ public partial class WeaponManager : Node
 
         _isThrowingGrenade = false;
     }
-
+    
     private async void SwapToWeaponIndex(int newIndex)
     {
         if (_isSwapping) return;
@@ -278,6 +290,15 @@ public partial class WeaponManager : Node
 
         if (!_isSwapping)
         {
+            if (Input.IsActionJustPressed("weapon1"))
+                SwapToWeaponIndex(0);
+            if (Input.IsActionJustPressed("weapon2"))
+                SwapToWeaponIndex(1);
+            if (Input.IsActionJustPressed("weapon3"))
+                SwapToWeaponIndex(2);
+            if (Input.IsActionJustPressed("weapon4"))
+                SwapToWeaponIndex(3);
+            
             if (Input.IsActionJustPressed("throw_grenade"))
                 TryStartGrenadeThrow();
 
