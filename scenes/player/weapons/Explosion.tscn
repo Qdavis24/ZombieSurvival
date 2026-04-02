@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://wpwy380xp0yw"]
 
 [ext_resource type="Script" uid="uid://ny45wnbu0k0r" path="res://scripts/player/weapons/Explosion.cs" id="1_n44nq"]
-[ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/particle_textures/scorch_01.png" id="2_js8jj"]
-[ext_resource type="AudioStream" uid="uid://c5sh2xrw472np" path="res://assets/sound/music/guns/rpg/explosion1.wav" id="2_2st6p"]
-[ext_resource type="AudioStream" uid="uid://bhw80m76smjcg" path="res://assets/sound/music/guns/rpg/explosion2.wav" id="3_2st6p"]
+[ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/models/player/scorch_01.png" id="2_js8jj"]
+[ext_resource type="AudioStream" uid="uid://c5sh2xrw472np" path="res://assets/sound/guns/rpg/explosion1.wav" id="2_2st6p"]
+[ext_resource type="AudioStream" uid="uid://bhw80m76smjcg" path="res://assets/sound/guns/rpg/explosion2.wav" id="3_2st6p"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2st6p"]
 streams_count = 2

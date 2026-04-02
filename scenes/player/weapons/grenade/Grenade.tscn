@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://dsg1yds3jtqik" path="res://scripts/player/weapons/grenade/Grenade.cs" id="1_ax4gn"]
 [ext_resource type="PackedScene" uid="uid://5q4d8liiht13" path="res://assets/models/player/weapons/grenade_throwing.glb" id="1_lkmmb"]
 [ext_resource type="PackedScene" uid="uid://rchj2cww7afb" path="res://scenes/player/weapons/grenade/GrenadeProjectile.tscn" id="2_70d18"]
-[ext_resource type="AudioStream" uid="uid://bb3un4wtkjeaj" path="res://assets/sound/music/guns/grenadethrow/grenadethrow1.wav" id="3_vndjd"]
-[ext_resource type="AudioStream" uid="uid://ds0oifg56ya8y" path="res://assets/sound/music/guns/grenadethrow/grenadethrow2.wav" id="4_c45ie"]
+[ext_resource type="AudioStream" uid="uid://bb3un4wtkjeaj" path="res://assets/sound/guns/grenadethrow/grenadethrow1.wav" id="3_vndjd"]
+[ext_resource type="AudioStream" uid="uid://ds0oifg56ya8y" path="res://assets/sound/guns/grenadethrow/grenadethrow2.wav" id="4_c45ie"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_d7a1p"]
 streams_count = 2

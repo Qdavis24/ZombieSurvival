@@ -2,15 +2,14 @@
 
 [ext_resource type="Script" uid="uid://dbyhmp7kvgdqb" path="res://scripts/player/weapons/WeaponBase.cs" id="1_cxf1s"]
 [ext_resource type="PackedScene" uid="uid://dsgkm7iixsc4l" path="res://assets/models/player/weapons/new_rifle.glb" id="2_cxf1s"]
-[ext_resource type="AudioStream" uid="uid://2oxjkg17nv1y" path="res://assets/sound/music/guns/ak47/ak47a.wav" id="2_grs7q"]
+[ext_resource type="AudioStream" uid="uid://bd6mbmm0qwouq" path="res://assets/sound/guns/ak47/rifle1.wav" id="2_jc7wx"]
 [ext_resource type="PackedScene" uid="uid://erpp137vqg0w" path="res://scenes/player/weapons/pistol/pistol_muzzle_flash.tscn" id="3_gfsj7"]
-[ext_resource type="AudioStream" uid="uid://bgw6cvemi7rsu" path="res://assets/sound/music/guns/ak47/riflereload.wav" id="6_etkhb"]
+[ext_resource type="AudioStream" uid="uid://bgw6cvemi7rsu" path="res://assets/sound/guns/ak47/riflereload.wav" id="6_etkhb"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_d62rd"]
-random_pitch = 1.122462
-random_volume_offset_db = 2.0
+random_pitch = 1.0594631
 streams_count = 1
-stream_0/stream = ExtResource("2_grs7q")
+stream_0/stream = ExtResource("2_jc7wx")
 
 [node name="Rifle" type="Node3D" unique_id=866969985 node_paths=PackedStringArray("_muzzleFlash")]
 script = ExtResource("1_cxf1s")

@@ -3,20 +3,43 @@
 [ext_resource type="Script" uid="uid://brb5s1wvupwh8" path="res://scripts/zombie_package/Zombie.cs" id="1_6mvc3"]
 [ext_resource type="Material" uid="uid://ovvn4sh7fyha" path="res://resources/zombie_material-1.tres" id="1_nlave"]
 [ext_resource type="PackedScene" uid="uid://bgghqwh1u2n5q" path="res://scenes/zombie/attack.tscn" id="2_bxjsn"]
+[ext_resource type="AudioStream" uid="uid://cw83lp3iard4p" path="res://assets/sound/zombies/zombie1.wav" id="2_pxi50"]
 [ext_resource type="Script" uid="uid://dn55dd5q3bfvp" path="res://scripts/zombie_package/dismemberment_system/DismemberableBody.cs" id="2_r1l86"]
+[ext_resource type="AudioStream" uid="uid://beqw1dgpilcua" path="res://assets/sound/zombies/zombie2.wav" id="3_v2fc0"]
 [ext_resource type="PackedScene" uid="uid://s8o7ag6ytq5l" path="res://scenes/zombie/limb_container.tscn" id="3_vwmx8"]
 [ext_resource type="PackedScene" uid="uid://cla78u6roi8at" path="res://scenes/zombie/body-parts/head.tscn" id="4_1eykj"]
 [ext_resource type="PackedScene" uid="uid://b6n1uwubc81kg" path="res://scenes/zombie/blood.tscn" id="4_bxjsn"]
+[ext_resource type="AudioStream" uid="uid://bjxt6kn5xboja" path="res://assets/sound/zombies/zombie3.wav" id="4_fw0dg"]
 [ext_resource type="Script" uid="uid://ck5dhnoi1tcen" path="res://scripts/zombie_package/dismemberment_system/BodyPart.cs" id="4_rovuw"]
 [ext_resource type="PackedScene" uid="uid://be2i0n12424l5" path="res://scenes/zombie/body-parts/upper_leg_l.tscn" id="5_lamel"]
+[ext_resource type="AudioStream" uid="uid://c7j1tw2wy21aq" path="res://assets/sound/zombies/zombie4.wav" id="5_xe23r"]
+[ext_resource type="AudioStream" uid="uid://7sem8itqqdi3" path="res://assets/sound/zombies/zombie5.wav" id="6_cs03q"]
 [ext_resource type="PackedScene" uid="uid://dcx3jx02kkvfl" path="res://scenes/zombie/body-parts/lower_leg_l.tscn" id="6_x18kf"]
+[ext_resource type="AudioStream" uid="uid://bbnsxxex4tdqh" path="res://assets/sound/zombies/zombie6.wav" id="7_drd6e"]
 [ext_resource type="PackedScene" uid="uid://yqmxfe3i74rk" path="res://scenes/zombie/body-parts/upper_leg_r.tscn" id="7_ltkux"]
 [ext_resource type="PackedScene" uid="uid://bev6hii80s6li" path="res://scenes/zombie/body-parts/lower_leg_r.tscn" id="8_4k7nl"]
+[ext_resource type="AudioStream" uid="uid://5h6ay21y0qbt" path="res://assets/sound/zombies/zombie7.wav" id="8_jtpun"]
+[ext_resource type="AudioStream" uid="uid://bjd18fnii3cop" path="res://assets/sound/zombies/zombie8.wav" id="9_8wwx6"]
 [ext_resource type="PackedScene" uid="uid://c06lyhj0lm3p2" path="res://scenes/zombie/body-parts/upper_arm_l.tscn" id="9_hy5tm"]
 [ext_resource type="PackedScene" uid="uid://oa3vltidsysp" path="res://scenes/zombie/body-parts/lower_arm_l.tscn" id="10_a5kb4"]
+[ext_resource type="AudioStream" uid="uid://cmmxh8ruu21yo" path="res://assets/sound/zombies/zombie9.wav" id="10_kc3ju"]
 [ext_resource type="PackedScene" uid="uid://j2kmc40i84x" path="res://scenes/zombie/body-parts/upper_arm_r.tscn" id="11_vwmx8"]
 [ext_resource type="PackedScene" uid="uid://c6jewwi5hgotf" path="res://scenes/zombie/body-parts/lower_arm_r.tscn" id="12_bxjsn"]
 [ext_resource type="PackedScene" uid="uid://diw46jgb6wloj" path="res://scenes/zombie/parasitic_material.tscn" id="17_iiuu8"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_cr1ja"]
+random_pitch = 1.1892071
+random_volume_offset_db = 1.0
+streams_count = 9
+stream_0/stream = ExtResource("2_pxi50")
+stream_1/stream = ExtResource("3_v2fc0")
+stream_2/stream = ExtResource("4_fw0dg")
+stream_3/stream = ExtResource("5_xe23r")
+stream_4/stream = ExtResource("6_cs03q")
+stream_5/stream = ExtResource("7_drd6e")
+stream_6/stream = ExtResource("8_jtpun")
+stream_7/stream = ExtResource("9_8wwx6")
+stream_8/stream = ExtResource("10_kc3ju")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_imofc"]
 
@@ -481,6 +504,8 @@ _dismemberableBody = NodePath("Armature/Skeleton3D")
 _navAgent = NodePath("NavigationAgent3D")
 _collisionShape = NodePath("CollisionShape3D")
 _animationPlayer = NodePath("AnimationPlayer")
+_attackRange = 1.2
+_groanSound = SubResource("AudioStreamRandomizer_cr1ja")
 
 [node name="Armature" type="Node3D" parent="." unique_id=1601233901]
 transform = Transform3D(0.049773708, 0, -0.9987605, 0, 1, 0, 0.9987605, 0, 0.049773708, 0, 0, 0)
@@ -490,64 +515,64 @@ bones/0/name = "torso"
 bones/0/parent = -1
 bones/0/rest = Transform3D(0.9965558, -0.082924634, 9.085998e-05, 0.08291534, 0.99642664, -0.01609681, 0.0012442867, 0.016048903, 0.9998704, 0.00029297173, 0.99391204, 0.0107459305)
 bones/0/enabled = true
-bones/0/position = Vector3(0.000292968, 0.91335547, 0.010745931)
-bones/0/rotation = Quaternion(0.007887617, -0.0016026666, -0.12276781, 0.99240285)
+bones/0/position = Vector3(0.00029297403, 0.90473354, 0.01074593)
+bones/0/rotation = Quaternion(0.007865405, -0.0017083398, -0.13607074, 0.99066645)
 bones/0/scale = Vector3(1, 1, 0.99999994)
 bones/1/name = "neck"
 bones/1/parent = 0
 bones/1/rest = Transform3D(0.97641516, 0.21589862, -0.0011051451, -0.21589628, 0.9763433, -0.0119328275, -0.0014972803, 0.011889989, 0.9999282, 9.065843e-09, 0.568821, 2.1045707e-09)
 bones/1/enabled = true
 bones/1/position = Vector3(9.065843e-09, 0.568821, 2.1045707e-09)
-bones/1/rotation = Quaternion(0.006020937, -0.0024587489, -0.22294596, 0.9748091)
+bones/1/rotation = Quaternion(0.0060208817, -0.00247142, -0.22350875, 0.9746802)
 bones/1/scale = Vector3(1, 0.9999999, 0.99999994)
 bones/2/name = "upper.leg.l"
 bones/2/parent = 0
 bones/2/rest = Transform3D(0.999994, 1.4528923e-06, -0.0034741864, -0.00014492907, -0.9991119, -0.04213361, -0.0034711596, 0.042133827, -0.9991067, -0.08815241, -0.02394414, -0.10678603)
 bones/2/enabled = true
 bones/2/position = Vector3(-0.08815241, -0.02394414, -0.10678603)
-bones/2/rotation = Quaternion(0.99262273, 0.1154972, 0.009433848, -0.035660908)
+bones/2/rotation = Quaternion(0.9554658, 0.29211378, 0.0036303753, -0.041730896)
 bones/2/scale = Vector3(1, 0.9999999, 1.0000007)
 bones/3/name = "lower.leg.l"
 bones/3/parent = 2
 bones/3/rest = Transform3D(0.9905794, -0.13691442, -0.0026030217, 0.13692427, 0.99001247, 0.033571575, -0.0020194086, -0.03361173, 0.9994329, -9.487849e-09, 0.44085827, 2.7014266e-09)
 bones/3/enabled = true
 bones/3/position = Vector3(-9.487849e-09, 0.44085827, 2.7014266e-09)
-bones/3/rotation = Quaternion(-0.072993025, -0.0001396127, 0.29751882, 0.9519215)
+bones/3/rotation = Quaternion(-0.082357086, -0.00013763971, 0.33568662, 0.9383666)
 bones/3/scale = Vector3(0.99999994, 1, 0.99999994)
 bones/4/name = "foot.l"
 bones/4/parent = 3
 bones/4/rest = Transform3D(0.20311585, 0.9786055, -0.03279535, -0.9673728, 0.1953789, -0.16129912, -0.1514407, 0.064487725, 0.98636055, 9.255018e-09, 0.45725507, -4.524736e-09)
 bones/4/enabled = true
 bones/4/position = Vector3(9.255018e-09, 0.45725507, -4.524736e-09)
-bones/4/rotation = Quaternion(0.0151943695, 0.004067769, -0.75781536, 0.6522794)
+bones/4/rotation = Quaternion(0.021027867, 0.0026521152, -0.7391122, 0.67324895)
 bones/4/scale = Vector3(1.0000002, 1.0000001, 1)
 bones/5/name = "upper.leg.r"
 bones/5/parent = 0
 bones/5/rest = Transform3D(0.999977, -0.006709693, -0.0009850992, -0.0067164954, -0.99995255, -0.0070737083, -0.0009375901, 0.0070801643, -0.9999743, -0.0957982, -0.021755673, 0.10320108)
 bones/5/enabled = true
 bones/5/position = Vector3(-0.0957982, -0.021755673, 0.10320108)
-bones/5/rotation = Quaternion(0.9307008, 0.36516434, 0.004889931, 0.020670751)
+bones/5/rotation = Quaternion(0.84677434, 0.5228334, 0.01948788, 0.09611774)
 bones/5/scale = Vector3(1, 1.0000001, 0.9999998)
 bones/6/name = "lower.leg.r"
 bones/6/parent = 5
 bones/6/rest = Transform3D(0.9930706, -0.1174707, 0.003350262, 0.11751649, 0.99248624, -0.034073, 0.0006774895, 0.03423061, 0.9994137, 5.133188e-09, 0.43789688, -1.369699e-09)
 bones/6/enabled = true
 bones/6/position = Vector3(5.133188e-09, 0.43789688, -1.369699e-09)
-bones/6/rotation = Quaternion(0.041053332, 0.0006634185, 0.14123717, 0.989124)
+bones/6/rotation = Quaternion(0.18044, 0.0005116882, 0.62077415, 0.7629421)
 bones/6/scale = Vector3(0.9999999, 1, 1)
 bones/7/name = "foot.r"
 bones/7/parent = 6
 bones/7/rest = Transform3D(0.18636239, 0.9807984, -0.057474516, -0.9208702, 0.19476643, 0.33773386, 0.342443, -0.010014322, 0.93948525, 3.914465e-09, 0.460259, -7.772542e-09)
 bones/7/enabled = true
 bones/7/position = Vector3(3.914465e-09, 0.460259, -7.772542e-09)
-bones/7/rotation = Quaternion(-0.12600145, -0.07101488, -0.6402084, 0.7544625)
+bones/7/rotation = Quaternion(-0.194791, -0.090539455, -0.49840978, 0.8399089)
 bones/7/scale = Vector3(1, 0.9999999, 1)
 bones/8/name = "upper.arm.l"
 bones/8/parent = 0
 bones/8/rest = Transform3D(0.9965574, -0.08211527, 0.011564915, -0.08292574, -0.9869802, 0.1378175, 9.742023e-05, -0.13830121, -0.9903947, 0.024101561, 0.47907367, -0.16108406)
 bones/8/enabled = true
-bones/8/position = Vector3(0.0067951363, 0.41882026, -0.17673096)
-bones/8/rotation = Quaternion(0.9572439, 0.2807605, -0.024146307, -0.06537985)
+bones/8/position = Vector3(0.0069582965, 0.418901, -0.17666191)
+bones/8/rotation = Quaternion(0.9565489, 0.28311294, -0.02434409, -0.06533426)
 bones/8/scale = Vector3(1.0000017, 1, 1.0000045)
 bones/9/name = "lower.arm.l"
 bones/9/parent = 8
@@ -560,8 +585,8 @@ bones/10/name = "upper.arm.r"
 bones/10/parent = 0
 bones/10/rest = Transform3D(0.9947795, -0.10061336, -0.017091509, -0.101970285, -0.97310245, -0.20657678, 0.0041525876, 0.20724045, -0.97828394, 0.013914583, 0.49351782, 0.15825136)
 bones/10/enabled = true
-bones/10/position = Vector3(0.020590167, 0.49533576, 0.16157115)
-bones/10/rotation = Quaternion(0.94086665, 0.3272796, 0.023733148, 0.084229946)
+bones/10/position = Vector3(0.018973164, 0.48729706, 0.16268425)
+bones/10/rotation = Quaternion(0.9451717, 0.3145933, 0.02279693, 0.08462747)
 bones/10/scale = Vector3(1.0000007, 1, 1.0000027)
 bones/11/name = "lower.arm.r"
 bones/11/parent = 10
@@ -772,7 +797,7 @@ transform = Transform3D(0.99999624, -1.0430813e-07, -3.7252903e-08, 9.685755e-08
 shape = SubResource("CapsuleShape3D_6mvc3")
 
 [node name="Physical Bone lower_leg_l" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" unique_id=547455762]
-transform = Transform3D(0.8144036, -0.012641922, 0.5801613, -0.5798968, -0.05494226, 0.8128352, 0.021599576, -0.99840957, -0.052076187, -0.22910188, 0.28823704, -0.12222877)
+transform = Transform3D(0.9335983, 0.0067206696, 0.3582584, -0.35707456, -0.065887935, 0.93174917, 0.029866882, -0.9978044, -0.05911308, -0.033340972, 0.2776534, -0.12318754)
 collision_layer = 8
 collision_mask = 8
 joint_type = 3

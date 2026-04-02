@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://ces8k7fo8wyg0" path="res://scripts/player/weapons/shotgun/ShotgunWeapon.cs" id="1_3i4rd"]
 [ext_resource type="PackedScene" uid="uid://biq2wqtoa5x1y" path="res://assets/models/player/weapons/shotgun_shaded.glb" id="2_3i4rd"]
-[ext_resource type="AudioStream" uid="uid://dap6gxr13i17g" path="res://assets/sound/music/guns/shotgun/shotgunreload.wav" id="2_u8g2y"]
-[ext_resource type="AudioStream" uid="uid://d2clt4lgdyyy8" path="res://assets/sound/music/guns/shotgun/shotgun2c.wav" id="3_u8g2y"]
+[ext_resource type="AudioStream" uid="uid://lpdnm1b5t4gq" path="res://assets/sound/guns/shotgun/shotgunreload.wav" id="2_u8g2y"]
+[ext_resource type="AudioStream" uid="uid://cibusp6qa1vq0" path="res://assets/sound/guns/shotgun/shotgun.wav" id="3_u8g2y"]
 [ext_resource type="PackedScene" uid="uid://erpp137vqg0w" path="res://scenes/player/weapons/pistol/pistol_muzzle_flash.tscn" id="3_ytgbc"]
-[ext_resource type="AudioStream" uid="uid://n70greha0gn1" path="res://assets/sound/music/guns/shotgun/shotgunreloadshell.wav" id="3_yxl01"]
+[ext_resource type="AudioStream" uid="uid://c2ja4j8tsjw4y" path="res://assets/sound/guns/shotgun/shotgunreloadshell.wav" id="3_yxl01"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_u8g2y"]
 streams_count = 1

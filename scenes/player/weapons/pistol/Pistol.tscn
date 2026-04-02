@@ -2,14 +2,13 @@
 
 [ext_resource type="Script" uid="uid://dbyhmp7kvgdqb" path="res://scripts/player/weapons/WeaponBase.cs" id="1_at3be"]
 [ext_resource type="PackedScene" uid="uid://dmlswd2qgnmoh" path="res://assets/models/player/weapons/pistol_improvedreload.glb" id="2_2ru15"]
-[ext_resource type="AudioStream" uid="uid://ba740r357d2xg" path="res://assets/sound/music/guns/1911/pistol1.wav" id="2_fbydl"]
-[ext_resource type="AudioStream" uid="uid://bjc7q6xsih0r6" path="res://assets/sound/music/guns/1911/pistol2.wav" id="3_nimcv"]
+[ext_resource type="AudioStream" uid="uid://bnk8bm5gihb8h" path="res://assets/sound/guns/1911/1911a.wav" id="2_fbydl"]
+[ext_resource type="AudioStream" uid="uid://b4v88ly80ke17" path="res://assets/sound/guns/1911/1911b.wav" id="3_nimcv"]
 [ext_resource type="PackedScene" uid="uid://erpp137vqg0w" path="res://scenes/player/weapons/pistol/pistol_muzzle_flash.tscn" id="3_p313x"]
-[ext_resource type="AudioStream" uid="uid://wel2g2xj0x5r" path="res://assets/sound/music/guns/1911/pistolreload.wav" id="4_fbydl"]
+[ext_resource type="AudioStream" uid="uid://uivgilnvafsp" path="res://assets/sound/guns/1911/pistolreload.wav" id="4_fbydl"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nimcv"]
-random_pitch = 1.122462
-random_volume_offset_db = 2.0
+random_pitch = 1.0293022
 streams_count = 2
 stream_0/stream = ExtResource("2_fbydl")
 stream_1/stream = ExtResource("3_nimcv")
