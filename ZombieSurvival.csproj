@@ -5,6 +5,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="scenes\interactables\" />
     <Folder Include="scripts\pickups\" />
   </ItemGroup>
 </Project>

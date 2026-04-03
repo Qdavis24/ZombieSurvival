@@ -1,44 +1,45 @@
 using Godot;
-using System;
 using System.Threading.Tasks;
 
 public partial class PlayerPopup : MarginContainer
 {
-	[Export] private Label _text;
+	[Signal]
+	public delegate void PopupFreeEventHandler();
 	
-	private string _pickupPrefix = "Press E to pickup the ";
-	private string _notificationPrefix = "You picked up the ";
+	[Export] private Label _text;
 
 	private Vector2 _basePosition = new Vector2(0, 200);
-	
-	public void SetPickupText(string itemName)
+
+	public void ShowMessage(string message)
 	{
-		_text.Text = _pickupPrefix + itemName;
+		_text.Text = message;
+		Visible = true;
 	}
 
-	public async Task SuccessfullyPickedUp(string itemName)
+	public void HideMessage()
 	{
-		_text.Text = _notificationPrefix + itemName;	
+		Visible = false;
+	}
+
+	public async Task ShowNotification(string message)
+	{
+		ShowMessage(message);
 		await PlayFadeAnimation();
+		HideMessage();
+		EmitSignalPopupFree();
 	}
 
 	private async Task PlayFadeAnimation()
 	{
-		// Reset state
 		_text.Position = _basePosition;
 		_text.Modulate = new Color(1, 1, 1, 1);
 
 		var tween = CreateTween();
-
-		// Move up
-		tween.TweenProperty(_text, "position:y", _basePosition.Y - 50, 1.0f);
-
-		// Fade out
-		tween.Parallel().TweenProperty(_text, "modulate:a", 0f, 1.0f);
+		tween.TweenProperty(_text, "position:y", _basePosition.Y - 20, .70f);
+		tween.Parallel().TweenProperty(_text, "modulate:a", 0f, .70f);
 
 		await ToSignal(tween, Tween.SignalName.Finished);
 
-		// Reset after animation
 		_text.Position = _basePosition;
 		_text.Modulate = new Color(1, 1, 1, 1);
 	}

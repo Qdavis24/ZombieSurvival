@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bqy2scgfjaspk" path="res://scenes/map/Assets/Building2.tscn" id="4_03gun"]
 [ext_resource type="PackedScene" uid="uid://cvt0aomoxtces" path="res://scenes/round_system/round_system.tscn" id="5_0wksg"]
 [ext_resource type="PackedScene" uid="uid://cpuy8hqpdax45" path="res://scenes/store_system/shotgun_store.tscn" id="9_ytxki"]
+[ext_resource type="PackedScene" uid="uid://fvmrnn61a00s" path="res://scenes/interactables/chain_link_fence_door.tscn" id="10_ngqtf"]
 
 [node name="TestingNavMeshMain" type="Node3D" unique_id=1906095306 node_paths=PackedStringArray("Player")]
 transform = Transform3D(0.9989043, -0.020793993, 0.041928995, 0.021435108, 0.9996593, -0.0148992995, -0.04160489, 0.015781721, 0.9990095, 0, 0, 0)
@@ -121,6 +122,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.855404, 0.40553248, -4.7351
 
 [node name="ShotgunStore" parent="." unique_id=176065396 instance=ExtResource("9_ytxki")]
 transform = Transform3D(1, -2.561137e-09, 3.3527613e-08, 1.3504177e-08, 0.9999996, 1.8626451e-09, 0, -5.5879354e-09, 0.99999917, 6.7045484, 2.1754122, 7.338958)
+
+[node name="ChainLinkFenceDoor" parent="." unique_id=1285907813 instance=ExtResource("10_ngqtf")]
+transform = Transform3D(1, -2.6193447e-09, 2.9802322e-08, 1.1641532e-08, 0.99999964, 1.8626451e-09, 0, -5.5879354e-09, 0.9999993, 0.050063178, 0.30040586, -4.9259615)
 
 [editable path="Node3D"]
 [editable path="RoundManager"]

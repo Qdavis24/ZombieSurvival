@@ -5,14 +5,13 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_hew1x"]
 radius = 3.0
 
-[node name="ShotgunStore" type="Node3D" unique_id=176065396 node_paths=PackedStringArray("_buyRange", "_light")]
+[node name="ShotgunStore" type="Node3D" unique_id=176065396 node_paths=PackedStringArray("_light", "_interactionRange")]
 script = ExtResource("1_hew1x")
-_buyRange = NodePath("Area3D")
-_storeSellItemType = 5
-_storeSellAmount = 25
+_storeSellAmount = 1
 _storeBuyItemType = 2
 _storeBuyAmount = 10
 _light = NodePath("OmniLight3D")
+_interactionRange = NodePath("Area3D")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=488960934]
 

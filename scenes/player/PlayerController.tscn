@@ -17,7 +17,8 @@
 [ext_resource type="Theme" uid="uid://djrvn0o5wdyef" path="res://scenes/ui/ammo_theme.tres" id="14_jlpny"]
 [ext_resource type="Texture2D" uid="uid://qkr7gisrljdt" path="res://scenes/ui/ammo.png" id="15_444fp"]
 [ext_resource type="Texture2D" uid="uid://ds7gkrlq74gh2" path="res://scenes/ui/grenade.png" id="16_4vr2v"]
-[ext_resource type="PackedScene" uid="uid://dii0p3dtncfx3" path="res://scenes/ui/Popup.tscn" id="17_r81m1"]
+[ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="18_jlpny"]
+[ext_resource type="Script" uid="uid://djc05fynr5gvv" path="res://scripts/player/player_hud/PlayerPopup.cs" id="18_klk5f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2fbm"]
 albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
@@ -71,13 +72,14 @@ _playerController = NodePath("..")
 _camera = NodePath("../Head/Camera3D")
 _grenadeThrowScene = ExtResource("8_wtdo7")
 
-[node name="PlayerHud" type="CanvasLayer" parent="." unique_id=1950508150 node_paths=PackedStringArray("_healthIndicator", "_bloodSplatter", "_currentAmmoLabel", "_reserveAmmoLabel", "_playerPopup")]
+[node name="PlayerHud" type="CanvasLayer" parent="." unique_id=1950508150 node_paths=PackedStringArray("_healthIndicator", "_bloodSplatter", "_currentAmmoLabel", "_reserveAmmoLabel", "_interactPopup", "_itemPopup")]
 script = ExtResource("9_hmgul")
 _healthIndicator = NodePath("HitEffect")
 _bloodSplatter = NodePath("BloodSplatter")
 _currentAmmoLabel = NodePath("AmmoUI/VBoxContainer/Ammo/HBoxContainer/CurrentAmmoLabel")
 _reserveAmmoLabel = NodePath("AmmoUI/VBoxContainer/Ammo/HBoxContainer/ReserveAmmoLabel")
-_playerPopup = NodePath("Popup")
+_interactPopup = NodePath("InteractionIndicator")
+_itemPopup = NodePath("ItemIndicator")
 
 [node name="HitEffect" type="ColorRect" parent="PlayerHud" unique_id=1250240893]
 material = SubResource("ShaderMaterial_g4ghg")
@@ -212,8 +214,39 @@ layout_mode = 2
 theme = ExtResource("14_jlpny")
 text = "4"
 
-[node name="Popup" parent="PlayerHud" unique_id=580647925 instance=ExtResource("17_r81m1")]
-layer = 5
-visible = false
+[node name="InteractionIndicator" type="MarginContainer" parent="PlayerHud" unique_id=1656273995 node_paths=PackedStringArray("_text")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 200
+script = ExtResource("18_klk5f")
+_text = NodePath("Label")
+
+[node name="Label" type="Label" parent="PlayerHud/InteractionIndicator" unique_id=21204602]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("18_jlpny")
+theme_override_font_sizes/font_size = 36
+
+[node name="ItemIndicator" type="MarginContainer" parent="PlayerHud" unique_id=1136610117 node_paths=PackedStringArray("_text")]
+offset_left = 1649.0
+offset_top = 699.0
+offset_right = 1849.0
+offset_bottom = 931.0
+theme_override_constants/margin_top = 200
+script = ExtResource("18_klk5f")
+_text = NodePath("Label")
+
+[node name="Label" type="Label" parent="PlayerHud/ItemIndicator" unique_id=1634085792]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("18_jlpny")
+theme_override_font_sizes/font_size = 25
 
 [node name="Inventory" parent="." unique_id=949916564 instance=ExtResource("13_xpgqn")]

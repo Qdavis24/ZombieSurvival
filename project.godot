@@ -28,6 +28,7 @@ buses/default_bus_layout="uid://bx2u5suvigpa"
 
 AudioManager="*uid://bflo1ddufl31"
 Containers="*uid://dlab3liuud346"
+EventBus="*uid://mi0v0u7bgihx"
 
 [display]
 

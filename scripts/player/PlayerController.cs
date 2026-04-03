@@ -78,7 +78,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 	private void OnItemAdded(ItemType type, int amount)
 	{
-		_playerHud.ShowSuccessfulPickup($"{type} + {amount}");
+		_playerHud.ShowNotification($"{type} + {amount}");
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -98,7 +98,6 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		
 		Health += _healthRegenRate * _maxHealth * dt;
 		
-		GD.Print(Health);
 
 		var input = Input.GetVector("move_left", "move_right", "move_forward", "move_back");
 
