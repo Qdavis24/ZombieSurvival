@@ -16,7 +16,12 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	// [Export] private float _gravity = 24.0f;
 	[Export] private float _gravity = 20.0f;
 	[Export] private float _jumpVelocity = 6.0f;
-	
+
+	[ExportGroup("Sounds")] 
+	[Export] private AudioStream _footstepSound;
+	[Export] private AudioStream _jumpSound;
+	[Export] private AudioStream _hitSound;
+
 	private float _yaw; // left and right
 	private float _pitch; // up and down
 
@@ -49,8 +54,8 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		{
 			AddPitchRecoil(Mathf.DegToRad(pitchKickDegrees));
 		}
-	}	
-	
+	}
+
 	private void ApplyLookRotation()
 	{
 		_pitch = Mathf.Clamp(_pitch, -Mathf.Pi / 2f, Mathf.Pi / 2f);
@@ -89,7 +94,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 			_pitch -= mouseMotion.Relative.Y * _mouseSensitivity;
 			ApplyLookRotation();
 		}
-		
+
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -114,9 +119,21 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		if (IsOnFloor())
 		{
 			if (Input.IsActionJustPressed("jump"))
+			{
 				yVel = _jumpVelocity;
+			
+				AudioManager.I.Play3D(_jumpSound, GlobalPosition, -15f);	
+			}
 			else
+			{
 				yVel = 0f;
+			
+				// Only play footstep when moving on the ground
+				if (wishDir.Length() > 0.1f)
+				{
+					AudioManager.I.PlayFootstep(_footstepSound, GlobalPosition);
+				}
+			}
 		}
 		else
 		{
@@ -130,5 +147,6 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	public void TakeDamage(float damage, Vector3 hitGlobalPosition, Vector3 hitDir, float force)
 	{
 		Health -= damage;
+		AudioManager.I.Play3D(_hitSound, GlobalPosition, -15f);
 	}
 }

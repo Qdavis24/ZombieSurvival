@@ -26,12 +26,6 @@ public partial class UiManager : Node
 		_deathMenu.QuitButtonPressed += OnQuitGame;
 	}
 	
-	public void PausePressed()
-	{
-		_startMenu.Visible = false;
-		Input.MouseMode = Input.MouseModeEnum.Visible;
-	}
-
 	public void OnQuitGame()
 	{
 		_popup.Visible = false;
@@ -55,6 +49,8 @@ public partial class UiManager : Node
 	public void ShowPauseMenu()
 	{
 		_pauseMenu.Visible = true;
+		AudioManager.I.PlayUiClick();
+		_pauseMenu.SetCurrentSong();
 	}
 
 	public void ShowDeathMenu()
@@ -65,6 +61,7 @@ public partial class UiManager : Node
 	public void HidePauseMenu()
 	{
 		_pauseMenu.Visible = false;
+		AudioManager.I.PlayUiClick();
 	}
 	
 	public void HudSetRound(int round)

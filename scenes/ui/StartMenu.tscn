@@ -2,7 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://df8gn2pfhr8gi" path="res://scenes/ui/start_screen.jpeg" id="1_hbvfd"]
 [ext_resource type="Script" uid="uid://bovjrnfemb6ks" path="res://scripts/ui/StartMenu.cs" id="1_y4veo"]
-[ext_resource type="AudioStream" uid="uid://db7l2826g4qi3" path="res://assets/sound/music/MainMenu.ogg" id="2_8s1oy"]
 [ext_resource type="FontFile" uid="uid://b5xps8x8u85bq" path="res://scenes/ui/Clynical Terror.ttf" id="2_xr47m"]
 [ext_resource type="Texture2D" uid="uid://cm3ob2bkerjfe" path="res://scenes/ui/control_help.png" id="3_y35d7"]
 [ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="4_pridf"]
@@ -610,10 +609,10 @@ font_color = Color(0.85490507, 0.04420513, 2.8878452e-07, 1)
 shadow_size = 12
 shadow_color = Color(0, 0, 0, 0.5372549)
 
-[node name="StartMenu" type="CanvasLayer" unique_id=1584193192 node_paths=PackedStringArray("_startGameButton")]
+[node name="StartMenu" type="CanvasLayer" unique_id=1584193192 node_paths=PackedStringArray("_startGameButton", "_optionsButton")]
 script = ExtResource("1_y4veo")
 _startGameButton = NodePath("Panel/VBoxContainer/HBoxContainer/VBoxContainer/Button")
-_startMenuMusic = ExtResource("2_8s1oy")
+_optionsButton = NodePath("Panel/VBoxContainer/HBoxContainer/VBoxContainer/Button2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=442801764]
 position = Vector2(964.55566, 539.00006)
@@ -682,6 +681,7 @@ layout_mode = 2
 theme_override_constants/margin_top = 20
 
 [node name="Button2" type="Button" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1203944240]
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85490197, 0.043137256, 0, 1)
 theme_override_fonts/font = ExtResource("4_pridf")

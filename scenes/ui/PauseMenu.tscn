@@ -3,9 +3,13 @@
 [ext_resource type="Script" uid="uid://5dqqq7vp5mja" path="res://scripts/ui/PauseMenu.cs" id="1_7ida2"]
 [ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="1_vb6pq"]
 
-[node name="PauseMenu" type="CanvasLayer" unique_id=1825430013 node_paths=PackedStringArray("_quit")]
+[node name="PauseMenu" type="CanvasLayer" unique_id=1825430013 node_paths=PackedStringArray("_quit", "_options", "_next", "_curr", "_prev")]
 script = ExtResource("1_7ida2")
 _quit = NodePath("Panel/HBoxContainer/VBoxContainer/Quit")
+_options = NodePath("Panel/HBoxContainer/VBoxContainer/Options")
+_next = NodePath("Panel/HBoxContainer/VBoxContainer/HBoxContainer/Next")
+_curr = NodePath("Panel/HBoxContainer/VBoxContainer/HBoxContainer/currentsong")
+_prev = NodePath("Panel/HBoxContainer/VBoxContainer/HBoxContainer/Prev")
 
 [node name="Panel" type="Panel" parent="." unique_id=1347633763]
 offset_right = 1924.0
@@ -36,8 +40,53 @@ theme_override_fonts/font = ExtResource("1_vb6pq")
 theme_override_font_sizes/font_size = 40
 text = "Quit To Main Menu"
 
-[node name="Button2" type="Button" parent="Panel/HBoxContainer/VBoxContainer" unique_id=468963473]
+[node name="Options" type="Button" parent="Panel/HBoxContainer/VBoxContainer" unique_id=468963473]
+visible = false
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_vb6pq")
 theme_override_font_sizes/font_size = 40
 text = "Options"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/HBoxContainer/VBoxContainer" unique_id=1094391736]
+layout_mode = 2
+theme_override_constants/margin_top = 80
+
+[node name="Label2" type="Label" parent="Panel/HBoxContainer/VBoxContainer" unique_id=798458352]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.87058824, 0.87058824, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("1_vb6pq")
+theme_override_font_sizes/font_size = 60
+text = "Change Song:"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/HBoxContainer/VBoxContainer" unique_id=1056918526]
+layout_mode = 2
+alignment = 1
+
+[node name="Prev" type="Button" parent="Panel/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=578267088]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_vb6pq")
+theme_override_font_sizes/font_size = 40
+text = "Prev"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=499678567]
+layout_mode = 2
+theme_override_constants/margin_right = 20
+
+[node name="currentsong" type="Label" parent="Panel/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1894116570]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6542324, 0.654232, 0.6542317, 1)
+theme_override_fonts/font = ExtResource("1_vb6pq")
+theme_override_font_sizes/font_size = 54
+text = "#1"
+horizontal_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1488471496]
+layout_mode = 2
+theme_override_constants/margin_right = 15
+
+[node name="Next" type="Button" parent="Panel/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1542771354]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_vb6pq")
+theme_override_font_sizes/font_size = 40
+text = "Next"
