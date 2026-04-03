@@ -66,6 +66,7 @@ public partial class UiManager : Node
 	{
 		_pauseMenu.Visible = true;
 		AudioManager.I.PlayUiClick();
+		_pauseMenu.SetCurrentSong();
 	}
 
 	public void ShowDeathMenu()

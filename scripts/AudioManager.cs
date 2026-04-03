@@ -6,6 +6,15 @@ public partial class AudioManager : Node
 
 	public override void _EnterTree() => I = this;
 
+	private sealed class MusicSong
+	{
+		public AudioStream Layer1;
+		public AudioStream Layer2;
+		public AudioStream Layer3;
+
+		public AudioStream[] Layers => [Layer1, Layer2, Layer3];
+	}
+
 	private bool _footstepPlaying = false;
 	private float _footstepCooldownTime = 0.5f;
 	private static bool _explosionCooldown = false;
@@ -18,15 +27,124 @@ public partial class AudioManager : Node
 	private int _maxZombieHitSounds = 4;
 	private int _currentZombieHitSounds = 0;
 	
-	private float _tween = 3.0f; // fades for layers
+	private float _tween = 0.5f; // fades for layers
 	
 	private AudioStream _uiClickStream = GD.Load<AudioStream>("res://assets/sound/ui_click.wav");
+	
+	private MusicSong _song1 = new()
+	{
+		Layer1 = GD.Load<AudioStream>("res://assets/sound/music/beat1/layer1.ogg"),
+		Layer2 = GD.Load<AudioStream>("res://assets/sound/music/beat1/layer2.ogg"),
+		Layer3 = GD.Load<AudioStream>("res://assets/sound/music/beat1/layer3.ogg"),
+	};
+
+	private MusicSong _song2 = new()
+	{
+		Layer1 = GD.Load<AudioStream>("res://assets/sound/music/beat2/layer1.ogg"),
+		Layer2 = GD.Load<AudioStream>("res://assets/sound/music/beat2/layer2.ogg"),
+		Layer3 = GD.Load<AudioStream>("res://assets/sound/music/beat2/layer3.ogg"),
+	};
+
+	private MusicSong _song3 = new()
+	{
+		Layer1 = GD.Load<AudioStream>("res://assets/sound/music/beat3/layer1.ogg"),
+		Layer2 = GD.Load<AudioStream>("res://assets/sound/music/beat3/layer2.ogg"),
+		Layer3 = GD.Load<AudioStream>("res://assets/sound/music/beat3/layer3.ogg"),
+	};
+	
+	private MusicSong _song4 = new()
+	{
+		Layer1 = GD.Load<AudioStream>("res://assets/sound/music/beat4/layer1.ogg"),
+		Layer2 = GD.Load<AudioStream>("res://assets/sound/music/beat4/layer2.ogg"),
+		Layer3 = GD.Load<AudioStream>("res://assets/sound/music/beat4/layer3.ogg"),
+	};
+	
+	private MusicSong _song5 = new()
+	{
+		Layer1 = GD.Load<AudioStream>("res://assets/sound/music/beat5/layer1.ogg"),
+		Layer2 = GD.Load<AudioStream>("res://assets/sound/music/beat5/layer2.ogg"),
+		Layer3 = GD.Load<AudioStream>("res://assets/sound/music/beat5/layer3.ogg"),
+	};
+
+	private MusicSong[] _songs;
+	private int  _currentSong = 0;
+	private float  _musicVol = -8f;
 
 	private AudioStreamPlayer _musicPlayer;
 	
 	private AudioStreamPlayer _layer1;
 	private AudioStreamPlayer _layer2;
 	private AudioStreamPlayer _layer3;
+
+	public void NextSong()
+	{
+		if (_songs == null || _songs.Length == 0)
+			return;
+
+		_currentSong = (_currentSong + 1) % _songs.Length;
+		StartCurrentSong();
+	}
+
+	public void PrevSong()
+	{
+		if (_songs == null || _songs.Length == 0)
+			return;
+
+		_currentSong--;
+		if (_currentSong < 0)
+			_currentSong = _songs.Length - 1;
+
+		StartCurrentSong();
+	}
+
+	public int GetCurrentSong()
+	{
+		return _currentSong;
+	}
+
+	public void MuteCurrentSong()
+	{
+		var tween = CreateTween();
+		tween.TweenProperty(_layer1, "volume_db", -80f, 1f);
+		tween.TweenProperty(_layer2, "volume_db", -80f, 1f);
+		tween.TweenProperty(_layer3, "volume_db", -80f, 1f);
+	}
+
+	public void RandomizeSong()
+	{
+		GD.Randomize();
+		_currentSong = GD.RandRange(0, _songs.Length-1);
+	}
+
+	public void StartCurrentSong()
+	{
+		if (_songs == null || _songs.Length == 0)
+			return;
+
+		StopMusicLayer(ref _layer1);
+		StopMusicLayer(ref _layer2);
+		StopMusicLayer(ref _layer3);
+
+		var song = _songs[_currentSong];
+		if (song == null)
+			return;
+
+		InitLayer1(song.Layer1);
+		InitLayer2(song.Layer2);
+		InitLayer3(song.Layer3);
+
+		PlayLayer1();
+	}
+
+	private void StopMusicLayer(ref AudioStreamPlayer layer)
+	{
+		if (layer == null)
+			return;
+		
+		layer.Stop();
+		layer.QueueFree();
+		layer = null;
+	}
 
 	public void PlayFootstep(AudioStream stream, Vector3 pos)
 	{
@@ -324,7 +442,7 @@ public partial class AudioManager : Node
 		if (_layer1 == null) return;
 
 		var tween = CreateTween();
-		tween.TweenProperty(_layer1, "volume_db", -6f, _tween);
+		tween.TweenProperty(_layer1, "volume_db", _musicVol, _tween);
 		tween.TweenProperty(_layer2, "volume_db", -80f, _tween);
 		tween.TweenProperty(_layer3, "volume_db", -80f, _tween);
 	}
@@ -333,8 +451,8 @@ public partial class AudioManager : Node
 		if (_layer2 == null) return;
 
 		var tween = CreateTween();
-		tween.TweenProperty(_layer1, "volume_db", -6f, _tween);
-		tween.TweenProperty(_layer2, "volume_db", -6f, _tween);
+		tween.TweenProperty(_layer1, "volume_db", _musicVol, _tween);
+		tween.TweenProperty(_layer2, "volume_db", _musicVol, _tween);
 		tween.TweenProperty(_layer3, "volume_db", -80f, _tween);
 	}
 	public void PlayLayer3()
@@ -342,13 +460,13 @@ public partial class AudioManager : Node
 		if (_layer3 == null) return;
 
 		var tween = CreateTween();
-		tween.TweenProperty(_layer1, "volume_db", -6f, _tween);
-		tween.TweenProperty(_layer2, "volume_db", -6f, _tween);
-		tween.TweenProperty(_layer3, "volume_db", -6f, _tween);
+		tween.TweenProperty(_layer1, "volume_db", _musicVol, _tween);
+		tween.TweenProperty(_layer2, "volume_db", _musicVol, _tween);
+		tween.TweenProperty(_layer3, "volume_db", _musicVol, _tween);
 	}
 
 	public override void _Ready()
 	{
-		ProcessMode = Node.ProcessModeEnum.Always;
+		_songs = [_song1, _song2, _song3, _song4, _song5];
 	}
 }
