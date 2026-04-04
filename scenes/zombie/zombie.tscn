@@ -45,6 +45,7 @@ stream_6/stream = ExtResource("8_jtpun")
 stream_7/stream = ExtResource("9_8wwx6")
 stream_8/stream = ExtResource("10_kc3ju")
 stream_9/stream = ExtResource("15_us7i4")
+stream_9/weight = 0.3
 stream_10/stream = ExtResource("4_kc3ju")
 stream_11/stream = ExtResource("5_6p1aj")
 stream_12/stream = ExtResource("6_jur0n")
@@ -753,12 +754,12 @@ transform = Transform3D(0.99998415, -0.004049644, -0.0015320331, 0.001701124, 0.
 shape = SubResource("CapsuleShape3D_lamel")
 
 [node name="PhysicalBone lower_arm_r" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" unique_id=117889073]
-transform = Transform3D(0.48068532, 0.8767096, -0.017942563, 0.8558465, -0.4645939, 0.2273308, 0.19096708, -0.12463066, -0.9736523, 0.25275126, 1.0999198, 0.2293937)
+transform = Transform3D(0.48068532, 0.8767097, -0.01794257, 0.8558465, -0.46459392, 0.22733079, 0.19096708, -0.124630675, -0.9736523, 0.25275126, 1.0999198, 0.2293937)
 collision_layer = 8
 collision_mask = 8
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0005934173, -0.0005395897, 0.001116654)
-body_offset = Transform3D(0.99999607, -0.002592653, 0.00044732913, 0.0025925934, 0.99999624, -0.00018199533, -0.00044554472, 0.00018195808, 0.99999774, 0.0005915165, 0.0005413294, -0.0011168178)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00059341727, -0.0005395896, 0.0011166541)
+body_offset = Transform3D(0.99999607, -0.002592653, 0.00044731423, 0.0025925934, 0.99999624, -0.00018201768, -0.00044554472, 0.00018197298, 0.99999774, 0.0005915165, 0.0005413294, -0.0011168178)
 mass = 3.0
 angular_damp = 1.0
 bone_name = "lower.arm.r"
