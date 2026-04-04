@@ -33,6 +33,7 @@ public partial class WeaponBase : Node3D
     [ExportGroup("Misc")]
     [Export] private float _animBlendTime = 0.3f;
     [Export] public ItemType AmmoType;
+    [Export] public ItemType WeaponType;
     [Export] private MuzzleFlash _muzzleFlash;
     
     [ExportGroup("Sound")]

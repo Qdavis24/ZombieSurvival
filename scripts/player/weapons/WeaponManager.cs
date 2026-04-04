@@ -7,8 +7,11 @@ namespace ZombieSurvival.scripts.player.weapons;
 
 public partial class WeaponManager : Node
 {
-    [Signal] public delegate void AmmoChangedEventHandler(int currentAmmo, int reserve);
-    [Signal] public delegate void GrenadesChangedEventHandler(int currentGrenades, int reserve);
+    [Signal]
+    public delegate void AmmoChangedEventHandler(int currentAmmo, int reserve);
+
+    [Signal]
+    public delegate void GrenadesChangedEventHandler(int currentGrenades, int reserve);
 
     private sealed class WeaponSlot
     {
@@ -16,12 +19,14 @@ public partial class WeaponManager : Node
         public bool Unlocked;
         public int CurrentAmmo;
         public ItemType AmmoType;
+        public ItemType WeaponType;
 
-        public WeaponSlot(PackedScene scene, int currentAmmo, ItemType ammoType)
+        public WeaponSlot(PackedScene scene, int currentAmmo, ItemType ammoType, ItemType weaponType)
         {
             Scene = scene;
             CurrentAmmo = currentAmmo;
             AmmoType = ammoType;
+            WeaponType = weaponType;
         }
     }
 
@@ -72,11 +77,12 @@ public partial class WeaponManager : Node
                     ? _startingReserveAmmo[i]
                     : 0;
                 ItemType ammoType = previewWeapon.AmmoType;
+                ItemType weaponType = previewWeapon.WeaponType;
 
-                _weaponSlots[i] = new WeaponSlot(scene, magazineSize, ammoType)
+                _weaponSlots[i] = new WeaponSlot(scene, magazineSize, ammoType, weaponType)
                 {
                     // Unlocked = i == 0 // final version just pistol unlocked
-                    Unlocked = i == 0 || i == 1 || i == 2 || i == 3
+                    Unlocked = i == 0
                 };
 
                 _playerController.Inventory.AddItem(ammoType, reserveAmmo);
@@ -92,8 +98,21 @@ public partial class WeaponManager : Node
     private void OnPlayerInventoryItemAdded(ItemType itemType, int amount)
     {
         if (_weaponSlots == null) return;
-        if (_weaponSlots[_currentWeaponIndex].AmmoType == itemType)
-            RefreshHudAmmo();
+        switch (itemType.GetGroup())
+        {
+            case (ItemGroup.Ammo):
+                if (_weaponSlots[_currentWeaponIndex].AmmoType == itemType)
+                    RefreshHudAmmo();
+                break;
+            case (ItemGroup.Weapon):
+                for (int i = 0; i < _weaponSlots.Length; i++)
+                {
+                    if (_weaponSlots[i].WeaponType == itemType)
+                        _weaponSlots[i].Unlocked = true;
+                }
+
+                break;
+        }
     }
 
     private void OnPlayerInventoryItemRemoved(ItemType itemType, int amount)
@@ -126,6 +145,7 @@ public partial class WeaponManager : Node
         {
             rpg.SetRocketLoaded(_isRocketLoaded);
         }
+
         _weaponSocket.AddChild(_current);
         _current.Initialize(_camera, _hitResolver, slot.CurrentAmmo);
         _current.SetAmmoSource(needed =>
@@ -156,7 +176,7 @@ public partial class WeaponManager : Node
                     // Update rocket loaded state
                     _isRocketLoaded = currentAmmo != 0;
                 }
-                
+
                 slot.CurrentAmmo = currentAmmo;
             }
         }
@@ -326,7 +346,7 @@ public partial class WeaponManager : Node
                 SwapToWeaponIndex(2);
             if (Input.IsActionJustPressed("weapon4"))
                 SwapToWeaponIndex(3);
-            
+
             if (Input.IsActionJustPressed("throw_grenade"))
                 TryStartGrenadeThrow();
 

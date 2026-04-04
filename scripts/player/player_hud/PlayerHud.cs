@@ -27,6 +27,14 @@ public partial class PlayerHud : CanvasLayer
         _itemPopup.PopupFree += OnPopupFree;
     }
 
+    public override void _ExitTree()
+    {
+        if (EventBus.Instance == null) return;
+
+        EventBus.Instance.PlayerEnteredInteractableRange -= OnPlayerEnteredInteractableRange;
+        EventBus.Instance.PlayerExitedInteractableRange -= OnPlayerExitedInteractableRange;
+    }
+
     private void OnPopupFree()
     {
         _notificationsBusy = false;

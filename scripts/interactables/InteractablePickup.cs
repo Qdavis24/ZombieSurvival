@@ -1,11 +1,10 @@
 using Godot;
 using ZombieSurvival.scripts.inventory_system;
 
-public partial class ShotgunPickup : Node3D
+public partial class InteractablePickup : Node3D
 {
     [Export] private InteractNotifier _interactNotifier;
     [Export] private ItemType _item;
-    [Export] private int _amount;
 
     public override void _Ready()
     {
@@ -27,7 +26,7 @@ public partial class ShotgunPickup : Node3D
     private void OnInteracted(Node3D player)
     {
         if (player is not IInventoryOwner inventoryOwner) return;
-        inventoryOwner.Inventory.AddItem(_item, _amount);
+        inventoryOwner.Inventory.AddItem(_item, 1);
         _interactNotifier.Disable();
         QueueFree();
     }

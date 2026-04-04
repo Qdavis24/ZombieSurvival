@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cvt0aomoxtces" path="res://scenes/round_system/round_system.tscn" id="5_0wksg"]
 [ext_resource type="PackedScene" uid="uid://d1vcwcrp7eqh8" path="res://scenes/interactables/guns/shotgun_pickup.tscn" id="8_3xj3m"]
 [ext_resource type="PackedScene" uid="uid://cpuy8hqpdax45" path="res://scenes/store_system/shotgun_store.tscn" id="9_ytxki"]
+[ext_resource type="PackedScene" uid="uid://ccl3ov7ljjugm" path="res://scenes/interactables/keys/bolt_cutters.tscn" id="10_7ua8r"]
 [ext_resource type="PackedScene" uid="uid://fvmrnn61a00s" path="res://scenes/interactables/doors/chain_link_fence.tscn" id="10_ngqtf"]
 
 [node name="Game" type="Node3D" unique_id=1906095306 node_paths=PackedStringArray("Player")]
@@ -96,11 +97,14 @@ spot_angle = 84.2
 [node name="ShotgunStore" parent="World/Interactables" unique_id=176065396 instance=ExtResource("9_ytxki")]
 transform = Transform3D(0.9989979, 0.0006882804, 0.044737127, -0.00064527546, 0.99999887, -0.0009741932, -0.0447377, 0.00094431266, 0.99899596, -5.021401, 0.59800404, -4.2954865)
 
-[node name="ChainLinkFenceDoor" parent="World/Interactables" unique_id=1285907813 instance=ExtResource("10_ngqtf")]
+[node name="ChainLinkFence" parent="World/Interactables" unique_id=1285907813 instance=ExtResource("10_ngqtf")]
 transform = Transform3D(1, -2.5029294e-09, 4.0978193e-08, 1.5366822e-08, 0.9999995, 1.8626451e-09, 0, -7.450581e-09, 0.99999905, 0.05006315, 0.30040586, -4.9259615)
 
 [node name="ShotgunPickup" parent="World/Interactables" unique_id=1224397729 instance=ExtResource("8_3xj3m")]
 transform = Transform3D(0.22849877, -0.97339916, -0.016752811, 0.97238433, 0.22735363, 0.05270186, -0.047491163, -0.02833251, 0.99846816, 5.637163, 1.197041, 7.4536266)
+
+[node name="BoltCutters" parent="World/Interactables" unique_id=1165095353 instance=ExtResource("10_7ua8r")]
+transform = Transform3D(0.06181355, 0.9980446, 0.009185998, 0.036561757, 0.0069332044, -0.999306, -0.9974175, 0.06210656, -0.036061727, -7.120558, 1.0129064, 8.864985)
 
 [node name="PlayerController" parent="." unique_id=1073413131 instance=ExtResource("2_s0yep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6407409, 4.1583242)
@@ -128,6 +132,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.855404, 0.40553248, -4.7351
 
 [editable path="World"]
 [editable path="World/Interactables/ShotgunStore"]
+[editable path="World/Interactables/ChainLinkFence"]
+[editable path="World/Interactables/ChainLinkFence/InteractNotifier"]
 [editable path="RoundManager"]
 [editable path="RoundManager/DifficultyManager"]
 [editable path="RoundManager/SpawnManager"]

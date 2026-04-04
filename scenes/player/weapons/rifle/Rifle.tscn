@@ -18,6 +18,7 @@ _magazineSize = 30
 _manualRecoil = true
 _animBlendTime = 0.22
 AmmoType = 4
+WeaponType = 9
 _muzzleFlash = NodePath("Rig/HumanArms/Skeleton3D/BoneAttachment3D2/PistolMuzzleFlash")
 _gunshotSound = SubResource("AudioStreamRandomizer_d62rd")
 _reloadSound = ExtResource("6_etkhb")

@@ -1,7 +1,7 @@
 using Godot;
 using ZombieSurvival.scripts.inventory_system;
 
-public partial class ChainLinkFenceDoor : Node3D
+public partial class ChainLinkFence : Node3D
 {
     [Export] private InteractNotifier _interactNotifier;
     [Export] private ItemType _requiredItem;

@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://fvmrnn61a00s"]
 
-[ext_resource type="Script" uid="uid://c44r8ukitq0jd" path="res://scripts/interactables/ChainLinkFenceDoor.cs" id="1_jqngw"]
+[ext_resource type="Script" uid="uid://c44r8ukitq0jd" path="res://scripts/interactables/KeyedInteractables/ChainLinkFence.cs" id="1_jqngw"]
 [ext_resource type="Texture2D" uid="uid://c5vgnlqy1t0ok" path="res://assets/textures/chain_link_tex.png" id="2_8goxo"]
+[ext_resource type="AudioStream" uid="uid://cglthr2sqd28e" path="res://assets/sound/ui_click.wav" id="2_iwot6"]
 [ext_resource type="PackedScene" uid="uid://eksdoewlbll1" path="res://scenes/interactables/interact_notifier.tscn" id="3_iwot6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vqgk5"]
@@ -20,11 +21,12 @@ material = SubResource("StandardMaterial3D_0l0v2")
 [sub_resource type="BoxShape3D" id="BoxShape3D_aq8tv"]
 size = Vector3(2.9753418, 3.1467285, 1.4100647)
 
-[node name="ChainLinkFenceDoor" type="StaticBody3D" unique_id=1757120054 node_paths=PackedStringArray("_interactNotifier", "_pivotPoint", "_invisibleWall")]
+[node name="ChainLinkFence" type="StaticBody3D" unique_id=1757120054 node_paths=PackedStringArray("_interactNotifier", "_pivotPoint", "_invisibleWall")]
 script = ExtResource("1_jqngw")
 _interactNotifier = NodePath("InteractNotifier")
 _pivotPoint = NodePath("PivotPoint")
 _invisibleWall = NodePath("CollisionShape3D")
+_lockedSound = ExtResource("2_iwot6")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1142658180]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08163452, 1.4429932, 0.19099426)
