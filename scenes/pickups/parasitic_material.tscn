@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/particle_textures/scorch_01.png" id="1_fsev3"]
 [ext_resource type="Shader" uid="uid://c660spghxdgb3" path="res://shaders/parasitic_material.gdshader" id="1_gw401"]
-[ext_resource type="Script" uid="uid://b8rkrc3jiwrgy" path="res://scripts/pickups/ParasiticMaterial.cs" id="1_n706s"]
+[ext_resource type="Script" uid="uid://b8rkrc3jiwrgy" path="res://scripts/pickups/Pickup.cs" id="1_n706s"]
 
 [sub_resource type="Curve" id="Curve_5ywyb"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -66,16 +66,16 @@ height = 0.20911407
 [sub_resource type="SphereShape3D" id="SphereShape3D_n706s"]
 radius = 0.53270906
 
-[node name="ParasiticMaterial" type="RigidBody3D" unique_id=720967199 node_paths=PackedStringArray("_pickupParticles", "_despawnTimer", "_pickupRange", "_parasiteMesh")]
+[node name="ParasiticMaterial" type="RigidBody3D" unique_id=720967199 node_paths=PackedStringArray("_despawnTimer", "_pickupRange")]
 collision_layer = 16
 collision_mask = 16
 continuous_cd = true
 angular_damp = 1.0
 script = ExtResource("1_n706s")
-_pickupParticles = NodePath("ooze")
 _despawnTimer = NodePath("DespawnTimer")
 _pickupRange = NodePath("PickupRange")
-_parasiteMesh = NodePath("MeshInstance3D")
+_itemType = 2
+_itemAmount = 1
 
 [node name="ooze" type="GPUParticles3D" parent="." unique_id=1168257984]
 amount = 20

@@ -36,13 +36,12 @@ public partial class PlayerHud : CanvasLayer
         }
     }
 
-    private void OnPlayerEnteredInteractableRange(Node3D interactable)
+    private void OnPlayerEnteredInteractableRange(InteractNotifier interactable)
     {
-        if (interactable is IInteractable i)
-            _interactPopup.ShowMessage(i.InteractPrompt);
+        _interactPopup.ShowMessage(interactable.InteractPrompt);
     }
 
-    private void OnPlayerExitedInteractableRange(Node3D interactable)
+    private void OnPlayerExitedInteractableRange(InteractNotifier interactable)
     {
         _interactPopup.HideMessage();
     }

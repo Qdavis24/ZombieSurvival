@@ -5,5 +5,6 @@ public enum ItemGroup
     Ammo,
     Consumable,
     Key,
-    Currency
+    Currency,
+    Weapon
 }

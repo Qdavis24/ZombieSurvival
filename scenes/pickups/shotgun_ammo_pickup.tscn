@@ -1,0 +1,286 @@
+[gd_scene format=3 uid="uid://4d4f8uxcwn6i"]
+
+[ext_resource type="Script" uid="uid://b8rkrc3jiwrgy" path="res://scripts/pickups/Pickup.cs" id="1_a0evs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a0evs"]
+size = Vector3(0.30447388, 0.12072754, 0.17015076)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lcjwk"]
+albedo_color = Color(0.54509807, 0.101960786, 0.101960786, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7pw0j"]
+material = SubResource("StandardMaterial3D_lcjwk")
+top_radius = 0.02
+bottom_radius = 0.02
+height = 0.08
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hgyky"]
+albedo_color = Color(0.72156864, 0.5254902, 0.043137256, 1)
+metallic = 1.0
+roughness = 0.24
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_a0evs"]
+material = SubResource("StandardMaterial3D_hgyky")
+top_radius = 0.02
+bottom_radius = 0.02
+height = 0.02
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_a0evs"]
+radius = 0.2766276
+
+[node name="ShotgunAmmoPickup" type="RigidBody3D" unique_id=279052207 node_paths=PackedStringArray("_despawnTimer", "_pickupRange")]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("1_a0evs")
+_despawnTimer = NodePath("Timer")
+_pickupRange = NodePath("Area3D")
+_itemType = 5
+_itemAmount = 18
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=710930066]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0017852783, 0.044332534, 0.0020980835)
+shape = SubResource("BoxShape3D_a0evs")
+
+[node name="ShellPack" type="Node3D" parent="." unique_id=1405475973]
+
+[node name="ShotgunShell" type="Node3D" parent="ShellPack" unique_id=1102665303]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03047023, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell" unique_id=555711444]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell" unique_id=844898527]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell2" type="Node3D" parent="ShellPack" unique_id=583425805]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11224633, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell2" unique_id=1711407789]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell2" unique_id=431327885]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell3" type="Node3D" parent="ShellPack" unique_id=1158017930]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07128967, -7.863343e-05, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell3" unique_id=381545849]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell3" unique_id=624772281]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell4" type="Node3D" parent="ShellPack" unique_id=136213104]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09149987, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell4" unique_id=1920150663]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell4" unique_id=393526862]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell5" type="Node3D" parent="ShellPack" unique_id=1185485255]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009723775, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell5" unique_id=2141268475]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell5" unique_id=570666770]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell6" type="Node3D" parent="ShellPack" unique_id=1530667634]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.050680436, -7.863343e-05, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell6" unique_id=1430829987]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell6" unique_id=1595296248]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell7" type="Node3D" parent="ShellPack" unique_id=1970248693]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03047023, 0.039672352, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell7" unique_id=1855544368]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell7" unique_id=1587072694]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell8" type="Node3D" parent="ShellPack" unique_id=1453534382]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11224633, 0.039672352, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell8" unique_id=1277733685]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell8" unique_id=1276658561]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell9" type="Node3D" parent="ShellPack" unique_id=1859358069]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07128967, 0.03959372, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell9" unique_id=1812223303]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell9" unique_id=1425938178]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell10" type="Node3D" parent="ShellPack" unique_id=148465371]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09149987, 0.039672352, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell10" unique_id=1932946555]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell10" unique_id=501398710]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell11" type="Node3D" parent="ShellPack" unique_id=1010194916]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009723775, 0.039672352, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell11" unique_id=630848762]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell11" unique_id=1475333972]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell12" type="Node3D" parent="ShellPack" unique_id=269597845]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.050680436, 0.03959372, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell12" unique_id=1744898605]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell12" unique_id=235917132]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell13" type="Node3D" parent="ShellPack" unique_id=292374751]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03047023, 0.079317376, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell13" unique_id=2121678153]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell13" unique_id=430535689]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell14" type="Node3D" parent="ShellPack" unique_id=1253794953]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11224633, 0.079317376, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell14" unique_id=1900024187]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell14" unique_id=1791760513]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell15" type="Node3D" parent="ShellPack" unique_id=1842605119]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07128967, 0.07923874, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell15" unique_id=1287050703]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell15" unique_id=1939542733]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell16" type="Node3D" parent="ShellPack" unique_id=1162638405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09149987, 0.079317376, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell16" unique_id=2075755512]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell16" unique_id=792263339]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell17" type="Node3D" parent="ShellPack" unique_id=1121638426]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009723775, 0.079317376, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell17" unique_id=937284709]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell17" unique_id=722125788]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="ShotgunShell18" type="Node3D" parent="ShellPack" unique_id=154454049]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.050680436, 0.07923874, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellPack/ShotgunShell18" unique_id=322659152]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, 0.00972493)
+mesh = SubResource("CylinderMesh_7pw0j")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShellPack/ShotgunShell18" unique_id=805259577]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0.00980337, 0, -0.039904844)
+mesh = SubResource("CylinderMesh_a0evs")
+skeleton = NodePath("../../..")
+
+[node name="Timer" type="Timer" parent="." unique_id=1666122828]
+wait_time = 40.0
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1282810576]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1642963554]
+shape = SubResource("SphereShape3D_a0evs")

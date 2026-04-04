@@ -1,13 +1,11 @@
 using Godot;
 using ZombieSurvival.scripts.inventory_system;
 
-public partial class ChainLinkFenceDoor : Node3D
+public partial class ShotgunPickup : Node3D
 {
     [Export] private InteractNotifier _interactNotifier;
-    [Export] private ItemType _requiredItem;
-    [Export] private Node3D _pivotPoint;
-    [Export] private CollisionShape3D _invisibleWall;
-    [Export] private AudioStream _lockedSound;
+    [Export] private ItemType _item;
+    [Export] private int _amount;
 
     public override void _Ready()
     {
@@ -29,21 +27,8 @@ public partial class ChainLinkFenceDoor : Node3D
     private void OnInteracted(Node3D player)
     {
         if (player is not IInventoryOwner inventoryOwner) return;
-        if (inventoryOwner.Inventory.ConsumeItem(_requiredItem, 1))
-        {
-            OpenGate();
-            _interactNotifier.Disable();
-            _invisibleWall.QueueFree();
-        }
-        else
-            AudioManager.I.Play3D(_lockedSound, GlobalPosition);
-    }
-
-    private void OpenGate()
-    {
-        Tween tween = CreateTween();
-        tween.TweenProperty(_pivotPoint, "rotation:y", Mathf.DegToRad(-90f), 1.0f)
-            .SetTrans(Tween.TransitionType.Sine)
-            .SetEase(Tween.EaseType.InOut);
+        inventoryOwner.Inventory.AddItem(_item, _amount);
+        _interactNotifier.Disable();
+        QueueFree();
     }
 }

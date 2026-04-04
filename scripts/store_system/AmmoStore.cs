@@ -1,38 +1,57 @@
 using Godot;
 using ZombieSurvival.scripts.inventory_system;
 
-public partial class AmmoStore : InteractableBase
+public partial class AmmoStore : Node3D
 {
-    public override string InteractPrompt => "Press E to buy ammo";
-
-    [Export] private ItemType _storeSellItemType;
+    [Export] private InteractNotifier _interactNotifier;
+    [Export] private PackedScene _ammoScene;
     [Export] private int _storeSellAmount;
     [Export] private ItemType _storeBuyItemType;
     [Export] private int _storeBuyAmount;
-    [Export] private OmniLight3D _light;
+
+    
+    [Export] private AudioStream _failedBuySound;
+    [Export] private AudioStream _successfulBuySound;
+    [Export] private Marker3D _marker;
+
 
     public override void _Ready()
     {
-        base._Ready();
-        _light.Visible = false;
+
+        _interactNotifier.PlayerEnteredRange += OnPlayerEnteredRange;
+        _interactNotifier.PlayerExitedRange += OnPlayerExitedRange;
+        _interactNotifier.Interacted += OnInteracted;
     }
 
-    protected override void OnInteract()
+    private void OnPlayerEnteredRange()
     {
-        if (InteractionRangeBody is IInventoryOwner inventoryOwner)
+        EventBus.Instance.EmitSignal(EventBus.SignalName.PlayerEnteredInteractableRange, _interactNotifier);
+    }
+
+    private void OnPlayerExitedRange()
+    {
+        EventBus.Instance.EmitSignal(EventBus.SignalName.PlayerExitedInteractableRange, _interactNotifier);
+    }
+
+    private void OnInteracted(Node3D player)
+    {
+        if (player is not IInventoryOwner inventoryOwner) return;
+        if (inventoryOwner.Inventory.ConsumeItem(_storeBuyItemType, _storeBuyAmount))
         {
-            if (inventoryOwner.Inventory.ConsumeItem(_storeBuyItemType, _storeBuyAmount))
-                inventoryOwner.Inventory.AddItem(_storeSellItemType, _storeSellAmount);
+            AudioManager.I.Play3D(_successfulBuySound, GlobalPosition);
+            for (int i = 0; i < _storeSellAmount; i++)
+                SpawnAmmo();
+      
         }
+        else
+            AudioManager.I.Play3D(_failedBuySound, GlobalPosition);
     }
 
-    protected override void OnPlayerEnteredRange(Node3D body)
+    private void SpawnAmmo()
     {
-        _light.Visible = true;
-    }
-
-    protected override void OnPlayerExitedRange(Node3D body)
-    {
-        _light.Visible = false;
+        var ammo = _ammoScene.Instantiate<Pickup>();
+        Containers.Instance.VFX.AddChild(ammo);
+        ammo.GlobalPosition = _marker.GlobalPosition;
+        ammo.ApplyImpulse(_marker.Basis.Z  * 1f);
     }
 }

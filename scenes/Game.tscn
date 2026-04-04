@@ -1,0 +1,133 @@
+[gd_scene format=3 uid="uid://brmqkfto14n3c"]
+
+[ext_resource type="Script" uid="uid://j7nqumogkvom" path="res://scripts/Game.cs" id="1_b343u"]
+[ext_resource type="PackedScene" uid="uid://c3roff7wy8drf" path="res://scenes/map/World_navmesh.tscn" id="1_rlmg0"]
+[ext_resource type="PackedScene" uid="uid://c5gxs84x66oh4" path="res://scenes/map/Assets/Building1.tscn" id="2_0wksg"]
+[ext_resource type="PackedScene" uid="uid://cfjp3bppwm4i8" path="res://scenes/player/PlayerController.tscn" id="2_s0yep"]
+[ext_resource type="PackedScene" uid="uid://bafgfpxa34vss" path="res://scenes/map/Assets/Bus.tscn" id="3_lsbak"]
+[ext_resource type="PackedScene" uid="uid://dnuwr0qeacme6" path="res://scenes/spawn_system/spawner.tscn" id="4_0wksg"]
+[ext_resource type="PackedScene" uid="uid://bqy2scgfjaspk" path="res://scenes/map/Assets/Building2.tscn" id="4_03gun"]
+[ext_resource type="PackedScene" uid="uid://cvt0aomoxtces" path="res://scenes/round_system/round_system.tscn" id="5_0wksg"]
+[ext_resource type="PackedScene" uid="uid://d1vcwcrp7eqh8" path="res://scenes/interactables/guns/shotgun_pickup.tscn" id="8_3xj3m"]
+[ext_resource type="PackedScene" uid="uid://cpuy8hqpdax45" path="res://scenes/store_system/shotgun_store.tscn" id="9_ytxki"]
+[ext_resource type="PackedScene" uid="uid://fvmrnn61a00s" path="res://scenes/interactables/doors/chain_link_fence.tscn" id="10_ngqtf"]
+
+[node name="Game" type="Node3D" unique_id=1906095306 node_paths=PackedStringArray("Player")]
+transform = Transform3D(0.9989043, -0.020793993, 0.041928995, 0.021435108, 0.9996593, -0.0148992995, -0.04160489, 0.015781721, 0.9990095, 0, 0, 0)
+script = ExtResource("1_b343u")
+Player = NodePath("PlayerController")
+
+[node name="World" parent="." unique_id=1803875491 instance=ExtResource("1_rlmg0")]
+
+[node name="DirectionalLight3D" parent="World" index="1" unique_id=92304437]
+visible = false
+shadow_enabled = false
+
+[node name="Walls" parent="World/NavigationRegion3D" parent_id_path=PackedInt32Array(1803875491, 1865754256) index="0" unique_id=1233253355]
+collision_layer = 31
+collision_mask = 31
+
+[node name="Building1" parent="World/NavigationRegion3D/Walls" index="0" unique_id=801496068 instance=ExtResource("2_0wksg")]
+transform = Transform3D(-0.89999986, 0, -7.86805e-08, 0, 0.9, 0, 7.8680486e-08, 0, -0.9, -0.5708313, 0.088222206, 13.64308)
+
+[node name="Wall" parent="World/NavigationRegion3D/Walls" index="25" unique_id=2048568619]
+visible = false
+
+[node name="AlleyWall2" parent="World/NavigationRegion3D/Walls" index="26" unique_id=729488119]
+visible = false
+
+[node name="AlleyWall1" parent="World/NavigationRegion3D/Walls" index="27" unique_id=1042938600]
+visible = false
+
+[node name="AlleyWall3" parent="World/NavigationRegion3D/Walls" index="28" unique_id=1494708274]
+visible = false
+
+[node name="AlleyWall5" parent="World/NavigationRegion3D/Walls" index="30" unique_id=449663289]
+visible = false
+
+[node name="AlleyWall6" parent="World/NavigationRegion3D/Walls" index="31" unique_id=305686383]
+visible = false
+
+[node name="BUS" parent="World/NavigationRegion3D/Walls" index="36" unique_id=344328127]
+visible = false
+
+[node name="Bus" parent="World/NavigationRegion3D/Walls" index="37" unique_id=1403012753 instance=ExtResource("3_lsbak")]
+transform = Transform3D(-0.53566986, 0.0001606585, -0.12472936, 0.00010511954, 0.54999965, 0.00025697332, 0.124729365, 0.00022643898, -0.5356698, -11.597675, -0.24412534, -2.9491656)
+
+[node name="Building2" parent="World/NavigationRegion3D/Walls" index="47" unique_id=1361504271 instance=ExtResource("4_03gun")]
+transform = Transform3D(-6.7055225e-08, -3.4924597e-09, 1.6000004, -5.5879354e-09, 1.599999, -2.0954758e-09, -1.6, 0, -8.195639e-08, -31.547115, 7.969871, -4.1317058)
+
+[node name="Building3" parent="World/NavigationRegion3D/Walls" index="48" unique_id=1159409400 instance=ExtResource("2_0wksg")]
+transform = Transform3D(-0.8999998, 0, -7.868048e-08, 0, 0.9, 0, 7.868048e-08, 0, -0.89999974, 10.935164, -0.121202886, -9.631489)
+
+[node name="Building4" parent="World/NavigationRegion3D/Walls" index="49" unique_id=730763204 instance=ExtResource("4_03gun")]
+transform = Transform3D(-1.6000006, -2.910383e-09, -1.7136335e-07, -1.1292286e-08, 1.5999981, -5.5879354e-09, 1.5646219e-07, 0, -1.6000006, -30.064686, 7.662418, -22.626905)
+
+[node name="Building5" parent="World/NavigationRegion3D/Walls" index="50" unique_id=651953571 instance=ExtResource("2_0wksg")]
+transform = Transform3D(-1.3000007, -1.4319085e-08, -2.2724271e-07, -2.0372681e-08, 1.2999992, 0, 2.1234155e-07, 0, -1.2999992, -37.279247, -0.8493773, 12.5581)
+
+[node name="Building6" parent="World/NavigationRegion3D/Walls" index="51" unique_id=204063170 instance=ExtResource("2_0wksg")]
+transform = Transform3D(-1.4901161e-08, -1.2165401e-08, -0.8000002, 0, 0.9999998, -1.1175871e-08, 0.49999982, -1.8626451e-09, -2.6077032e-08, -5.685619, -0.15514886, -10.044203)
+
+[node name="Building7" parent="World/NavigationRegion3D/Walls" index="52" unique_id=1177059896 instance=ExtResource("2_0wksg")]
+transform = Transform3D(-0.89999986, -1.5716068e-09, -8.195639e-08, -2.561137e-09, 0.9, 0, 8.195639e-08, 0, -0.8999999, 0.9817433, -0.5007063, -23.637081)
+
+[node name="Lights" type="Node3D" parent="World" unique_id=805863230]
+transform = Transform3D(1, -1.1641532e-09, 3.7252903e-09, 2.3283064e-09, 0.99999994, 0, 0, 0, 0.9999999, -2.910383e-10, 0.4687974, 4.656613e-10)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="World/Lights" unique_id=1245886515]
+transform = Transform3D(0.99999994, 5.2386895e-10, -1.1175871e-08, -3.259629e-09, 1, 3.7252903e-09, 0, 1.8626451e-09, 1.0000001, 0.09275501, 3.8569763, -0.06447294)
+visible = false
+light_energy = 16.0
+light_indirect_energy = 8.352
+light_size = 0.962
+omni_range = 4096.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="World/Lights" unique_id=588417280]
+transform = Transform3D(0.5737051, -0.25616112, 0.7779742, -1.8626451e-09, 0.9498357, 0.31274936, -0.81906205, -0.17942593, 0.54492563, 5.676791, 5.218582, 6.9424767)
+light_color = Color(1, 1, 0.59607846, 1)
+light_energy = 3.0
+shadow_enabled = true
+spot_range = 15.838
+spot_angle = 84.2
+
+[node name="Interactables" type="Node3D" parent="World" unique_id=1684070018]
+
+[node name="ShotgunStore" parent="World/Interactables" unique_id=176065396 instance=ExtResource("9_ytxki")]
+transform = Transform3D(0.9989979, 0.0006882804, 0.044737127, -0.00064527546, 0.99999887, -0.0009741932, -0.0447377, 0.00094431266, 0.99899596, -5.021401, 0.59800404, -4.2954865)
+
+[node name="ChainLinkFenceDoor" parent="World/Interactables" unique_id=1285907813 instance=ExtResource("10_ngqtf")]
+transform = Transform3D(1, -2.5029294e-09, 4.0978193e-08, 1.5366822e-08, 0.9999995, 1.8626451e-09, 0, -7.450581e-09, 0.99999905, 0.05006315, 0.30040586, -4.9259615)
+
+[node name="ShotgunPickup" parent="World/Interactables" unique_id=1224397729 instance=ExtResource("8_3xj3m")]
+transform = Transform3D(0.22849877, -0.97339916, -0.016752811, 0.97238433, 0.22735363, 0.05270186, -0.047491163, -0.02833251, 0.99846816, 5.637163, 1.197041, 7.4536266)
+
+[node name="PlayerController" parent="." unique_id=1073413131 instance=ExtResource("2_s0yep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6407409, 4.1583242)
+
+[node name="RoundManager" parent="." unique_id=397079504 node_paths=PackedStringArray("_player") instance=ExtResource("5_0wksg")]
+_player = NodePath("../PlayerController")
+
+[node name="DifficultyManager" parent="RoundManager" index="0" unique_id=1702326334]
+_zombieSpawnTimerIntervalScaleAmount = 0.5
+_maxZombieSpeed = 5.0
+_maxZombieHealth = 500.0
+_maxNumZombiesAliveLimit = 100
+_maxNumZombiesRoundLimit = 700
+_zombieSpawnTimerIntervalLimit = 1.0
+_startingZombieSpeed = 1.0
+_startingZombieHealth = 500.0
+_startingNumZombiesRoundLimit = 10
+_startingZombieSpawnTimerInterval = 5.0
+
+[node name="Spawner" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="1" unique_id=942961392 instance=ExtResource("4_0wksg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2253485, 0.16430509, 6.120675)
+
+[node name="Spawner2" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="2" unique_id=2123943745 instance=ExtResource("4_0wksg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.855404, 0.40553248, -4.7351832)
+
+[editable path="World"]
+[editable path="World/Interactables/ShotgunStore"]
+[editable path="RoundManager"]
+[editable path="RoundManager/DifficultyManager"]
+[editable path="RoundManager/SpawnManager"]

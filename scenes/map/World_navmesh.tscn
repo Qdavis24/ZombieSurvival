@@ -158,11 +158,7 @@ size = Vector3(1.5043945, 1.1323242, 2.242157)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09030914, 0.5097934, -19.211105)
 size = Vector3(1.5043945, 1.4255981, 0.6625824)
 
-[node name="SHOTGUN" type="CSGBox3D" parent="NavigationRegion3D/Walls" unique_id=512175923]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4141927, 0.65336907, 7.27581)
-size = Vector3(0.5001221, 1.4255981, 0.6625824)
-
-[node name="SHOTGUN2" type="CSGBox3D" parent="NavigationRegion3D/Walls" unique_id=106366829]
+[node name="LightPole" type="CSGBox3D" parent="NavigationRegion3D/Walls" unique_id=106366829]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.978838, 2.4303236, 7.291982)
 size = Vector3(0.36627197, 4.9795074, 0.23937607)
 

@@ -208,9 +208,9 @@ public partial class DismemberableBody : Skeleton3D
         return detachedBodyParts[0];
     }
 
-    private ParasiticMaterial SpawnParasiticMaterial(Transform3D transform)
+    private Pickup SpawnParasiticMaterial(Transform3D transform)
     {
-        var parasiticMat = _parasiticMaterialPackedScene.Instantiate<ParasiticMaterial>();
+        var parasiticMat = _parasiticMaterialPackedScene.Instantiate<Pickup>();
         parasiticMat.GlobalTransform = transform;
         Containers.Instance.VFX.AddChild(parasiticMat);
         return parasiticMat;

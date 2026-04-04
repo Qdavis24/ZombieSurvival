@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://7rc5i3bksypk"]
 
 [ext_resource type="Script" uid="uid://djavsc2rmyqdj" path="res://scripts/GameManager.cs" id="1_elqb8"]
-[ext_resource type="PackedScene" uid="uid://brmqkfto14n3c" path="res://scenes/testing_nav_mesh_main.tscn" id="2_rvslj"]
+[ext_resource type="PackedScene" uid="uid://brmqkfto14n3c" path="res://scenes/Game.tscn" id="2_rvslj"]
 [ext_resource type="PackedScene" uid="uid://0keac7gcsnat" path="res://scenes/ui/UiManager.tscn" id="3_0bbpv"]
 [ext_resource type="AudioStream" uid="uid://dv3l8j7quf0pj" path="res://assets/sound/music/beat1/layer1.ogg" id="3_nxtc6"]
 [ext_resource type="AudioStream" uid="uid://b3h6euorm47sl" path="res://assets/sound/music/beat1/layer2.ogg" id="4_jlsqs"]

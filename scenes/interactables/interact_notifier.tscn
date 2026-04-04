@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://eksdoewlbll1"]
+
+[ext_resource type="Script" path="res://scripts/interactables/InteractNotifier.cs" id="1_xyljr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_85cpn"]
+radius = 1.9979345
+
+[node name="InteractNotifier" type="Node3D" unique_id=517015701 node_paths=PackedStringArray("_interactionRange")]
+script = ExtResource("1_xyljr")
+_interactionRange = NodePath("Area3D")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1741340194]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=466240065]
+shape = SubResource("SphereShape3D_85cpn")

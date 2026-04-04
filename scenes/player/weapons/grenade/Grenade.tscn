@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://dsg1yds3jtqik" path="res://scripts/player/weapons/grenade/Grenade.cs" id="1_ax4gn"]
 [ext_resource type="PackedScene" uid="uid://5q4d8liiht13" path="res://assets/models/player/weapons/grenade_throwing.glb" id="1_lkmmb"]
 [ext_resource type="PackedScene" uid="uid://rchj2cww7afb" path="res://scenes/player/weapons/grenade/GrenadeProjectile.tscn" id="2_70d18"]
-[ext_resource type="AudioStream" uid="uid://bb3un4wtkjeaj" path="res://assets/sound/guns/grenadethrow/grenadethrow1.wav" id="3_vndjd"]
-[ext_resource type="AudioStream" uid="uid://ds0oifg56ya8y" path="res://assets/sound/guns/grenadethrow/grenadethrow2.wav" id="4_c45ie"]
+[ext_resource type="AudioStream" uid="uid://cv4orllm1k4sp" path="res://assets/sound/guns/grenadethrow/grenadethrow1.wav" id="3_vndjd"]
+[ext_resource type="AudioStream" uid="uid://dc5f54xxjq46d" path="res://assets/sound/guns/grenadethrow/grenadethrow2.wav" id="4_c45ie"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_d7a1p"]
 streams_count = 2
@@ -26,7 +26,7 @@ _throwSound = SubResource("AudioStreamRandomizer_d7a1p")
 [node name="Rig" parent="." unique_id=723177255 instance=ExtResource("1_lkmmb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.035, 0)
 
-[node name="Skeleton3D" parent="Rig/HumanArms" parent_id_path=PackedInt32Array(723177255, 1291068089) index="0" unique_id=680250230]
+[node name="Skeleton3D" parent="Rig/HumanArms" parent_id_path=PackedInt32Array(723177255, 1386631390) index="0" unique_id=1002670096]
 bones/1/position = Vector3(-0.21312506, 0.020278389, -0.04797538)
 bones/1/rotation = Quaternion(-0.17016183, 0.27279136, 0.9333309, 0.15975977)
 bones/2/rotation = Quaternion(-0.4962433, 0.000114397146, 0.06927816, 0.865415)
@@ -64,16 +64,26 @@ bones/41/position = Vector3(0.14352602, 0.7182904, -0.124308884)
 bones/41/rotation = Quaternion(-0.36743233, 0.2602513, -0.27365512, 0.84992695)
 bones/42/position = Vector3(-0.049498484, 0.07756377, 0.004835219)
 
-[node name="Torus" parent="Rig" index="1" unique_id=255082171]
+[node name="ArmMesh" parent="Rig/HumanArms/Skeleton3D" index="0" unique_id=1737377656]
+cast_shadow = 0
+
+[node name="grenade" parent="Rig/HumanArms/Skeleton3D" index="1" unique_id=814675729]
+cast_shadow = 0
+
+[node name="grenade_ring" parent="Rig/HumanArms/Skeleton3D" index="2" unique_id=438612238]
+cast_shadow = 0
+
+[node name="Torus" parent="Rig" index="1" unique_id=657097558]
+visible = false
+cast_shadow = 0
+
+[node name="Empty" parent="Rig" index="2" unique_id=1852199577]
 visible = false
 
-[node name="Empty" parent="Rig" index="2" unique_id=2128592389]
+[node name="Scale Reference" parent="Rig" index="3" unique_id=1997842083]
 visible = false
 
-[node name="Scale Reference" parent="Rig" index="3" unique_id=2064832013]
-visible = false
-
-[node name="AnimationPlayer" parent="Rig" index="4" unique_id=1846392575]
+[node name="AnimationPlayer" parent="Rig" index="4" unique_id=434342880]
 autoplay = &"grenade_throw"
 
 [node name="Marker3D" type="Marker3D" parent="." unique_id=249475587]

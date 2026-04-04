@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://wpwy380xp0yw"]
 
 [ext_resource type="Script" uid="uid://ny45wnbu0k0r" path="res://scripts/player/weapons/Explosion.cs" id="1_n44nq"]
-[ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/models/player/scorch_01.png" id="2_js8jj"]
-[ext_resource type="AudioStream" uid="uid://c5sh2xrw472np" path="res://assets/sound/guns/rpg/explosion1.wav" id="2_2st6p"]
-[ext_resource type="AudioStream" uid="uid://bhw80m76smjcg" path="res://assets/sound/guns/rpg/explosion2.wav" id="3_2st6p"]
+[ext_resource type="AudioStream" uid="uid://wjpgf5qyaarm" path="res://assets/sound/guns/rpg/explosion1.wav" id="2_2st6p"]
+[ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/particle_textures/scorch_01.png" id="2_js8jj"]
+[ext_resource type="AudioStream" uid="uid://j2puiep0bxyf" path="res://assets/sound/guns/rpg/explosion2.wav" id="3_2st6p"]
 [ext_resource type="AudioStream" uid="uid://bqpseia7vvqv4" path="res://assets/sound/shothits/specialexplosiongore.wav" id="4_poj2o"]
 [ext_resource type="AudioStream" uid="uid://ddc415cfw0jym" path="res://assets/sound/shothits/specialexplosiongore2.wav" id="5_38d5i"]
 
@@ -29,6 +29,13 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_nd350"]
 curve = SubResource("Curve_wtns8")
 
+[sub_resource type="Gradient" id="Gradient_38d5i"]
+offsets = PackedFloat32Array(0, 0.38784412, 0.7907645)
+colors = PackedColorArray(1, 0.6117647, 0, 1, 1, 0.7607843, 0.047058824, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kaav3"]
+gradient = SubResource("Gradient_38d5i")
+
 [sub_resource type="Curve" id="Curve_qje3w"]
 _data = [Vector2(0, 0.5794184), 0.0, 0.0, 0, 0, Vector2(0.994152, 0.9731544), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -45,6 +52,7 @@ gravity = Vector3(0, 0, 0)
 damping_min = 4.71
 damping_max = 14.710001
 scale_curve = SubResource("CurveTexture_oh15a")
+color_ramp = SubResource("GradientTexture1D_kaav3")
 alpha_curve = SubResource("CurveTexture_nd350")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8wo7"]
@@ -84,7 +92,9 @@ process_material = SubResource("ParticleProcessMaterial_no1nk")
 draw_pass_1 = SubResource("QuadMesh_5hvi3")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="ExplosionFlash" unique_id=1546540937]
+light_color = Color(1, 1, 0.43529412, 1)
 shadow_enabled = true
+omni_attenuation = 2.0
 
 [node name="Timer" type="Timer" parent="ExplosionFlash" unique_id=1184371043]
 one_shot = true

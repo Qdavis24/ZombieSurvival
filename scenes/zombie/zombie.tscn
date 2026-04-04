@@ -30,7 +30,7 @@
 [ext_resource type="PackedScene" uid="uid://j2kmc40i84x" path="res://scenes/zombie/body-parts/upper_arm_r.tscn" id="11_vwmx8"]
 [ext_resource type="PackedScene" uid="uid://c6jewwi5hgotf" path="res://scenes/zombie/body-parts/lower_arm_r.tscn" id="12_bxjsn"]
 [ext_resource type="AudioStream" uid="uid://51631oglvva8" path="res://assets/sound/zombies/zombie10Q.wav" id="15_us7i4"]
-[ext_resource type="PackedScene" uid="uid://diw46jgb6wloj" path="res://scenes/zombie/parasitic_material.tscn" id="17_6p1aj"]
+[ext_resource type="PackedScene" uid="uid://diw46jgb6wloj" path="res://scenes/pickups/parasitic_material.tscn" id="17_6p1aj"]
 [ext_resource type="AudioStream" uid="uid://b32tw6vl00cdg" path="res://assets/sound/shothits/shothit1.wav" id="20_gl5c4"]
 [ext_resource type="AudioStream" uid="uid://c8vym8otvlj2y" path="res://assets/sound/shothits/shothit2.wav" id="21_l7rcl"]
 [ext_resource type="AudioStream" uid="uid://bfe6wu6hmwku2" path="res://assets/sound/shothits/shothit3.wav" id="22_uq5pi"]
