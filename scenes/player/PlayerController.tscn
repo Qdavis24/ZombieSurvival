@@ -28,8 +28,10 @@
 [ext_resource type="PackedScene" uid="uid://bhwaaq5eta4sp" path="res://scenes/inventory_system/Inventory.tscn" id="13_xpgqn"]
 [ext_resource type="AudioStream" uid="uid://d25cmo0hid2cr" path="res://assets/sound/player/hit4.wav" id="14_eutje"]
 [ext_resource type="Theme" uid="uid://djrvn0o5wdyef" path="res://scenes/ui/ammo_theme.tres" id="14_jlpny"]
+[ext_resource type="AudioStream" uid="uid://buhe5wp3slwk4" path="res://assets/sound/player/hitmoan1.wav" id="15_1db2i"]
 [ext_resource type="Texture2D" uid="uid://qkr7gisrljdt" path="res://scenes/ui/ammo.png" id="15_444fp"]
 [ext_resource type="Texture2D" uid="uid://ds7gkrlq74gh2" path="res://scenes/ui/grenade.png" id="16_4vr2v"]
+[ext_resource type="AudioStream" uid="uid://dwwhjn6ikqk6p" path="res://assets/sound/player/hitmoan2.wav" id="16_gkq8c"]
 [ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="18_jlpny"]
 [ext_resource type="Script" uid="uid://djc05fynr5gvv" path="res://scripts/player/player_hud/PlayerPopup.cs" id="18_klk5f"]
 
@@ -52,11 +54,15 @@ stream_3/stream = ExtResource("10_lmmi6")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qhhj6"]
 random_pitch = 1.0594631
-streams_count = 4
+streams_count = 6
 stream_0/stream = ExtResource("11_i07ap")
 stream_1/stream = ExtResource("12_akdlx")
 stream_2/stream = ExtResource("13_52kwu")
 stream_3/stream = ExtResource("14_eutje")
+stream_4/stream = ExtResource("15_1db2i")
+stream_4/weight = 0.1
+stream_5/stream = ExtResource("16_gkq8c")
+stream_5/weight = 0.1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2fbm"]
 albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
@@ -76,7 +82,6 @@ shader_parameter/hit_flash = 0.0
 
 [node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "Inventory")]
 script = ExtResource("1_etyb6")
-_healthRegenRate = 0.1
 _playerHud = NodePath("PlayerHud")
 _weaponManager = NodePath("WeaponManager")
 _footstepSound = SubResource("AudioStreamRandomizer_ajn8d")

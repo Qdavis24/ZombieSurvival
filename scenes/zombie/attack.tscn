@@ -1,17 +1,20 @@
 [gd_scene format=3 uid="uid://bgghqwh1u2n5q"]
 
 [ext_resource type="Script" uid="uid://dm0v0qa86f0k3" path="res://scripts/zombie_package/Attack.cs" id="1_7hdol"]
-[ext_resource type="AudioStream" uid="uid://c1dl53b7fwblq" path="res://assets/sound/zombies/zombieattack1.wav" id="2_3ihrw"]
-[ext_resource type="AudioStream" uid="uid://3rnvbqyjir4o" path="res://assets/sound/zombies/zombieattack2.wav" id="3_3p37a"]
-[ext_resource type="AudioStream" uid="uid://b0rvi4uvv7b80" path="res://assets/sound/zombies/zombieattack3.wav" id="4_s785h"]
-[ext_resource type="AudioStream" uid="uid://clpcow43ns1in" path="res://assets/sound/zombies/zombieattack4.wav" id="5_rpjcx"]
-[ext_resource type="AudioStream" uid="uid://iuarasaul6ln" path="res://assets/sound/zombies/zombieattack5.wav" id="6_06sdt"]
-[ext_resource type="AudioStream" uid="uid://c5pxm0o76yoas" path="res://assets/sound/zombies/zombieattack6.wav" id="7_pg6kl"]
-[ext_resource type="AudioStream" uid="uid://bopnqxsj5jun1" path="res://assets/sound/zombies/zombieattack7.wav" id="8_odiew"]
+[ext_resource type="AudioStream" uid="uid://bgihmnt7anyeo" path="res://assets/sound/zombies/zombieattack1.wav" id="2_3ihrw"]
+[ext_resource type="AudioStream" uid="uid://c2o2ug3mc2nd7" path="res://assets/sound/zombies/zombieattack2.wav" id="3_3p37a"]
+[ext_resource type="AudioStream" uid="uid://dckq2sw1jc7b5" path="res://assets/sound/zombies/zombieattack3.wav" id="4_s785h"]
+[ext_resource type="AudioStream" uid="uid://cylljd4fm3kvf" path="res://assets/sound/zombies/zombieattack4.wav" id="5_rpjcx"]
+[ext_resource type="AudioStream" uid="uid://w7foo20au8is" path="res://assets/sound/zombies/zombieattack5.wav" id="6_06sdt"]
+[ext_resource type="AudioStream" uid="uid://t10k0cou3ruc" path="res://assets/sound/zombies/zombieattack6.wav" id="7_pg6kl"]
+[ext_resource type="AudioStream" uid="uid://e6b05msavpnj" path="res://assets/sound/zombies/zombieattack7.wav" id="8_odiew"]
+[ext_resource type="AudioStream" uid="uid://57txgja5pnpb" path="res://assets/sound/zombies/zombieattackQ8.wav" id="9_rpjcx"]
+[ext_resource type="AudioStream" uid="uid://by521nsvfh242" path="res://assets/sound/zombies/zombieattackQ9.wav" id="10_06sdt"]
+[ext_resource type="AudioStream" uid="uid://bhekemi1cdo1j" path="res://assets/sound/zombies/zombieattackQ10.wav" id="11_pg6kl"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tksjh"]
 random_pitch = 1.2599211
-streams_count = 7
+streams_count = 10
 stream_0/stream = ExtResource("2_3ihrw")
 stream_1/stream = ExtResource("3_3p37a")
 stream_2/stream = ExtResource("4_s785h")
@@ -19,6 +22,9 @@ stream_3/stream = ExtResource("5_rpjcx")
 stream_4/stream = ExtResource("6_06sdt")
 stream_5/stream = ExtResource("7_pg6kl")
 stream_6/stream = ExtResource("8_odiew")
+stream_7/stream = ExtResource("9_rpjcx")
+stream_8/stream = ExtResource("10_06sdt")
+stream_9/stream = ExtResource("11_pg6kl")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_14etj"]
 radius = 0.47955883
