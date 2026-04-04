@@ -4,7 +4,6 @@ using ZombieSurvival.scripts.inventory_system;
 
 public partial class ParasiticMaterial : RigidBody3D
 {
-	[Export] private GpuParticles3D _blowupParticles;
 	[Export] private GpuParticles3D _pickupParticles;
 	[Export] private Timer _despawnTimer;
 	[Export] private Area3D _pickupRange;
@@ -14,7 +13,7 @@ public partial class ParasiticMaterial : RigidBody3D
 	
 	public override void _Ready()
 	{
-		_despawnTimer.Timeout += TriggerFree;
+		_despawnTimer.Timeout += QueueFree;
 		_pickupRange.BodyEntered += PickupRangeOnBodyEntered;
 		_despawnTimer.Start();
 	}
@@ -24,17 +23,9 @@ public partial class ParasiticMaterial : RigidBody3D
 		if (body is IInventoryOwner inventoryOwner)
 		{
 			inventoryOwner.Inventory.AddItem(ItemType.ParasiticMaterial, 1);
-			TriggerFree();
+			CallDeferred(MethodName.QueueFree);
 		}
 	}
-
-	private void TriggerFree()
-	{
-		_pickupRange.BodyEntered -= PickupRangeOnBodyEntered;
-		_parasiteMesh.Visible = false;
-		_pickupParticles.Emitting = false;
-		_blowupParticles.Emitting = true;
-		_blowupParticles.Finished += QueueFree;
-	}
+	
 	
 }

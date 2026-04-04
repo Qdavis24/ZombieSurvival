@@ -30,6 +30,14 @@
 [ext_resource type="PackedScene" uid="uid://j2kmc40i84x" path="res://scenes/zombie/body-parts/upper_arm_r.tscn" id="11_vwmx8"]
 [ext_resource type="PackedScene" uid="uid://c6jewwi5hgotf" path="res://scenes/zombie/body-parts/lower_arm_r.tscn" id="12_bxjsn"]
 [ext_resource type="AudioStream" uid="uid://51631oglvva8" path="res://assets/sound/zombies/zombie10Q.wav" id="15_us7i4"]
+[ext_resource type="PackedScene" uid="uid://diw46jgb6wloj" path="res://scenes/zombie/parasitic_material.tscn" id="17_6p1aj"]
+[ext_resource type="AudioStream" uid="uid://b32tw6vl00cdg" path="res://assets/sound/shothits/shothit1.wav" id="20_gl5c4"]
+[ext_resource type="AudioStream" uid="uid://c8vym8otvlj2y" path="res://assets/sound/shothits/shothit2.wav" id="21_l7rcl"]
+[ext_resource type="AudioStream" uid="uid://bfe6wu6hmwku2" path="res://assets/sound/shothits/shothit3.wav" id="22_uq5pi"]
+[ext_resource type="AudioStream" uid="uid://dx1ubmcem1etc" path="res://assets/sound/shothits/shothit4.wav" id="23_rrych"]
+[ext_resource type="AudioStream" uid="uid://bulnqqxb72xaw" path="res://assets/sound/shothits/shothit5.wav" id="24_r774q"]
+[ext_resource type="AudioStream" uid="uid://bqnlklp08n457" path="res://assets/sound/shothits/shothit6.wav" id="25_dixnm"]
+[ext_resource type="AudioStream" uid="uid://brbnjlcvyf5da" path="res://assets/sound/shothits/shothit7.wav" id="26_7xuvb"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_cr1ja"]
 random_pitch = 1.1892071
@@ -50,6 +58,16 @@ stream_10/stream = ExtResource("4_kc3ju")
 stream_11/stream = ExtResource("5_6p1aj")
 stream_12/stream = ExtResource("6_jur0n")
 stream_13/stream = ExtResource("7_s4qnu")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qyorh"]
+streams_count = 7
+stream_0/stream = ExtResource("20_gl5c4")
+stream_1/stream = ExtResource("21_l7rcl")
+stream_2/stream = ExtResource("22_uq5pi")
+stream_3/stream = ExtResource("23_rrych")
+stream_4/stream = ExtResource("24_r774q")
+stream_5/stream = ExtResource("25_dixnm")
+stream_6/stream = ExtResource("26_7xuvb")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_imofc"]
 
@@ -507,14 +525,15 @@ _data = {
 radius = 0.4506836
 height = 1.6922607
 
-[node name="Zombie" type="CharacterBody3D" unique_id=1782173876 node_paths=PackedStringArray("_dismemberableBody", "_navAgent", "_collisionShape")]
+[node name="Zombie" type="CharacterBody3D" unique_id=1782173876 node_paths=PackedStringArray("_dismemberableBody", "_navAgent", "_collisionShape", "_animationPlayer")]
 transform = Transform3D(-0.9893283, 0, 0.14570318, 0, 1, 0, -0.14570318, 0, -0.9893283, 0, 0, 0)
 script = ExtResource("1_6mvc3")
 _dismemberableBody = NodePath("Armature/Skeleton3D")
 _navAgent = NodePath("NavigationAgent3D")
 _collisionShape = NodePath("CollisionShape3D")
-_attackRange = 1.2
+_attackRange = 1.4
 _groanSound = SubResource("AudioStreamRandomizer_cr1ja")
+_animationPlayer = NodePath("AnimationPlayer")
 
 [node name="Armature" type="Node3D" parent="." unique_id=1601233901]
 transform = Transform3D(0.049773708, 0, -0.9987605, 0, 1, 0, 0.9987605, 0, 0.049773708, 0, 0, 0)
@@ -619,9 +638,11 @@ _upperLegDamageMultiplier = 0.5
 _lowerLegDamageMultiplier = 0.5
 _torsoDamageMultiplier = 0.6
 _simulationRunTimer = NodePath("simulationRunTimer")
+_parasiticMaterialPackedScene = ExtResource("17_6p1aj")
 _physicalBoneSimulator = NodePath("PhysicalBoneSimulator3D")
 _limbContainerPackedScene = ExtResource("3_vwmx8")
 _blood = ExtResource("4_bxjsn")
+_shotHitSound = SubResource("AudioStreamRandomizer_qyorh")
 
 [node name="body" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=877516374]
 mesh = SubResource("ArrayMesh_ax0sv")
@@ -629,7 +650,6 @@ skin = SubResource("Skin_hyws2")
 surface_material_override/0 = ExtResource("1_nlave")
 
 [node name="PhysicalBoneSimulator3D" type="PhysicalBoneSimulator3D" parent="Armature/Skeleton3D" unique_id=1691963881]
-visible = false
 
 [node name="PhysicalBone head" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" unique_id=767285224]
 transform = Transform3D(0.75102395, 0.66008073, -0.016016364, -0.66026866, 0.7506891, -0.022611357, -0.002902016, 0.027556777, 0.999616, 0.16928256, 1.4745815, 0.019890804)
@@ -754,12 +774,12 @@ transform = Transform3D(0.99998415, -0.004049644, -0.0015320331, 0.001701124, 0.
 shape = SubResource("CapsuleShape3D_lamel")
 
 [node name="PhysicalBone lower_arm_r" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" unique_id=117889073]
-transform = Transform3D(0.48068532, 0.8767097, -0.01794257, 0.8558465, -0.46459392, 0.22733079, 0.19096708, -0.124630675, -0.9736523, 0.25275126, 1.0999198, 0.2293937)
+transform = Transform3D(0.48068532, 0.8767096, -0.017942563, 0.8558465, -0.4645939, 0.22733079, 0.19096708, -0.12463066, -0.9736523, 0.25275126, 1.0999198, 0.2293937)
 collision_layer = 8
 collision_mask = 8
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00059341727, -0.0005395896, 0.0011166541)
-body_offset = Transform3D(0.99999607, -0.002592653, 0.00044731423, 0.0025925934, 0.99999624, -0.00018201768, -0.00044554472, 0.00018197298, 0.99999774, 0.0005915165, 0.0005413294, -0.0011168178)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0005934173, -0.0005395897, 0.001116654)
+body_offset = Transform3D(0.99999607, -0.002592653, 0.0004473254, 0.0025925934, 0.99999624, -0.00018200278, -0.00044554472, 0.00018195808, 0.99999774, 0.0005915165, 0.0005413294, -0.0011168178)
 mass = 3.0
 angular_damp = 1.0
 bone_name = "lower.arm.r"

@@ -20,8 +20,6 @@ Player = NodePath("PlayerController")
 
 [node name="DirectionalLight3D" parent="Node3D" index="1" unique_id=92304437]
 visible = false
-light_energy = 12.571
-light_volumetric_fog_energy = 0.0
 
 [node name="Walls" parent="Node3D/NavigationRegion3D" parent_id_path=PackedInt32Array(1803875491, 1865754256) index="0" unique_id=1233253355]
 collision_layer = 31

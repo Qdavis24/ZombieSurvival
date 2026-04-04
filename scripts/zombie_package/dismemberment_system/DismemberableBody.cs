@@ -36,7 +36,8 @@ public partial class DismemberableBody : Skeleton3D
     [Export] private float _torsoDamageMultiplier;
 
     [ExportCategory("Miscellaneous")] [Export]
-    private Timer _simulationRunTimer;
+    private float _parasiticMaterialDropChance = .4f;
+    [Export] private Timer _simulationRunTimer;
     [Export] private PackedScene _parasiticMaterialPackedScene;
     [Export] private PhysicalBoneSimulator3D _physicalBoneSimulator;
     [Export] private PackedScene _limbContainerPackedScene;
@@ -154,7 +155,7 @@ public partial class DismemberableBody : Skeleton3D
             var rootDetachedBodyPart = SpawnDetachedBodyParts(attachedBodyPart.CollectChain());
             if (rootDetachedBodyPart != null)
             {
-                for (int i = 0; i < 2; i++)
+                if(GD.Randf() > _parasiticMaterialDropChance)
                 {
                     var parasiticMaterial = SpawnParasiticMaterial(rootDetachedBodyPart.GlobalTransform);
                     parasiticMaterial.ApplyCentralImpulse((new Vector3(GD.RandRange(-1,1), 0, GD.RandRange(-1,1)) + Vector3.Up).Normalized() * 3f);

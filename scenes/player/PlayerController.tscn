@@ -82,6 +82,7 @@ shader_parameter/hit_flash = 0.0
 
 [node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "Inventory")]
 script = ExtResource("1_etyb6")
+_healthRegenRate = 0.1
 _playerHud = NodePath("PlayerHud")
 _weaponManager = NodePath("WeaponManager")
 _footstepSound = SubResource("AudioStreamRandomizer_ajn8d")

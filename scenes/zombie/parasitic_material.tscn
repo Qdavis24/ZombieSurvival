@@ -34,7 +34,7 @@ turbulence_noise_speed = Vector3(0, 1, 0)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y7eqf"]
 transparency = 1
 vertex_color_use_as_albedo = true
-albedo_color = Color(0.5305071, 0.027183333, 0.12090104, 1)
+albedo_color = Color(0.5294118, 0.70980394, 0.12156863, 1)
 albedo_texture = ExtResource("1_fsev3")
 billboard_mode = 3
 billboard_keep_scale = true
@@ -51,7 +51,7 @@ render_priority = 0
 shader = ExtResource("1_gw401")
 shader_parameter/speed = 4.0
 shader_parameter/strength = 0.02
-shader_parameter/albedo_color = Color(0.16470589, 0, 0, 1)
+shader_parameter/albedo_color = Color(0.6420004, 0.6345856, 3.85046e-07, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_n706s"]
 material = SubResource("ShaderMaterial_fsev3")
@@ -66,39 +66,12 @@ height = 0.20911407
 [sub_resource type="SphereShape3D" id="SphereShape3D_n706s"]
 radius = 0.53270906
 
-[sub_resource type="Curve" id="Curve_5ydf6"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_6es1y"]
-curve = SubResource("Curve_5ydf6")
-
-[sub_resource type="CurveTexture" id="CurveTexture_5ywyb"]
-curve = SubResource("Curve_n706s")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pqc3m"]
-spread = 180.0
-initial_velocity_min = 1.0
-initial_velocity_max = 2.0
-gravity = Vector3(0, 0, 0)
-damping_min = 2.0
-damping_max = 3.0000002
-scale_min = 0.19999999
-scale_curve = SubResource("CurveTexture_5ywyb")
-alpha_curve = SubResource("CurveTexture_6es1y")
-turbulence_noise_strength = 13.75
-turbulence_noise_speed = Vector3(0, 1, 0)
-
-[sub_resource type="QuadMesh" id="QuadMesh_vpoko"]
-material = SubResource("StandardMaterial3D_y7eqf")
-
-[node name="ParasiticMaterial" type="RigidBody3D" unique_id=720967199 node_paths=PackedStringArray("_blowupParticles", "_pickupParticles", "_despawnTimer", "_pickupRange", "_parasiteMesh")]
+[node name="ParasiticMaterial" type="RigidBody3D" unique_id=720967199 node_paths=PackedStringArray("_pickupParticles", "_despawnTimer", "_pickupRange", "_parasiteMesh")]
 collision_layer = 16
 collision_mask = 16
 continuous_cd = true
 angular_damp = 1.0
 script = ExtResource("1_n706s")
-_blowupParticles = NodePath("blowup")
 _pickupParticles = NodePath("ooze")
 _despawnTimer = NodePath("DespawnTimer")
 _pickupRange = NodePath("PickupRange")
@@ -119,18 +92,9 @@ transform = Transform3D(-0.02968368, 4.3692125e-08, 0.99955934, 0.99955934, 1.29
 shape = SubResource("CapsuleShape3D_n706s")
 
 [node name="DespawnTimer" type="Timer" parent="." unique_id=435066335]
-wait_time = 30.0
+wait_time = 10.0
 
 [node name="PickupRange" type="Area3D" parent="." unique_id=1654162574]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PickupRange" unique_id=503801985]
 shape = SubResource("SphereShape3D_n706s")
-
-[node name="blowup" type="GPUParticles3D" parent="." unique_id=1448156198]
-emitting = false
-amount = 300
-lifetime = 1.22
-one_shot = true
-explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_pqc3m")
-draw_pass_1 = SubResource("QuadMesh_vpoko")
