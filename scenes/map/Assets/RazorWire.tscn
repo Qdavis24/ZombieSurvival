@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://7nrckpqs0pqo"]
+
+[ext_resource type="PackedScene" uid="uid://b7sl5rvwlyecp" path="res://assets/models/map/RazorWire4.glb" id="1_saj6m"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rws8q"]
+size = Vector3(28.499023, 17.317505, 2.9658203)
+
+[node name="RazorWire" type="StaticBody3D" unique_id=410178142]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=815384380]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.749512, 8.158752, -0.0034179688)
+shape = SubResource("BoxShape3D_rws8q")
+
+[node name="RazorWire4" parent="." unique_id=1881174557 instance=ExtResource("1_saj6m")]

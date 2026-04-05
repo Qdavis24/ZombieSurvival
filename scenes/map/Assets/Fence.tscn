@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://b6w0gtpd55dyb"]
+
+[ext_resource type="Texture2D" uid="uid://c5vgnlqy1t0ok" path="res://assets/textures/chain_link_tex.png" id="1_2u5vo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0l0v2"]
+transparency = 1
+albedo_texture = ExtResource("1_2u5vo")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i5lfh"]
+material = SubResource("StandardMaterial3D_0l0v2")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_otuoo"]
+size = Vector3(2.3896484, 3.9794922, 0.6230469)
+
+[node name="Fence" type="StaticBody3D" unique_id=1306783427]
+
+[node name="ChainLink" type="MeshInstance3D" parent="." unique_id=49448016]
+transform = Transform3D(1.1670765, -1.1175871e-08, 1.3387762e-08, -6.868504e-09, -4.656613e-08, -1.319414, 3.7252903e-09, 1.1724977, -7.264316e-08, -0.0014053583, 1.1641407, -0.0013337135)
+mesh = SubResource("PlaneMesh_i5lfh")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1406555397]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0022790432, 1.4897461, 0.053571105)
+shape = SubResource("BoxShape3D_otuoo")

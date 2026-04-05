@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://c3roff7wy8drf"]
 
 [ext_resource type="Texture2D" uid="uid://v1qnb1gkfp46" path="res://assets/hdri/qwantani_moon_noon_puresky_1k.hdr" id="1_yk6fn"]
+[ext_resource type="PackedScene" uid="uid://b6w0gtpd55dyb" path="res://scenes/map/Assets/Fence.tscn" id="2_8hd1s"]
+[ext_resource type="PackedScene" uid="uid://7nrckpqs0pqo" path="res://scenes/map/Assets/RazorWire.tscn" id="2_co15c"]
 [ext_resource type="Material" uid="uid://c3mm6ukoettxd" path="res://assets/temp_materials/street.tres" id="2_r8fep"]
+[ext_resource type="PackedScene" uid="uid://ci1swkup6cya4" path="res://scenes/map/Assets/ConcreteBarricade.tscn" id="3_8hd1s"]
 [ext_resource type="Material" uid="uid://jen20k8lu4ws" path="res://assets/temp_materials/sidewalk.tres" id="3_co15c"]
 [ext_resource type="Material" uid="uid://ejov3ukf1b7c" path="res://assets/temp_materials/tank.tres" id="4_8hd1s"]
 
@@ -46,11 +49,8 @@ albedo_color = Color(0.26101288, 0.36858416, 0.6330382, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cw8ec"]
 albedo_color = Color(0.11858138, 0.11858138, 0.11858138, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_32m71"]
-albedo_color = Color(0.646029, 0.646029, 0.646029, 1)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_erpfb"]
-albedo_color = Color(0.24840015, 0.24840018, 0.24840015, 1)
+albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_grsn6"]
 albedo_color = Color(0.42442718, 0.23305094, 0.17872787, 1)
@@ -130,26 +130,6 @@ transform = Transform3D(0.8788169, 0, 0.4771587, 0, 1, 0, -0.4771587, 0, 0.87881
 size = Vector3(5, 1.5, 2)
 material = SubResource("StandardMaterial3D_cw8ec")
 
-[node name="BARRICADE" type="CSGBox3D" parent="NavigationRegion3D/Walls" unique_id=16034372]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.707573, 0.5469943, 14.071608)
-size = Vector3(3.2988281, 1.5, 0.57702637)
-
-[node name="BARRICADE2" type="CSGBox3D" parent="NavigationRegion3D/Walls" unique_id=194826651]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.265898, 0.5469943, 14.071608)
-size = Vector3(3.1513672, 1.5, 0.57702637)
-
-[node name="BARRICADE3" type="CSGBox3D" parent="NavigationRegion3D/Walls" unique_id=928307938]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.761377, 0.5469943, 14.071608)
-size = Vector3(3.277832, 1.5, 0.57702637)
-
-[node name="BARRICADE4" type="CSGBox3D" parent="NavigationRegion3D/Walls" unique_id=1636747739]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.382765, 0.5469943, 14.071608)
-size = Vector3(3.5615234, 1.5, 0.57702637)
-
-[node name="BARRICADE5" type="CSGBox3D" parent="NavigationRegion3D/Walls" unique_id=853812022]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.146032, 1.6182834, 16.485054)
-size = Vector3(14.463135, 3.6425781, 0.3899536)
-
 [node name="RPG BOX" type="CSGBox3D" parent="NavigationRegion3D/Walls" unique_id=256035068]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.495691, 0.36315644, 9.102753)
 size = Vector3(1.5043945, 1.1323242, 2.242157)
@@ -162,14 +142,47 @@ size = Vector3(1.5043945, 1.4255981, 0.6625824)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.978838, 2.4303236, 7.291982)
 size = Vector3(0.36627197, 4.9795074, 0.23937607)
 
-[node name="fence" type="CSGBox3D" parent="NavigationRegion3D/Walls" unique_id=1886750990]
-transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, -25.46061, 2.1652193, -13.117743)
-size = Vector3(5, 4.73645, 0.35546875)
+[node name="Fence" parent="NavigationRegion3D/Walls" unique_id=1306783427 instance=ExtResource("2_8hd1s")]
+transform = Transform3D(-1.4, 0, 2.1139412e-07, 0, 1.4, 0, -2.1139412e-07, 0, -1.4, -19.273178, 0.086503625, 16.109776)
 
-[node name="razor wire" type="CSGCylinder3D" parent="NavigationRegion3D/Walls" unique_id=564071866]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -17.086308, 0.28486776, 12.9906025)
-height = 14.27832
-material = SubResource("StandardMaterial3D_32m71")
+[node name="Fence3" parent="NavigationRegion3D/Walls" unique_id=1153431018 instance=ExtResource("2_8hd1s")]
+transform = Transform3D(-1.4, 0, 2.1139412e-07, 0, 1.4, 0, -2.1139412e-07, 0, -1.4, -15.994413, 0.086503625, 16.109776)
+
+[node name="Fence4" parent="NavigationRegion3D/Walls" unique_id=1934306472 instance=ExtResource("2_8hd1s")]
+transform = Transform3D(-1.4, 0, 2.1139412e-07, 0, 1.4, 0, -2.1139412e-07, 0, -1.4, -12.715339, 0.086503625, 16.109776)
+
+[node name="Fence5" parent="NavigationRegion3D/Walls" unique_id=96764737 instance=ExtResource("2_8hd1s")]
+transform = Transform3D(-1.4, 0, 2.1139412e-07, 0, 1.4, 0, -2.1139412e-07, 0, -1.4, -9.445784, 0.086503625, 16.109776)
+
+[node name="Fence2" parent="NavigationRegion3D/Walls" unique_id=457045202 instance=ExtResource("2_8hd1s")]
+transform = Transform3D(-1.4, 0, 2.1139412e-07, 0, 1.4, 0, -2.1139412e-07, 0, -1.4, -22.539818, 0.086503625, 16.109776)
+
+[node name="Fence6" parent="NavigationRegion3D/Walls" unique_id=1305889833 instance=ExtResource("2_8hd1s")]
+transform = Transform3D(-6.119594e-08, 0, 1.4, 0, 1.4, 0, -1.4, 0, -6.119594e-08, -25.081676, 0.1575185, -13.02096)
+
+[node name="Fence7" parent="NavigationRegion3D/Walls" unique_id=562522052 instance=ExtResource("2_8hd1s")]
+transform = Transform3D(-6.119594e-08, 0, 1.4, 0, 1.4, 0, -1.4, 0, -6.119594e-08, -25.081676, 0.1575185, -9.73369)
+
+[node name="Fence8" parent="NavigationRegion3D/Walls" unique_id=1750044644 instance=ExtResource("2_8hd1s")]
+transform = Transform3D(-6.119594e-08, 0, 1.4, 0, 1.4, 0, -1.4, 0, -6.119594e-08, -25.081676, 0.1575185, -16.274881)
+
+[node name="RazorWire" parent="NavigationRegion3D/Walls" unique_id=410178142 instance=ExtResource("2_co15c")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -25.406492, 0.5266837, 13.05518)
+
+[node name="RazorWire2" parent="NavigationRegion3D/Walls" unique_id=439431914 instance=ExtResource("2_co15c")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -25.406492, 3.4538834, 16.194817)
+
+[node name="ConcreteBarricade" parent="NavigationRegion3D/Walls" unique_id=398564663 instance=ExtResource("3_8hd1s")]
+transform = Transform3D(-0.8, 0, -6.9938224e-08, 0, 0.8, 0, 6.9938224e-08, 0, -0.8, -11.9044075, -0.22473347, 14.1699505)
+
+[node name="ConcreteBarricade2" parent="NavigationRegion3D/Walls" unique_id=52006497 instance=ExtResource("3_8hd1s")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -15.387786, -0.22473347, 14.1699505)
+
+[node name="ConcreteBarricade3" parent="NavigationRegion3D/Walls" unique_id=390010045 instance=ExtResource("3_8hd1s")]
+transform = Transform3D(-0.8, 0, -6.9938224e-08, 0, 0.8, 0, 6.9938224e-08, 0, -0.8, -18.857067, -0.22473347, 14.1699505)
+
+[node name="ConcreteBarricade4" parent="NavigationRegion3D/Walls" unique_id=747327650 instance=ExtResource("3_8hd1s")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -22.423393, -0.22473347, 14.1699505)
 
 [node name="Street_Sunk" type="CSGBox3D" parent="NavigationRegion3D/Walls" unique_id=364718268]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6827097, -0.34844208, 1.5866647)

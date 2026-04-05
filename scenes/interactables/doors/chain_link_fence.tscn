@@ -11,12 +11,12 @@ size = Vector3(2.3447876, 2.7614746, 0.6650696)
 [sub_resource type="BoxMesh" id="BoxMesh_vqgk5"]
 size = Vector3(0.2, 3, 0.2)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0l0v2"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8goxo"]
 transparency = 1
 albedo_texture = ExtResource("2_8goxo")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_3wpdj"]
-material = SubResource("StandardMaterial3D_0l0v2")
+material = SubResource("StandardMaterial3D_8goxo")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_aq8tv"]
 size = Vector3(2.9753418, 3.1467285, 1.4100647)

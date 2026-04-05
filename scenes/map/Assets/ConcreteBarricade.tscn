@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://ci1swkup6cya4"]
+
+[ext_resource type="PackedScene" uid="uid://b60l5m1nja8q" path="res://assets/models/map/Barricade.glb" id="1_udnss"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ocjay"]
+size = Vector3(4.6171265, 3.3857422, 1)
+
+[node name="ConcreteBarricade" type="StaticBody3D" unique_id=398564663]
+
+[node name="Barricade" parent="." unique_id=1275310920 instance=ExtResource("1_udnss")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1751489733]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12802124, 1.1928711, 0)
+shape = SubResource("BoxShape3D_ocjay")

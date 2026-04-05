@@ -6,8 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://cfjp3bppwm4i8" path="res://scenes/player/PlayerController.tscn" id="2_s0yep"]
 [ext_resource type="PackedScene" uid="uid://bafgfpxa34vss" path="res://scenes/map/Assets/Bus.tscn" id="3_lsbak"]
 [ext_resource type="PackedScene" uid="uid://dnuwr0qeacme6" path="res://scenes/spawn_system/spawner.tscn" id="4_0wksg"]
+[ext_resource type="PackedScene" uid="uid://ohk7f7yuprd7" path="res://scenes/map/Assets/Tank.tscn" id="4_2rd6h"]
 [ext_resource type="PackedScene" uid="uid://bqy2scgfjaspk" path="res://scenes/map/Assets/Building2.tscn" id="4_03gun"]
 [ext_resource type="PackedScene" uid="uid://cvt0aomoxtces" path="res://scenes/round_system/round_system.tscn" id="5_0wksg"]
+[ext_resource type="PackedScene" uid="uid://bgovebhuqvyeq" path="res://scenes/map/Assets/Lightpole.tscn" id="7_7ua8r"]
 [ext_resource type="PackedScene" uid="uid://d1vcwcrp7eqh8" path="res://scenes/interactables/guns/shotgun_pickup.tscn" id="8_3xj3m"]
 [ext_resource type="PackedScene" uid="uid://cpuy8hqpdax45" path="res://scenes/store_system/shotgun_store.tscn" id="9_ytxki"]
 [ext_resource type="PackedScene" uid="uid://ccl3ov7ljjugm" path="res://scenes/interactables/keys/bolt_cutters.tscn" id="10_7ua8r"]
@@ -24,12 +26,18 @@ Player = NodePath("PlayerController")
 visible = false
 shadow_enabled = false
 
-[node name="Walls" parent="World/NavigationRegion3D" parent_id_path=PackedInt32Array(1803875491, 1865754256) index="0" unique_id=1233253355]
+[node name="NavigationRegion3D" parent="World" index="2" unique_id=1865754256]
+transform = Transform3D(1, -1.1059456e-09, 1.1175871e-08, 4.1909516e-09, 0.9999999, 0, 0, -1.8626451e-09, 0.99999976, 0.0076805823, 0.5091888, 0.09957416)
+
+[node name="Walls" parent="World/NavigationRegion3D" index="0" unique_id=1233253355]
 collision_layer = 31
 collision_mask = 31
 
 [node name="Building1" parent="World/NavigationRegion3D/Walls" index="0" unique_id=801496068 instance=ExtResource("2_0wksg")]
 transform = Transform3D(-0.89999986, 0, -7.86805e-08, 0, 0.9, 0, 7.8680486e-08, 0, -0.9, -0.5708313, 0.088222206, 13.64308)
+
+[node name="LightPole" parent="World/NavigationRegion3D/Walls" index="10" unique_id=106366829]
+visible = false
 
 [node name="Wall" parent="World/NavigationRegion3D/Walls" index="25" unique_id=2048568619]
 visible = false
@@ -49,40 +57,87 @@ visible = false
 [node name="AlleyWall6" parent="World/NavigationRegion3D/Walls" index="31" unique_id=305686383]
 visible = false
 
-[node name="BUS" parent="World/NavigationRegion3D/Walls" index="36" unique_id=344328127]
+[node name="Tank" parent="World/NavigationRegion3D/Walls" index="33" unique_id=440556348 instance=ExtResource("4_2rd6h")]
+transform = Transform3D(-0.3778984, 4.0745363e-10, -0.3996166, 0, 0.55000013, 6.9849193e-09, 0.39961636, 0, -0.3778985, -13.798136, -0.16031483, 5.7724433)
+
+[node name="TANK" parent="World/NavigationRegion3D/Walls" index="34" unique_id=1018912850]
 visible = false
 
-[node name="Bus" parent="World/NavigationRegion3D/Walls" index="37" unique_id=1403012753 instance=ExtResource("3_lsbak")]
+[node name="TANK2" parent="World/NavigationRegion3D/Walls" index="35" unique_id=1323636167]
+visible = false
+
+[node name="TANK3" parent="World/NavigationRegion3D/Walls" index="36" unique_id=585843253]
+visible = false
+
+[node name="BUS" parent="World/NavigationRegion3D/Walls" index="37" unique_id=344328127]
+visible = false
+
+[node name="Bus" parent="World/NavigationRegion3D/Walls" index="38" unique_id=1403012753 instance=ExtResource("3_lsbak")]
 transform = Transform3D(-0.53566986, 0.0001606585, -0.12472936, 0.00010511954, 0.54999965, 0.00025697332, 0.124729365, 0.00022643898, -0.5356698, -11.597675, -0.24412534, -2.9491656)
 
-[node name="Building2" parent="World/NavigationRegion3D/Walls" index="47" unique_id=1361504271 instance=ExtResource("4_03gun")]
+[node name="Building2" parent="World/NavigationRegion3D/Walls" index="48" unique_id=1361504271 instance=ExtResource("4_03gun")]
 transform = Transform3D(-6.7055225e-08, -3.4924597e-09, 1.6000004, -5.5879354e-09, 1.599999, -2.0954758e-09, -1.6, 0, -8.195639e-08, -31.547115, 7.969871, -4.1317058)
 
-[node name="Building3" parent="World/NavigationRegion3D/Walls" index="48" unique_id=1159409400 instance=ExtResource("2_0wksg")]
+[node name="Building3" parent="World/NavigationRegion3D/Walls" index="49" unique_id=1159409400 instance=ExtResource("2_0wksg")]
 transform = Transform3D(-0.8999998, 0, -7.868048e-08, 0, 0.9, 0, 7.868048e-08, 0, -0.89999974, 10.935164, -0.121202886, -9.631489)
 
-[node name="Building4" parent="World/NavigationRegion3D/Walls" index="49" unique_id=730763204 instance=ExtResource("4_03gun")]
+[node name="Building4" parent="World/NavigationRegion3D/Walls" index="50" unique_id=730763204 instance=ExtResource("4_03gun")]
 transform = Transform3D(-1.6000006, -2.910383e-09, -1.7136335e-07, -1.1292286e-08, 1.5999981, -5.5879354e-09, 1.5646219e-07, 0, -1.6000006, -30.064686, 7.662418, -22.626905)
 
-[node name="Building5" parent="World/NavigationRegion3D/Walls" index="50" unique_id=651953571 instance=ExtResource("2_0wksg")]
+[node name="Building5" parent="World/NavigationRegion3D/Walls" index="51" unique_id=651953571 instance=ExtResource("2_0wksg")]
 transform = Transform3D(-1.3000007, -1.4319085e-08, -2.2724271e-07, -2.0372681e-08, 1.2999992, 0, 2.1234155e-07, 0, -1.2999992, -37.279247, -0.8493773, 12.5581)
 
-[node name="Building6" parent="World/NavigationRegion3D/Walls" index="51" unique_id=204063170 instance=ExtResource("2_0wksg")]
+[node name="Building6" parent="World/NavigationRegion3D/Walls" index="52" unique_id=204063170 instance=ExtResource("2_0wksg")]
 transform = Transform3D(-1.4901161e-08, -1.2165401e-08, -0.8000002, 0, 0.9999998, -1.1175871e-08, 0.49999982, -1.8626451e-09, -2.6077032e-08, -5.685619, -0.15514886, -10.044203)
 
-[node name="Building7" parent="World/NavigationRegion3D/Walls" index="52" unique_id=1177059896 instance=ExtResource("2_0wksg")]
+[node name="Building7" parent="World/NavigationRegion3D/Walls" index="53" unique_id=1177059896 instance=ExtResource("2_0wksg")]
 transform = Transform3D(-0.89999986, -1.5716068e-09, -8.195639e-08, -2.561137e-09, 0.9, 0, 8.195639e-08, 0, -0.8999999, 0.9817433, -0.5007063, -23.637081)
 
 [node name="Lights" type="Node3D" parent="World" unique_id=805863230]
 transform = Transform3D(1, -1.1641532e-09, 3.7252903e-09, 2.3283064e-09, 0.99999994, 0, 0, 0, 0.9999999, -2.910383e-10, 0.4687974, 4.656613e-10)
 
+[node name="Lightpole2" parent="World/Lights" unique_id=78965588 instance=ExtResource("7_7ua8r")]
+transform = Transform3D(-1.3038516e-08, -1.1641532e-10, -0.29999995, -9.313226e-10, 0.3, 4.3655746e-10, 0.2999999, 0, -1.1175871e-08, 5.996634, -0.020022541, 7.2837596)
+
+[node name="Lightpole3" parent="World/Lights" unique_id=46978430 instance=ExtResource("7_7ua8r")]
+transform = Transform3D(-0.2999999, -1.1641532e-10, -2.6077032e-08, 3.3905962e-09, 0.3, 3.259629e-09, 3.259629e-08, 0, -0.2999999, -22.694204, 0.0085271, 11.248275)
+
+[node name="Lightpole4" parent="World/Lights" unique_id=1036700748 instance=ExtResource("7_7ua8r")]
+transform = Transform3D(0.2999999, 0, 0, 0, 0.3, 0, 0, 0, 0.2999999, -11.237862, -0.58612305, -12.167553)
+
 [node name="SpotLight3D" type="SpotLight3D" parent="World/Lights" unique_id=588417280]
-transform = Transform3D(0.5737051, -0.25616112, 0.7779742, -1.8626451e-09, 0.9498357, 0.31274936, -0.81906205, -0.17942593, 0.54492563, 5.676791, 5.218582, 6.9424767)
+transform = Transform3D(1, 0, 0, 0, 0.17364824, 0.9848077, 0, -0.98480785, 0.17364822, 6.0022936, 5.081602, 6.2496653)
+visible = false
 light_color = Color(1, 1, 0.59607846, 1)
 light_energy = 3.0
 light_bake_mode = 1
-spot_range = 20.0
+spot_range = 23.319
+spot_angle = 35.41
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="World/Lights" unique_id=149424622]
+transform = Transform3D(0.68191844, 0.23280291, -0.69339, -0.0068141483, 0.9499758, 0.3122491, 0.7313963, -0.20820358, 0.6493924, -23.260672, 5.9603605, 15.080482)
+visible = false
+light_color = Color(1, 1, 0.59607846, 1)
+light_energy = 3.0
+light_bake_mode = 1
+spot_range = 25.076
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="World/Lights" unique_id=537685099]
+transform = Transform3D(-0.99485475, 0.010525297, -0.100762926, 0.009582748, 0.9999058, 0.00983362, 0.100856945, 0.008817449, -0.994862, -4.793921, 2.195648, -5.3930435)
+light_color = Color(1, 0.43411544, 0.2725247, 1)
+light_energy = 3.0
+light_bake_mode = 1
+spot_range = 3.986
 spot_angle = 84.2
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="World/Lights" unique_id=815769627]
+transform = Transform3D(0.9769564, 0.07325085, -0.20047455, -0.091784425, 0.99216473, -0.084761284, 0.19269496, 0.10120856, 0.97602534, -18.35691, 0.24434501, -19.021477)
+light_color = Color(1, 1, 0.59607846, 1)
+light_energy = 3.0
+light_bake_mode = 1
+spot_range = 25.076
+spot_attenuation = 2.69
+spot_angle = 13.7
 
 [node name="Interactables" type="Node3D" parent="World" unique_id=1684070018]
 
