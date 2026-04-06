@@ -2,13 +2,22 @@
 
 [ext_resource type="Texture2D" uid="uid://sbic36b38nrw" path="res://assets/textures/bolt-cutters_bolt-cutters-tex.png" id="1_0wfbi"]
 [ext_resource type="Script" uid="uid://dmjsjbo83np" path="res://scripts/interactables/InteractablePickup.cs" id="1_78ko2"]
+[ext_resource type="Shader" uid="uid://daykcgo6jucby" path="res://shaders/item_outline.gdshader" id="3_8at6m"]
 [ext_resource type="PackedScene" uid="uid://eksdoewlbll1" path="res://scenes/interactables/interact_notifier.tscn" id="3_vbs7n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xf6by"]
+render_priority = 0
+shader = ExtResource("3_8at6m")
+shader_parameter/outline_width = 0.02
+shader_parameter/outline_color = Color(1, 1, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1sfo8"]
 resource_name = "demo-tex"
+next_pass = SubResource("ShaderMaterial_xf6by")
 cull_mode = 2
 albedo_texture = ExtResource("1_0wfbi")
 roughness = 0.5
+emission_energy_multiplier = 1.48
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_8e5wo"]
 _surfaces = [{
@@ -44,12 +53,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_8e5wo")
 
-[node name="BoltCutters" type="Node3D" unique_id=1165095353 node_paths=PackedStringArray("_interactNotifier")]
+[node name="BoltCutters" type="Node3D" unique_id=1165095353 node_paths=PackedStringArray("_interactNotifier", "_pickupMesh")]
 script = ExtResource("1_78ko2")
 _interactNotifier = NodePath("InteractNotifier")
+_pickupMesh = NodePath("handle_l")
 
 [node name="handle_l" type="MeshInstance3D" parent="." unique_id=880528351]
-transform = Transform3D(0.22227268, 0, 0, 0, 0.2, 0, 0, 0, 0.1771515, 0, 0, 0)
+transform = Transform3D(0.36107078, 0, 0, 0, 0.32488996, 0, 0, 0, 0.2877737, 0, 0, 0)
 mesh = SubResource("ArrayMesh_5gbl1")
 skeleton = NodePath("")
 

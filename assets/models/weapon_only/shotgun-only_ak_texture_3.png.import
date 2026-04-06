@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b728oplg63y8l"
-path.s3tc="res://.godot/imported/shotgun_only_ak_texture_3.png-68a97231a69e1de3f64f43be30c1632d.s3tc.ctex"
+uid="uid://bu5s0w3uncttb"
+path.s3tc="res://.godot/imported/shotgun-only_ak_texture_3.png-0c4a9585a9cf213ddd71c1aa97d4ea72.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "0300efcd2ca3262b2eac7144a2c027f8"
+}
 
 [deps]
 
-source_file="res://assets/models/weapon_only/shotgun_only_ak_texture_3.png"
-dest_files=["res://.godot/imported/shotgun_only_ak_texture_3.png-68a97231a69e1de3f64f43be30c1632d.s3tc.ctex"]
+source_file="res://assets/models/weapon_only/shotgun-only_ak_texture_3.png"
+dest_files=["res://.godot/imported/shotgun-only_ak_texture_3.png-0c4a9585a9cf213ddd71c1aa97d4ea72.s3tc.ctex"]
 
 [params]
 
