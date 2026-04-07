@@ -530,7 +530,6 @@ script = ExtResource("1_6mvc3")
 _dismemberableBody = NodePath("Armature/Skeleton3D")
 _navAgent = NodePath("NavigationAgent3D")
 _collisionShape = NodePath("CollisionShape3D")
-_attackRange = 1.4
 _groanSound = SubResource("AudioStreamRandomizer_cr1ja")
 _animationPlayer = NodePath("AnimationPlayer")
 
@@ -777,12 +776,12 @@ transform = Transform3D(0.99998415, -0.004049644, -0.0015320331, 0.001701124, 0.
 shape = SubResource("CapsuleShape3D_lamel")
 
 [node name="PhysicalBone lower_arm_r" type="PhysicalBone3D" parent="Armature/Skeleton3D/PhysicalBoneSimulator3D" unique_id=117889073]
-transform = Transform3D(0.48068532, 0.87670964, -0.017942555, 0.8558465, -0.46459392, 0.22733079, 0.19096708, -0.12463066, -0.9736523, 0.25275126, 1.0999198, 0.2293937)
+transform = Transform3D(0.48068532, 0.87670964, -0.01794257, 0.8558465, -0.46459392, 0.22733079, 0.19096708, -0.124630675, -0.9736523, 0.25275126, 1.0999198, 0.2293937)
 collision_layer = 8
 collision_mask = 8
 joint_type = 3
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0005934173, -0.0005395897, 0.001116654)
-body_offset = Transform3D(0.99999607, -0.0025926232, 0.00044731796, 0.0025925934, 0.9999963, -0.00018201023, -0.00044554472, 0.00018195808, 0.99999774, 0.0005915165, 0.0005413294, -0.0011168178)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0005934173, -0.00053958973, 0.0011166541)
+body_offset = Transform3D(0.99999607, -0.0025926232, 0.00044732168, 0.0025925934, 0.9999962, -0.00018201023, -0.00044554472, 0.00018197298, 0.99999774, 0.0005915165, 0.0005413294, -0.0011168178)
 mass = 3.0
 angular_damp = 1.0
 bone_name = "lower.arm.r"

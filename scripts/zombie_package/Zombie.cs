@@ -52,7 +52,7 @@ public partial class Zombie : CharacterBody3D
 
         Quaternion = Quaternion.Slerp(_targetRotation, (float)(delta * _rotationLerpSpeed));
 
-        var targetPosition = _target.GetPosition();
+        var targetPosition = _target.GlobalPosition;
         var distanceToTarget = (targetPosition - GlobalPosition).Length();
 
         SetState(distanceToTarget < _attackRange ? State.Attack : State.Chase);
