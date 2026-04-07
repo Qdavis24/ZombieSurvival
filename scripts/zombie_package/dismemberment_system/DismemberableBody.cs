@@ -137,7 +137,7 @@ public partial class DismemberableBody : Skeleton3D
         Containers.Instance.VFX.AddChild(blood);
         blood.GlobalPosition = hitGlobalPos;
         
-        AudioManager.I.PlayZombieHit(_shotHitSound, hitGlobalPos, -5f);
+        AudioManager.I.PlayZombieHit(_shotHitSound, hitGlobalPos, -15f);
 
         _health -= amount;
         if (_health <= 0f && !_isDead)

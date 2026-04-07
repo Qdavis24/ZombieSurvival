@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dougcog1p6qh6"]
+
+[ext_resource type="PackedScene" uid="uid://dmuvok10ea4i0" path="res://assets/models/map/JaceCar.glb" id="1_bmawl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_btq6w"]
+size = Vector3(5.701294, 4.6593018, 2.2910767)
+
+[node name="CarTypeBRed" type="StaticBody3D" unique_id=1967799238]
+
+[node name="JaceCar" parent="." unique_id=1488752052 instance=ExtResource("1_bmawl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1108513, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2134714919]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06732178, 1.8296509, -0.06539917)
+shape = SubResource("BoxShape3D_btq6w")

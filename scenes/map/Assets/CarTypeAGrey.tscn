@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dqeax6ssm17c6"]
+
+[ext_resource type="PackedScene" uid="uid://wnjjfh37hu4m" path="res://assets/models/map/AdamsCarTypeAgrey.glb" id="1_bxi8j"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bwfjc"]
+size = Vector3(7.6621094, 13.090759, 18.506409)
+
+[node name="CarTypeAGrey" type="StaticBody3D" unique_id=136016524]
+
+[node name="AdamsCarTypeAgrey" parent="." unique_id=1405013958 instance=ExtResource("1_bxi8j")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1833940377]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03466797, 5.760903, 0.0659678)
+shape = SubResource("BoxShape3D_bwfjc")

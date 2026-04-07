@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://df8gn2pfhr8gi" path="res://scenes/ui/start_screen.jpeg" id="1_hbvfd"]
 [ext_resource type="Script" uid="uid://bovjrnfemb6ks" path="res://scripts/ui/StartMenu.cs" id="1_y4veo"]
 [ext_resource type="FontFile" uid="uid://b5xps8x8u85bq" path="res://scenes/ui/Clynical Terror.ttf" id="2_xr47m"]
-[ext_resource type="Texture2D" uid="uid://cm3ob2bkerjfe" path="res://scenes/ui/control_help.png" id="3_y35d7"]
+[ext_resource type="Texture2D" uid="uid://btcmnenm87udu" path="res://scenes/ui/keybind_help.png" id="4_krfyo"]
 [ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="4_pridf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xr47m"]
@@ -656,7 +656,7 @@ layout_mode = 0
 offset_top = 4.0
 offset_right = 1300.0
 offset_bottom = 351.0
-texture = ExtResource("3_y35d7")
+texture = ExtResource("4_krfyo")
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer" unique_id=1714411362]
 layout_mode = 2

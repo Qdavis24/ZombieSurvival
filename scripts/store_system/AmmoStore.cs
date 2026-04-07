@@ -38,7 +38,7 @@ public partial class AmmoStore : Node3D
         if (player is not IInventoryOwner inventoryOwner) return;
         if (inventoryOwner.Inventory.ConsumeItem(_storeBuyItemType, _storeBuyAmount))
         {
-            AudioManager.I.Play3D(_successfulBuySound, GlobalPosition);
+            AudioManager.I.Play3D(_successfulBuySound, GlobalPosition, -20f);
             for (int i = 0; i < _storeSellAmount; i++)
                 SpawnAmmo();
       
