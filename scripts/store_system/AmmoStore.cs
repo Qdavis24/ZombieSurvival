@@ -10,12 +10,17 @@ public partial class AmmoStore : Node3D
     [Export] private int _storeBuyAmount;
     [Export] private Timer _cooldown;
 
-    
     [Export] private AudioStream _failedBuySound;
     [Export] private AudioStream _successfulBuySound;
     [Export] private Marker3D _marker;
+    
+    [ExportCategory("Text")]
+    [Export] private string _storeType;
+    [Export] private MeshInstance3D _textMesh;
 
     private bool _ready = true;
+
+    private int _totalAmmoUponBuying = 0;
 
 
     public override void _Ready()
@@ -24,6 +29,8 @@ public partial class AmmoStore : Node3D
         _interactNotifier.PlayerEnteredRange += OnPlayerEnteredRange;
         _interactNotifier.PlayerExitedRange += OnPlayerExitedRange;
         _interactNotifier.Interacted += OnInteracted;
+
+        InitShopText();
     }
 
     private void CooldownOnTimeout()
@@ -63,6 +70,30 @@ public partial class AmmoStore : Node3D
         var ammo = _ammoScene.Instantiate<Pickup>();
         Containers.Instance.VFX.AddChild(ammo);
         ammo.GlobalPosition = _marker.GlobalPosition;
-        ammo.ApplyImpulse(_marker.Basis.Z  * 1f);
+        ammo.ApplyImpulse(_marker.Basis.Z * 1f);
+    }
+
+    private void InitShopText()
+    {
+        if (_textMesh == null || _textMesh.Mesh == null)
+            return;
+
+        _textMesh.Mesh = _textMesh.Mesh.Duplicate() as Mesh;
+
+        if (_textMesh.Mesh is not TextMesh textMesh)
+            return;
+
+        // Calculate total ammo preview
+        int ammoPerPickup = 0;
+        var tempInstance = _ammoScene.Instantiate<Pickup>();
+        if (tempInstance != null)
+        {
+            ammoPerPickup = tempInstance.GetItemAmount();
+            tempInstance.QueueFree();
+        }
+
+        _totalAmmoUponBuying = ammoPerPickup * _storeSellAmount;
+
+        textMesh.Text = $"{_totalAmmoUponBuying} {_storeType}\nfor {_storeBuyAmount}\nParasitic Material";
     }
 }

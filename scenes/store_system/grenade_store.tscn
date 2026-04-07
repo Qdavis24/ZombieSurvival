@@ -5,22 +5,18 @@
 [ext_resource type="AudioStream" uid="uid://cglthr2sqd28e" path="res://assets/sound/ui_click.wav" id="3_lv3v6"]
 [ext_resource type="AudioStream" uid="uid://ow67mln4ganu" path="res://assets/sound/interactables/vending-machine.wav" id="4_q3t3b"]
 [ext_resource type="PackedScene" uid="uid://eksdoewlbll1" path="res://scenes/interactables/interact_notifier.tscn" id="5_pbjys"]
-[ext_resource type="FontFile" uid="uid://b5xps8x8u85bq" path="res://scenes/ui/Clynical Terror.ttf" id="6_p77sh"]
+[ext_resource type="FontFile" uid="uid://dcgs1avogr603" path="res://scenes/ui/beon.regular.ttf" id="6_lv3v6"]
 [ext_resource type="Texture2D" uid="uid://df8gn2pfhr8gi" path="res://scenes/ui/start_screen.jpeg" id="7_ko6dp"]
+[ext_resource type="Material" uid="uid://df16mwfeetn6d" path="res://assets/materials/grenade_shop_glow.tres" id="7_lv3v6"]
 [ext_resource type="Texture2D" uid="uid://bkcxms4jq2b1v" path="res://assets/textures/rusty_metal.jpg" id="8_6xpah"]
 [ext_resource type="Texture2D" uid="uid://dyokikc8j7jjj" path="res://assets/models/player/weapons/grenade_projectile_ak_texture_3.png" id="9_027le"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nriay"]
-emission_enabled = true
-emission = Color(1, 0.2784314, 0, 1)
-emission_energy_multiplier = 16.0
-
 [sub_resource type="TextMesh" id="TextMesh_rhg0q"]
-material = SubResource("StandardMaterial3D_nriay")
+material = ExtResource("7_lv3v6")
 text = "Grenades
 for
 Parasitic Material"
-font = ExtResource("6_p77sh")
+font = ExtResource("6_lv3v6")
 font_size = 20
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_begna"]
@@ -207,7 +203,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_eqp6w")
 
-[node name="GrenadeStore" type="StaticBody3D" unique_id=841175754 node_paths=PackedStringArray("_interactNotifier", "_cooldown", "_marker")]
+[node name="GrenadeStore" type="StaticBody3D" unique_id=841175754 node_paths=PackedStringArray("_interactNotifier", "_cooldown", "_marker", "_textMesh")]
 collision_layer = 9
 collision_mask = 9
 script = ExtResource("1_dgx23")
@@ -220,6 +216,8 @@ _cooldown = NodePath("Timer")
 _failedBuySound = ExtResource("3_lv3v6")
 _successfulBuySound = ExtResource("4_q3t3b")
 _marker = NodePath("Cube/Marker3D")
+_storeType = "Grenades"
+_textMesh = NodePath("text")
 
 [node name="InteractNotifier" parent="." unique_id=517015701 instance=ExtResource("5_pbjys")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3845181, 0)
@@ -234,7 +232,7 @@ mesh = SubResource("TextMesh_rhg0q")
 transform = Transform3D(-1.1469029, 0, 3.9399124e-09, 0, 0.45969835, 0, 1.0026544e-07, 0, 0.045067344, 0.10270733, 2.567854, -0.10164547)
 mesh = SubResource("ArrayMesh_rhg0q")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_nriay")
+surface_material_override/0 = ExtResource("7_lv3v6")
 surface_material_override/1 = SubResource("StandardMaterial3D_2mccj")
 surface_material_override/2 = SubResource("StandardMaterial3D_eeerg")
 surface_material_override/3 = SubResource("StandardMaterial3D_eeerg")
@@ -269,3 +267,7 @@ skeleton = NodePath("")
 transform = Transform3D(-0.018115526, 0, -0.9998359, 0, 1, 0, 0.9998359, 0, -0.018115526, -0.31642842, 1.4234272, 0.013535768)
 mesh = SubResource("ArrayMesh_lv3v6")
 skeleton = NodePath("")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1920334318]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25139523, 2.5925593, 0.2890011)
+light_color = Color(0, 0.8417749, 0.14562926, 1)

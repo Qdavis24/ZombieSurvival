@@ -26,6 +26,9 @@ public partial class Pickup : RigidBody3D
 			CallDeferred(MethodName.QueueFree);
 		}
 	}
-	
-	
+
+	public int GetItemAmount()
+	{
+		return _itemAmount;
+	}
 }

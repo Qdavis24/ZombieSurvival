@@ -208,14 +208,6 @@ light_energy = 3.0
 light_bake_mode = 1
 spot_range = 25.076
 
-[node name="SpotLight3D3" type="SpotLight3D" parent="World/Lights" unique_id=537685099]
-transform = Transform3D(-0.99485475, 0.010525297, -0.100762926, 0.009582748, 0.9999058, 0.00983362, 0.100856945, 0.008817449, -0.994862, -4.793921, 2.195648, -5.3930435)
-light_color = Color(1, 0.43411544, 0.2725247, 1)
-light_energy = 3.0
-light_bake_mode = 1
-spot_range = 3.986
-spot_angle = 84.2
-
 [node name="SpotLight3D4" type="SpotLight3D" parent="World/Lights" unique_id=815769627]
 transform = Transform3D(0.97695655, 0.07325085, -0.20047455, -0.091784425, 0.99216485, -0.084761284, 0.19269499, 0.101208575, 0.97602546, -18.5244, 1.0570418, -19.200258)
 light_color = Color(1, 1, 0.59607846, 1)
@@ -259,7 +251,7 @@ transform = Transform3D(0.06181349, 0.99804413, 0.009185998, 0.03656175, 0.00693
 transform = Transform3D(1, -2.6193447e-09, 2.9802322e-08, 1.1641532e-08, 0.99999964, 1.8626451e-09, 0, -5.5879354e-09, 0.9999993, -5.3855515, 0.7325126, -4.4648547)
 
 [node name="RifleStore" parent="World/Interactables" unique_id=1982503143 instance=ExtResource("12_y5y3l")]
-transform = Transform3D(1, -2.5029294e-09, 4.0978193e-08, 1.5366822e-08, 0.9999995, 1.8626451e-09, 0, -7.450581e-09, 0.99999905, 4.7012687, 0.7370392, -18.397936)
+transform = Transform3D(1, -2.386514e-09, 4.4703484e-08, 1.7229468e-08, 0.99999946, 1.8626451e-09, 0, -7.450581e-09, 0.9999989, 4.0603547, 0.750381, -18.424837)
 
 [node name="GrenadeStore" parent="World/Interactables" unique_id=689710109 instance=ExtResource("13_vjgi4")]
 transform = Transform3D(0.04681232, 0.035317354, 0.99827904, 0.0055508465, 0.9993502, -0.03561555, -0.9988877, 0.007208526, 0.04658586, -23.39396, 0.61966515, -19.257618)
