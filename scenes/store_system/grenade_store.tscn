@@ -222,7 +222,7 @@ _textMesh = NodePath("text")
 [node name="InteractNotifier" parent="." unique_id=517015701 instance=ExtResource("5_pbjys")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3845181, 0)
 visible = false
-InteractPrompt = "press e to buy shotgun ammo"
+InteractPrompt = "press e to buy grenade"
 
 [node name="text" type="MeshInstance3D" parent="." unique_id=382481848]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10379709, 2.5685587, -0.13568458)
