@@ -24,6 +24,7 @@
 [ext_resource type="AudioStream" uid="uid://d25cmo0hid2cr" path="res://assets/sound/player/hit4.wav" id="14_eutje"]
 [ext_resource type="AudioStream" uid="uid://buhe5wp3slwk4" path="res://assets/sound/player/hitmoan1.wav" id="15_1db2i"]
 [ext_resource type="AudioStream" uid="uid://dwwhjn6ikqk6p" path="res://assets/sound/player/hitmoan2.wav" id="16_gkq8c"]
+[ext_resource type="AudioStream" uid="uid://g7sxc76lhyha" path="res://assets/sound/player/deathbell.mp3" id="17_mx0ws"]
 [ext_resource type="PackedScene" uid="uid://de6jft8suc321" path="res://scenes/player/PlayerHud.tscn" id="24_nn1ai"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ajn8d"]
@@ -74,7 +75,10 @@ _weaponManager = NodePath("WeaponManager")
 _footstepSound = SubResource("AudioStreamRandomizer_ajn8d")
 _jumpSound = SubResource("AudioStreamRandomizer_d8kh4")
 _hitSound = SubResource("AudioStreamRandomizer_qhhj6")
+_deathSound = ExtResource("17_mx0ws")
 Inventory = NodePath("Inventory")
+_maxHealth = 75.0
+_health = 75.0
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1270238325]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)

@@ -15,7 +15,7 @@ public partial class Game : Node3D
 	{
 		RoundManager.RoundFinished += OnRoundFinished;
 		_gameManager = GetParent<GameManager>();
-		
+		Player.PlayerDied += _gameManager.PlayerDied;
 	}
 
 	private void OnRoundFinished(int round)

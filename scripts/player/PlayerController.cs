@@ -6,6 +6,8 @@ using ZombieSurvival.scripts.player.weapons;
 
 public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamageable
 {
+	[Signal] public delegate void PlayerDiedEventHandler();
+	
 	private Node3D _head;
 	[Export] private float _healthRegenRate;
 	[Export] private PlayerHud _playerHud;
@@ -21,14 +23,16 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	[Export] private AudioStream _footstepSound;
 	[Export] private AudioStream _jumpSound;
 	[Export] private AudioStream _hitSound;
+	[Export] private AudioStream _deathSound;
 
 	private float _yaw; // left and right
 	private float _pitch; // up and down
 
+	[ExportGroup("Player")] 
 	[Export] public Inventory Inventory { get; private set; }
 	
-	private float _maxHealth = 200f;
-	private float _health = 200f;
+	[Export] private float _maxHealth = 200f;
+	[Export] private float _health = 200f;
 	private float Health
 	{
 		get => _health;
@@ -165,5 +169,26 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	{
 		Health -= damage;
 		AudioManager.I.Play3D(_hitSound, GlobalPosition, -15f);
+
+		if (Health <= 0)
+		{
+			CallDeferred(nameof(HandleDeath));
+		}
+	}
+
+	private void HandleDeath()
+	{
+		// Stop movement
+		SetPhysicsProcess(false);
+		Velocity = Vector3.Zero;
+		
+		AudioManager.I.PlayUi(_deathSound, -12f);
+
+		var tween = CreateTween();
+		tween.TweenProperty(this, "rotation", new Vector3(Mathf.DegToRad(90f), Rotation.Y, Rotation.Z), 0.5f)
+			.SetTrans(Tween.TransitionType.Cubic)
+			.SetEase(Tween.EaseType.Out);
+
+		tween.Finished += () => EmitSignal(SignalName.PlayerDied);
 	}
 }

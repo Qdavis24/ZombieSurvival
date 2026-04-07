@@ -93,4 +93,12 @@ public partial class GameManager : Node
         _gameInstance.QueueFree();
         _isGamePlaying = false;
     }
+    
+    public void PlayerDied()
+    {
+        _isGamePlaying = false;
+        Input.MouseMode = Input.MouseModeEnum.Visible;
+        _uiManager.PlayerDied();
+        _gameInstance.CallDeferred(Node.MethodName.SetProcessMode, (int)ProcessModeEnum.Disabled);
+    }
 }

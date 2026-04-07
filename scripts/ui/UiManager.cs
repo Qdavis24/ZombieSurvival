@@ -68,4 +68,10 @@ public partial class UiManager : Node
 	{
 		_hud.SetRound(round);
 	}
+
+	public void PlayerDied()
+	{
+		_pauseMenu.Visible = false;
+		_deathMenu.Visible = true;
+	}
 }
