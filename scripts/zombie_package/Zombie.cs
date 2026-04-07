@@ -88,7 +88,7 @@ public partial class Zombie : CharacterBody3D
                 break;
             case State.Dead:
                 _collisionShape.QueueFree();
-                //_animationPlayer.Stop();
+                _animationPlayer.Stop();
                 EmitSignalDead();
                 break;
         }
