@@ -45,11 +45,7 @@ public partial class PlayerHud : CanvasLayer
         EventBus.Instance.PlayerExitedInteractableRange += OnPlayerExitedInteractableRange;
         _itemPopup.PopupFree += OnPopupFree;
     }
-
-    private void OnPopupDelayTimeout()
-    {
-        throw new NotImplementedException();
-    }
+    
 
     public override void _ExitTree()
     {
