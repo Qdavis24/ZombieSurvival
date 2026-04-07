@@ -73,7 +73,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	public override void _Ready()
 	{
 		_head = GetNode<Node3D>("Head");
-
+		
 		_yaw = Rotation.Y;
 		_pitch = _head.Rotation.X;
 		Inventory.ItemAdded += OnItemAdded;

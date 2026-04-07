@@ -83,6 +83,7 @@ public partial class GameManager : Node
         _player = _gameInstance.Player;
         _isGamePlaying = true;
         Input.MouseMode = Input.MouseModeEnum.Captured;
+        _uiManager.HudSetRound(1);
     }
 
     private void OnQuitGame()

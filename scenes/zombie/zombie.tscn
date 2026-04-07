@@ -33,7 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://diw46jgb6wloj" path="res://scenes/pickups/parasitic_material.tscn" id="17_6p1aj"]
 [ext_resource type="AudioStream" uid="uid://b32tw6vl00cdg" path="res://assets/sound/shothits/shothit1.wav" id="20_gl5c4"]
 [ext_resource type="AudioStream" uid="uid://c8vym8otvlj2y" path="res://assets/sound/shothits/shothit2.wav" id="21_l7rcl"]
-[ext_resource type="AudioStream" uid="uid://2mkxo8vs0pgi" path="res://assets/sound/shothits/headshot-ka-ching-noise.wav" id="22_jur0n"]
+[ext_resource type="AudioStream" uid="uid://cg57xv3buer8o" path="res://assets/sound/shothits/headshot.wav" id="22_gl5c4"]
 [ext_resource type="AudioStream" uid="uid://bfe6wu6hmwku2" path="res://assets/sound/shothits/shothit3.wav" id="22_uq5pi"]
 [ext_resource type="AudioStream" uid="uid://dx1ubmcem1etc" path="res://assets/sound/shothits/shothit4.wav" id="23_rrych"]
 [ext_resource type="AudioStream" uid="uid://bulnqqxb72xaw" path="res://assets/sound/shothits/shothit5.wav" id="24_r774q"]
@@ -665,7 +665,7 @@ joint_constraints/bias = 0.3
 joint_constraints/softness = 0.8
 joint_constraints/relaxation = 1.0
 script = ExtResource("4_rovuw")
-ShotHitSound = ExtResource("22_jur0n")
+ShotHitSound = ExtResource("22_gl5c4")
 _shouldDie = true
 ShouldDismember = true
 BodyPartPackedScene = ExtResource("4_1eykj")

@@ -37,12 +37,12 @@ public partial class ChainLinkFence : Node3D
             OpenGate();
             _interactNotifier.Disable();
             _invisibleWall.QueueFree();
-            AudioManager.I.Play3D(_lockBreakSound, GlobalPosition);
+            AudioManager.I.Play3D(_lockBreakSound, GlobalPosition, -18f);
             SpawnBrokenLock();
         }
         else
         {
-            AudioManager.I.Play3D(_lockedSound, GlobalPosition);
+            AudioManager.I.Play3D(_lockedSound, GlobalPosition, -8f);
             ShakeLock();
         }
     }

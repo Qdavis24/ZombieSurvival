@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://d1vcwcrp7eqh8"]
 
 [ext_resource type="Script" uid="uid://dmjsjbo83np" path="res://scripts/interactables/InteractablePickup.cs" id="1_0qrkh"]
-[ext_resource type="AudioStream" uid="uid://bbeheqo6rxl5q" path="res://assets/sound/guns/shotgun/shotgunreload.wav" id="2_u3b7p"]
+[ext_resource type="AudioStream" uid="uid://je16cd5i74j8" path="res://assets/sound/pickups/ShotGunPickup.wav" id="2_u3b7p"]
 [ext_resource type="PackedScene" uid="uid://eksdoewlbll1" path="res://scenes/interactables/interact_notifier.tscn" id="3_0qrkh"]
 [ext_resource type="Texture2D" uid="uid://bu5s0w3uncttb" path="res://assets/models/weapon_only/shotgun-only_ak_texture_3.png" id="3_mbfdl"]
 [ext_resource type="Shader" uid="uid://daykcgo6jucby" path="res://shaders/item_outline.gdshader" id="3_u3b7p"]

@@ -22,10 +22,11 @@
 [ext_resource type="PackedScene" uid="uid://dg2r2wjcfdgn6" path="res://scenes/store_system/rifle_store.tscn" id="12_y5y3l"]
 [ext_resource type="PackedScene" uid="uid://t0phtwd422bv" path="res://scenes/store_system/grenade_store.tscn" id="13_vjgi4"]
 
-[node name="Game" type="Node3D" unique_id=1906095306 node_paths=PackedStringArray("Player")]
+[node name="Game" type="Node3D" unique_id=1906095306 node_paths=PackedStringArray("Player", "RoundManager")]
 transform = Transform3D(0.9989043, -0.020793993, 0.041928995, 0.021435108, 0.9996593, -0.0148992995, -0.04160489, 0.015781721, 0.9990095, 0, 0, 0)
 script = ExtResource("1_b343u")
 Player = NodePath("PlayerController")
+RoundManager = NodePath("RoundManager")
 
 [node name="World" parent="." unique_id=1803875491 instance=ExtResource("1_rlmg0")]
 

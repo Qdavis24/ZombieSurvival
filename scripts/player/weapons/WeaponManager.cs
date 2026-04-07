@@ -59,6 +59,8 @@ public partial class WeaponManager : Node
         _playerController.Inventory.ItemAdded += OnPlayerInventoryItemAdded;
         _playerController.Inventory.ItemRemoved += OnPlayerInventoryItemRemoved;
         _playerController.Inventory.AddItem(ItemType.Grenades, _startingGrenadeCount);
+        
+        CallDeferred(nameof(RefreshHudGrenades));
 
         if (_weaponScenes != null && _weaponScenes.Length > 0)
         {

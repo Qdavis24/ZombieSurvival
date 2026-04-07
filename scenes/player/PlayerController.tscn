@@ -15,26 +15,16 @@
 [ext_resource type="AudioStream" uid="uid://bdj1d24ha37m" path="res://assets/sound/player/jump1.wav" id="7_yfo7q"]
 [ext_resource type="AudioStream" uid="uid://cbl1ald03u2bs" path="res://assets/sound/player/jump2.wav" id="8_upw0j"]
 [ext_resource type="PackedScene" uid="uid://cjng820s0s2d" path="res://scenes/player/weapons/grenade/Grenade.tscn" id="8_wtdo7"]
-[ext_resource type="Script" uid="uid://8ekxc1y8cxhh" path="res://scripts/player/player_hud/PlayerHud.cs" id="9_hmgul"]
 [ext_resource type="AudioStream" uid="uid://cppxp5kseatkc" path="res://assets/sound/player/jump3.wav" id="9_kwp3v"]
 [ext_resource type="AudioStream" uid="uid://df5vcgg0q3y1m" path="res://assets/sound/player/jump4.wav" id="10_lmmi6"]
-[ext_resource type="Script" uid="uid://dtutdnd7epe8x" path="res://scripts/player/player_hud/HealthIndicator.cs" id="11_hmgul"]
 [ext_resource type="AudioStream" uid="uid://blamn7dky7rh1" path="res://assets/sound/player/hit1.wav" id="11_i07ap"]
-[ext_resource type="Shader" uid="uid://dhk6778ekh32f" path="res://scenes/player/health_visual_shader.gdshader" id="11_xpgqn"]
 [ext_resource type="AudioStream" uid="uid://dacu1b18ajrqm" path="res://assets/sound/player/hit2.wav" id="12_akdlx"]
-[ext_resource type="Texture2D" uid="uid://bsg165p8bjmje" path="res://assets/particle_textures/blood_particle_tex.png" id="12_qcp1l"]
 [ext_resource type="AudioStream" uid="uid://xwjo0o3fn3yy" path="res://assets/sound/player/hit3.wav" id="13_52kwu"]
-[ext_resource type="Script" uid="uid://b42xyipo0jtr8" path="res://scripts/player/player_hud/BloodSplatter.cs" id="13_klk5f"]
 [ext_resource type="PackedScene" uid="uid://bhwaaq5eta4sp" path="res://scenes/inventory_system/Inventory.tscn" id="13_xpgqn"]
 [ext_resource type="AudioStream" uid="uid://d25cmo0hid2cr" path="res://assets/sound/player/hit4.wav" id="14_eutje"]
-[ext_resource type="Theme" uid="uid://djrvn0o5wdyef" path="res://scenes/ui/ammo_theme.tres" id="14_jlpny"]
 [ext_resource type="AudioStream" uid="uid://buhe5wp3slwk4" path="res://assets/sound/player/hitmoan1.wav" id="15_1db2i"]
-[ext_resource type="Texture2D" uid="uid://qkr7gisrljdt" path="res://scenes/ui/ammo.png" id="15_444fp"]
-[ext_resource type="Texture2D" uid="uid://ds7gkrlq74gh2" path="res://scenes/ui/grenade.png" id="16_4vr2v"]
 [ext_resource type="AudioStream" uid="uid://dwwhjn6ikqk6p" path="res://assets/sound/player/hitmoan2.wav" id="16_gkq8c"]
-[ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="18_jlpny"]
-[ext_resource type="Script" uid="uid://djc05fynr5gvv" path="res://scripts/player/player_hud/PlayerPopup.cs" id="18_klk5f"]
-[ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/particle_textures/scorch_01.png" id="29_gkq8c"]
+[ext_resource type="PackedScene" uid="uid://de6jft8suc321" path="res://scenes/player/PlayerHud.tscn" id="24_nn1ai"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ajn8d"]
 random_pitch = 1.0594631
@@ -76,11 +66,6 @@ height = 1.8
 radius = 0.4
 height = 1.8
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_g4ghg"]
-shader = ExtResource("11_xpgqn")
-shader_parameter/intensity = 0.0
-shader_parameter/hit_flash = 0.0
-
 [node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "Inventory")]
 script = ExtResource("1_etyb6")
 _healthRegenRate = 0.1
@@ -120,190 +105,6 @@ _playerController = NodePath("..")
 _camera = NodePath("../Head/Camera3D")
 _grenadeThrowScene = ExtResource("8_wtdo7")
 
-[node name="PlayerHud" type="CanvasLayer" parent="." unique_id=1950508150 node_paths=PackedStringArray("_healthIndicator", "_bloodSplatter", "_currentAmmoLabel", "_reserveAmmoLabel", "_currentGrenadesLabel", "_parasiticMaterialLabel", "_interactPopup", "_itemPopup")]
-script = ExtResource("9_hmgul")
-_healthIndicator = NodePath("HitEffect")
-_bloodSplatter = NodePath("BloodSplatter")
-_currentAmmoLabel = NodePath("Counts/Ammo/Ammo/HBoxContainer/CurrentAmmoLabel")
-_reserveAmmoLabel = NodePath("Counts/Ammo/Ammo/HBoxContainer/ReserveAmmoLabel")
-_currentGrenadesLabel = NodePath("Counts/Ammo/Grenade/current")
-_parasiticMaterialLabel = NodePath("Counts/ParasiticMat/ParasiticMatCount")
-_interactPopup = NodePath("InteractionIndicator")
-_itemPopup = NodePath("ItemIndicator")
-
-[node name="HitEffect" type="ColorRect" parent="PlayerHud" unique_id=1250240893]
-material = SubResource("ShaderMaterial_g4ghg")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(1, 0, 0, 0)
-script = ExtResource("11_hmgul")
-
-[node name="BloodSplatter" type="TextureRect" parent="PlayerHud" unique_id=1004675379]
-modulate = Color(1, 0, 0, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -7.0
-offset_top = -1.0
-offset_right = -7.0
-offset_bottom = -1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("12_qcp1l")
-script = ExtResource("13_klk5f")
-
-[node name="Counts" type="VBoxContainer" parent="PlayerHud" unique_id=583640421]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -141.50305
-offset_top = -220.893
-offset_right = -60.50305
-offset_bottom = -84.89227
-grow_horizontal = 0
-grow_vertical = 0
-scale = Vector2(1.5, 1.5)
-size_flags_vertical = 8
-
-[node name="ParasiticMat" type="HBoxContainer" parent="PlayerHud/Counts" unique_id=1970851803]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="PlayerHud/Counts/ParasiticMat" unique_id=1460395427]
-modulate = Color(1, 1, 0, 1)
-layout_mode = 2
-texture = ExtResource("29_gkq8c")
-
-[node name="ParasiticMatCount" type="Label" parent="PlayerHud/Counts/ParasiticMat" unique_id=1409711084]
-layout_mode = 2
-theme = ExtResource("14_jlpny")
-theme_override_colors/font_color = Color(1, 1, 0, 1)
-text = "0"
-vertical_alignment = 1
-
-[node name="Ammo" type="VBoxContainer" parent="PlayerHud/Counts" unique_id=928866451]
-layout_mode = 2
-
-[node name="ShotgunLabel" type="Label" parent="PlayerHud/Counts/Ammo" unique_id=1735955300]
-visible = false
-layout_mode = 2
-theme = ExtResource("14_jlpny")
-theme_override_font_sizes/font_size = 20
-text = "Shotgun"
-horizontal_alignment = 1
-
-[node name="RifleLabel" type="Label" parent="PlayerHud/Counts/Ammo" unique_id=1440502149]
-visible = false
-layout_mode = 2
-theme = ExtResource("14_jlpny")
-theme_override_font_sizes/font_size = 29
-text = "Rifle"
-horizontal_alignment = 1
-
-[node name="PistolLabel" type="Label" parent="PlayerHud/Counts/Ammo" unique_id=1570430985]
-visible = false
-layout_mode = 2
-theme = ExtResource("14_jlpny")
-theme_override_font_sizes/font_size = 29
-text = "Pistol"
-horizontal_alignment = 1
-
-[node name="RpgLabel" type="Label" parent="PlayerHud/Counts/Ammo" unique_id=1284063286]
-visible = false
-layout_mode = 2
-theme = ExtResource("14_jlpny")
-theme_override_font_sizes/font_size = 29
-text = "RPG"
-horizontal_alignment = 1
-
-[node name="Ammo" type="HBoxContainer" parent="PlayerHud/Counts/Ammo" unique_id=1022492745]
-layout_mode = 2
-alignment = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="PlayerHud/Counts/Ammo/Ammo" unique_id=411688836]
-layout_mode = 2
-theme_override_constants/margin_bottom = 7
-
-[node name="TextureRect" type="TextureRect" parent="PlayerHud/Counts/Ammo/Ammo/MarginContainer" unique_id=926040673]
-layout_mode = 2
-texture = ExtResource("15_444fp")
-expand_mode = 3
-stretch_mode = 4
-
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayerHud/Counts/Ammo/Ammo" unique_id=11811990]
-layout_mode = 2
-
-[node name="CurrentAmmoLabel" type="Label" parent="PlayerHud/Counts/Ammo/Ammo/HBoxContainer" unique_id=138161115]
-layout_mode = 2
-theme = ExtResource("14_jlpny")
-text = " 8"
-
-[node name="slash" type="Label" parent="PlayerHud/Counts/Ammo/Ammo/HBoxContainer" unique_id=1982051813]
-layout_mode = 2
-theme = ExtResource("14_jlpny")
-text = "/"
-
-[node name="ReserveAmmoLabel" type="Label" parent="PlayerHud/Counts/Ammo/Ammo/HBoxContainer" unique_id=777322997]
-layout_mode = 2
-theme = ExtResource("14_jlpny")
-text = "12"
-
-[node name="Grenade" type="HBoxContainer" parent="PlayerHud/Counts/Ammo" unique_id=136844001]
-layout_mode = 2
-alignment = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="PlayerHud/Counts/Ammo/Grenade" unique_id=1932368185]
-layout_mode = 2
-theme_override_constants/margin_bottom = 7
-
-[node name="TextureRect" type="TextureRect" parent="PlayerHud/Counts/Ammo/Grenade/MarginContainer" unique_id=1997851579]
-layout_mode = 2
-texture = ExtResource("16_4vr2v")
-expand_mode = 3
-stretch_mode = 4
-
-[node name="current" type="Label" parent="PlayerHud/Counts/Ammo/Grenade" unique_id=1900581714]
-layout_mode = 2
-theme = ExtResource("14_jlpny")
-text = "2"
-
-[node name="InteractionIndicator" type="MarginContainer" parent="PlayerHud" unique_id=1656273995 node_paths=PackedStringArray("_text")]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_top = 200
-script = ExtResource("18_klk5f")
-_text = NodePath("Label")
-
-[node name="Label" type="Label" parent="PlayerHud/InteractionIndicator" unique_id=21204602]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("18_jlpny")
-theme_override_font_sizes/font_size = 36
-
-[node name="ItemIndicator" type="MarginContainer" parent="PlayerHud" unique_id=1136610117 node_paths=PackedStringArray("_text")]
-offset_left = 1493.193
-offset_top = 602.82
-offset_right = 1850.387
-offset_bottom = 834.82
-theme_override_constants/margin_top = 200
-script = ExtResource("18_klk5f")
-_text = NodePath("Label")
-
-[node name="Label" type="Label" parent="PlayerHud/ItemIndicator" unique_id=1634085792]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("18_jlpny")
-theme_override_font_sizes/font_size = 30
+[node name="PlayerHud" parent="." unique_id=171600604 instance=ExtResource("24_nn1ai")]
 
 [node name="Inventory" parent="." unique_id=949916564 instance=ExtResource("13_xpgqn")]

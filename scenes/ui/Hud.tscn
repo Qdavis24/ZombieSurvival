@@ -1,29 +1,31 @@
 [gd_scene format=3 uid="uid://dh0j7uwlkf840"]
 
 [ext_resource type="Script" uid="uid://ci3yjb1ocdeji" path="res://scripts/ui/Hud.cs" id="1_f1iev"]
+[ext_resource type="AudioStream" uid="uid://w7kfo2hputov" path="res://assets/sound/RoundChange.wav" id="2_jb0ce"]
 [ext_resource type="FontFile" uid="uid://b5xps8x8u85bq" path="res://scenes/ui/Clynical Terror.ttf" id="2_jkjdw"]
 
-[node name="Hud" type="CanvasLayer" unique_id=665882280 node_paths=PackedStringArray("_currentAmmoLabel", "_reserveAmmoLabel")]
+[node name="Hud" type="CanvasLayer" unique_id=665882280 node_paths=PackedStringArray("_round")]
 script = ExtResource("1_f1iev")
-_currentAmmoLabel = NodePath("")
-_reserveAmmoLabel = NodePath("")
+_round = NodePath("Round")
+_moveToCenterDuration = 0.05
+_waitBeforeTextChangeDuration = 0.5
+_textColorFadeDuration = 2.0
+_waitAfterTextChangeDuration = 1.0
+_roundChangeSound = ExtResource("2_jb0ce")
 
-[node name="Screen" type="HBoxContainer" parent="." unique_id=595994582]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Round" type="Label" parent="." unique_id=733552920]
+anchors_preset = -1
+anchor_left = 0.029000001
+anchor_top = 0.94600004
+anchor_right = 0.029000001
+anchor_bottom = 0.94600004
+offset_left = -5.6800003
+offset_top = -24.680054
+offset_right = 5.3199997
+offset_bottom = 29.319946
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="MarginContainer2" type="MarginContainer" parent="Screen" unique_id=1213433285]
-layout_mode = 2
-size_flags_vertical = 8
-theme_override_constants/margin_left = 60
-theme_override_constants/margin_bottom = 32
-
-[node name="Round" type="Label" parent="Screen/MarginContainer2" unique_id=733552920]
-layout_mode = 2
+size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("2_jkjdw")
-theme_override_font_sizes/font_size = 33
-text = "I"
+theme_override_font_sizes/font_size = 50
 horizontal_alignment = 2

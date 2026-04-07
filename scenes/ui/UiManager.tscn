@@ -1,29 +1,23 @@
 [gd_scene format=3 uid="uid://0keac7gcsnat"]
 
 [ext_resource type="Script" uid="uid://obsjaggn25s2" path="res://scripts/ui/UiManager.cs" id="1_b44pn"]
+[ext_resource type="AudioStream" uid="uid://w7kfo2hputov" path="res://assets/sound/RoundChange.wav" id="2_3v6dp"]
 [ext_resource type="AudioStream" uid="uid://db7l2826g4qi3" path="res://assets/sound/music/MainMenu.ogg" id="2_68wcl"]
 [ext_resource type="PackedScene" uid="uid://cojaotwhnc5xn" path="res://scenes/ui/StartMenu.tscn" id="2_vd515"]
-[ext_resource type="AudioStream" uid="uid://cglthr2sqd28e" path="res://assets/sound/ui_click.wav" id="3_3v6dp"]
 [ext_resource type="PackedScene" uid="uid://dtxx54opy5t17" path="res://scenes/ui/PauseMenu.tscn" id="3_77bur"]
 [ext_resource type="PackedScene" uid="uid://dh0j7uwlkf840" path="res://scenes/ui/Hud.tscn" id="4_y1emd"]
 [ext_resource type="PackedScene" uid="uid://ceenxu0j8cvnk" path="res://scenes/ui/DeathMenu.tscn" id="5_y1emd"]
 [ext_resource type="PackedScene" uid="uid://dii0p3dtncfx3" path="res://scenes/ui/Popup.tscn" id="6_1k00l"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3v6dp"]
-random_pitch = 1.0594631
-random_volume_offset_db = 0.5
-streams_count = 1
-stream_0/stream = ExtResource("3_3v6dp")
-
 [node name="UiManager" type="Node" unique_id=823563542 node_paths=PackedStringArray("_startMenu", "_pauseMenu", "_deathMenu", "_hud", "_popup")]
 script = ExtResource("1_b44pn")
+_roundChangeSound = ExtResource("2_3v6dp")
 _startMenuMusic = ExtResource("2_68wcl")
 _startMenu = NodePath("StartMenu")
 _pauseMenu = NodePath("PauseMenu")
 _deathMenu = NodePath("DeathMenu")
 _hud = NodePath("Hud")
 _popup = NodePath("Popup")
-_clickSound = SubResource("AudioStreamRandomizer_3v6dp")
 
 [node name="PauseMenu" parent="." unique_id=1825430013 instance=ExtResource("3_77bur")]
 layer = 10
@@ -32,7 +26,6 @@ visible = false
 [node name="StartMenu" parent="." unique_id=1584193192 instance=ExtResource("2_vd515")]
 layer = 9
 visible = false
-_clickSound = ExtResource("3_3v6dp")
 
 [node name="DeathMenu" parent="." unique_id=1710384687 instance=ExtResource("5_y1emd")]
 layer = 8

@@ -1,0 +1,179 @@
+[gd_scene format=3 uid="uid://de6jft8suc321"]
+
+[ext_resource type="Script" uid="uid://8ekxc1y8cxhh" path="res://scripts/player/player_hud/PlayerHud.cs" id="1_tbcmq"]
+[ext_resource type="Shader" uid="uid://dhk6778ekh32f" path="res://scenes/player/health_visual_shader.gdshader" id="2_fc5ru"]
+[ext_resource type="Script" uid="uid://dtutdnd7epe8x" path="res://scripts/player/player_hud/HealthIndicator.cs" id="3_a7gaw"]
+[ext_resource type="Texture2D" uid="uid://bsg165p8bjmje" path="res://assets/particle_textures/blood_particle_tex.png" id="4_rn047"]
+[ext_resource type="Script" uid="uid://b42xyipo0jtr8" path="res://scripts/player/player_hud/BloodSplatter.cs" id="5_qbpwv"]
+[ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/particle_textures/scorch_01.png" id="6_dm2ga"]
+[ext_resource type="Theme" uid="uid://djrvn0o5wdyef" path="res://scenes/ui/ammo_theme.tres" id="7_jyy7t"]
+[ext_resource type="Texture2D" uid="uid://qkr7gisrljdt" path="res://scenes/ui/ammo.png" id="8_460si"]
+[ext_resource type="Texture2D" uid="uid://ds7gkrlq74gh2" path="res://scenes/ui/grenade.png" id="9_hpijl"]
+[ext_resource type="Script" uid="uid://djc05fynr5gvv" path="res://scripts/player/player_hud/PlayerPopup.cs" id="10_7vsir"]
+[ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="11_h88ne"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g4ghg"]
+shader = ExtResource("2_fc5ru")
+shader_parameter/intensity = 0.0
+shader_parameter/hit_flash = 0.0
+
+[node name="PlayerHud" type="CanvasLayer" unique_id=171600604 node_paths=PackedStringArray("_healthIndicator", "_bloodSplatter", "_currentAmmoLabel", "_reserveAmmoLabel", "_currentGrenadesLabel", "_parasiticMaterialLabel", "_interactPopup", "_itemPopup")]
+script = ExtResource("1_tbcmq")
+_healthIndicator = NodePath("HitEffect")
+_bloodSplatter = NodePath("BloodSplatter")
+_currentAmmoLabel = NodePath("Counts/Ammo/MarginContainer/Ammo/HBoxContainer/CurrentAmmoLabel")
+_reserveAmmoLabel = NodePath("Counts/Ammo/MarginContainer/Ammo/HBoxContainer/ReserveAmmoLabel")
+_currentGrenadesLabel = NodePath("Counts/Ammo/Grenade/current")
+_parasiticMaterialLabel = NodePath("Counts/ParasiticMat/ParasiticMatCount")
+_interactPopup = NodePath("InteractionIndicator")
+_itemPopup = NodePath("ItemIndicator")
+
+[node name="HitEffect" type="ColorRect" parent="." unique_id=319660820]
+material = SubResource("ShaderMaterial_g4ghg")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 0)
+script = ExtResource("3_a7gaw")
+
+[node name="BloodSplatter" type="TextureRect" parent="." unique_id=892117911]
+modulate = Color(1, 0, 0, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -7.0
+offset_top = -1.0
+offset_right = -7.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_rn047")
+script = ExtResource("5_qbpwv")
+
+[node name="Counts" type="VBoxContainer" parent="." unique_id=1532640630]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -171.00012
+offset_top = -241.0
+offset_right = -83.00012
+offset_bottom = -87.261536
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(1.5, 1.5)
+size_flags_vertical = 8
+
+[node name="ParasiticMat" type="HBoxContainer" parent="Counts" unique_id=1136608367]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Counts/ParasiticMat" unique_id=1993950812]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 2
+texture = ExtResource("6_dm2ga")
+
+[node name="ParasiticMatCount" type="Label" parent="Counts/ParasiticMat" unique_id=49754370]
+layout_mode = 2
+theme = ExtResource("7_jyy7t")
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+text = "0"
+vertical_alignment = 1
+
+[node name="Ammo" type="VBoxContainer" parent="Counts" unique_id=663804056]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Counts/Ammo" unique_id=2051503874]
+layout_mode = 2
+theme_override_constants/margin_bottom = 7
+
+[node name="Ammo" type="HBoxContainer" parent="Counts/Ammo/MarginContainer" unique_id=1291482840]
+layout_mode = 2
+alignment = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Counts/Ammo/MarginContainer/Ammo" unique_id=119024312]
+layout_mode = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 7
+
+[node name="TextureRect" type="TextureRect" parent="Counts/Ammo/MarginContainer/Ammo/MarginContainer" unique_id=738972128]
+layout_mode = 2
+texture = ExtResource("8_460si")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Counts/Ammo/MarginContainer/Ammo" unique_id=634900506]
+layout_mode = 2
+
+[node name="CurrentAmmoLabel" type="Label" parent="Counts/Ammo/MarginContainer/Ammo/HBoxContainer" unique_id=284726086]
+layout_mode = 2
+theme = ExtResource("7_jyy7t")
+text = " 8"
+
+[node name="slash" type="Label" parent="Counts/Ammo/MarginContainer/Ammo/HBoxContainer" unique_id=547139950]
+layout_mode = 2
+theme = ExtResource("7_jyy7t")
+text = "/"
+
+[node name="ReserveAmmoLabel" type="Label" parent="Counts/Ammo/MarginContainer/Ammo/HBoxContainer" unique_id=1887138990]
+layout_mode = 2
+theme = ExtResource("7_jyy7t")
+text = "12"
+
+[node name="Grenade" type="HBoxContainer" parent="Counts/Ammo" unique_id=501170837]
+layout_mode = 2
+alignment = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Counts/Ammo/Grenade" unique_id=834435650]
+layout_mode = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 7
+
+[node name="TextureRect" type="TextureRect" parent="Counts/Ammo/Grenade/MarginContainer" unique_id=928303830]
+layout_mode = 2
+texture = ExtResource("9_hpijl")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="current" type="Label" parent="Counts/Ammo/Grenade" unique_id=2111447112]
+layout_mode = 2
+theme = ExtResource("7_jyy7t")
+text = "2"
+
+[node name="InteractionIndicator" type="MarginContainer" parent="." unique_id=1384263505 node_paths=PackedStringArray("_text")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 200
+script = ExtResource("10_7vsir")
+_text = NodePath("Label")
+
+[node name="Label" type="Label" parent="InteractionIndicator" unique_id=366583967]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("11_h88ne")
+theme_override_font_sizes/font_size = 36
+
+[node name="ItemIndicator" type="MarginContainer" parent="." unique_id=350197045 node_paths=PackedStringArray("_text")]
+offset_left = 1256.0
+offset_top = 602.82
+offset_right = 1889.0
+offset_bottom = 856.82
+theme_override_constants/margin_top = 200
+script = ExtResource("10_7vsir")
+_text = NodePath("Label")
+
+[node name="Label" type="Label" parent="ItemIndicator" unique_id=893228653]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("11_h88ne")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 2

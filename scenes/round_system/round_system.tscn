@@ -6,6 +6,7 @@
 
 [node name="RoundManager" type="Node" unique_id=397079504 node_paths=PackedStringArray("_spawnManager", "_difficultyManager")]
 script = ExtResource("1_bkdqf")
+_roundStartGapTime = 5.0
 _spawnManager = NodePath("SpawnManager")
 _difficultyManager = NodePath("DifficultyManager")
 
