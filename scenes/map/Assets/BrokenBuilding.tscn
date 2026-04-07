@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dp8prlcdyul4"]
+
+[ext_resource type="PackedScene" uid="uid://duagvy72170jk" path="res://assets/models/map/BrokenBuilding.glb" id="1_tpv77"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sl8p0"]
+size = Vector3(23.061462, 21.226074, 30.411499)
+
+[node name="BrokenBuilding" type="StaticBody3D" unique_id=245747974]
+
+[node name="BrokenBuilding" parent="." unique_id=434570219 instance=ExtResource("1_tpv77")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1778021849]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6567411, 5.3723145, 0.75408936)
+shape = SubResource("BoxShape3D_sl8p0")

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bkdqo5ooys8xg"]
+
+[ext_resource type="PackedScene" uid="uid://batxuwm1tlxci" path="res://assets/models/map/AdamsCarTypeAblue.glb" id="1_5n4ly"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kght8"]
+size = Vector3(8.0767975, 17.486328, 20.25415)
+
+[node name="CarTypeABlue" type="StaticBody3D" unique_id=1910819203]
+
+[node name="AdamsCarTypeAblue" parent="." unique_id=1071878447 instance=ExtResource("1_5n4ly")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=244893691]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.002494812, 8.243164, 0.4234619)
+shape = SubResource("BoxShape3D_kght8")

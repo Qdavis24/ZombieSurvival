@@ -5,10 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://c5gxs84x66oh4" path="res://scenes/map/Assets/Building1.tscn" id="2_0wksg"]
 [ext_resource type="PackedScene" uid="uid://cfjp3bppwm4i8" path="res://scenes/player/PlayerController.tscn" id="2_s0yep"]
 [ext_resource type="PackedScene" uid="uid://bafgfpxa34vss" path="res://scenes/map/Assets/Bus.tscn" id="3_lsbak"]
+[ext_resource type="PackedScene" uid="uid://d3yi8gfkqi1j2" path="res://scenes/map/Assets/Floor.tscn" id="3_r7sob"]
 [ext_resource type="PackedScene" uid="uid://dnuwr0qeacme6" path="res://scenes/spawn_system/spawner.tscn" id="4_0wksg"]
 [ext_resource type="PackedScene" uid="uid://ohk7f7yuprd7" path="res://scenes/map/Assets/Tank.tscn" id="4_2rd6h"]
 [ext_resource type="PackedScene" uid="uid://bqy2scgfjaspk" path="res://scenes/map/Assets/Building2.tscn" id="4_03gun"]
 [ext_resource type="PackedScene" uid="uid://cvt0aomoxtces" path="res://scenes/round_system/round_system.tscn" id="5_0wksg"]
+[ext_resource type="PackedScene" uid="uid://bkdqo5ooys8xg" path="res://scenes/map/Assets/CarTypeABlue.tscn" id="5_kyk2p"]
+[ext_resource type="PackedScene" uid="uid://dqeax6ssm17c6" path="res://scenes/map/Assets/CarTypeAGrey.tscn" id="5_y5y3l"]
+[ext_resource type="PackedScene" uid="uid://dougcog1p6qh6" path="res://scenes/map/Assets/CarTypeBRed.tscn" id="6_vjgi4"]
 [ext_resource type="PackedScene" uid="uid://bgovebhuqvyeq" path="res://scenes/map/Assets/Lightpole.tscn" id="7_7ua8r"]
 [ext_resource type="PackedScene" uid="uid://d1vcwcrp7eqh8" path="res://scenes/interactables/guns/shotgun_pickup.tscn" id="8_3xj3m"]
 [ext_resource type="PackedScene" uid="uid://cpuy8hqpdax45" path="res://scenes/store_system/shotgun_store.tscn" id="9_ytxki"]
@@ -36,79 +40,143 @@ transform = Transform3D(1, -1.1059456e-09, 1.1175871e-08, 4.1909516e-09, 0.99999
 collision_layer = 31
 collision_mask = 31
 
-[node name="Building1" parent="World/NavigationRegion3D/Walls" index="0" unique_id=801496068 instance=ExtResource("2_0wksg")]
+[node name="Floor" parent="World/NavigationRegion3D/Walls" index="0" unique_id=1818002992 instance=ExtResource("3_r7sob")]
+transform = Transform3D(1.0000001, 2.4447218e-09, 0, -3.434252e-09, 1, 1.8626451e-09, 3.7252903e-09, 0, 1, -0.008973071, -0.011113197, -0.03771518)
+collision_layer = 4294967295
+
+[node name="Building1" parent="World/NavigationRegion3D/Walls" index="1" unique_id=801496068 instance=ExtResource("2_0wksg")]
 transform = Transform3D(-0.89999986, 0, -7.86805e-08, 0, 0.9, 0, 7.8680486e-08, 0, -0.9, -0.5708313, 0.088222206, 13.64308)
 collision_layer = 31
 collision_mask = 31
 
-[node name="LightPole" parent="World/NavigationRegion3D/Walls" index="9" unique_id=106366829]
+[node name="CarTypeABlue" parent="World/NavigationRegion3D/Walls" index="2" unique_id=1910819203 instance=ExtResource("5_kyk2p")]
+transform = Transform3D(0.11519949, -0.00016593972, -0.27700016, 0.008089321, 0.29987407, 0.0031845649, 0.276882, -0.008692011, 0.11515558, -0.43317944, -0.12087175, -0.016130798)
+
+[node name="CarTypeABlue2" parent="World/NavigationRegion3D/Walls" index="3" unique_id=381157617 instance=ExtResource("5_kyk2p")]
+transform = Transform3D(0.19648188, -0.0011591624, -0.2267019, 0.005597536, 0.29992968, 0.0033177962, 0.22663563, -0.0064028543, 0.19645728, -12.737071, -0.22722155, -24.852818)
+
+[node name="CarTypeAGrey" parent="World/NavigationRegion3D/Walls" index="4" unique_id=136016524 instance=ExtResource("5_y5y3l")]
+transform = Transform3D(0.29446083, 0.00097392715, 0.057375524, -0.0007364288, 0.29999638, -0.0013128468, -0.05737915, 0.0011477666, 0.2944596, -19.131271, -0.087145865, -24.653643)
+
+[node name="CAR" parent="World/NavigationRegion3D/Walls" index="5" unique_id=1721413302]
 visible = false
 
-[node name="Wall" parent="World/NavigationRegion3D/Walls" index="32" unique_id=2048568619]
+[node name="CAR2" parent="World/NavigationRegion3D/Walls" index="6" unique_id=1901402340]
 visible = false
 
-[node name="Tank" parent="World/NavigationRegion3D/Walls" index="33" unique_id=440556348 instance=ExtResource("4_2rd6h")]
+[node name="CarTypeBRed" parent="World/NavigationRegion3D/Walls" index="7" unique_id=1967799238 instance=ExtResource("6_vjgi4")]
+transform = Transform3D(0.1694906, 0.032488924, 0.9849968, 0.0031194557, 0.9994341, -0.033501886, -0.9855276, 0.008750914, 0.16929328, -19.556118, 0.16012466, -16.482977)
+
+[node name="CarTypeBRed2" parent="World/NavigationRegion3D/Walls" index="8" unique_id=417506981 instance=ExtResource("6_vjgi4")]
+transform = Transform3D(-0.3832892, 0.043412015, 0.92260885, 0.015896987, 0.9990574, -0.040404934, -0.92349267, -0.000820077, -0.38361785, -22.351389, 0.08299005, -25.679726)
+
+[node name="CAR3" parent="World/NavigationRegion3D/Walls" index="9" unique_id=1024545204]
+visible = false
+
+[node name="CAR4" parent="World/NavigationRegion3D/Walls" index="10" unique_id=1284664796]
+visible = false
+
+[node name="CAR6" parent="World/NavigationRegion3D/Walls" index="12" unique_id=1947562192]
+visible = false
+
+[node name="LightPole" parent="World/NavigationRegion3D/Walls" index="15" unique_id=106366829]
+visible = false
+
+[node name="Street_Sunk" parent="World/NavigationRegion3D/Walls" index="30" unique_id=364718268]
+visible = false
+
+[node name="Sidewalk2TRI" parent="World/NavigationRegion3D/Walls" index="31" unique_id=763612259]
+visible = false
+
+[node name="Sidewalk2TRI2" parent="World/NavigationRegion3D/Walls" index="32" unique_id=1454913106]
+visible = false
+
+[node name="Sidewalk2TRI3" parent="World/NavigationRegion3D/Walls" index="33" unique_id=395346528]
+visible = false
+
+[node name="Sidewalk2TRI4" parent="World/NavigationRegion3D/Walls" index="34" unique_id=1056163908]
+visible = false
+
+[node name="SidewalkTRI" parent="World/NavigationRegion3D/Walls" index="35" unique_id=1072686395]
+visible = false
+
+[node name="Sidewalk2" parent="World/NavigationRegion3D/Walls" index="36" unique_id=1588866498]
+visible = false
+
+[node name="Sidewalk3" parent="World/NavigationRegion3D/Walls" index="37" unique_id=2056741861]
+visible = false
+
+[node name="Wall" parent="World/NavigationRegion3D/Walls" index="38" unique_id=2048568619]
+visible = false
+
+[node name="Tank" parent="World/NavigationRegion3D/Walls" index="39" unique_id=440556348 instance=ExtResource("4_2rd6h")]
 transform = Transform3D(-0.3778984, 4.0745363e-10, -0.3996166, 0, 0.55000013, 6.9849193e-09, 0.39961636, 0, -0.3778985, -13.798136, -0.16031483, 5.7724433)
 
-[node name="AlleyWall2" parent="World/NavigationRegion3D/Walls" index="34" unique_id=729488119]
+[node name="AlleyWall2" parent="World/NavigationRegion3D/Walls" index="40" unique_id=729488119]
 visible = false
 
-[node name="AlleyWall1" parent="World/NavigationRegion3D/Walls" index="35" unique_id=1042938600]
+[node name="AlleyWall1" parent="World/NavigationRegion3D/Walls" index="41" unique_id=1042938600]
 visible = false
 
-[node name="AlleyWall3" parent="World/NavigationRegion3D/Walls" index="36" unique_id=1494708274]
+[node name="AlleyWall3" parent="World/NavigationRegion3D/Walls" index="42" unique_id=1494708274]
 visible = false
 
-[node name="Bus" parent="World/NavigationRegion3D/Walls" index="38" unique_id=1403012753 instance=ExtResource("3_lsbak")]
+[node name="Bus" parent="World/NavigationRegion3D/Walls" index="44" unique_id=1403012753 instance=ExtResource("3_lsbak")]
 transform = Transform3D(-0.53566986, 0.0001606585, -0.12472936, 0.00010511954, 0.54999965, 0.00025697332, 0.124729365, 0.00022643898, -0.5356698, -11.597675, -0.24412534, -2.9491656)
 
-[node name="AlleyWall5" parent="World/NavigationRegion3D/Walls" index="39" unique_id=449663289]
+[node name="AlleyWall5" parent="World/NavigationRegion3D/Walls" index="45" unique_id=449663289]
 visible = false
 
-[node name="AlleyWall6" parent="World/NavigationRegion3D/Walls" index="40" unique_id=305686383]
+[node name="AlleyWall6" parent="World/NavigationRegion3D/Walls" index="46" unique_id=305686383]
 visible = false
 
-[node name="TANK" parent="World/NavigationRegion3D/Walls" index="42" unique_id=1018912850]
+[node name="TANK" parent="World/NavigationRegion3D/Walls" index="49" unique_id=1018912850]
 visible = false
 
-[node name="TANK2" parent="World/NavigationRegion3D/Walls" index="43" unique_id=1323636167]
+[node name="TANK2" parent="World/NavigationRegion3D/Walls" index="50" unique_id=1323636167]
 visible = false
 
-[node name="TANK3" parent="World/NavigationRegion3D/Walls" index="44" unique_id=585843253]
+[node name="TANK3" parent="World/NavigationRegion3D/Walls" index="51" unique_id=585843253]
 visible = false
 
-[node name="BUS" parent="World/NavigationRegion3D/Walls" index="45" unique_id=344328127]
+[node name="BUS" parent="World/NavigationRegion3D/Walls" index="52" unique_id=344328127]
 visible = false
 
-[node name="Building2" parent="World/NavigationRegion3D/Walls" index="48" unique_id=1361504271 instance=ExtResource("4_03gun")]
+[node name="Building2" parent="World/NavigationRegion3D/Walls" index="54" unique_id=1361504271 instance=ExtResource("4_03gun")]
 transform = Transform3D(-6.7055225e-08, -3.4924597e-09, 1.6000004, -5.5879354e-09, 1.599999, -2.0954758e-09, -1.6, 0, -8.195639e-08, -31.547115, 7.969871, -4.1317058)
 collision_layer = 31
 collision_mask = 31
 
-[node name="Building3" parent="World/NavigationRegion3D/Walls" index="49" unique_id=1159409400 instance=ExtResource("2_0wksg")]
+[node name="Building3" parent="World/NavigationRegion3D/Walls" index="55" unique_id=1159409400 instance=ExtResource("2_0wksg")]
 transform = Transform3D(-0.8999998, 0, -7.868048e-08, 0, 0.9, 0, 7.868048e-08, 0, -0.89999974, 10.935164, -0.121202886, -9.631489)
 collision_layer = 31
 collision_mask = 31
 
-[node name="Building4" parent="World/NavigationRegion3D/Walls" index="50" unique_id=730763204 instance=ExtResource("4_03gun")]
+[node name="Building4" parent="World/NavigationRegion3D/Walls" index="56" unique_id=730763204 instance=ExtResource("4_03gun")]
 transform = Transform3D(-1.6000006, -2.910383e-09, -1.7136335e-07, -1.1292286e-08, 1.5999981, -5.5879354e-09, 1.5646219e-07, 0, -1.6000006, -30.064686, 7.662418, -22.626905)
 collision_layer = 31
 collision_mask = 31
 
-[node name="Building5" parent="World/NavigationRegion3D/Walls" index="51" unique_id=651953571 instance=ExtResource("2_0wksg")]
+[node name="Building5" parent="World/NavigationRegion3D/Walls" index="57" unique_id=651953571 instance=ExtResource("2_0wksg")]
 transform = Transform3D(-1.3000007, -1.4319085e-08, -2.2724271e-07, -2.0372681e-08, 1.2999992, 0, 2.1234155e-07, 0, -1.2999992, -37.279247, -0.8493773, 12.5581)
 collision_layer = 31
 collision_mask = 31
 
-[node name="Building6" parent="World/NavigationRegion3D/Walls" index="52" unique_id=204063170 instance=ExtResource("2_0wksg")]
+[node name="Building6" parent="World/NavigationRegion3D/Walls" index="58" unique_id=204063170 instance=ExtResource("2_0wksg")]
 transform = Transform3D(-1.4901161e-08, -1.2165401e-08, -0.8000002, 0, 0.9999998, -1.1175871e-08, 0.49999982, -1.8626451e-09, -2.6077032e-08, -5.685619, -0.15514886, -10.044203)
 collision_layer = 31
 collision_mask = 31
 
-[node name="Building7" parent="World/NavigationRegion3D/Walls" index="53" unique_id=1177059896 instance=ExtResource("2_0wksg")]
+[node name="Building7" parent="World/NavigationRegion3D/Walls" index="59" unique_id=1177059896 instance=ExtResource("2_0wksg")]
 transform = Transform3D(-0.89999986, -1.5716068e-09, -8.195639e-08, -2.561137e-09, 0.9, 0, 8.195639e-08, 0, -0.8999999, 0.9817433, -0.5007063, -23.637081)
 collision_layer = 31
 collision_mask = 31
+
+[node name="Street_Sunk2" parent="World/NavigationRegion3D/Walls" index="66" unique_id=1857397159]
+visible = false
+
+[node name="Sidewalk4" parent="World/NavigationRegion3D/Walls" index="67" unique_id=1938404846]
+visible = false
 
 [node name="Lights" type="Node3D" parent="World" unique_id=805863230]
 transform = Transform3D(1, -1.1641532e-09, 3.7252903e-09, 2.3283064e-09, 0.99999994, 0, 0, 0, 0.9999999, -2.910383e-10, 0.4687974, 4.656613e-10)
@@ -148,13 +216,32 @@ spot_range = 3.986
 spot_angle = 84.2
 
 [node name="SpotLight3D4" type="SpotLight3D" parent="World/Lights" unique_id=815769627]
-transform = Transform3D(0.9769564, 0.07325085, -0.20047455, -0.091784425, 0.99216473, -0.084761284, 0.19269496, 0.10120856, 0.97602534, -18.35691, 0.24434501, -19.021477)
+transform = Transform3D(0.97695655, 0.07325085, -0.20047455, -0.091784425, 0.99216485, -0.084761284, 0.19269499, 0.101208575, 0.97602546, -18.5244, 1.0570418, -19.200258)
 light_color = Color(1, 1, 0.59607846, 1)
 light_energy = 3.0
 light_bake_mode = 1
-spot_range = 25.076
-spot_attenuation = 2.69
+spot_range = 5.136
 spot_angle = 13.7
+
+[node name="OmniLight3D" type="OmniLight3D" parent="World/Lights/SpotLight3D4" unique_id=225274828]
+transform = Transform3D(0.99999994, -1.8626451e-09, 0, -1.8626451e-09, 0.99999994, -1.4901161e-08, -1.4901161e-08, 1.4901161e-08, 0.99999994, -0.0065631866, -0.013392687, -0.12359524)
+light_color = Color(0.94722074, 1, 0.7195193, 1)
+light_bake_mode = 1
+omni_range = 0.54
+
+[node name="SpotLight3D5" type="SpotLight3D" parent="World/Lights" unique_id=2069433826]
+transform = Transform3D(0.994609, 0.09878726, 0.031525455, -0.09563244, 0.99138993, -0.0894458, -0.040089943, 0.08594877, 0.9954927, -19.583418, 1.0784805, -19.285374)
+light_color = Color(1, 1, 0.59607846, 1)
+light_energy = 3.0
+light_bake_mode = 1
+spot_range = 5.376
+spot_angle = 13.7
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="World/Lights/SpotLight3D5" unique_id=504707166]
+transform = Transform3D(0.99999994, -2.7939677e-09, 7.450581e-09, 0, 1, -3.7252903e-08, 0, 3.7252903e-08, 0.99999994, 0.014039993, -0.012165546, -0.12649536)
+light_color = Color(0.94722074, 1, 0.7195193, 1)
+light_bake_mode = 1
+omni_range = 0.762
 
 [node name="Interactables" type="Node3D" parent="World" unique_id=1684070018]
 
