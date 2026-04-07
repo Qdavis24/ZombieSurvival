@@ -17,21 +17,28 @@ public partial class InteractablePickup : Node3D
         _interactNotifier.PlayerEnteredRange += OnPlayerEnteredRange;
         _interactNotifier.PlayerExitedRange += OnPlayerExitedRange;
         _interactNotifier.Interacted += OnInteracted;
-        _pickupMaterial = _pickupMesh.GetActiveMaterial(0);
-        _highlightMaterial = _pickupMaterial.NextPass;
-        _pickupMaterial.NextPass = null;
+        var activeMaterial = _pickupMesh.GetActiveMaterial(0);
+        if (activeMaterial != null)
+        {
+            _pickupMaterial = activeMaterial.Duplicate() as Material;
+            _pickupMesh.SetSurfaceOverrideMaterial(0, _pickupMaterial);
+            _highlightMaterial = _pickupMaterial.NextPass;
+            _pickupMaterial.NextPass = null;
+        }
     }
 
     private void OnPlayerEnteredRange()
     {
-        _pickupMaterial.NextPass = _highlightMaterial;
+        if (_pickupMaterial != null)
+            _pickupMaterial.NextPass = _highlightMaterial;
         _glow.Visible = true;
         EventBus.Instance.EmitSignal(EventBus.SignalName.PlayerEnteredInteractableRange, _interactNotifier);
     }
 
     private void OnPlayerExitedRange()
     {
-        _pickupMaterial.NextPass = null;
+        if (_pickupMaterial != null)
+            _pickupMaterial.NextPass = null;
         _glow.Visible = false;
         EventBus.Instance.EmitSignal(EventBus.SignalName.PlayerExitedInteractableRange, _interactNotifier);
     }
