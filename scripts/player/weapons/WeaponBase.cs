@@ -12,6 +12,7 @@ public partial class WeaponBase : Node3D
         bool manualRecoil
     );
     [Signal] public delegate void AmmoChangedEventHandler(int currentAmmo);
+    [Signal] public delegate void ReloadFailedEventHandler();
     
     // Default values for pistol
     [ExportGroup("Stats")]
@@ -32,6 +33,7 @@ public partial class WeaponBase : Node3D
     
     [ExportGroup("Misc")]
     [Export] private float _animBlendTime = 0.3f;
+    [Export] private float _reloadFailedCooldown = 0.25f;
     [Export] public ItemType AmmoType;
     [Export] public ItemType WeaponType;
     [Export] private MuzzleFlash _muzzleFlash;
@@ -52,9 +54,11 @@ public partial class WeaponBase : Node3D
     private bool _queuedAimState; // true = ads, false = hip
     private bool _isWalkingForward;
     private bool _isReloading;
+    private bool _canEmitReloadFailed = true;
     private int _currentAmmo;
     
     private Func<int, int> _consumeAmmo;
+    private Func<int> _getAvailableAmmo;
 
     public void Initialize(Camera3D camera, HitResolver hitResolver, int currentAmmo)
     {
@@ -64,7 +68,11 @@ public partial class WeaponBase : Node3D
         NotifyAmmoChanged();
     }
 
-    public void SetAmmoSource(Func<int, int> consumeAmmo) => _consumeAmmo = consumeAmmo;
+    public void SetAmmoSource(Func<int, int> consumeAmmo, Func<int> getAvailableAmmo)
+    {
+        _consumeAmmo = consumeAmmo;
+        _getAvailableAmmo = getAvailableAmmo;
+    }
 
     public int CurrentAmmo => _currentAmmo;
     public int MagazineSize => _magazineSize;
@@ -193,12 +201,17 @@ public partial class WeaponBase : Node3D
         if (!triggerPressed) return;
         if (_cooldown > 0) return;
         if (_isShooting) return;
+        if (_currentAmmo <= 0)
+        {
+            TryReload(); 
+            return;
+        }
+
         if (_isReloading)
         {
             RequestReloadCancel();
             return;
         }
-        if (_currentAmmo <= 0) return;
 
         Fire();
         _cooldown = GetShotInterval();
@@ -210,7 +223,26 @@ public partial class WeaponBase : Node3D
         if (_isShooting) return;
         if (_currentAmmo >= _magazineSize) return;
 
+        int available = _getAvailableAmmo?.Invoke() ?? 0;
+        if (available <= 0)
+        {
+            TryEmitReloadFailed();
+            return;
+        }
+
         StartReload();
+    }
+
+    private async void TryEmitReloadFailed()
+    {
+        if (!_canEmitReloadFailed)
+            return;
+
+        _canEmitReloadFailed = false;
+        EmitSignal(SignalName.ReloadFailed);
+
+        await ToSignal(GetTree().CreateTimer(_reloadFailedCooldown), SceneTreeTimer.SignalName.Timeout);
+        _canEmitReloadFailed = true;
     }
 
     protected virtual void StartReload()

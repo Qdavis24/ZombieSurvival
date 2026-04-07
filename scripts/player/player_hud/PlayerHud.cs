@@ -131,4 +131,43 @@ public partial class PlayerHud : CanvasLayer
             await _itemPopup.ShowNotification(message, color);
         }
     }
+
+    public void ReloadFailed()
+    {
+        if (_currentAmmoLabel == null || _reserveAmmoLabel == null)
+            return;
+        
+        AudioManager.I.PlayUiClick();
+
+        // Immediately flash red
+        _currentAmmoLabel.Modulate = Colors.Red;
+        _reserveAmmoLabel.Modulate = Colors.Red;
+
+        // Tween back to white
+        var tween = CreateTween();
+        tween.TweenProperty(_currentAmmoLabel, "modulate", Colors.White, 0.4f)
+            .SetTrans(Tween.TransitionType.Cubic)
+            .SetEase(Tween.EaseType.Out);
+
+        tween.Parallel().TweenProperty(_reserveAmmoLabel, "modulate", Colors.White, 0.4f)
+            .SetTrans(Tween.TransitionType.Cubic)
+            .SetEase(Tween.EaseType.Out);
+    }
+    
+    public void GrenadeThrowFailed()
+    {
+        if (_currentGrenadesLabel == null)
+            return;
+        
+        AudioManager.I.PlayUiClick();
+
+        // Immediately flash red
+        _currentGrenadesLabel.Modulate = Colors.Red;
+
+        // Tween back to white
+        var tween = CreateTween();
+        tween.TweenProperty(_currentGrenadesLabel, "modulate", Colors.White, 0.4f)
+            .SetTrans(Tween.TransitionType.Cubic)
+            .SetEase(Tween.EaseType.Out);
+    }
 }

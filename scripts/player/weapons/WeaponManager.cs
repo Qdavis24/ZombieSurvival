@@ -13,6 +13,12 @@ public partial class WeaponManager : Node
     [Signal]
     public delegate void GrenadesChangedEventHandler(int currentGrenades);
 
+    [Signal]
+    public delegate void ReloadFailedEventHandler();
+    
+    [Signal]
+    public delegate void GrenadeThrowFailedEventHandler();
+
     private sealed class WeaponSlot
     {
         public PackedScene Scene;
@@ -155,6 +161,7 @@ public partial class WeaponManager : Node
             _current.Fired -= _camera.OnWeaponFired;
             _current.Fired -= _playerController.OnWeaponFired;
             _current.AmmoChanged -= OnCurrentWeaponAmmoChanged;
+            _current.ReloadFailed -= OnCurrentWeaponReloadFailed;
         }
 
         _current?.QueueFree();
@@ -167,17 +174,21 @@ public partial class WeaponManager : Node
 
         _weaponSocket.AddChild(_current);
         _current.Initialize(_camera, _hitResolver, slot.CurrentAmmo);
-        _current.SetAmmoSource(needed =>
-        {
-            var available = _playerController.Inventory.GetAmount(slot.AmmoType);
-            var granted = Math.Min(needed, available);
-            if (granted > 0)
-                _playerController.Inventory.ConsumeItem(slot.AmmoType, granted);
-            return granted;
-        });
+        _current.SetAmmoSource(
+            needed =>
+            {
+                var available = _playerController.Inventory.GetAmount(slot.AmmoType);
+                var granted = Math.Min(needed, available);
+                if (granted > 0)
+                    _playerController.Inventory.ConsumeItem(slot.AmmoType, granted);
+                return granted;
+            },
+            () => _playerController.Inventory.GetAmount(slot.AmmoType)
+        );        
         _current.Fired += _camera.OnWeaponFired;
         _current.Fired += _playerController.OnWeaponFired;
         _current.AmmoChanged += OnCurrentWeaponAmmoChanged;
+        _current.ReloadFailed += OnCurrentWeaponReloadFailed;
 
         RefreshHudAmmo();
         CallDeferred(nameof(RefreshHudAmmo));
@@ -203,6 +214,11 @@ public partial class WeaponManager : Node
         RefreshHudAmmo();
     }
 
+    private void OnCurrentWeaponReloadFailed()
+    {
+        EmitSignal(SignalName.ReloadFailed);
+    }
+
     private void RefreshHudAmmo()
     {
         if (_current == null || _weaponSlots == null)
@@ -223,7 +239,10 @@ public partial class WeaponManager : Node
             return;
 
         if (_playerController.Inventory.GetAmount(ItemType.Grenades) <= 0)
+        {
+            EmitSignal(SignalName.GrenadeThrowFailed);
             return;
+        }
 
         if (_grenadeThrowScene == null)
             return;
@@ -245,6 +264,7 @@ public partial class WeaponManager : Node
             _current.Fired -= _camera.OnWeaponFired;
             _current.Fired -= _playerController.OnWeaponFired;
             _current.AmmoChanged -= OnCurrentWeaponAmmoChanged;
+            _current.ReloadFailed -= OnCurrentWeaponReloadFailed;
             _current.QueueFree();
             _current = null;
         }
@@ -384,7 +404,7 @@ public partial class WeaponManager : Node
             if (Input.IsActionJustPressed("reload"))
             {
                 var slot = _weaponSlots?[_currentWeaponIndex];
-                if (_current != null && slot != null && _playerController.Inventory.GetAmount(slot.AmmoType) > 0)
+                if (_current != null && slot != null)
                     _current.TryReload();
             }
 

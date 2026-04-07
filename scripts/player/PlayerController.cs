@@ -80,6 +80,8 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		Inventory.ItemRemoved += OnItemRemoved;
 		_weaponManager.AmmoChanged += _playerHud.SetAmmo;
 		_weaponManager.GrenadesChanged += _playerHud.SetGrenades;
+		_weaponManager.ReloadFailed += _playerHud.ReloadFailed;
+		_weaponManager.GrenadeThrowFailed += _playerHud.GrenadeThrowFailed;
 		_health = _maxHealth;
 	}
 
