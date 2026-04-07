@@ -77,13 +77,28 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		_yaw = Rotation.Y;
 		_pitch = _head.Rotation.X;
 		Inventory.ItemAdded += OnItemAdded;
+		Inventory.ItemRemoved += OnItemRemoved;
 		_weaponManager.AmmoChanged += _playerHud.SetAmmo;
+		_weaponManager.GrenadesChanged += _playerHud.SetGrenades;
 		_health = _maxHealth;
+	}
+
+	private void OnItemRemoved(ItemType type, int amount)
+	{
+		if (type is ItemType.ParasiticMaterial)
+		{
+			_playerHud.ShowPickup(type, -amount);
+			_playerHud.SetParasiticMaterial(Inventory.GetAmount(ItemType.ParasiticMaterial));
+		}
 	}
 
 	private void OnItemAdded(ItemType type, int amount)
 	{
-		_playerHud.ShowNotification($"{type} + {amount}");
+		_playerHud.ShowPickup(type, amount);
+		if (type is ItemType.ParasiticMaterial)
+		{
+			_playerHud.SetParasiticMaterial(Inventory.GetAmount(ItemType.ParasiticMaterial));
+		}
 	}
 
 	public override void _UnhandledInput(InputEvent @event)

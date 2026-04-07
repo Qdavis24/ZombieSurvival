@@ -8,6 +8,7 @@ public partial class Pickup : RigidBody3D
 	[Export] private Area3D _pickupRange;
 	[Export] private ItemType _itemType;
 	[Export] private int _itemAmount;
+	[Export] private AudioStream _pickupSound;
 	
 	public override void _Ready()
 	{
@@ -21,6 +22,7 @@ public partial class Pickup : RigidBody3D
 		if (body is IInventoryOwner inventoryOwner)
 		{
 			inventoryOwner.Inventory.AddItem(_itemType, _itemAmount);
+			AudioManager.I.Play3D(_pickupSound, GlobalPosition);
 			CallDeferred(MethodName.QueueFree);
 		}
 	}

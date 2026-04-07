@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dr4e2417egb5f"]
+
+[ext_resource type="Texture2D" uid="uid://bmwgr711oo4uv" path="res://assets/models/weapon_only/rifle-only_ak_texture_2.png" id="1_cduba"]
+[ext_resource type="Shader" uid="uid://daykcgo6jucby" path="res://shaders/item_outline.gdshader" id="2_f8o5b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pxlqp"]
+render_priority = 0
+shader = ExtResource("2_f8o5b")
+shader_parameter/outline_width = 0.02
+shader_parameter/outline_color = Color(1, 1, 0, 1)
+
+[resource]
+resource_name = "Material.005"
+next_pass = SubResource("ShaderMaterial_pxlqp")
+cull_mode = 2
+albedo_texture = ExtResource("1_cduba")
+roughness = 0.5

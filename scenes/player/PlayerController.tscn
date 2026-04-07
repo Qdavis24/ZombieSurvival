@@ -34,6 +34,7 @@
 [ext_resource type="AudioStream" uid="uid://dwwhjn6ikqk6p" path="res://assets/sound/player/hitmoan2.wav" id="16_gkq8c"]
 [ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="18_jlpny"]
 [ext_resource type="Script" uid="uid://djc05fynr5gvv" path="res://scripts/player/player_hud/PlayerPopup.cs" id="18_klk5f"]
+[ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/particle_textures/scorch_01.png" id="29_gkq8c"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ajn8d"]
 random_pitch = 1.0594631
@@ -119,12 +120,14 @@ _playerController = NodePath("..")
 _camera = NodePath("../Head/Camera3D")
 _grenadeThrowScene = ExtResource("8_wtdo7")
 
-[node name="PlayerHud" type="CanvasLayer" parent="." unique_id=1950508150 node_paths=PackedStringArray("_healthIndicator", "_bloodSplatter", "_currentAmmoLabel", "_reserveAmmoLabel", "_interactPopup", "_itemPopup")]
+[node name="PlayerHud" type="CanvasLayer" parent="." unique_id=1950508150 node_paths=PackedStringArray("_healthIndicator", "_bloodSplatter", "_currentAmmoLabel", "_reserveAmmoLabel", "_currentGrenadesLabel", "_parasiticMaterialLabel", "_interactPopup", "_itemPopup")]
 script = ExtResource("9_hmgul")
 _healthIndicator = NodePath("HitEffect")
 _bloodSplatter = NodePath("BloodSplatter")
-_currentAmmoLabel = NodePath("AmmoUI/VBoxContainer/Ammo/HBoxContainer/CurrentAmmoLabel")
-_reserveAmmoLabel = NodePath("AmmoUI/VBoxContainer/Ammo/HBoxContainer/ReserveAmmoLabel")
+_currentAmmoLabel = NodePath("Counts/Ammo/Ammo/HBoxContainer/CurrentAmmoLabel")
+_reserveAmmoLabel = NodePath("Counts/Ammo/Ammo/HBoxContainer/ReserveAmmoLabel")
+_currentGrenadesLabel = NodePath("Counts/Ammo/Grenade/current")
+_parasiticMaterialLabel = NodePath("Counts/ParasiticMat/ParasiticMatCount")
 _interactPopup = NodePath("InteractionIndicator")
 _itemPopup = NodePath("ItemIndicator")
 
@@ -143,32 +146,49 @@ modulate = Color(1, 0, 0, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -7.0
+offset_top = -1.0
+offset_right = -7.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("12_qcp1l")
 script = ExtResource("13_klk5f")
 
-[node name="AmmoUI" type="MarginContainer" parent="PlayerHud" unique_id=792199847]
+[node name="Counts" type="VBoxContainer" parent="PlayerHud" unique_id=583640421]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -176.0
-offset_top = -88.0
+offset_left = -141.50305
+offset_top = -220.893
+offset_right = -60.50305
+offset_bottom = -84.89227
 grow_horizontal = 0
 grow_vertical = 0
-size_flags_horizontal = 10
+scale = Vector2(1.5, 1.5)
 size_flags_vertical = 8
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 72
-theme_override_constants/margin_bottom = 32
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PlayerHud/AmmoUI" unique_id=928866451]
+[node name="ParasiticMat" type="HBoxContainer" parent="PlayerHud/Counts" unique_id=1970851803]
 layout_mode = 2
 
-[node name="ShotgunLabel" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer" unique_id=1735955300]
+[node name="TextureRect" type="TextureRect" parent="PlayerHud/Counts/ParasiticMat" unique_id=1460395427]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 2
+texture = ExtResource("29_gkq8c")
+
+[node name="ParasiticMatCount" type="Label" parent="PlayerHud/Counts/ParasiticMat" unique_id=1409711084]
+layout_mode = 2
+theme = ExtResource("14_jlpny")
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+text = "0"
+vertical_alignment = 1
+
+[node name="Ammo" type="VBoxContainer" parent="PlayerHud/Counts" unique_id=928866451]
+layout_mode = 2
+
+[node name="ShotgunLabel" type="Label" parent="PlayerHud/Counts/Ammo" unique_id=1735955300]
 visible = false
 layout_mode = 2
 theme = ExtResource("14_jlpny")
@@ -176,7 +196,7 @@ theme_override_font_sizes/font_size = 20
 text = "Shotgun"
 horizontal_alignment = 1
 
-[node name="RifleLabel" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer" unique_id=1440502149]
+[node name="RifleLabel" type="Label" parent="PlayerHud/Counts/Ammo" unique_id=1440502149]
 visible = false
 layout_mode = 2
 theme = ExtResource("14_jlpny")
@@ -184,7 +204,7 @@ theme_override_font_sizes/font_size = 29
 text = "Rifle"
 horizontal_alignment = 1
 
-[node name="PistolLabel" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer" unique_id=1570430985]
+[node name="PistolLabel" type="Label" parent="PlayerHud/Counts/Ammo" unique_id=1570430985]
 visible = false
 layout_mode = 2
 theme = ExtResource("14_jlpny")
@@ -192,7 +212,7 @@ theme_override_font_sizes/font_size = 29
 text = "Pistol"
 horizontal_alignment = 1
 
-[node name="RpgLabel" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer" unique_id=1284063286]
+[node name="RpgLabel" type="Label" parent="PlayerHud/Counts/Ammo" unique_id=1284063286]
 visible = false
 layout_mode = 2
 theme = ExtResource("14_jlpny")
@@ -200,66 +220,56 @@ theme_override_font_sizes/font_size = 29
 text = "RPG"
 horizontal_alignment = 1
 
-[node name="Ammo" type="HBoxContainer" parent="PlayerHud/AmmoUI/VBoxContainer" unique_id=1022492745]
+[node name="Ammo" type="HBoxContainer" parent="PlayerHud/Counts/Ammo" unique_id=1022492745]
 layout_mode = 2
 alignment = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PlayerHud/AmmoUI/VBoxContainer/Ammo" unique_id=411688836]
+[node name="MarginContainer" type="MarginContainer" parent="PlayerHud/Counts/Ammo/Ammo" unique_id=411688836]
 layout_mode = 2
 theme_override_constants/margin_bottom = 7
 
-[node name="TextureRect" type="TextureRect" parent="PlayerHud/AmmoUI/VBoxContainer/Ammo/MarginContainer" unique_id=926040673]
+[node name="TextureRect" type="TextureRect" parent="PlayerHud/Counts/Ammo/Ammo/MarginContainer" unique_id=926040673]
 layout_mode = 2
 texture = ExtResource("15_444fp")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayerHud/AmmoUI/VBoxContainer/Ammo" unique_id=11811990]
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerHud/Counts/Ammo/Ammo" unique_id=11811990]
 layout_mode = 2
 
-[node name="CurrentAmmoLabel" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer/Ammo/HBoxContainer" unique_id=138161115]
+[node name="CurrentAmmoLabel" type="Label" parent="PlayerHud/Counts/Ammo/Ammo/HBoxContainer" unique_id=138161115]
 layout_mode = 2
 theme = ExtResource("14_jlpny")
 text = " 8"
 
-[node name="slash" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer/Ammo/HBoxContainer" unique_id=1982051813]
+[node name="slash" type="Label" parent="PlayerHud/Counts/Ammo/Ammo/HBoxContainer" unique_id=1982051813]
 layout_mode = 2
 theme = ExtResource("14_jlpny")
 text = "/"
 
-[node name="ReserveAmmoLabel" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer/Ammo/HBoxContainer" unique_id=777322997]
+[node name="ReserveAmmoLabel" type="Label" parent="PlayerHud/Counts/Ammo/Ammo/HBoxContainer" unique_id=777322997]
 layout_mode = 2
 theme = ExtResource("14_jlpny")
 text = "12"
 
-[node name="Grenade" type="HBoxContainer" parent="PlayerHud/AmmoUI/VBoxContainer" unique_id=136844001]
+[node name="Grenade" type="HBoxContainer" parent="PlayerHud/Counts/Ammo" unique_id=136844001]
 layout_mode = 2
 alignment = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PlayerHud/AmmoUI/VBoxContainer/Grenade" unique_id=1932368185]
+[node name="MarginContainer" type="MarginContainer" parent="PlayerHud/Counts/Ammo/Grenade" unique_id=1932368185]
 layout_mode = 2
 theme_override_constants/margin_bottom = 7
 
-[node name="TextureRect" type="TextureRect" parent="PlayerHud/AmmoUI/VBoxContainer/Grenade/MarginContainer" unique_id=1997851579]
+[node name="TextureRect" type="TextureRect" parent="PlayerHud/Counts/Ammo/Grenade/MarginContainer" unique_id=1997851579]
 layout_mode = 2
 texture = ExtResource("16_4vr2v")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="current" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer/Grenade" unique_id=1900581714]
+[node name="current" type="Label" parent="PlayerHud/Counts/Ammo/Grenade" unique_id=1900581714]
 layout_mode = 2
 theme = ExtResource("14_jlpny")
 text = "2"
-
-[node name="slash" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer/Grenade" unique_id=1020627379]
-layout_mode = 2
-theme = ExtResource("14_jlpny")
-text = "/"
-
-[node name="max" type="Label" parent="PlayerHud/AmmoUI/VBoxContainer/Grenade" unique_id=1636670534]
-layout_mode = 2
-theme = ExtResource("14_jlpny")
-text = "4"
 
 [node name="InteractionIndicator" type="MarginContainer" parent="PlayerHud" unique_id=1656273995 node_paths=PackedStringArray("_text")]
 anchors_preset = 8
@@ -283,10 +293,10 @@ theme_override_fonts/font = ExtResource("18_jlpny")
 theme_override_font_sizes/font_size = 36
 
 [node name="ItemIndicator" type="MarginContainer" parent="PlayerHud" unique_id=1136610117 node_paths=PackedStringArray("_text")]
-offset_left = 1649.0
-offset_top = 699.0
-offset_right = 1849.0
-offset_bottom = 931.0
+offset_left = 1493.193
+offset_top = 602.82
+offset_right = 1850.387
+offset_bottom = 834.82
 theme_override_constants/margin_top = 200
 script = ExtResource("18_klk5f")
 _text = NodePath("Label")
@@ -294,6 +304,6 @@ _text = NodePath("Label")
 [node name="Label" type="Label" parent="PlayerHud/ItemIndicator" unique_id=1634085792]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("18_jlpny")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 30
 
 [node name="Inventory" parent="." unique_id=949916564 instance=ExtResource("13_xpgqn")]

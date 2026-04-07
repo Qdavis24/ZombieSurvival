@@ -186,7 +186,7 @@ albedo_texture = ExtResource("3_sgiwp")
 [sub_resource type="BoxShape3D" id="BoxShape3D_rhg0q"]
 size = Vector3(1.844307, 1.9023438, 1.2836914)
 
-[node name="ShotgunStore" type="StaticBody3D" unique_id=841175754 node_paths=PackedStringArray("_interactNotifier", "_marker")]
+[node name="ShotgunStore" type="StaticBody3D" unique_id=841175754 node_paths=PackedStringArray("_interactNotifier", "_cooldown", "_marker")]
 collision_layer = 9
 collision_mask = 9
 script = ExtResource("1_hew1x")
@@ -195,6 +195,7 @@ _ammoScene = ExtResource("2_rhg0q")
 _storeSellAmount = 2
 _storeBuyItemType = 2
 _storeBuyAmount = 2
+_cooldown = NodePath("Timer")
 _failedBuySound = ExtResource("3_2mccj")
 _successfulBuySound = ExtResource("4_eeerg")
 _marker = NodePath("Cube/Marker3D")
@@ -466,3 +467,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_eeerg")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1149484087]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2166481, 0.45117188, 0.1418457)
 shape = SubResource("BoxShape3D_rhg0q")
+
+[node name="Timer" type="Timer" parent="." unique_id=1844845772]
+one_shot = true

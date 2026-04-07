@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cc168d8h8dmek"]
+
+[ext_resource type="Shader" uid="uid://daykcgo6jucby" path="res://shaders/item_outline.gdshader" id="1_7tsti"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bvncx"]
+load_path = "res://.godot/imported/rifle-only_ak_texture.png-e06eefff2e42fd34f95eef9559649205.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yetlj"]
+render_priority = 0
+shader = ExtResource("1_7tsti")
+shader_parameter/outline_width = 0.02
+shader_parameter/outline_color = Color(1, 1, 0, 1)
+
+[resource]
+resource_name = "Material.004"
+next_pass = SubResource("ShaderMaterial_yetlj")
+cull_mode = 2
+albedo_texture = SubResource("CompressedTexture2D_bvncx")
+roughness = 0.5

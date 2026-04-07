@@ -53,10 +53,20 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_8e5wo")
 
-[node name="BoltCutters" type="Node3D" unique_id=1165095353 node_paths=PackedStringArray("_interactNotifier", "_pickupMesh")]
+[sub_resource type="Gradient" id="Gradient_mbfdl"]
+offsets = PackedFloat32Array(0, 0.6370723)
+colors = PackedColorArray(0.9882353, 1, 0, 0.043137256, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vbs7n"]
+gradient = SubResource("Gradient_mbfdl")
+fill = 1
+fill_from = Vector2(0.4783654, 0.5366086)
+
+[node name="BoltCutters" type="Node3D" unique_id=1165095353 node_paths=PackedStringArray("_interactNotifier", "_pickupMesh", "_glow")]
 script = ExtResource("1_78ko2")
 _interactNotifier = NodePath("InteractNotifier")
 _pickupMesh = NodePath("handle_l")
+_glow = NodePath("Sprite3D")
 
 [node name="handle_l" type="MeshInstance3D" parent="." unique_id=880528351]
 transform = Transform3D(0.36107078, 0, 0, 0, 0.32488996, 0, 0, 0, 0.2877737, 0, 0, 0)
@@ -65,5 +75,14 @@ skeleton = NodePath("")
 
 [node name="InteractNotifier" parent="." unique_id=517015701 instance=ExtResource("3_vbs7n")]
 InteractPrompt = "press e to pickup bolt cutters"
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=2049645089]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0022203326, 0.09699881, -0.11570859)
+visible = false
+pixel_size = 0.05
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture = SubResource("GradientTexture2D_vbs7n")
 
 [editable path="InteractNotifier"]

@@ -8,19 +8,27 @@ public partial class AmmoStore : Node3D
     [Export] private int _storeSellAmount;
     [Export] private ItemType _storeBuyItemType;
     [Export] private int _storeBuyAmount;
+    [Export] private Timer _cooldown;
 
     
     [Export] private AudioStream _failedBuySound;
     [Export] private AudioStream _successfulBuySound;
     [Export] private Marker3D _marker;
 
+    private bool _ready = true;
+
 
     public override void _Ready()
     {
-
+        _cooldown.Timeout += CooldownOnTimeout;
         _interactNotifier.PlayerEnteredRange += OnPlayerEnteredRange;
         _interactNotifier.PlayerExitedRange += OnPlayerExitedRange;
         _interactNotifier.Interacted += OnInteracted;
+    }
+
+    private void CooldownOnTimeout()
+    {
+        _ready = true;
     }
 
     private void OnPlayerEnteredRange()
@@ -35,9 +43,12 @@ public partial class AmmoStore : Node3D
 
     private void OnInteracted(Node3D player)
     {
+        if (!_ready) return;
         if (player is not IInventoryOwner inventoryOwner) return;
         if (inventoryOwner.Inventory.ConsumeItem(_storeBuyItemType, _storeBuyAmount))
         {
+            _ready = false;
+            _cooldown.Start();
             AudioManager.I.Play3D(_successfulBuySound, GlobalPosition);
             for (int i = 0; i < _storeSellAmount; i++)
                 SpawnAmmo();

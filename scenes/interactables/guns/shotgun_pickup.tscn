@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://d1vcwcrp7eqh8"]
 
 [ext_resource type="Script" uid="uid://dmjsjbo83np" path="res://scripts/interactables/InteractablePickup.cs" id="1_0qrkh"]
+[ext_resource type="AudioStream" uid="uid://bbeheqo6rxl5q" path="res://assets/sound/guns/shotgun/shotgunreload.wav" id="2_u3b7p"]
 [ext_resource type="PackedScene" uid="uid://eksdoewlbll1" path="res://scenes/interactables/interact_notifier.tscn" id="3_0qrkh"]
 [ext_resource type="Texture2D" uid="uid://bu5s0w3uncttb" path="res://assets/models/weapon_only/shotgun-only_ak_texture_3.png" id="3_mbfdl"]
 [ext_resource type="Shader" uid="uid://daykcgo6jucby" path="res://shaders/item_outline.gdshader" id="3_u3b7p"]
@@ -80,11 +81,22 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ra5bl")
 
-[node name="ShotgunPickup" type="Node3D" unique_id=1224397729 node_paths=PackedStringArray("_interactNotifier", "_pickupMesh")]
+[sub_resource type="Gradient" id="Gradient_mbfdl"]
+offsets = PackedFloat32Array(0, 0.6370723)
+colors = PackedColorArray(0.9882353, 1, 0, 0.043137256, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u3b7p"]
+gradient = SubResource("Gradient_mbfdl")
+fill = 1
+fill_from = Vector2(0.4783654, 0.5366086)
+
+[node name="ShotgunPickup" type="Node3D" unique_id=1224397729 node_paths=PackedStringArray("_interactNotifier", "_pickupMesh", "_glow")]
 script = ExtResource("1_0qrkh")
 _interactNotifier = NodePath("InteractNotifier")
 _item = 8
 _pickupMesh = NodePath("Cube_001")
+_glow = NodePath("Sprite3D")
+_pickupSound = ExtResource("2_u3b7p")
 
 [node name="Cube_001" type="MeshInstance3D" parent="." unique_id=1520737447]
 mesh = SubResource("ArrayMesh_u3b7p")
@@ -92,5 +104,14 @@ skeleton = NodePath("")
 
 [node name="InteractNotifier" parent="." unique_id=517015701 instance=ExtResource("3_0qrkh")]
 InteractPrompt = "press e to pickup shotgun"
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=371124743]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.055913925, 0.03412029, -0.11570859)
+visible = false
+pixel_size = 0.05
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture = SubResource("GradientTexture2D_u3b7p")
 
 [editable path="InteractNotifier"]

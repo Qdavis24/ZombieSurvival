@@ -43,7 +43,6 @@ public partial class DismemberableBody : Skeleton3D
     [Export] private PackedScene _limbContainerPackedScene;
     [Export] private PackedScene _blood;
 
-    [ExportGroup("Sound")] [Export] private AudioStream _shotHitSound;
 
     private float _health;
     private bool _isDead;
@@ -136,8 +135,8 @@ public partial class DismemberableBody : Skeleton3D
         processMat.Direction = hitDir;
         Containers.Instance.VFX.AddChild(blood);
         blood.GlobalPosition = hitGlobalPos;
-        
-        AudioManager.I.PlayZombieHit(_shotHitSound, hitGlobalPos, -5f);
+
+        AudioManager.I.PlayZombieHit(bodyPart.ShotHitSound, hitGlobalPos, -5f);
 
         _health -= amount;
         if (_health <= 0f && !_isDead)
@@ -155,15 +154,17 @@ public partial class DismemberableBody : Skeleton3D
             var rootDetachedBodyPart = SpawnDetachedBodyParts(attachedBodyPart.CollectChain());
             if (rootDetachedBodyPart != null)
             {
-                if(GD.Randf() > _parasiticMaterialDropChance)
+                if (GD.Randf() > _parasiticMaterialDropChance)
                 {
                     var parasiticMaterial = SpawnParasiticMaterial(rootDetachedBodyPart.GlobalTransform);
-                    parasiticMaterial.ApplyCentralImpulse((new Vector3(GD.RandRange(-1,1), 0, GD.RandRange(-1,1)) + Vector3.Up).Normalized() * 3f);
+                    parasiticMaterial.ApplyCentralImpulse(
+                        (new Vector3(GD.RandRange(-1, 1), 0, GD.RandRange(-1, 1)) + Vector3.Up).Normalized() * 3f);
 
                     float spinAmount = 3f;
 
                     parasiticMaterial.ApplyTorqueImpulse(Vector3.Up * spinAmount);
                 }
+
                 rootDetachedBodyPart.ApplyImpulse(dir * force * _dismemberedBodyPartImpulseScale);
                 attachedBodyPart.MarkDestroyed();
             }
@@ -202,7 +203,7 @@ public partial class DismemberableBody : Skeleton3D
             if (i > 0)
                 CreateHinge(limbContainer, boneGlobalTransform, detachedBodyParts[i - 1], currDetachedBodyPart);
         }
-        
+
         SetBonePoseScale(destroyedAttachedBodyParts[0].BoneIdx,
             Vector3.One * 0.01f); // shrink armature at root bone to "remove" the mesh
         return detachedBodyParts[0];

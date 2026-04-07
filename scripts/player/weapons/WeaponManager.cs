@@ -11,7 +11,7 @@ public partial class WeaponManager : Node
     public delegate void AmmoChangedEventHandler(int currentAmmo, int reserve);
 
     [Signal]
-    public delegate void GrenadesChangedEventHandler(int currentGrenades, int reserve);
+    public delegate void GrenadesChangedEventHandler(int currentGrenades);
 
     private sealed class WeaponSlot
     {
@@ -46,7 +46,6 @@ public partial class WeaponManager : Node
 
     [Export] private PackedScene _grenadeThrowScene;
     [Export] private int _startingGrenadeCount = 8;
-    private int _grenadeCount;
     private bool _isThrowingGrenade = false;
     private int _previousWeaponIndex = -1;
 
@@ -59,7 +58,7 @@ public partial class WeaponManager : Node
         _hitResolver = GetTree().CurrentScene.GetNodeOrNull<HitResolver>("HitResolver");
         _playerController.Inventory.ItemAdded += OnPlayerInventoryItemAdded;
         _playerController.Inventory.ItemRemoved += OnPlayerInventoryItemRemoved;
-        _grenadeCount = _startingGrenadeCount;
+        _playerController.Inventory.AddItem(ItemType.Grenades, _startingGrenadeCount);
 
         if (_weaponScenes != null && _weaponScenes.Length > 0)
         {
@@ -97,6 +96,12 @@ public partial class WeaponManager : Node
 
     private void OnPlayerInventoryItemAdded(ItemType itemType, int amount)
     {
+        if (itemType == ItemType.Grenades)
+        {
+            RefreshHudGrenades();
+            return;
+        }
+
         if (_weaponSlots == null) return;
         switch (itemType.GetGroup())
         {
@@ -117,9 +122,21 @@ public partial class WeaponManager : Node
 
     private void OnPlayerInventoryItemRemoved(ItemType itemType, int amount)
     {
+        if (itemType == ItemType.Grenades)
+        {
+            RefreshHudGrenades();
+            return;
+        }
+
         if (_weaponSlots == null) return;
         if (_weaponSlots[_currentWeaponIndex].AmmoType == itemType)
             RefreshHudAmmo();
+    }
+
+    private void RefreshHudGrenades()
+    {
+        var count = _playerController.Inventory.GetAmount(ItemType.Grenades);
+        EmitSignal(SignalName.GrenadesChanged, count);
     }
 
     private void Equip(int weaponIndex)
@@ -203,14 +220,14 @@ public partial class WeaponManager : Node
         if (_isSwapping || _isThrowingGrenade)
             return;
 
-        if (_grenadeCount <= 0)
+        if (_playerController.Inventory.GetAmount(ItemType.Grenades) <= 0)
             return;
 
         if (_grenadeThrowScene == null)
             return;
 
         _isThrowingGrenade = true;
-        _grenadeCount--;
+        _playerController.Inventory.ConsumeItem(ItemType.Grenades, 1);
         _previousWeaponIndex = _currentWeaponIndex;
 
         if (_current != null)

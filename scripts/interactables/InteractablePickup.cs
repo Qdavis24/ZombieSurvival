@@ -6,8 +6,11 @@ public partial class InteractablePickup : Node3D
     [Export] private InteractNotifier _interactNotifier;
     [Export] private ItemType _item;
     [Export] private MeshInstance3D _pickupMesh;
+    [Export] private Sprite3D _glow;
+    [Export] private AudioStream _pickupSound;
     private Material _pickupMaterial;
     private Material _highlightMaterial;
+  
 
     public override void _Ready()
     {
@@ -22,12 +25,14 @@ public partial class InteractablePickup : Node3D
     private void OnPlayerEnteredRange()
     {
         _pickupMaterial.NextPass = _highlightMaterial;
+        _glow.Visible = true;
         EventBus.Instance.EmitSignal(EventBus.SignalName.PlayerEnteredInteractableRange, _interactNotifier);
     }
 
     private void OnPlayerExitedRange()
     {
         _pickupMaterial.NextPass = null;
+        _glow.Visible = false;
         EventBus.Instance.EmitSignal(EventBus.SignalName.PlayerExitedInteractableRange, _interactNotifier);
     }
 
@@ -35,6 +40,7 @@ public partial class InteractablePickup : Node3D
     {
         if (player is not IInventoryOwner inventoryOwner) return;
         inventoryOwner.Inventory.AddItem(_item, 1);
+        AudioManager.I.Play3D(_pickupSound, GlobalPosition);
         _interactNotifier.Disable();
         QueueFree();
     }

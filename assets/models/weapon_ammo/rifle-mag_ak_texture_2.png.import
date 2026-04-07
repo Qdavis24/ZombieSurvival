@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b20tnbw6dpl3r"
-path.s3tc="res://.godot/imported/ak_only_ak_texture.png-cd6601bf56221f9457b69321961265af.s3tc.ctex"
+uid="uid://b8u5ycldm5lve"
+path.s3tc="res://.godot/imported/rifle-mag_ak_texture_2.png-687ee3397103c1fa1654569296186a82.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "f2100a92ba11b3b0a4cb3bd5ac313464"
+}
 
 [deps]
 
-source_file="res://assets/models/weapon_only/ak_only_ak_texture.png"
-dest_files=["res://.godot/imported/ak_only_ak_texture.png-cd6601bf56221f9457b69321961265af.s3tc.ctex"]
+source_file="res://assets/models/weapon_ammo/rifle-mag_ak_texture_2.png"
+dest_files=["res://.godot/imported/rifle-mag_ak_texture_2.png-687ee3397103c1fa1654569296186a82.s3tc.ctex"]
 
 [params]
 

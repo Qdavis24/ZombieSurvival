@@ -19,6 +19,8 @@ public partial class BodyPart : PhysicalBone3D, IDamageable
     public delegate void TookDamageEventHandler(BodyPart bodyPart, Vector3 hitPosition, Vector3 dir, float force,
         float amount);
 
+    [Export] public AudioStream ShotHitSound;
+
     [Export] public Limb Type;
     [Export] private bool _shouldDie;
     [Export] public bool ShouldDismember;

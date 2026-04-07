@@ -1,18 +1,37 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using ZombieSurvival.scripts.inventory_system;
 
 public partial class PlayerHud : CanvasLayer
 {
+    private struct PickupNotification
+    {
+        public ItemType ItemType;
+        public int ItemAmount;
+    };
+
     [Export] private HealthIndicator _healthIndicator;
     [Export] private BloodSplatter _bloodSplatter;
     [Export] private Label _currentAmmoLabel;
     [Export] private Label _reserveAmmoLabel;
+    [Export] private Label _currentGrenadesLabel;
+    [Export] private Label _parasiticMaterialLabel;
     [Export] private PlayerPopup _interactPopup;
     [Export] private PlayerPopup _itemPopup;
 
-    private Queue<String> _itemNotifications = new();
+    private Dictionary<ItemGroup, Color> _itemGroupColorMap = new()
+    {
+        { ItemGroup.Ammo, Colors.DarkGoldenrod },
+        { ItemGroup.Currency, new Color(255, 255, 0) },
+        { ItemGroup.Weapon, Colors.Purple },
+        { ItemGroup.Key, Colors.Gold },
+        { ItemGroup.Consumable, Colors.Green }
+    };
+
+    private Queue<PickupNotification> _itemNotifications = new();
     private bool _notificationsBusy;
+
 
     public override void _Ready()
     {
@@ -27,6 +46,11 @@ public partial class PlayerHud : CanvasLayer
         _itemPopup.PopupFree += OnPopupFree;
     }
 
+    private void OnPopupDelayTimeout()
+    {
+        throw new NotImplementedException();
+    }
+
     public override void _ExitTree()
     {
         if (EventBus.Instance == null) return;
@@ -38,9 +62,14 @@ public partial class PlayerHud : CanvasLayer
     private void OnPopupFree()
     {
         _notificationsBusy = false;
-        if (_itemNotifications.TryDequeue(out string msg))
+        PickupNotification currNotification;
+        if (_itemNotifications.TryDequeue(out currNotification))
         {
-            ShowNotification(msg);
+            var itemType = currNotification.ItemType;
+            var amount = currNotification.ItemAmount;
+            while (_itemNotifications.TryDequeue(out currNotification) && currNotification.ItemType == itemType)
+                amount += currNotification.ItemAmount;
+            ShowPickup(itemType, amount);
         }
     }
 
@@ -70,17 +99,40 @@ public partial class PlayerHud : CanvasLayer
         _reserveAmmoLabel.Text = reserveAmmo.ToString();
     }
 
-    public async void ShowNotification(string message)
+    public void SetGrenades(int currentGrenades)
+    {
+        _currentGrenadesLabel.Text = currentGrenades.ToString();
+    }
+
+    public void SetParasiticMaterial(int amount)
+    {
+        _parasiticMaterialLabel.Text = amount.ToString();
+    }
+
+    public async void ShowPickup(ItemType itemType, int amount)
     {
         if (_notificationsBusy)
         {
-            _itemNotifications.Enqueue(message);
+            _itemNotifications.Enqueue(
+                new PickupNotification { ItemType = itemType, ItemAmount = amount });
         }
         else
         {
             _notificationsBusy = true;
-            await _itemPopup.ShowNotification(message);
+            var message = "";
+            var color = Colors.Red;
+            
+            if (amount > 0)
+            {
+                message = $"Picked up {amount} {itemType}";
+                color = _itemGroupColorMap[itemType.GetGroup()];
+            }
+            else
+            {
+                message = $"Consumed {amount} {itemType}";
+            }
+            
+            await _itemPopup.ShowNotification(message, color);
         }
-        
     }
 }
