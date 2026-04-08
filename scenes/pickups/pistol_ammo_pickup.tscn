@@ -1,0 +1,204 @@
+[gd_scene format=4 uid="uid://cf2sltrg4llvi"]
+
+[ext_resource type="Script" uid="uid://b8rkrc3jiwrgy" path="res://scripts/pickups/Pickup.cs" id="1_imldb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o8xqe"]
+size = Vector3(0.18804932, 0.049224854, 0.18507004)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_o8xqe"]
+radius = 0.2766276
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i3imq"]
+resource_name = "Material.003"
+cull_mode = 2
+albedo_color = Color(0.4359966, 0.4359966, 0.4359966, 1)
+roughness = 0.5
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_4k6pp"]
+resource_name = "pistol_improvedreload_Cube_004"
+_surfaces = [{
+"aabb": AABB(1.0724243, 1.4276251, -0.06344016, 0.122667074, 0.042161226, 0.14793229),
+"attribute_data": PackedByteArray("zlT1PnBN7j2c8ug+UPGRPVbO8z7oFpY9nPLoPtho5T0hJQc/cE3uPVEABD/o1Zo9ISUHP+jVmj1RAAQ/cE3uPYHbAD/YaOU9Stv2PugWlj2B2wA/UPGRPdBU9T5wTe49gdsAP/jglT1RAAQ/cE3uPYHbAD9wTe49UQAEP/jglT1RAAQ/4BpHPYHbAD/44JU9gdsAP+AaRz1RAAQ/+OCVPZzy6D5Q8ZE9PDzvPsCfTD08PO8+UPGRPZzy6D7An0w9"),
+"bone_aabbs": [AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(0, 0, 0, -1, -1, -1), AABB(1.0724243, 1.4276251, -0.06344016, 0.122667074, 0.042161226, 0.14793229)],
+"format": 34359745559,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_i3imq"),
+"name": "Material.003",
+"primitive": 3,
+"skin_data": PackedByteArray("KgAAAAAAAAD//wAAAAAAACoAAAAAAAAA//8AAAAAAAAqAAAAAAAAAP//AAAAAAAAKgAAAAAAAAD//wAAAAAAACoAAAAAAAAA//8AAAAAAAAqAAAAAAAAAP//AAAAAAAAKgAAAAAAAAD//wAAAAAAACoAAAAAAAAA//8AAAAAAAAqAAAAAAAAAP//AAAAAAAAKgAAAAAAAAD//wAAAAAAACoAAAAAAAAA//8AAAAAAAAqAAAAAAAAAP//AAAAAAAAKgAAAAAAAAD//wAAAAAAACoAAAAAAAAA//8AAAAAAAAqAAAAAAAAAP//AAAAAAAAKgAAAAAAAAD//wAAAAAAACoAAAAAAAAA//8AAAAAAAAqAAAAAAAAAP//AAAAAAAAKgAAAAAAAAD//wAAAAAAACoAAAAAAAAA//8AAAAAAAAqAAAAAAAAAP//AAAAAAAAKgAAAAAAAAD//wAAAAAAACoAAAAAAAAA//8AAAAAAAAqAAAAAAAAAP//AAAAAAAA"),
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("M0WJP2u8tj8WSJs9wfiYP2u8tj9Un0y9J8WPP2u8tj/q7IG9CQOUP2u8tj82Cq09CQOUP2u8tj82Cq09wfiYP/UhvD9Un0y9wfiYP2u8tj9Un0y9CQOUP/UhvD82Cq09CQOUP/UhvD82Cq09J8WPP/UhvD/q7IG9wfiYP/UhvD9Un0y9M0WJP/UhvD8WSJs9M0WJP/UhvD8WSJs9J8WPP2u8tj/q7IG9J8WPP/UhvD/q7IG9M0WJP2u8tj8WSJs9CQOUP2u8tj82Cq09M0WJP/UhvD8WSJs9CQOUP/UhvD82Cq09M0WJP2u8tj8WSJs9wfiYP/UhvD9Un0y9J8WPP2u8tj/q7IG9wfiYP2u8tj9Un0y9J8WPP/UhvD/q7IG9/38AAAAAUM7/fwAAAABQzv9/AAAAAFDO/38AAAAAUM5c4/9//38AgFzj/3//fwCAXOP/f/9/AIBc4/9//38AgP9///9c4/+//3///1zj/7//f///XOP/v/9///9c4/+/AAAzov9/AIAAADOi/38AgAAAM6L/fwCAAAAzov9/AIACdP9//38AgAJ0/3//fwCAAnT/f/9/AIACdP9//38AgP//xuv/fwCA///G6/9/AID//8br/38AgP//xuv/fwCA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="Skin" id="Skin_cu1kk"]
+resource_name = "Skin"
+bind_count = 47
+bind/0/name = &"Root"
+bind/0/bone = -1
+bind/0/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5002545, 0)
+bind/1/name = &"Bicep.l"
+bind/1/bone = -1
+bind/1/pose = Transform3D(0.010507502, 0.99994415, 0.0011384942, -0.9951284, 0.010345142, 0.09804295, 0.09802568, -0.0021631285, 0.9951816, -1.4990195, -0.22761843, 0.024139326)
+bind/2/name = &"Forearm.l"
+bind/2/bone = -1
+bind/2/pose = Transform3D(-0.016199779, 0.99986845, 0.0009389344, -0.99550843, -0.01604165, -0.09330373, -0.09327636, -0.0024462352, 0.9956373, -1.5148814, -0.5680928, -0.08994063)
+bind/3/name = &"Palm.l"
+bind/3/bone = -1
+bind/3/pose = Transform3D(-2.02272e-09, 1.0000001, 5.2037655e-07, -1, -1.2633971e-07, -1.4901229e-08, -7.45058e-09, -5.268958e-07, 1.0000001, -1.4988214, -1.003544, 6.593111e-07)
+bind/4/name = &"Pinky1.l"
+bind/4/bone = -1
+bind/4/pose = Transform3D(3.4109956e-07, 1.0000001, 9.372744e-07, -0.93717057, -1.261003e-07, 0.34887138, 0.34887135, -9.601249e-07, 0.9371707, -1.5055696, -1.1087673, 0.34887335)
+bind/5/name = &"Pinky2.l"
+bind/5/bone = -1
+bind/5/pose = Transform3D(-0.03631723, 0.9993081, 0.008033536, -0.99621344, -0.036837988, 0.07875114, 0.07899257, -0.005143091, 0.996862, -1.548238, -1.133625, 0.031800583)
+bind/6/name = &"Pinky3.l"
+bind/6/bone = -1
+bind/6/pose = Transform3D(0.00031097734, 0.9999845, 0.005562337, -0.9984407, -1.3335377e-07, 0.055821624, 0.05582075, -0.0055710245, 0.9984253, -1.5045518, -1.2177408, 0.00416376)
+bind/7/name = &"Ring1.l"
+bind/7/bone = -1
+bind/7/pose = Transform3D(7.739744e-08, 1.0000001, 7.550136e-07, -0.9950777, -1.2215446e-07, 0.09909732, 0.09909732, -7.531348e-07, 0.99507785, -1.5055698, -1.1576908, 0.09542706)
+bind/8/name = &"Ring2.l"
+bind/8/bone = -1
+bind/8/pose = Transform3D(0.007942174, 0.99996835, -0.00061214814, -0.99859893, 0.007963201, 0.05231452, 0.05231774, 0.00019579942, 0.9986306, -1.4959531, -1.2145408, 0.038771)
+bind/9/name = &"Ring3.l"
+bind/9/bone = -1
+bind/9/pose = Transform3D(-0.0058116685, 0.99998313, 0.00011135256, -0.99926126, -0.0058118273, 0.037986737, 0.03798675, 0.00010949429, 0.9992783, -1.5130732, -1.2330797, 0.021088473)
+bind/10/name = &"Middle1.l"
+bind/10/bone = -1
+bind/10/pose = Transform3D(-4.4596153e-08, 1.0000001, 7.576626e-07, -0.9985123, -1.2699464e-07, -0.054525312, -0.0545253, -7.7225513e-07, 0.99851245, -1.5055698, -1.1617607, -0.04458552)
+bind/11/name = &"Middle2.l"
+bind/11/bone = -1
+bind/11/pose = Transform3D(-4.2780547e-15, 1.0000001, 7.5896725e-07, -1, -1.24317e-07, -3.725385e-09, 3.7252907e-09, -7.654865e-07, 1.0000001, -1.5055698, -1.2096332, 0.021401947)
+bind/12/name = &"Middle3.l"
+bind/12/bone = -1
+bind/12/pose = Transform3D(-4.3233673e-23, 1.0000001, 7.5896725e-07, -1, -1.24317e-07, -7.450676e-09, 2.2204463e-16, -7.654865e-07, 1.0000001, -1.5055698, -1.2558206, 0.021401944)
+bind/13/name = &"Pointer1.l"
+bind/13/bone = -1
+bind/13/pose = Transform3D(0.0070161857, 0.9999741, 0.0016212504, -0.9908673, 0.007170474, -0.1346493, -0.13465741, -0.0006617428, 0.9908921, -1.4973104, -1.1665343, -0.10066303)
+bind/14/name = &"Pointer2.l"
+bind/14/bone = -1
+bind/14/pose = Transform3D(-0.006120817, 0.9999806, 0.00096990855, -0.9983256, -0.0060550165, -0.05752373, -0.05751675, -0.0013203907, 0.9983437, -1.5131254, -1.1924652, -0.0066429195)
+bind/15/name = &"Pointer3.l"
+bind/15/bone = -1
+bind/15/pose = Transform3D(-0.010573596, 0.9999438, 0.0006021453, -0.9947568, -0.01045761, -0.10173162, -0.1017196, -0.0016746763, 0.99481183, -1.5186166, -1.2245866, -0.061162572)
+bind/16/name = &"Thumb1.l"
+bind/16/bone = -1
+bind/16/pose = Transform3D(-0.29193926, 0.91484135, -0.2789925, 0.15717998, -0.24184334, -0.9575001, -0.94343317, -0.32338402, -0.07319126, -1.6732022, 0.46478173, -0.5213607)
+bind/17/name = &"Thumb2.l"
+bind/17/bone = -1
+bind/17/pose = Transform3D(-0.162122, 0.8667629, -0.4716341, -0.44600505, -0.49071506, -0.7485176, -0.880225, 0.08899994, 0.46613628, -1.4843872, 0.18314853, -1.0101336)
+bind/18/name = &"Thumb3.l"
+bind/18/bone = -1
+bind/18/pose = Transform3D(-0.1430415, 0.8959147, -0.42056626, -0.64045155, -0.40776166, -0.6508094, -0.75456035, 0.1762594, 0.6321167, -1.5005434, -0.16338235, -0.98418564)
+bind/19/name = &"Bicep.r"
+bind/19/bone = -1
+bind/19/pose = Transform3D(0.010507502, -0.99994415, -0.0011384942, 0.9951284, 0.010345142, 0.09804295, -0.09802568, -0.0021631285, 0.9951816, 1.4990195, -0.22761843, 0.024139326)
+bind/20/name = &"Forearm.r"
+bind/20/bone = -1
+bind/20/pose = Transform3D(-0.016199779, -0.99986845, -0.0009389344, 0.99550843, -0.01604165, -0.09330373, 0.09327636, -0.0024462352, 0.9956373, 1.5148814, -0.5680928, -0.08994063)
+bind/21/name = &"Palm.r"
+bind/21/bone = -1
+bind/21/pose = Transform3D(-2.02272e-09, -1.0000001, -5.2037655e-07, 1, -1.2633971e-07, -1.4901229e-08, 7.45058e-09, -5.268958e-07, 1.0000001, 1.4988214, -1.003544, 6.593111e-07)
+bind/22/name = &"Pinky1.r"
+bind/22/bone = -1
+bind/22/pose = Transform3D(3.4109956e-07, -1.0000001, -9.372744e-07, 0.93717057, -1.261003e-07, 0.34887138, -0.34887135, -9.601249e-07, 0.9371707, 1.5055696, -1.1087673, 0.34887335)
+bind/23/name = &"Pinky2.r"
+bind/23/bone = -1
+bind/23/pose = Transform3D(-0.03631723, -0.9993081, -0.008033536, 0.99621344, -0.036837988, 0.07875114, -0.07899257, -0.005143091, 0.996862, 1.548238, -1.133625, 0.031800583)
+bind/24/name = &"Pinky3.r"
+bind/24/bone = -1
+bind/24/pose = Transform3D(0.00031097734, -0.9999845, -0.005562337, 0.9984407, -1.3335377e-07, 0.055821624, -0.05582075, -0.0055710245, 0.9984253, 1.5045518, -1.2177408, 0.00416376)
+bind/25/name = &"Ring1.r"
+bind/25/bone = -1
+bind/25/pose = Transform3D(7.739744e-08, -1.0000001, -7.550136e-07, 0.9950777, -1.2215446e-07, 0.09909732, -0.09909732, -7.531348e-07, 0.99507785, 1.5055698, -1.1576908, 0.09542706)
+bind/26/name = &"Ring2.r"
+bind/26/bone = -1
+bind/26/pose = Transform3D(0.007942174, -0.99996835, 0.00061214814, 0.99859893, 0.007963201, 0.05231452, -0.05231774, 0.00019579942, 0.9986306, 1.4959531, -1.2145408, 0.038771)
+bind/27/name = &"Ring3.r"
+bind/27/bone = -1
+bind/27/pose = Transform3D(-0.0058116685, -0.99998313, -0.00011135256, 0.99926126, -0.0058118273, 0.037986737, -0.03798675, 0.00010949429, 0.9992783, 1.5130732, -1.2330797, 0.021088473)
+bind/28/name = &"Middle1.r"
+bind/28/bone = -1
+bind/28/pose = Transform3D(-4.4596153e-08, -1.0000001, -7.576626e-07, 0.9985123, -1.2699464e-07, -0.054525312, 0.0545253, -7.7225513e-07, 0.99851245, 1.5055698, -1.1617607, -0.04458552)
+bind/29/name = &"Middle2.r"
+bind/29/bone = -1
+bind/29/pose = Transform3D(-4.2780547e-15, -1.0000001, -7.5896725e-07, 1, -1.24317e-07, -3.725385e-09, -3.7252907e-09, -7.654865e-07, 1.0000001, 1.5055698, -1.2096332, 0.021401947)
+bind/30/name = &"Middle3.r"
+bind/30/bone = -1
+bind/30/pose = Transform3D(-4.3233673e-23, -1.0000001, -7.5896725e-07, 1, -1.24317e-07, -7.450676e-09, -2.2204463e-16, -7.654865e-07, 1.0000001, 1.5055698, -1.2558206, 0.021401944)
+bind/31/name = &"Pointer1.r"
+bind/31/bone = -1
+bind/31/pose = Transform3D(0.0070161857, -0.9999741, -0.0016212504, 0.9908673, 0.007170474, -0.1346493, 0.13465741, -0.0006617428, 0.9908921, 1.4973104, -1.1665343, -0.10066303)
+bind/32/name = &"Pointer2.r"
+bind/32/bone = -1
+bind/32/pose = Transform3D(-0.006120817, -0.9999806, -0.00096990855, 0.9983256, -0.0060550165, -0.05752373, 0.05751675, -0.0013203907, 0.9983437, 1.5131254, -1.1924652, -0.0066429195)
+bind/33/name = &"Pointer3.r"
+bind/33/bone = -1
+bind/33/pose = Transform3D(-0.010573596, -0.9999438, -0.0006021453, 0.9947568, -0.01045761, -0.10173162, 0.1017196, -0.0016746763, 0.99481183, 1.5186166, -1.2245866, -0.061162572)
+bind/34/name = &"Thumb1.r"
+bind/34/bone = -1
+bind/34/pose = Transform3D(-0.29193926, -0.91484135, 0.2789925, -0.15717998, -0.24184334, -0.9575001, 0.94343317, -0.32338402, -0.07319126, 1.6732022, 0.46478173, -0.5213607)
+bind/35/name = &"Thumb2.r"
+bind/35/bone = -1
+bind/35/pose = Transform3D(-0.162122, -0.8667629, 0.4716341, 0.44600505, -0.49071506, -0.7485176, 0.880225, 0.08899994, 0.46613628, 1.4843872, 0.18314853, -1.0101336)
+bind/36/name = &"Thumb3.r"
+bind/36/bone = -1
+bind/36/pose = Transform3D(-0.1430415, -0.8959147, 0.42056626, 0.64045155, -0.40776166, -0.6508094, 0.75456035, 0.1762594, 0.6321167, 1.5005434, -0.16338235, -0.98418564)
+bind/37/name = &"Grip"
+bind/37/bone = -1
+bind/37/pose = Transform3D(0.95489883, -1.1954185e-07, 0.2969317, 0.2969317, -1.5959214e-08, -0.95489895, -2.2648547e-09, 1.0000001, 1.9684268e-08, -1.0834708, -0.2689283, -1.4502763)
+bind/38/name = &"Slide"
+bind/38/bone = -1
+bind/38/pose = Transform3D(-0.015999498, -0.9998719, -9.742998e-07, 0.999872, -0.015999673, 3.4208333e-07, -3.7278087e-07, -9.643619e-07, 1.0000001, 1.4749156, -1.114758, 0.15522394)
+bind/39/name = &"Hammer"
+bind/39/bone = -1
+bind/39/pose = Transform3D(0.013539324, 0.99940425, 0.031746663, -0.9050968, 0.025743794, -0.42442545, -0.4249899, -0.022987315, 0.9049064, -1.4609402, 0.90847975, 0.6426727)
+bind/40/name = &"Barrell"
+bind/40/bone = -1
+bind/40/pose = Transform3D(-0.04684862, -0.9989021, 1.0966252e-07, 0.99890214, -0.04684874, -5.318884e-07, 4.821167e-07, 8.113438e-08, 1.0000002, 1.5161836, -1.1015661, 0.15350759)
+bind/41/name = &"MUZZLE"
+bind/41/bone = -1
+bind/41/pose = Transform3D(2.2351637e-08, -1.0000001, 7.549763e-08, 1.0000002, -1.0430935e-07, -1.6603048e-05, 1.654872e-05, 7.200648e-08, 1.0000002, 1.4491539, -1.513288, 0.14956233)
+bind/42/name = &"magazine"
+bind/42/bone = -1
+bind/42/pose = Transform3D(0.94400024, -8.881788e-15, 0.32994518, 0.32994518, -3.9434152e-08, -0.94400036, -1.08142906e-07, 1.0000001, -3.7797903e-08, -1.0800608, -0.30551448, -1.450276)
+bind/43/name = &"IK Arm Pole.l"
+bind/43/bone = -1
+bind/43/pose = Transform3D(0.011539636, 0.9999334, 0, 0, 0, 1, 0.9999334, -0.011539636, 0, -1.4983423, -0.30559283, 0.6158028)
+bind/44/name = &"IK Arm Target.l"
+bind/44/bone = -1
+bind/44/pose = Transform3D(0, 1, 2.8212997e-07, -1, 0, 0, 0, -2.8212997e-07, 1, -1.4988214, -1.0035443, 2.9257478e-07)
+bind/45/name = &"IK Arm Pole.r"
+bind/45/bone = -1
+bind/45/pose = Transform3D(0.011539636, -0.9999334, 0, 0, 0, 1, -0.9999334, -0.011539636, 0, 1.4983423, -0.30559283, 0.6158028)
+bind/46/name = &"IK Arm Target.r"
+bind/46/bone = -1
+bind/46/pose = Transform3D(0, -1, -2.8212997e-07, 1, 0, 0, 0, -2.8212997e-07, 1, 1.4988214, -1.0035443, 2.9257478e-07)
+
+[node name="PistolAmmoPickup" type="RigidBody3D" unique_id=8043454 node_paths=PackedStringArray("_despawnTimer", "_pickupRange")]
+script = ExtResource("1_imldb")
+_despawnTimer = NodePath("Timer")
+_pickupRange = NodePath("Area3D")
+_itemType = 3
+_itemAmount = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1003042136]
+transform = Transform3D(0.981222, 0, -0.19288161, 0, 1, 0, 0.19288161, 0, 0.981222, 0.027818859, 0.03968811, 0.00853226)
+shape = SubResource("BoxShape3D_o8xqe")
+
+[node name="Timer" type="Timer" parent="." unique_id=562180321]
+wait_time = 40.0
+
+[node name="Area3D" type="Area3D" parent="." unique_id=645408412]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=639641185]
+shape = SubResource("SphereShape3D_o8xqe")
+
+[node name="PMag" type="MeshInstance3D" parent="." unique_id=1925614203]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.110358, -1.4146284, 0)
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_4k6pp")
+skin = SubResource("Skin_cu1kk")
