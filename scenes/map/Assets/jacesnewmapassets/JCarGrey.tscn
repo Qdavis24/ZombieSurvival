@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://d604yeyxm5nh"]
+
+[ext_resource type="PackedScene" uid="uid://dvwdx5itjabjc" path="res://assets/models/map/jacesnewassets/CarGREY.glb" id="1_msyem"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jmdck"]
+size = Vector3(5.5706787, 1.979126, 2.2876892)
+
+[node name="JCarGrey" type="StaticBody3D" unique_id=1617812169]
+
+[node name="CarGREY" parent="." unique_id=503441571 instance=ExtResource("1_msyem")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1611435041]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.105651855, -0.21990967, 0.00047302246)
+shape = SubResource("BoxShape3D_jmdck")

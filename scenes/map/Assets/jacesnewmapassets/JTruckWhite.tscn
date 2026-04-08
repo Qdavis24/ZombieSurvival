@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://hjp6rpo0jlqn"]
+
+[ext_resource type="PackedScene" uid="uid://c1gy0b231lik3" path="res://assets/models/map/jacesnewassets/truck_whiteglb.glb" id="1_fjaod"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lgcn6"]
+size = Vector3(2.3948975, 1.5991211, 6.0296936)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1gpap"]
+size = Vector3(2.2559204, 1, 1.8562012)
+
+[node name="JTruckWhite" type="StaticBody3D" unique_id=1321479283]
+
+[node name="truck_whiteglb" parent="." unique_id=1071177442 instance=ExtResource("1_fjaod")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=445532088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03741455, -0.7194824, 0.60176086)
+shape = SubResource("BoxShape3D_lgcn6")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=162508742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009735107, 0.5225049, 1.4807539)
+shape = SubResource("BoxShape3D_1gpap")
