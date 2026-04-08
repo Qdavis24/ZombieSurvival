@@ -14,6 +14,7 @@ public partial class RpgChest : Node3D
     [Export] private MeshInstance3D _openChestMesh;
 
     [Export] private PackedScene _chestTop;
+    [Export] private PackedScene _rpgPickup;
     [Export] private Sprite3D _keyPadLight;
 
     public override void _Ready()
@@ -56,7 +57,9 @@ public partial class RpgChest : Node3D
         _keyPadLight.Modulate = color;
         _keyPadLight.Visible = true;
         var tween = CreateTween();
-        tween.TweenProperty(_keyPadLight, "modulate:a", 0f, 0.35f)
+        tween.TweenProperty(_keyPadLight, "modulate:a", 0f, 0.1f);
+        tween.TweenProperty(_keyPadLight, "modulate:a", 1f, 0.05f);
+        tween.TweenProperty(_keyPadLight, "modulate:a", 0f, 0.2f)
             .SetTrans(Tween.TransitionType.Expo)
             .SetEase(Tween.EaseType.In);
         tween.TweenCallback(Callable.From(() => _keyPadLight.Visible = false));
@@ -66,6 +69,20 @@ public partial class RpgChest : Node3D
     {
         _chestMesh.Visible = false;
         _openChestMesh.Visible = true;
+        SpawnRpg();
+    }
+
+    private void SpawnRpg()
+    {
+        var pickup = _rpgPickup.Instantiate<Node3D>();
+        Containers.Instance.VFX.AddChild(pickup);
+        var spawnPos = _chestMesh.GlobalPosition + Vector3.Up * 0.3f;
+        pickup.GlobalPosition = spawnPos;
+        pickup.GlobalRotation = _chestMesh.GlobalRotation;
+        var tween = CreateTween();
+        tween.TweenProperty(pickup, "global_position", spawnPos + Vector3.Up * 0.6f, 0.8f)
+            .SetTrans(Tween.TransitionType.Sine)
+            .SetEase(Tween.EaseType.Out);
     }
 
     private void SpawnTop()

@@ -2,11 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://dfgsw17w0ec00" path="res://assets/models/interactables/chest_crate-tex.png" id="1_dbrc4"]
 [ext_resource type="Script" uid="uid://b5040las34kvo" path="res://scripts/interactables/KeyedInteractables/RpgChest.cs" id="1_grdnn"]
+[ext_resource type="AudioStream" uid="uid://7gpt0ut5g4ep" path="res://assets/sound/pickups/card_swipe.wav" id="2_0au8o"]
 [ext_resource type="Texture2D" uid="uid://bkcxms4jq2b1v" path="res://assets/textures/rusty_metal.jpg" id="2_5ynpe"]
-[ext_resource type="AudioStream" uid="uid://chi7swdcpuuma" path="res://assets/sound/interactables/lock-shake.wav" id="2_k8iot"]
 [ext_resource type="PackedScene" uid="uid://eksdoewlbll1" path="res://scenes/interactables/interact_notifier.tscn" id="3_5ynpe"]
-[ext_resource type="AudioStream" uid="uid://bpqwhlmxgkrrs" path="res://assets/sound/interactables/lock-break-fence-open.wav" id="3_qlh2i"]
 [ext_resource type="PackedScene" uid="uid://bahy837y5sr8q" path="res://scenes/interactables/chest/chest_top.tscn" id="4_cuvww"]
+[ext_resource type="PackedScene" uid="uid://cchb5krluggnh" path="res://scenes/interactables/guns/rpg_pickup.tscn" id="4_k8iot"]
 [ext_resource type="Texture2D" uid="uid://df46khhhgpg3f" path="res://assets/models/interactables/chest-top-gone_crate-tex.png" id="5_akalh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcbal"]
@@ -246,11 +246,11 @@ collision_mask = 31
 script = ExtResource("1_grdnn")
 _interactNotifier = NodePath("InteractNotifier")
 _requiredItem = 2
-_lockedSound = ExtResource("2_k8iot")
-_successfulSound = ExtResource("3_qlh2i")
+_successfulSound = ExtResource("2_0au8o")
 _chestMesh = NodePath("chest")
 _openChestMesh = NodePath("chest-top-gone")
 _chestTop = ExtResource("4_cuvww")
+_rpgPickup = ExtResource("4_k8iot")
 _keyPadLight = NodePath("Sprite3D")
 
 [node name="chest-top-gone" type="MeshInstance3D" parent="." unique_id=1939182325]
