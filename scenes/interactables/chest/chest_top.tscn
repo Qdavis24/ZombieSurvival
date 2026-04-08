@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://bahy837y5sr8q"]
+
+[ext_resource type="PackedScene" uid="uid://m1xakik1uyik" path="res://assets/models/interactables/chest-top.glb" id="1_h32xt"]
+[ext_resource type="Script" uid="uid://dp76lkc8cuufy" path="res://scripts/interactables/doors/chain_link_fence/BrokenLock.cs" id="1_p8l6o"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h32xt"]
+size = Vector3(0.9838867, 0.42518616, 2.3583832)
+
+[sub_resource type="Curve" id="Curve_lbbiq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_cr4jh"]
+curve = SubResource("Curve_lbbiq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mg48t"]
+emission_shape_scale = Vector3(0.2, 0.1, 0.2)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, 1, 0)
+spread = 78.167
+flatness = 0.432
+initial_velocity_min = 0.5
+initial_velocity_max = 1.0
+gravity = Vector3(0, 1, 0)
+alpha_curve = SubResource("CurveTexture_cr4jh")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p16vo"]
+transparency = 1
+blend_mode = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.7409735, 0.861072, 0.8908084, 1)
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_5okpa"]
+material = SubResource("StandardMaterial3D_p16vo")
+size = Vector2(0.1, 0.1)
+
+[node name="ChestTop" type="RigidBody3D" unique_id=2032458820 node_paths=PackedStringArray("_freeTimer", "_effect")]
+collision_layer = 31
+collision_mask = 31
+script = ExtResource("1_p8l6o")
+_freeTimer = NodePath("Timer")
+_effect = NodePath("GPUParticles3D")
+
+[node name="chest-top" parent="." unique_id=1370732813 instance=ExtResource("1_h32xt")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=648301592]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008056641, 0.6505966, -0.009361267)
+shape = SubResource("BoxShape3D_h32xt")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1431294961]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.069308415, 0)
+emitting = false
+amount = 200
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_mg48t")
+draw_pass_1 = SubResource("QuadMesh_5okpa")
+
+[node name="Timer" type="Timer" parent="." unique_id=1538981419]
+wait_time = 10.0
