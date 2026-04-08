@@ -131,6 +131,20 @@ light_color = Color(0.94722074, 1, 0.7195193, 1)
 light_bake_mode = 1
 omni_range = 0.762
 
+[node name="OmniLight3D" type="OmniLight3D" parent="Lights" unique_id=1811673285]
+transform = Transform3D(1, 6.0535967e-09, -1.1175871e-08, -7.1013346e-09, 1.0000001, 7.450581e-09, 0, 0, 1.0000002, 0.091016956, 9.262839, 2.425395)
+light_color = Color(0.95829743, 0.9216825, 0, 1)
+light_energy = 0.6
+light_volumetric_fog_energy = 0.0
+omni_range = 15.912
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Lights" unique_id=1906847374]
+transform = Transform3D(1, 9.778887e-09, -1.1175871e-08, -1.0826625e-08, 1.0000001, 7.450581e-09, 0, 0, 1.0000002, -17.639631, 9.542441, -4.3233857)
+light_color = Color(0.95829743, 0.9216825, 0, 1)
+light_energy = 0.6
+light_volumetric_fog_energy = 0.0
+omni_range = 15.912
+
 [node name="Interactables" type="Node3D" parent="." unique_id=1684070018]
 transform = Transform3D(1, -1.1641532e-09, 3.7252903e-09, 2.3283064e-09, 0.99999994, 0, 0, 0, 0.9999999, 0, 0, 0)
 
