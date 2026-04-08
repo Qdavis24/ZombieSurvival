@@ -1,5 +1,6 @@
 using Godot;
 using ZombieSurvival.scripts.inventory_system;
+using ZombieSurvival.scripts.shared;
 
 public partial class ChainLinkFence : Node3D
 {
@@ -11,6 +12,7 @@ public partial class ChainLinkFence : Node3D
     [Export] private AudioStream _lockBreakSound;
     [Export] private MeshInstance3D _lockMesh;
     [Export] private PackedScene _brokenLock;
+    [Export] private MapArea _mapAreaDoorUnlocks;
 
     public override void _Ready()
     {
@@ -34,6 +36,7 @@ public partial class ChainLinkFence : Node3D
         if (player is not IInventoryOwner inventoryOwner) return;
         if (inventoryOwner.Inventory.ConsumeItem(_requiredItem, 1))
         {
+            EventBus.Instance.EmitSignal(EventBus.SignalName.MapAreaUnlocked, (int)_mapAreaDoorUnlocks);
             OpenGate();
             _interactNotifier.Disable();
             _invisibleWall.QueueFree();

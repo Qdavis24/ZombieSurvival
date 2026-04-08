@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://fvmrnn61a00s"]
 
-[ext_resource type="Script" uid="uid://c44r8ukitq0jd" path="res://scripts/interactables/KeyedInteractables/ChainLinkFence.cs" id="1_jqngw"]
+[ext_resource type="Script" uid="uid://c44r8ukitq0jd" path="res://scripts/interactables/doors/chain_link_fence/ChainLinkFence.cs" id="1_jqngw"]
 [ext_resource type="Texture2D" uid="uid://c5vgnlqy1t0ok" path="res://assets/textures/chain_link_tex.png" id="2_8goxo"]
 [ext_resource type="AudioStream" uid="uid://chi7swdcpuuma" path="res://assets/sound/interactables/lock-shake.wav" id="2_iwot6"]
 [ext_resource type="AudioStream" uid="uid://bpqwhlmxgkrrs" path="res://assets/sound/interactables/lock-break-fence-open.wav" id="3_23xn8"]
@@ -94,6 +94,7 @@ _lockedSound = ExtResource("2_iwot6")
 _lockBreakSound = ExtResource("3_23xn8")
 _lockMesh = NodePath("Torus")
 _brokenLock = ExtResource("3_aq8tv")
+_mapAreaDoorUnlocks = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1142658180]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08163452, 1.4429932, 0.19099426)

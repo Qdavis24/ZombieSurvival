@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using ZombieSurvival.scripts.shared;
 using ZombieSurvival.scripts.zombie_package;
 
 public partial class Spawner : Node3D
@@ -7,12 +8,12 @@ public partial class Spawner : Node3D
     [Signal]
     public delegate void ZombieDiedEventHandler();
 
+    [Export] public MapArea Area;
     [Export] private PackedScene _zombiePackedScene;
-
     [Export] private float _offset = 0f;
 
+    public bool Unlocked;
     private Node3D _zombTarget;
-
     private  ZombieStats _zombStats;
     
     public void SpawnZombie()

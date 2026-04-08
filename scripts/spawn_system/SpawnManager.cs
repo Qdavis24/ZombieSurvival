@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using ZombieSurvival.scripts.shared;
 using ZombieSurvival.scripts.zombie_package;
 
 
@@ -44,6 +45,7 @@ public partial class SpawnManager : Node
     public override void _Ready()
     {
         _spawnInterval.Timeout += TriggerSpawns;
+        EventBus.Instance.MapAreaUnlocked += RefreshSpawners;
 
         foreach (var child in GetChildren())
         {
@@ -51,6 +53,19 @@ public partial class SpawnManager : Node
             {
                 spawner.ZombieDied += OnZombieDied;
                 _spawners.Add(spawner);
+            }
+        }
+        
+        RefreshSpawners((int)MapArea.StartingZone);
+    }
+
+    private void RefreshSpawners(int mapArea)
+    {
+        foreach (Spawner spawner in _spawners)
+        {
+            if (spawner.Area == (MapArea)mapArea)
+            {
+                spawner.Unlocked =  true;
             }
         }
     }
@@ -110,13 +125,10 @@ public partial class SpawnManager : Node
 
     private void TriggerSpawns()
     {
-        //_spawners.Sort((a, b) => (a.GlobalPosition - _zombTarget.GlobalPosition).Length()
-//            .CompareTo((b.GlobalPosition - _zombTarget.GlobalPosition).Length())); // sort by closest to player MAYBE KEEP IDK
-
         for (int i = 0; i < _spawners.Count; i++)
         {
             var spawner = _spawners[i];
-
+            if (!spawner.Unlocked) continue;
             if (NumZombiesAlive < _stats.NumZombiesAliveLimit && _numZombiesSpawned < _stats.NumZombiesRoundLimit)
             {
                 spawner.SpawnZombie();
