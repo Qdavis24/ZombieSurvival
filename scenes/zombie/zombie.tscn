@@ -530,6 +530,7 @@ script = ExtResource("1_6mvc3")
 _dismemberableBody = NodePath("Armature/Skeleton3D")
 _navAgent = NodePath("NavigationAgent3D")
 _collisionShape = NodePath("CollisionShape3D")
+_attackRange = 1.2
 _groanSound = SubResource("AudioStreamRandomizer_cr1ja")
 _animationPlayer = NodePath("AnimationPlayer")
 

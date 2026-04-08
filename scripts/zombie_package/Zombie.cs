@@ -106,8 +106,8 @@ public partial class Zombie : CharacterBody3D
 
     private void FaceTarget(Vector3 targetPosition)
     {
-        var dir = (targetPosition - GlobalTransform.Origin).Normalized();
-        FaceDirection(dir);
+        var dir = targetPosition - GlobalTransform.Origin;
+        FaceDirection(new Vector3(dir.X, .1f, dir.Z).Normalized());
     }
 
     private void FaceDirection(Vector3 dir)
