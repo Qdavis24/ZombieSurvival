@@ -24,6 +24,9 @@
 [ext_resource type="PackedScene" uid="uid://dg2r2wjcfdgn6" path="res://scenes/store_system/rifle_store.tscn" id="12_y5y3l"]
 [ext_resource type="PackedScene" uid="uid://b2a2lq030p0mk" path="res://scenes/map/Assets/jacesnewmapassets/JApartmentBuilding.tscn" id="13_ocgqw"]
 [ext_resource type="PackedScene" uid="uid://t0phtwd422bv" path="res://scenes/store_system/grenade_store.tscn" id="13_vjgi4"]
+[ext_resource type="PackedScene" uid="uid://bkitammqjn6iq" path="res://scenes/store_system/pistol_store.tscn" id="19_a85ww"]
+[ext_resource type="PackedScene" uid="uid://dojlsl6bbl6rp" path="res://scenes/map/Assets/DeadGuy.tscn" id="22_jbgew"]
+[ext_resource type="PackedScene" uid="uid://dfko4x0qoffn4" path="res://scenes/store_system/rpg_store.tscn" id="22_jhsr3"]
 
 [node name="Game" type="Node3D" unique_id=1906095306 node_paths=PackedStringArray("Player", "RoundManager")]
 transform = Transform3D(0.9989043, -0.020793993, 0.041928995, 0.021435108, 0.9996593, -0.0148992995, -0.04160489, 0.015781721, 0.9990095, 0, 0, 0)
@@ -267,14 +270,25 @@ transform = Transform3D(0.06181349, 0.99804413, 0.009185998, 0.03656175, 0.00693
 [node name="ShotgunStore" parent="World/Interactables" unique_id=841175754 instance=ExtResource("9_ytxki")]
 transform = Transform3D(1, -2.6193447e-09, 2.9802322e-08, 1.1641532e-08, 0.99999964, 1.8626451e-09, 0, -5.5879354e-09, 0.9999993, -5.3855515, 0.7325126, -4.4648547)
 
+[node name="PistolStore" parent="World/Interactables" unique_id=1483834262 instance=ExtResource("19_a85ww")]
+transform = Transform3D(-2.6077032e-08, -1.9208528e-09, -0.9999982, 0, 0.99999845, -7.741619e-09, 0.9999986, -3.7252903e-09, -2.9802322e-08, 7.035602, 0.4592161, 2.1512482)
+
 [node name="RifleStore" parent="World/Interactables" unique_id=1982503143 instance=ExtResource("12_y5y3l")]
 transform = Transform3D(1, -2.386514e-09, 4.4703484e-08, 1.7229468e-08, 0.99999946, 1.8626451e-09, 0, -7.450581e-09, 0.9999989, 4.0603547, 0.750381, -18.424837)
 
 [node name="GrenadeStore" parent="World/Interactables" unique_id=689710109 instance=ExtResource("13_vjgi4")]
 transform = Transform3D(0.04681232, 0.035317354, 0.99827904, 0.0055508465, 0.9993502, -0.03561555, -0.9988877, 0.007208526, 0.04658586, -23.39396, 0.61966515, -19.257618)
 
+[node name="RpgStore" parent="World/Interactables" unique_id=698688144 instance=ExtResource("22_jhsr3")]
+transform = Transform3D(0.7156927, -8.731149e-10, -0.6984149, 7.450581e-09, 0.9999996, -1.8626451e-09, 0.6984151, -1.8626451e-09, 0.7156924, -17.55855, 0.47191635, 6.402077)
+
 [node name="RiflePickup" parent="World/Interactables" unique_id=766928468 instance=ExtResource("12_r7sob")]
-transform = Transform3D(-0.013137559, 0.022975326, 0.99964875, 0.94328356, 0.3319522, 0.004767408, -0.33172643, 0.9430159, -0.026033256, 1.3209507, 1.2380981, -18.77913)
+transform = Transform3D(-0.013137565, 0.02297534, 0.99964863, 0.9432833, 0.33195215, 0.0047674137, -0.33172643, 0.94301575, -0.026033264, -0.28015828, 1.272454, -18.77749)
+
+[node name="Assets" type="Node3D" parent="World" unique_id=987520523]
+
+[node name="DeadGuy" parent="World/Assets" unique_id=537797684 instance=ExtResource("22_jbgew")]
+transform = Transform3D(0.06522016, 0.0077777468, -1.3984584, 0.04945135, 1.3990897, 0.01008753, 1.397605, -0.04986684, 0.064903036, 0.51209307, 0.48732573, -18.899658)
 
 [node name="PlayerController" parent="." unique_id=1073413131 instance=ExtResource("2_s0yep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6407409, 4.1583242)
