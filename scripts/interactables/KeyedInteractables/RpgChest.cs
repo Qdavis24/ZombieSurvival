@@ -44,24 +44,27 @@ public partial class RpgChest : Node3D
             _interactNotifier.Disable();
             AudioManager.I.Play3D(_successfulSound, GlobalPosition, -18f);
             SpawnTop();
-            FlickerScreen(Colors.Green);
             _idCard.Visible = true;
         }
         else
         {
             AudioManager.I.Play3D(_lockedSound, GlobalPosition, -8f);
-            FlickerScreen(Colors.Red);
+            var tween = CreateTween();
+            tween.TweenInterval(0.5f);
+            tween.TweenCallback(Callable.From(FlickerScreen));
         }
     }
 
-    private void FlickerScreen(Color color)
+    private void FlickerScreen()
     {
+        var color = Colors.Red;
+        var clear = new Color(color.R, color.G, color.B, 0f);
         _keyPadLight.Modulate = color;
         _keyPadLight.Visible = true;
         var tween = CreateTween();
-        tween.TweenProperty(_keyPadLight, "modulate:a", 0f, 0.1f);
-        tween.TweenProperty(_keyPadLight, "modulate:a", 1f, 0.05f);
-        tween.TweenProperty(_keyPadLight, "modulate:a", 0f, 0.2f)
+        tween.TweenProperty(_keyPadLight, "modulate", clear, 0.1f);
+        tween.TweenProperty(_keyPadLight, "modulate", color, 0.05f);
+        tween.TweenProperty(_keyPadLight, "modulate", clear, 0.25f)
             .SetTrans(Tween.TransitionType.Expo)
             .SetEase(Tween.EaseType.In);
         tween.TweenCallback(Callable.From(() => _keyPadLight.Visible = false));

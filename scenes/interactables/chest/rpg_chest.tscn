@@ -307,7 +307,7 @@ mesh = SubResource("ArrayMesh_8i2t0")
 skeleton = NodePath("")
 
 [node name="cord" type="MeshInstance3D" parent="." unique_id=794393002]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.62267625, 0, 0, 0.59527016)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.33605397, 0, 0, 1.1409835)
 mesh = SubResource("ArrayMesh_f0v5w")
 skeleton = NodePath("")
 
@@ -317,7 +317,7 @@ mesh = SubResource("ArrayMesh_4morw")
 skeleton = NodePath("")
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1245958205]
-transform = Transform3D(-3.2405666e-08, 0.67111266, -0.7413552, 2.9335263e-08, 0.7413553, 0.67111266, 0.9999999, 1.7813484e-15, -4.3711378e-08, -0.2837347, 0.6974664, 2.3150518)
+transform = Transform3D(-3.2405666e-08, 0.67111266, -0.7413552, 2.9335263e-08, 0.7413553, 0.67111266, 0.9999999, 1.7813484e-15, -4.3711378e-08, -0.2837347, 0.6974664, 1.7511344)
 visible = false
 double_sided = false
 no_depth_test = true

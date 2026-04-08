@@ -945,5 +945,6 @@ visible = false
 shape = SubResource("CapsuleShape3D_ocgsw")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1380560577]
+path_height_offset = 0.5
 
 [editable path="Armature/Skeleton3D/BoneAttachment3D/Attack"]
