@@ -211,7 +211,3 @@ shape = SubResource("BoxShape3D_rhg0q")
 
 [node name="Timer" type="Timer" parent="." unique_id=1844845772]
 one_shot = true
-
-[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1920334318]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25139523, 2.5925593, 0.2890011)
-light_color = Color(0.78012127, 0.616688, 0.9125271, 1)

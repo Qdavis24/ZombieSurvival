@@ -43,7 +43,7 @@ public partial class Inventory : Node
 
     public void AddItem(ItemType type, int amount)
     {
-        SeeInventory();
+        //SeeInventory();
         var idx = _items.FindIndex(x => x.Type == type);
         if (idx >= 0)
             _items[idx].Amount += amount;

@@ -14,6 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://osnvcnyafbyf" path="res://scenes/interactables/guns/rifle_pickup.tscn" id="12_r7sob"]
 [ext_resource type="PackedScene" uid="uid://dg2r2wjcfdgn6" path="res://scenes/store_system/rifle_store.tscn" id="12_y5y3l"]
 [ext_resource type="PackedScene" uid="uid://t0phtwd422bv" path="res://scenes/store_system/grenade_store.tscn" id="13_vjgi4"]
+[ext_resource type="Shader" uid="uid://dcv26lnhrqhrb" path="res://shaders/spawnersmoke.gdshader" id="15_sv1m6"]
+[ext_resource type="Texture2D" uid="uid://bo4os1ijypkv0" path="res://assets/textures/cloud.jpg" id="16_a8wo8"]
+[ext_resource type="Texture2D" uid="uid://dk1i7co07itj" path="res://assets/textures/smoke.jpg" id="17_attvq"]
 [ext_resource type="PackedScene" uid="uid://bkitammqjn6iq" path="res://scenes/store_system/pistol_store.tscn" id="19_a85ww"]
 [ext_resource type="PackedScene" uid="uid://dojlsl6bbl6rp" path="res://scenes/map/Assets/DeadGuy.tscn" id="22_jbgew"]
 [ext_resource type="PackedScene" uid="uid://dfko4x0qoffn4" path="res://scenes/store_system/rpg_store.tscn" id="22_jhsr3"]
@@ -32,6 +35,28 @@ ssao_enabled = true
 glow_enabled = true
 volumetric_fog_enabled = true
 volumetric_fog_emission = Color(0.08661275, 0.032505102, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bneo8"]
+render_priority = 0
+shader = ExtResource("15_sv1m6")
+shader_parameter/noise_texture_1 = ExtResource("16_a8wo8")
+shader_parameter/noise_texture_2 = ExtResource("17_attvq")
+shader_parameter/noise_blend = 0.5
+shader_parameter/noise_speed_1 = 0.4
+shader_parameter/noise_speed_2 = 0.25
+shader_parameter/noise_dir_1 = Vector2(1, -1)
+shader_parameter/noise_dir_2 = Vector2(1, 1)
+shader_parameter/noise_scale_1 = 0.9
+shader_parameter/noise_scale_2 = 0.9
+shader_parameter/base_color = Color(0.08627451, 0.039215688, 0.011764706, 1)
+shader_parameter/smoke_color = Color(0.22091964, 0.19009277, 0.18460211, 1)
+shader_parameter/noise_power = 2.5
+shader_parameter/noise_darkness = 1.0
+shader_parameter/alpha_strength = 0.618000029355
+
+[sub_resource type="BoxMesh" id="BoxMesh_ocgqw"]
+material = SubResource("ShaderMaterial_bneo8")
+size = Vector3(22, 5, 1)
 
 [node name="Game" type="Node3D" unique_id=1906095306 node_paths=PackedStringArray("Player", "RoundManager")]
 transform = Transform3D(0.9989043, -0.020793993, 0.041928995, 0.021435108, 0.9996593, -0.0148992995, -0.04160489, 0.015781721, 0.9990095, 0, 0, 0)
@@ -144,11 +169,21 @@ transform = Transform3D(-0.013137562, 0.022975333, 0.99964875, 0.94328344, 0.331
 [node name="DeadGuy" parent="Assets" unique_id=537797684 instance=ExtResource("22_jbgew")]
 transform = Transform3D(0.06522016, 0.0077777468, -1.3984584, 0.049451344, 1.3990896, 0.01008753, 1.3976047, -0.04986684, 0.064903036, 0.51209295, 0.4873257, -18.899656)
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Assets" unique_id=696619825]
+transform = Transform3D(1, -1.0244548e-08, 3.7252903e-09, 6.0535967e-09, 0.9583218, 0.28568795, 0, -0.2856881, 0.95832145, -16.253132, 2.06676, -29.392775)
+mesh = SubResource("BoxMesh_ocgqw")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Assets" unique_id=1768096552]
+transform = Transform3D(-1, 2.6077032e-08, -9.313226e-08, -4.656613e-09, 0.95832145, 0.28568795, 8.568168e-08, 0.28568804, -0.9583213, -18.331274, 2.8550472, 20.507267)
+mesh = SubResource("BoxMesh_ocgqw")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Assets" unique_id=1668491329]
+transform = Transform3D(-4.8428774e-08, -0.28568807, 0.95832133, 0, 0.9583215, 0.285688, -0.9999999, 1.6763806e-08, -4.4703484e-08, -34.476456, 2.6913104, -13.706142)
+mesh = SubResource("BoxMesh_ocgqw")
+
 [node name="PlayerController" parent="." unique_id=1073413131 instance=ExtResource("2_s0yep")]
 transform = Transform3D(1, -1.1641532e-09, 3.7252903e-09, 2.3283064e-09, 0.99999994, 0, 0, 0, 0.9999999, 2.9802322e-08, 0.6407409, 4.158324)
 _deathSound = null
-_maxHealth = 200.0
-_health = 200.0
 
 [node name="RoundManager" parent="." unique_id=397079504 node_paths=PackedStringArray("_player") instance=ExtResource("5_0wksg")]
 _roundStartGapTime = 2.0
@@ -167,25 +202,25 @@ _startingNumZombiesRoundLimit = 10
 _startingZombieSpawnTimerInterval = 5.0
 
 [node name="BusSpawner" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="1" unique_id=942961392 instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2253485, 0.16430509, 6.120675)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.802733, 0.16430509, 7.2929525)
 
 [node name="RubbleSpawner" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="2" unique_id=2123943745 instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.855404, 0.40553248, -4.7351832)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.483181, 0.40553248, -4.7351832)
 
 [node name="DeadEndSpawner" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="3" unique_id=1877162586 instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7692184, 1.3162324, -15.98585)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.078809, 0.70167637, -17.211376)
 Area = 1
 
 [node name="AlleyWaySpawner" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="4" unique_id=799035997 instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.570488, 0.61693823, 4.982323)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.570488, -0.2722417, 4.982323)
 Area = 1
 
 [node name="CarSpawner" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="5" unique_id=1848091989 instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.000368, 1.516797, -21.552612)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.075966, 0.43281353, -21.997902)
 Area = 1
 
 [node name="TankSpawner" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="6" unique_id=518461937 instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5315895, 0.52650046, 11.435036)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.411651, 0.52650046, 12.132733)
 Area = 1
 
 [editable path="Interactables/ChainLinkFence"]

@@ -1,0 +1,28 @@
+[gd_resource type="SphereMesh" format=3 uid="uid://blgd6wk1ub8ik"]
+
+[ext_resource type="Shader" uid="uid://dcv26lnhrqhrb" path="res://shaders/spawnersmoke.gdshader" id="1_j5o0m"]
+[ext_resource type="Texture2D" uid="uid://dk1i7co07itj" path="res://assets/textures/smoke.jpg" id="2_qmpvp"]
+[ext_resource type="Texture2D" uid="uid://bo4os1ijypkv0" path="res://assets/textures/cloud.jpg" id="3_8wuks"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j5o0m"]
+render_priority = 0
+shader = ExtResource("1_j5o0m")
+shader_parameter/noise_texture_1 = ExtResource("2_qmpvp")
+shader_parameter/noise_texture_2 = ExtResource("3_8wuks")
+shader_parameter/noise_blend = 1.0
+shader_parameter/noise_speed_1 = 2.0
+shader_parameter/noise_speed_2 = 2.0
+shader_parameter/noise_dir_1 = Vector2(1, 1)
+shader_parameter/noise_dir_2 = Vector2(1, -1)
+shader_parameter/noise_scale_1 = 1.1
+shader_parameter/noise_scale_2 = 1.1
+shader_parameter/base_color = Color(0.056291595, 0.056291595, 0.05629161, 1)
+shader_parameter/smoke_color = Color(0.096204735, 0.09620475, 0.096204735, 1)
+shader_parameter/noise_power = 2.5
+shader_parameter/noise_darkness = 1.0
+shader_parameter/alpha_strength = 0.99
+
+[resource]
+material = SubResource("ShaderMaterial_j5o0m")
+radial_segments = 6
+rings = 6

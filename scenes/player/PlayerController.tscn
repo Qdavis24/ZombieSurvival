@@ -68,6 +68,8 @@ radius = 0.4
 height = 1.8
 
 [node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "Inventory")]
+collision_layer = 8193
+collision_mask = 8193
 script = ExtResource("1_etyb6")
 _healthRegenRate = 0.1
 _playerHud = NodePath("PlayerHud")
@@ -77,8 +79,6 @@ _jumpSound = SubResource("AudioStreamRandomizer_d8kh4")
 _hitSound = SubResource("AudioStreamRandomizer_qhhj6")
 _deathSound = ExtResource("17_mx0ws")
 Inventory = NodePath("Inventory")
-_maxHealth = 75.0
-_health = 75.0
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1270238325]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)

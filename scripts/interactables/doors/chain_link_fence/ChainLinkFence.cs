@@ -76,7 +76,6 @@ public partial class ChainLinkFence : Node3D
         _lockMesh.Visible = false;
 
         if (_brokenLock == null) return;
-        GD.Print("SPAWN");
         var instance = _brokenLock.Instantiate<RigidBody3D>();
         Containers.Instance.VFX.AddChild(instance);
         instance.GlobalPosition = _lockMesh.GlobalPosition;
