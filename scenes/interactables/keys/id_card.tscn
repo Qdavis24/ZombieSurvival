@@ -1,0 +1,80 @@
+[gd_scene format=4 uid="uid://cl4fusewf351r"]
+
+[ext_resource type="Script" uid="uid://dmjsjbo83np" path="res://scripts/interactables/InteractablePickup.cs" id="1_5q3g2"]
+[ext_resource type="AudioStream" uid="uid://06u77t235vy0" path="res://assets/sound/pickups/KeycardPickup.wav" id="2_w5dda"]
+[ext_resource type="Texture2D" uid="uid://pkvurlvc3ck8" path="res://assets/models/player/items/id_ID.png" id="4_5q3g2"]
+[ext_resource type="PackedScene" uid="uid://eksdoewlbll1" path="res://scenes/interactables/interact_notifier.tscn" id="5_ekgup"]
+
+[sub_resource type="Gradient" id="Gradient_mbfdl"]
+offsets = PackedFloat32Array(0, 0.6370723)
+colors = PackedColorArray(0.9882353, 1, 0, 0.043137256, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vbs7n"]
+gradient = SubResource("Gradient_mbfdl")
+fill = 1
+fill_from = Vector2(0.4783654, 0.5366086)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l6u5i"]
+resource_name = "Material"
+cull_mode = 2
+albedo_texture = ExtResource("4_5q3g2")
+roughness = 0.5
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_g5l36"]
+_surfaces = [{
+"aabb": AABB(-1, -0.05613178, -1.4207851, 1.7162796, 0.11226356, 2.8415701),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAwACAAEAAAAEAAEAAwAFAAIABQAAAAIABgAEAAAABQAGAAAABwABAAQABwADAAEABgAHAAQABQADAAcABQAHAAYA"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("/////wAAAAAAAP////8AAAAA//8AAAAAAAAAAP//AAD///////8AAAAAAAAAAAAA//8AAAAAAAD//wAA//8AAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_abvv0"]
+resource_name = "id_Cube"
+_surfaces = [{
+"aabb": AABB(-1, -0.05613178, -1.4207851, 1.7162796, 0.11226356, 2.8415701),
+"attribute_data": PackedByteArray("D9CDjfgH8QDwz8UAFwivjZswJp5aLpPAWi4mnpswk8AaLJOH2SmTwNkpk4caLJPAaQs8fxLg7fsSDa3+ad58fFouk4caLJPAGiyTh1ouk8DbMiaemzCTwJswJp7bMpPA"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_l6u5i"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/////wAAUNUAAP////9Q1QAA//8AAFDV////////UNX//wAA////vwAA//////+//////////78AAAAA////vwAAAAD//1TVAAD//wAAVNUAAP////9U1QAAAAAAAFTVAAAAAAAABtX//wAA//8G1f//AAAAAAbVAAAAAP//BtX//wAAAABU1f///////1TV/////wAAVNX//wAA//9U1QAAAAAAAP///////wAA//8AAP//AAD/////AAAAAP//V9WvKlfVrypX1a8qV9WvKv9//3//f/9//3//f/9//39UVaqqVFWqqlRVqqpUVaqqeir11Hoq9dR6KvXUeir11KqqVFWqqlRVqqpUVaqqVFX/P/+//z//v/8//7//P/+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_g5l36")
+
+[node name="IdCard" type="Node3D" unique_id=1165095353 node_paths=PackedStringArray("_interactNotifier", "_pickupMesh", "_glow")]
+script = ExtResource("1_5q3g2")
+_interactNotifier = NodePath("InteractNotifier")
+_item = 1
+_pickupMesh = NodePath("Cube")
+_glow = NodePath("Sprite3D")
+_pickupSound = ExtResource("2_w5dda")
+
+[node name="InteractNotifier" parent="." unique_id=517015701 instance=ExtResource("5_ekgup")]
+InteractPrompt = "press e to pickup id card"
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=2049645089]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0022203326, 0.09699881, -0.11570859)
+visible = false
+pixel_size = 0.05
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture = SubResource("GradientTexture2D_vbs7n")
+
+[node name="Cube" type="MeshInstance3D" parent="." unique_id=1014914151]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("ArrayMesh_abvv0")
+skeleton = NodePath("")
+
+[editable path="InteractNotifier"]
