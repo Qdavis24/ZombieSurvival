@@ -4,10 +4,12 @@
 [ext_resource type="Script" uid="uid://b5040las34kvo" path="res://scripts/interactables/KeyedInteractables/RpgChest.cs" id="1_grdnn"]
 [ext_resource type="AudioStream" uid="uid://7gpt0ut5g4ep" path="res://assets/sound/pickups/card_swipe.wav" id="2_0au8o"]
 [ext_resource type="Texture2D" uid="uid://bkcxms4jq2b1v" path="res://assets/textures/rusty_metal.jpg" id="2_5ynpe"]
+[ext_resource type="AudioStream" uid="uid://c6eg27h03uexu" path="res://assets/sound/pickups/card_swipe_fail.wav" id="2_qlh2i"]
 [ext_resource type="PackedScene" uid="uid://eksdoewlbll1" path="res://scenes/interactables/interact_notifier.tscn" id="3_5ynpe"]
 [ext_resource type="PackedScene" uid="uid://bahy837y5sr8q" path="res://scenes/interactables/chest/chest_top.tscn" id="4_cuvww"]
 [ext_resource type="PackedScene" uid="uid://cchb5krluggnh" path="res://scenes/interactables/guns/rpg_pickup.tscn" id="4_k8iot"]
 [ext_resource type="Texture2D" uid="uid://df46khhhgpg3f" path="res://assets/models/interactables/chest-top-gone_crate-tex.png" id="5_akalh"]
+[ext_resource type="Texture2D" uid="uid://pkvurlvc3ck8" path="res://assets/models/player/items/id_ID.png" id="10_cuvww"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcbal"]
 resource_name = "Material"
@@ -240,15 +242,55 @@ size = Vector3(0.51013184, 1.2603011, 0.2582569)
 [sub_resource type="BoxShape3D" id="BoxShape3D_qlh2i"]
 size = Vector3(1, 0.90582275, 2.4171143)
 
-[node name="RpgChest" type="StaticBody3D" unique_id=1753819895 node_paths=PackedStringArray("_interactNotifier", "_chestMesh", "_openChestMesh", "_keyPadLight")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l6u5i"]
+resource_name = "Material"
+cull_mode = 2
+albedo_texture = ExtResource("10_cuvww")
+roughness = 0.5
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_g5l36"]
+_surfaces = [{
+"aabb": AABB(-1, -0.05613178, -1.4207851, 1.7162796, 0.11226356, 2.8415701),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAwACAAEAAAAEAAEAAwAFAAIABQAAAAIABgAEAAAABQAGAAAABwABAAQABwADAAEABgAHAAQABQADAAcABQAHAAYA"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("/////wAAAAAAAP////8AAAAA//8AAAAAAAAAAP//AAD///////8AAAAAAAAAAAAA//8AAAAAAAD//wAA//8AAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_abvv0"]
+resource_name = "id_Cube"
+_surfaces = [{
+"aabb": AABB(-1, -0.05613178, -1.4207851, 1.7162796, 0.11226356, 2.8415701),
+"attribute_data": PackedByteArray("D9CDjfgH8QDwz8UAFwivjZswJp5aLpPAWi4mnpswk8AaLJOH2SmTwNkpk4caLJPAaQs8fxLg7fsSDa3+ad58fFouk4caLJPAGiyTh1ouk8DbMiaemzCTwJswJp7bMpPA"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_l6u5i"),
+"name": "Material",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/////wAAUNUAAP////9Q1QAA//8AAFDV////////UNX//wAA////vwAA//////+//////////78AAAAA////vwAAAAD//1TVAAD//wAAVNUAAP////9U1QAAAAAAAFTVAAAAAAAABtX//wAA//8G1f//AAAAAAbVAAAAAP//BtX//wAAAABU1f///////1TV/////wAAVNX//wAA//9U1QAAAAAAAP///////wAA//8AAP//AAD/////AAAAAP//V9WvKlfVrypX1a8qV9WvKv9//3//f/9//3//f/9//39UVaqqVFWqqlRVqqpUVaqqeir11Hoq9dR6KvXUeir11KqqVFWqqlRVqqpUVaqqVFX/P/+//z//v/8//7//P/+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_g5l36")
+
+[node name="RpgChest" type="StaticBody3D" unique_id=1753819895 node_paths=PackedStringArray("_interactNotifier", "_chestMesh", "_openChestMesh", "_idCard", "_keyPadLight")]
 collision_layer = 31
 collision_mask = 31
 script = ExtResource("1_grdnn")
 _interactNotifier = NodePath("InteractNotifier")
-_requiredItem = 2
+_requiredItem = 1
+_lockedSound = ExtResource("2_qlh2i")
 _successfulSound = ExtResource("2_0au8o")
 _chestMesh = NodePath("chest")
 _openChestMesh = NodePath("chest-top-gone")
+_idCard = NodePath("id")
 _chestTop = ExtResource("4_cuvww")
 _rpgPickup = ExtResource("4_k8iot")
 _keyPadLight = NodePath("Sprite3D")
@@ -265,12 +307,12 @@ mesh = SubResource("ArrayMesh_8i2t0")
 skeleton = NodePath("")
 
 [node name="cord" type="MeshInstance3D" parent="." unique_id=794393002]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.62267625, 0, 0, 1.0845101)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.62267625, 0, 0, 0.59527016)
 mesh = SubResource("ArrayMesh_f0v5w")
 skeleton = NodePath("")
 
 [node name="keypad" type="MeshInstance3D" parent="." unique_id=1556819717]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 1.2, 0, 0, 0)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 1.2, 0, 0, -0.53135884)
 mesh = SubResource("ArrayMesh_4morw")
 skeleton = NodePath("")
 
@@ -286,9 +328,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.057893872, 0.5054515, 2.28
 InteractPrompt = "Press e to open chest"
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1863048570]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.124938965, 0.17479688, 2.3034282)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.124938965, 0.17479688, 1.7720693)
 shape = SubResource("BoxShape3D_k8iot")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1532117080]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047088623, 0.00970459)
 shape = SubResource("BoxShape3D_qlh2i")
+
+[node name="id" type="MeshInstance3D" parent="." unique_id=499045899]
+transform = Transform3D(-2.6604845e-09, -0.060864795, -2.6604845e-09, 0, -2.6604847e-09, 0.06086479, -0.06086479, 2.6604847e-09, 1.1629347e-16, -0.2848366, 0.75113285, 1.7597016)
+visible = false
+mesh = SubResource("ArrayMesh_abvv0")
+skeleton = NodePath("")

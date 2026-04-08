@@ -12,6 +12,7 @@ public partial class RpgChest : Node3D
     
     [Export] private MeshInstance3D _chestMesh;
     [Export] private MeshInstance3D _openChestMesh;
+    [Export] private MeshInstance3D _idCard;
 
     [Export] private PackedScene _chestTop;
     [Export] private PackedScene _rpgPickup;
@@ -44,6 +45,7 @@ public partial class RpgChest : Node3D
             AudioManager.I.Play3D(_successfulSound, GlobalPosition, -18f);
             SpawnTop();
             FlickerScreen(Colors.Green);
+            _idCard.Visible = true;
         }
         else
         {
@@ -90,6 +92,6 @@ public partial class RpgChest : Node3D
         var top = _chestTop.Instantiate<RigidBody3D>();
         Containers.Instance.VFX.AddChild(top);
         top.GlobalTransform = _chestMesh.GlobalTransform;
-        top.ApplyCentralImpulse(new Vector3(0, 2.5f, 0.5f) * 2f);
+        top.ApplyImpulse(new Vector3(0, 2.5f, 0.5f) * 5f);
     }
 }

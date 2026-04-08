@@ -40,8 +40,8 @@ material = SubResource("StandardMaterial3D_p16vo")
 size = Vector2(0.1, 0.1)
 
 [node name="ChestTop" type="RigidBody3D" unique_id=2032458820 node_paths=PackedStringArray("_freeTimer", "_effect")]
-collision_layer = 31
-collision_mask = 31
+collision_layer = 30
+collision_mask = 30
 script = ExtResource("1_p8l6o")
 _freeTimer = NodePath("Timer")
 _effect = NodePath("GPUParticles3D")

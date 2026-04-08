@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://bwmwf0q4mj2jt" path="res://assets/models/player/weapons/rpg.glb" id="1_wor8h"]
 [ext_resource type="PackedScene" uid="uid://dr8whnbpfr8ne" path="res://scenes/player/weapons/rpg/rpg_projectile.tscn" id="2_8ye5n"]
 [ext_resource type="PackedScene" uid="uid://erpp137vqg0w" path="res://scenes/player/weapons/pistol/pistol_muzzle_flash.tscn" id="3_8ye5n"]
-[ext_resource type="AudioStream" uid="uid://pwpjbi8v4w5k" path="res://assets/sound/guns/rpg/rpglaunch.wav" id="3_d7ivq"]
-[ext_resource type="AudioStream" uid="uid://dden0yr6755u3" path="res://assets/sound/guns/rpg/rpgreload.wav" id="4_3pw1x"]
+[ext_resource type="AudioStream" uid="uid://bapp8186ie45r" path="res://assets/sound/guns/rpg/rpglaunch.wav" id="3_d7ivq"]
+[ext_resource type="AudioStream" uid="uid://s2jla7pudc6o" path="res://assets/sound/guns/rpg/rpgreload.wav" id="4_3pw1x"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3pw1x"]
 random_pitch = 1.2599211
@@ -23,6 +23,7 @@ _damage = 400.0
 _force = 100.0
 _magazineSize = 1
 AmmoType = 6
+WeaponType = 10
 _muzzleFlash = NodePath("Rig/HumanArms/Skeleton3D/BoneAttachment3D/PistolMuzzleFlash")
 _gunshotSound = SubResource("AudioStreamRandomizer_3pw1x")
 _reloadSound = ExtResource("4_3pw1x")

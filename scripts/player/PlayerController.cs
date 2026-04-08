@@ -167,6 +167,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 	public void TakeDamage(float damage, Vector3 hitGlobalPosition, Vector3 hitDir, float force)
 	{
+		if (damage > 100f) return;
 		Health -= damage;
 		AudioManager.I.Play3D(_hitSound, GlobalPosition, -15f);
 
