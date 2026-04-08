@@ -41,6 +41,7 @@ public partial class UiManager : Node
 	{
 		_startMenu.Visible = false;
 		_pauseMenu.Visible = false;
+		_hud.Init();
 		_hud.Visible = true;
 		AudioManager.I.StopMusic();
 		EmitSignal(SignalName.StartGame);

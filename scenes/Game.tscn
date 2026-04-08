@@ -164,21 +164,22 @@ transform = Transform3D(0.06181349, 0.99804413, 0.009185998, 0.03656175, 0.00693
 
 [node name="ShotgunStore" parent="Interactables" unique_id=841175754 instance=ExtResource("9_ytxki")]
 transform = Transform3D(1, -2.6193447e-09, 2.9802322e-08, 1.1641532e-08, 0.99999964, 1.8626451e-09, 0, -5.5879354e-09, 0.9999993, -5.3855515, 0.7325126, -4.4648547)
-_storeType = ""
+_storeBuyAmount = 10
 
 [node name="RifleStore" parent="Interactables" unique_id=1982503143 instance=ExtResource("12_y5y3l")]
 transform = Transform3D(1, -2.386514e-09, 4.4703484e-08, 1.7229468e-08, 0.99999946, 1.8626451e-09, 0, -7.450581e-09, 0.9999989, 4.0603547, 0.750381, -18.424837)
-_storeType = ""
+_storeBuyAmount = 15
 
 [node name="PistolStore" parent="Interactables" unique_id=1483834262 instance=ExtResource("19_a85ww")]
 transform = Transform3D(-2.6077032e-08, -1.9208528e-09, -0.9999982, 0, 0.99999845, -7.741619e-09, 0.9999986, -3.7252903e-09, -2.9802322e-08, 7.035602, 0.4592161, 2.1512482)
 
 [node name="GrenadeStore" parent="Interactables" unique_id=689710109 instance=ExtResource("13_vjgi4")]
 transform = Transform3D(0.04681232, 0.035317354, 0.99827904, 0.0055508465, 0.9993502, -0.03561555, -0.9988877, 0.007208526, 0.04658586, -23.39396, 0.61966515, -19.257618)
-_storeType = ""
+_storeBuyAmount = 20
 
 [node name="RpgStore" parent="Interactables" unique_id=698688144 instance=ExtResource("22_jhsr3")]
 transform = Transform3D(0.7156927, -8.731149e-10, -0.6984149, 7.450581e-09, 0.9999996, -1.8626451e-09, 0.6984151, -1.8626451e-09, 0.7156924, -17.55855, 0.47191635, 6.402077)
+_storeBuyAmount = 40
 
 [node name="RiflePickup" parent="Interactables" unique_id=766928468 instance=ExtResource("12_r7sob")]
 transform = Transform3D(-0.013137562, 0.022975333, 0.99964875, 0.94328344, 0.33195218, 0.004767408, -0.33172643, 0.9430159, -0.026033252, -0.4810357, 1.2756097, -18.85477)

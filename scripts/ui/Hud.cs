@@ -26,6 +26,11 @@ public partial class Hud : CanvasLayer
         _roundOriginalPosition = _round.Position;
     }
 
+    public void Init()
+    {
+        _round.Text = "";
+    }
+
     public async void SetRound(int round)
     {
         if (_roundTween != null && _roundTween.IsValid())
