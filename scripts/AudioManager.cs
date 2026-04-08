@@ -181,7 +181,6 @@ public partial class AudioManager : Node
 		if (_currentZombieHitSounds >= _maxZombieHitSounds)
 			return;
 
-		GD.Print("Played");
 		_currentZombieHitSounds++;
 
 		var p = new AudioStreamPlayer3D

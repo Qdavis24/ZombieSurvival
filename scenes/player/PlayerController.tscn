@@ -68,6 +68,8 @@ radius = 0.4
 height = 1.8
 
 [node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "Inventory")]
+collision_layer = 8193
+collision_mask = 8193
 script = ExtResource("1_etyb6")
 _healthRegenRate = 0.1
 _playerHud = NodePath("PlayerHud")
