@@ -32,10 +32,14 @@
 [ext_resource type="AudioStream" uid="uid://51631oglvva8" path="res://assets/sound/zombies/zombie10Q.wav" id="15_us7i4"]
 [ext_resource type="PackedScene" uid="uid://diw46jgb6wloj" path="res://scenes/pickups/parasitic_material.tscn" id="17_6p1aj"]
 [ext_resource type="AudioStream" uid="uid://b32tw6vl00cdg" path="res://assets/sound/shothits/shothit1.wav" id="20_gl5c4"]
+[ext_resource type="Script" uid="uid://5fhqjl34onpy" path="res://scripts/zombie_package/Skin.cs" id="20_r774q"]
 [ext_resource type="AudioStream" uid="uid://c8vym8otvlj2y" path="res://assets/sound/shothits/shothit2.wav" id="21_l7rcl"]
+[ext_resource type="Material" uid="uid://b0mtg3blqxihp" path="res://resources/zombie_material_2.tres" id="22_dixnm"]
 [ext_resource type="AudioStream" uid="uid://cg57xv3buer8o" path="res://assets/sound/shothits/headshot.wav" id="22_gl5c4"]
 [ext_resource type="AudioStream" uid="uid://bfe6wu6hmwku2" path="res://assets/sound/shothits/shothit3.wav" id="22_uq5pi"]
+[ext_resource type="Material" uid="uid://b1jsl4ley7jfo" path="res://resources/zombie_material_3.tres" id="23_7xuvb"]
 [ext_resource type="AudioStream" uid="uid://dx1ubmcem1etc" path="res://assets/sound/shothits/shothit4.wav" id="23_rrych"]
+[ext_resource type="Material" uid="uid://3wcxru0aj5h" path="res://resources/zombie_material_4.tres" id="24_qyorh"]
 [ext_resource type="AudioStream" uid="uid://bulnqqxb72xaw" path="res://assets/sound/shothits/shothit5.wav" id="24_r774q"]
 [ext_resource type="AudioStream" uid="uid://bqnlklp08n457" path="res://assets/sound/shothits/shothit6.wav" id="25_dixnm"]
 
@@ -530,7 +534,7 @@ script = ExtResource("1_6mvc3")
 _dismemberableBody = NodePath("Armature/Skeleton3D")
 _navAgent = NodePath("NavigationAgent3D")
 _collisionShape = NodePath("CollisionShape3D")
-_attackRange = 1.2
+_attackRange = 1.3
 _groanSound = SubResource("AudioStreamRandomizer_cr1ja")
 _animationPlayer = NodePath("AnimationPlayer")
 
@@ -646,6 +650,8 @@ _blood = ExtResource("4_bxjsn")
 mesh = SubResource("ArrayMesh_ax0sv")
 skin = SubResource("Skin_hyws2")
 surface_material_override/0 = ExtResource("1_nlave")
+script = ExtResource("20_r774q")
+_materials = [ExtResource("1_nlave"), ExtResource("22_dixnm"), ExtResource("24_qyorh"), ExtResource("23_7xuvb")]
 
 [node name="PhysicalBoneSimulator3D" type="PhysicalBoneSimulator3D" parent="Armature/Skeleton3D" unique_id=1691963881]
 

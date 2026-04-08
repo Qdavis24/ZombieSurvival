@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://b1jsl4ley7jfo"]
+
+[ext_resource type="Texture2D" uid="uid://cycfshsa84jgd" path="res://assets/textures/zombie_tex-v3.png" id="1_surk0"]
+
+[resource]
+albedo_texture = ExtResource("1_surk0")
