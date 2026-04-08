@@ -147,8 +147,6 @@ transform = Transform3D(0.06522016, 0.0077777468, -1.3984584, 0.049451344, 1.399
 [node name="PlayerController" parent="." unique_id=1073413131 instance=ExtResource("2_s0yep")]
 transform = Transform3D(1, -1.1641532e-09, 3.7252903e-09, 2.3283064e-09, 0.99999994, 0, 0, 0, 0.9999999, 2.9802322e-08, 0.6407409, 4.158324)
 _deathSound = null
-_maxHealth = 200.0
-_health = 200.0
 
 [node name="RoundManager" parent="." unique_id=397079504 node_paths=PackedStringArray("_player") instance=ExtResource("5_0wksg")]
 _roundStartGapTime = 2.0

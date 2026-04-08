@@ -77,8 +77,6 @@ _jumpSound = SubResource("AudioStreamRandomizer_d8kh4")
 _hitSound = SubResource("AudioStreamRandomizer_qhhj6")
 _deathSound = ExtResource("17_mx0ws")
 Inventory = NodePath("Inventory")
-_maxHealth = 75.0
-_health = 75.0
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1270238325]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
