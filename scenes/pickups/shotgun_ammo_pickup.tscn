@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://4d4f8uxcwn6i"]
 
 [ext_resource type="Script" uid="uid://b8rkrc3jiwrgy" path="res://scripts/pickups/Pickup.cs" id="1_a0evs"]
+[ext_resource type="AudioStream" uid="uid://06u77t235vy0" path="res://assets/sound/pickups/KeycardPickup.wav" id="2_baaxq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a0evs"]
 size = Vector3(0.30447388, 0.12072754, 0.17015076)
@@ -35,7 +36,8 @@ script = ExtResource("1_a0evs")
 _despawnTimer = NodePath("Timer")
 _pickupRange = NodePath("Area3D")
 _itemType = 5
-_itemAmount = 18
+_itemAmount = 1000
+_pickupSound = ExtResource("2_baaxq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=710930066]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0017852783, 0.044332534, 0.0020980835)

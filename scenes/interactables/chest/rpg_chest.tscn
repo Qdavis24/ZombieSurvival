@@ -326,6 +326,7 @@ texture = SubResource("GradientTexture2D_xnukl")
 [node name="InteractNotifier" parent="." unique_id=517015701 instance=ExtResource("3_5ynpe")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.057893872, 0.5054515, 2.28892)
 InteractPrompt = "Press e to open chest"
+Type = 1
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1863048570]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.124938965, 0.17479688, 1.7720693)

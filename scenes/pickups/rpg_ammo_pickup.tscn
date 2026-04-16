@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b8rkrc3jiwrgy" path="res://scripts/pickups/Pickup.cs" id="1_6cdv6"]
 [ext_resource type="Texture2D" uid="uid://cknwkqf4ks87e" path="res://assets/models/player/weapons/rocket_ak_texture_3.png" id="2_6cdv6"]
+[ext_resource type="AudioStream" uid="uid://06u77t235vy0" path="res://assets/sound/pickups/KeycardPickup.wav" id="2_ceud8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o8xqe"]
 size = Vector3(0.18804932, 0.049224854, 0.93281174)
@@ -54,7 +55,8 @@ script = ExtResource("1_6cdv6")
 _despawnTimer = NodePath("Timer")
 _pickupRange = NodePath("Area3D")
 _itemType = 6
-_itemAmount = 2
+_itemAmount = 1000
+_pickupSound = ExtResource("2_ceud8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1003042136]
 transform = Transform3D(0.9998117, 0, -0.019406874, 0, 1, 0, 0.019406874, 0, 0.9998117, 0.005331777, 0.03968811, 0.02087789)

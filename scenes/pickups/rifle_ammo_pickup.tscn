@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b8u5ycldm5lve" path="res://assets/models/weapon_ammo/rifle-mag_ak_texture_2.png" id="1_doss8"]
 [ext_resource type="Script" uid="uid://b8rkrc3jiwrgy" path="res://scripts/pickups/Pickup.cs" id="1_he3tk"]
+[ext_resource type="AudioStream" uid="uid://06u77t235vy0" path="res://assets/sound/pickups/KeycardPickup.wav" id="2_o8xqe"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b5y12"]
 resource_name = "Material.005"
@@ -52,7 +53,8 @@ script = ExtResource("1_he3tk")
 _despawnTimer = NodePath("Timer")
 _pickupRange = NodePath("Area3D")
 _itemType = 4
-_itemAmount = 35
+_itemAmount = 1000
+_pickupSound = ExtResource("2_o8xqe")
 
 [node name="mag_001" type="MeshInstance3D" parent="." unique_id=1101363888]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4507891, -1.4011527, -0.07687469)

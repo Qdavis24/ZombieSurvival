@@ -71,7 +71,7 @@ public partial class PlayerHud : CanvasLayer
 
     private void OnPlayerEnteredInteractableRange(InteractNotifier interactable)
     {
-        _interactPopup.ShowMessage(interactable.InteractPrompt);
+        _interactPopup.ShowMessage(interactable.InteractPrompt, interactable.TypeColor);
     }
 
     private void OnPlayerExitedInteractableRange(InteractNotifier interactable)

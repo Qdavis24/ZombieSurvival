@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b8rkrc3jiwrgy" path="res://scripts/pickups/Pickup.cs" id="1_240fw"]
 [ext_resource type="Texture2D" uid="uid://dyokikc8j7jjj" path="res://assets/models/player/weapons/grenade_projectile_ak_texture_3.png" id="1_hu36c"]
+[ext_resource type="AudioStream" uid="uid://06u77t235vy0" path="res://assets/sound/pickups/KeycardPickup.wav" id="2_0o1k2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fkvwx"]
 resource_name = "Material.006"
@@ -55,7 +56,8 @@ script = ExtResource("1_240fw")
 _despawnTimer = NodePath("Timer")
 _pickupRange = NodePath("Area3D")
 _itemType = 7
-_itemAmount = 1
+_itemAmount = 20
+_pickupSound = ExtResource("2_0o1k2")
 
 [node name="grenade" type="MeshInstance3D" parent="." unique_id=1093972392]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.007793188, -0.0045142174)

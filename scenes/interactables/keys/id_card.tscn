@@ -69,7 +69,9 @@ _glow = NodePath("Sprite3D")
 _pickupSound = ExtResource("2_w5dda")
 
 [node name="InteractNotifier" parent="." unique_id=517015701 instance=ExtResource("5_ekgup")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 InteractPrompt = "press e to pickup id card"
+Type = 2
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=2049645089]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0022203326, 0.09699881, -0.11570859)

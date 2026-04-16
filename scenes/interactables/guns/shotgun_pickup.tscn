@@ -104,6 +104,7 @@ skeleton = NodePath("")
 
 [node name="InteractNotifier" parent="." unique_id=517015701 instance=ExtResource("3_0qrkh")]
 InteractPrompt = "press e to pickup shotgun"
+Type = 3
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=371124743]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.055913925, 0.03412029, -0.11570859)

@@ -30,6 +30,7 @@ public partial class AmmoStore : Node3D
         _interactNotifier.PlayerExitedRange += OnPlayerExitedRange;
         _interactNotifier.Interacted += OnInteracted;
 
+        _interactNotifier.InteractPrompt = $"press e to spend {_storeBuyAmount} points for {_storeType}";
         InitShopText();
     }
 
@@ -94,6 +95,8 @@ public partial class AmmoStore : Node3D
 
         _totalAmmoUponBuying = ammoPerPickup * _storeSellAmount;
 
-        textMesh.Text = $"{_totalAmmoUponBuying} {_storeType}\nfor {_storeBuyAmount}\nParasitic Material";
+        // textMesh.Text = $"{_totalAmmoUponBuying} {_storeType}\nfor {_storeBuyAmount}\nParasitic Material";
+        textMesh.FontSize = 30;
+        textMesh.Text = $"{_storeType}";
     }
 }

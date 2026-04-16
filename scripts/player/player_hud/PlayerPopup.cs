@@ -10,8 +10,10 @@ public partial class PlayerPopup : MarginContainer
 
 	private Vector2 _basePosition = new Vector2(0, 200);
 
-	public void ShowMessage(string message)
+	public void ShowMessage(string message, Color? color = null)
 	{
+		var finalColor = color ?? Colors.White;
+		_text.AddThemeColorOverride("font_color", finalColor);
 		_text.Text = message;
 		Visible = true;
 	}
@@ -24,7 +26,7 @@ public partial class PlayerPopup : MarginContainer
 	public async Task ShowNotification(string message, Color color)
 	{
 		_text.AddThemeColorOverride("font_color", color);
-		ShowMessage(message);
+		ShowMessage(message, color);
 		await PlayFadeAnimation();
 		HideMessage();
 		EmitSignalPopupFree();

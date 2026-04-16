@@ -227,6 +227,7 @@ texture = SubResource("GradientTexture2D_jb628")
 
 [node name="InteractNotifier" parent="." unique_id=517015701 instance=ExtResource("3_1ow3t")]
 InteractPrompt = "press e to pickup rpg"
+Type = 3
 
 [node name="rpg_body" type="MeshInstance3D" parent="." unique_id=1076650071]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033099055, -1.5554366, 0.41377342)

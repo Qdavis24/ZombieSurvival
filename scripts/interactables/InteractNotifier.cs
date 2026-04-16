@@ -4,10 +4,27 @@ using ZombieSurvival.scripts.inventory_system;
 public partial class InteractNotifier : Node3D
 {
     [Export] private Area3D _interactionRange;
-    [Export] public string InteractPrompt { get; private set; }
-
+    [Export] public string InteractPrompt { get; set; }
+    
     private Node3D _playerInRange;
 
+    public enum NotifierType
+    {
+        Ammo,
+        Open,
+        Pickup,
+        Gun
+    }
+    [Export] public NotifierType Type = NotifierType.Ammo;
+    public Color TypeColor => Type switch
+    {
+        NotifierType.Ammo => Colors.White,
+        NotifierType.Open => Colors.LightBlue,
+        NotifierType.Gun => Colors.Green,
+        NotifierType.Pickup => Colors.Yellow,
+        _ => Colors.White
+    };
+    
     [Signal]
     public delegate void PlayerEnteredRangeEventHandler();
 

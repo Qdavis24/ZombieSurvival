@@ -120,6 +120,7 @@ skeleton = NodePath("../..")
 
 [node name="InteractNotifier" parent="." unique_id=517015701 instance=ExtResource("3_iwot6")]
 InteractPrompt = "press e to open gate"
+Type = 1
 
 [node name="CollisionShape3D" parent="InteractNotifier/Area3D" parent_id_path=PackedInt32Array(517015701, 1741340194) index="0" unique_id=466240065]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04309082, 1.0733643, 0.69337463)
