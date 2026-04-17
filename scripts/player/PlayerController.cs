@@ -104,11 +104,13 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	{
 		if (amount == 0)
 			return;
-		_playerHud.ShowPickup(type, amount);
 		if (type is ItemType.Money)
 		{
 			_playerHud.SetParasiticMaterial(Inventory.GetAmount(ItemType.Money));
+			_playerHud.ShowMoneyPickup(amount);
+			return;
 		}
+		_playerHud.ShowPickup(type, amount);
 	}
 
 	public override void _UnhandledInput(InputEvent @event)

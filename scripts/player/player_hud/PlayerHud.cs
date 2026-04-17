@@ -19,6 +19,8 @@ public partial class PlayerHud : CanvasLayer
     [Export] private Label _parasiticMaterialLabel;
     [Export] private PlayerPopup _interactPopup;
     [Export] private PlayerPopup _itemPopup;
+    [Export] private PackedScene _pointTextAnimation;
+    [Export] private int _maxVisibleMoneyPopups = 12;
 
     private Dictionary<ItemGroup, Color> _itemGroupColorMap = new()
     {
@@ -132,6 +134,26 @@ public partial class PlayerHud : CanvasLayer
         }
     }
 
+    public void ShowMoneyPickup(int amount)
+    {
+        if (_pointTextAnimation == null || _parasiticMaterialLabel == null)
+            return;
+
+        int visiblePopupCount = 0;
+        foreach (Node child in GetChildren())
+        {
+            if (child is PointTextAnimation)
+                visiblePopupCount++;
+        }
+
+        if (visiblePopupCount >= _maxVisibleMoneyPopups)
+            return;
+
+        var popup = _pointTextAnimation.Instantiate<PointTextAnimation>();
+        AddChild(popup);
+        popup.SetAmount(amount);
+    }
+    
     public void ReloadFailed()
     {
         if (_currentAmmoLabel == null || _reserveAmmoLabel == null)
