@@ -64,17 +64,16 @@ radius = 0.4
 height = 1.8
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6ev1f"]
-radius = 0.96972656
+radius = 0.40966797
 height = 1.9394531
 
-[node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "_camera", "Inventory")]
-collision_layer = 8193
-collision_mask = 8193
+[node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "Inventory")]
+collision_layer = 8195
+collision_mask = 8195
 script = ExtResource("1_etyb6")
 _healthRegenRate = 0.1
 _playerHud = NodePath("PlayerHud")
 _weaponManager = NodePath("WeaponManager")
-_camera = NodePath("Head/Camera3D")
 _footstepSound = SubResource("AudioStreamRandomizer_ajn8d")
 _jumpSound = SubResource("AudioStreamRandomizer_d8kh4")
 _hitSound = SubResource("AudioStreamRandomizer_qhhj6")

@@ -13,6 +13,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	[Export] private PlayerHud _playerHud;
 	[Export] private WeaponManager _weaponManager;
 	[Export] private float _mouseSensitivity = 0.0020f;
+	[Export] private float _aimSensitivityMultiplier = 0.5f;
 	[Export] private float _controllerSensitivityHorizontal = 5f;
 	[Export] private float _controllerSensitivityVertical = 2.5f;
 	[Export] private float _moveSpeed = 6.0f;
@@ -132,8 +133,9 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		var look = Input.GetVector("look_left", "look_right", "look_up", "look_down");
 		if (look.LengthSquared() > 0.01f)
 		{
-			_yaw -= look.X * _controllerSensitivityHorizontal * dt;
-			_pitch -= look.Y * _controllerSensitivityVertical * dt;
+			var multiplier = Input.IsActionPressed("aim") ? _aimSensitivityMultiplier : 1;
+			_yaw -= look.X * _controllerSensitivityHorizontal * multiplier * dt;
+			_pitch -= look.Y * _controllerSensitivityVertical * multiplier * dt;
 		}
 		
 		ApplyLookRotation();

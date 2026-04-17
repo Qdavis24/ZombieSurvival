@@ -5,10 +5,12 @@
 [ext_resource type="SphereMesh" uid="uid://blgd6wk1ub8ik" path="res://shaders/spawnersmoke.tres" id="3_bh4db"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oi6bh"]
+radius = 0.52685547
+height = 1.0874023
 
 [node name="Spawner" type="StaticBody3D" unique_id=2072746930 node_paths=PackedStringArray("_smokeMesh")]
 collision_layer = 8192
-collision_mask = 8193
+collision_mask = 8192
 script = ExtResource("1_ra5uc")
 _zombiePackedScene = ExtResource("2_oi6bh")
 _smokeMesh = NodePath("MeshInstance3D")
@@ -21,5 +23,5 @@ transform = Transform3D(5.5, 0, 0, 0, 5.5, 0, 0, 0, 5.5, 0, 0.9041786, 0)
 mesh = ExtResource("3_bh4db")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=588457046]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -1.0956419, 0)
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 1.1858523, 0)
 shape = SubResource("CapsuleShape3D_oi6bh")

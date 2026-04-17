@@ -456,6 +456,8 @@ shape = SubResource("BoxShape3D_rg52m")
 
 [node name="CarTypeBRed" type="StaticBody3D" parent="." unique_id=1967799238]
 transform = Transform3D(0.1694906, 0.032488924, 0.9849968, 0.0031194557, 0.9994341, -0.033501886, -0.9855276, 0.008750914, 0.16929328, -19.556118, 0.16012466, -16.482977)
+collision_layer = 31
+collision_mask = 31
 
 [node name="JaceCar" parent="CarTypeBRed" unique_id=1488752052 instance=ExtResource("11_ui5tt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1108513, 0)
@@ -466,6 +468,8 @@ shape = SubResource("BoxShape3D_btq6w")
 
 [node name="CarTypeBRed2" type="StaticBody3D" parent="." unique_id=1352842147]
 transform = Transform3D(-0.3832892, 0.043412015, 0.92260885, 0.015896987, 0.9990574, -0.040404934, -0.92349267, -0.000820077, -0.38361785, -22.351389, 0.08299005, -25.679726)
+collision_layer = 31
+collision_mask = 31
 
 [node name="JaceCar" parent="CarTypeBRed2" unique_id=1411363366 instance=ExtResource("11_ui5tt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1108513, 0)
@@ -476,6 +480,8 @@ shape = SubResource("BoxShape3D_btq6w")
 
 [node name="JTruckWhite" type="StaticBody3D" parent="." unique_id=1321479283]
 transform = Transform3D(-0.6702347, 0.009543129, 0.7420883, 0.012586053, 0.99992007, -0.0014913986, -0.7420428, 0.008340375, -0.6703009, -13.136191, 1.4049137, -24.591965)
+collision_layer = 31
+collision_mask = 31
 
 [node name="truck_whiteglb" parent="JTruckWhite" unique_id=1071177442 instance=ExtResource("12_mo16c")]
 
@@ -489,6 +495,8 @@ shape = SubResource("BoxShape3D_1gpap")
 
 [node name="Tank" type="StaticBody3D" parent="." unique_id=440556348]
 transform = Transform3D(-0.3778984, 4.0745363e-10, -0.3996166, 0, 0.55000013, 6.9849193e-09, 0.39961636, 0, -0.3778985, -13.798136, -0.16031483, 5.7724433)
+collision_layer = 31
+collision_mask = 31
 
 [node name="Tank3" parent="Tank" unique_id=822040994 instance=ExtResource("13_1ysy5")]
 
@@ -501,6 +509,8 @@ shape = SubResource("BoxShape3D_jnf6s")
 
 [node name="Bus" type="StaticBody3D" parent="." unique_id=1403012753]
 transform = Transform3D(-0.53566986, 0.0001606585, -0.12472936, 0.00010511954, 0.54999965, 0.00025697332, 0.124729365, 0.00022643898, -0.5356698, -11.597675, -0.24412534, -2.9491656)
+collision_layer = 31
+collision_mask = 31
 
 [node name="Bus" parent="Bus" unique_id=480129296 instance=ExtResource("15_62js3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.487769, 0, 0)
@@ -511,6 +521,8 @@ shape = SubResource("BoxShape3D_ti1xq")
 
 [node name="BrokenBuilding" type="StaticBody3D" parent="." unique_id=245747974]
 transform = Transform3D(-0.5, 0, 4.371139e-08, 0, 0.5, 0, -4.371139e-08, 0, -0.5, 13.406183, 0.005865872, 3.8100915)
+collision_layer = 31
+collision_mask = 31
 
 [node name="BrokenBuilding" parent="BrokenBuilding" unique_id=434570219 instance=ExtResource("16_2tjs3")]
 
@@ -526,12 +538,18 @@ shape = SubResource("BoxShape3D_na14q")
 
 [node name="Lightpole2" parent="." unique_id=78965588 instance=ExtResource("17_y111a")]
 transform = Transform3D(-1.3038516e-08, -1.1641532e-10, -0.29999995, -9.313226e-10, 0.3, 4.3655746e-10, 0.2999999, 0, -1.1175871e-08, 5.996634, -0.020022541, 7.2837596)
+collision_layer = 31
+collision_mask = 31
 
 [node name="Lightpole3" parent="." unique_id=979085218 instance=ExtResource("17_y111a")]
 transform = Transform3D(-0.2999999, -1.1641532e-10, -2.6077032e-08, 3.3905962e-09, 0.3, 3.259629e-09, 3.259629e-08, 0, -0.2999999, -22.694204, 0.0085271, 11.248275)
+collision_layer = 31
+collision_mask = 31
 
 [node name="Lightpole4" parent="." unique_id=1321789995 instance=ExtResource("17_y111a")]
 transform = Transform3D(0.2999999, 0, 0, 0, 0.3, 0, 0, 0, 0.2999999, -11.237862, -0.58612305, -12.167553)
+collision_layer = 31
+collision_mask = 31
 
 [node name="ShotgunStore" parent="." unique_id=841175754 instance=ExtResource("19_v34e3")]
 transform = Transform3D(1, -2.6193447e-09, 2.9802322e-08, 1.1641532e-08, 0.99999964, 1.8626451e-09, 0, -5.5879354e-09, 0.9999993, -5.3855515, 0.21538818, -4.4648547)
