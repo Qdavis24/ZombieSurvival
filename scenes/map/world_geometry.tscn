@@ -111,6 +111,7 @@ transform = Transform3D(1.0000001, 2.4447218e-09, 0, -3.434252e-09, 1, 1.8626451
 collision_layer = 4294967295
 
 [node name="Floorv3" parent="Floor" unique_id=1779851370 instance=ExtResource("1_na14q")]
+transform = Transform3D(1, 0, 0, -6.938894e-18, 1, 0, 0, 0, 1, -0.008999824, -4.7683716e-07, 0.008911133)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=810607723]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.872009, -0.4855051, -5.748169)
@@ -214,7 +215,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0022790432, 1.4897461, 0.0
 shape = SubResource("BoxShape3D_otuoo")
 
 [node name="RazorWire" type="StaticBody3D" parent="." unique_id=410178142]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -25.406492, 0.5266837, 13.05518)
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -31.79276, 0.5266837, 13.05518)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RazorWire" unique_id=815384380]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.749512, 8.158752, -0.0034179688)
