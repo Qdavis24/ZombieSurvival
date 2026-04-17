@@ -41,11 +41,11 @@ public class InventoryItem
 
     private Dictionary<ItemType, int> _itemsMaxAmount = new()
     {
-        { ItemType.PistolAmmo, 120 },
-        { ItemType.ShotgunAmmo, 120 },
-        { ItemType.RifleAmmo, 120 },
-        { ItemType.RpgAmmo, 20 },
-        { ItemType.Grenades, 20 },
+        { ItemType.PistolAmmo, 84 },
+        { ItemType.ShotgunAmmo, 100 },
+        { ItemType.RifleAmmo, 200 },
+        { ItemType.RpgAmmo, 10 },
+        { ItemType.Grenades, 10 },
     };
 
     public InventoryItem(ItemType type)
