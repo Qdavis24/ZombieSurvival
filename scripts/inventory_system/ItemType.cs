@@ -6,7 +6,7 @@ public enum ItemType
 {
     BoltCutters,
     MilitaryKeyCard,
-    ParasiticMaterial,
+    Money,
     PistolAmmo,
     RifleAmmo,
     ShotgunAmmo,
@@ -21,7 +21,7 @@ public static class ItemTypeExtensions
 {               
     public static ItemGroup GetGroup(this ItemType type) => type switch
     {
-        ItemType.ParasiticMaterial => ItemGroup.Currency,
+        ItemType.Money => ItemGroup.Currency,
         ItemType.PistolAmmo or ItemType.RifleAmmo                                                                                                                                                                                 
             or ItemType.ShotgunAmmo or ItemType.RpgAmmo => ItemGroup.Ammo,
         ItemType.MilitaryKeyCard or ItemType.BoltCutters => ItemGroup.Key,                                                                                                                                                                    

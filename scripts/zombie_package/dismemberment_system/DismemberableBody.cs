@@ -12,6 +12,9 @@ public partial class DismemberableBody : Skeleton3D
 
     [Signal]
     public delegate void SimulationFinishedEventHandler();
+    
+    [Signal]
+    public delegate void DismemberedEventHandler();
 
     [Export] private float _dismemberedBodyPartImpulseScale = .25f;
     [Export] private int _maxDismemberments = 4;
@@ -38,7 +41,6 @@ public partial class DismemberableBody : Skeleton3D
     [ExportCategory("Miscellaneous")] [Export]
     private float _parasiticMaterialDropChance = .4f;
     [Export] private Timer _simulationRunTimer;
-    [Export] private PackedScene _parasiticMaterialPackedScene;
     [Export] private PhysicalBoneSimulator3D _physicalBoneSimulator;
     [Export] private PackedScene _limbContainerPackedScene;
     [Export] private PackedScene _blood;
@@ -154,17 +156,6 @@ public partial class DismemberableBody : Skeleton3D
             var rootDetachedBodyPart = SpawnDetachedBodyParts(attachedBodyPart.CollectChain());
             if (rootDetachedBodyPart != null)
             {
-                if (GD.Randf() > _parasiticMaterialDropChance)
-                {
-                    var parasiticMaterial = SpawnParasiticMaterial(rootDetachedBodyPart.GlobalTransform);
-                    parasiticMaterial.ApplyCentralImpulse(
-                        (new Vector3(GD.RandRange(-1, 1), 0, GD.RandRange(-1, 1)) + Vector3.Up).Normalized() * 3f);
-
-                    float spinAmount = 3f;
-
-                    parasiticMaterial.ApplyTorqueImpulse(Vector3.Up * spinAmount);
-                }
-
                 rootDetachedBodyPart.ApplyImpulse(dir * force * _dismemberedBodyPartImpulseScale);
                 attachedBodyPart.MarkDestroyed();
             }
@@ -180,7 +171,7 @@ public partial class DismemberableBody : Skeleton3D
     {
         if (_currDismemberments >= _maxDismemberments) return null;
         _currDismemberments++;
-
+        EmitSignalDismembered();
         var detachedBodyParts = new List<RigidBody3D>();
 
         var limbContainer = _limbContainerPackedScene.Instantiate<LimbContainer>();
@@ -207,13 +198,5 @@ public partial class DismemberableBody : Skeleton3D
         SetBonePoseScale(destroyedAttachedBodyParts[0].BoneIdx,
             Vector3.One * 0.01f); // shrink armature at root bone to "remove" the mesh
         return detachedBodyParts[0];
-    }
-
-    private Pickup SpawnParasiticMaterial(Transform3D transform)
-    {
-        var parasiticMat = _parasiticMaterialPackedScene.Instantiate<Pickup>();
-        parasiticMat.GlobalTransform = transform;
-        Containers.Instance.VFX.AddChild(parasiticMat);
-        return parasiticMat;
     }
 }

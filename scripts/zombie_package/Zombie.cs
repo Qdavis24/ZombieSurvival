@@ -1,4 +1,5 @@
 using Godot;
+using ZombieSurvival.scripts.inventory_system;
 using ZombieSurvival.scripts.zombie_package.dismemberment_system;
 
 namespace ZombieSurvival.scripts.zombie_package;
@@ -9,6 +10,8 @@ public partial class Zombie : CharacterBody3D
     public delegate void DeadEventHandler();
 
     [ExportCategory("Miscellaneous")] 
+    [Export] private int _deathMoneyReward = 10;
+    [Export] private int _dismemberMoneyRewared = 5;
     [Export] private float _rotationLerpSpeed = 10f;
     [Export] private DismemberableBody _dismemberableBody;
     [Export] private NavigationAgent3D _navAgent;
@@ -41,8 +44,14 @@ public partial class Zombie : CharacterBody3D
         _dismemberableBody.Init(_bodyHealth, _target);
         _dismemberableBody.Dead += Die;
         _dismemberableBody.SimulationFinished += QueueFree;
+        _dismemberableBody.Dismembered += OnDismembered;
         SetState(State.Chase);
         SetupGroanTimer(); // audio
+    }
+
+    private void OnDismembered()
+    {
+        RewardPlayerWithMoney(_dismemberMoneyRewared);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -89,6 +98,7 @@ public partial class Zombie : CharacterBody3D
             case State.Dead:
                 _collisionShape.QueueFree();
                 _animationPlayer.Stop();
+                RewardPlayerWithMoney(_deathMoneyReward);
                 EmitSignalDead();
                 break;
         }
@@ -118,8 +128,17 @@ public partial class Zombie : CharacterBody3D
 
     private void Die()
     {
+        
         _groanTimer?.Stop(); // audio
         SetState(State.Dead);
+    }
+
+    private void RewardPlayerWithMoney(int amount)
+    {
+        if (_target is IInventoryOwner invOwner)
+        {
+            invOwner.Inventory.AddItem(ItemType.Money, amount);
+        }
     }
 
     // Audio
