@@ -13,6 +13,8 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	[Export] private PlayerHud _playerHud;
 	[Export] private WeaponManager _weaponManager;
 	[Export] private float _mouseSensitivity = 0.0020f;
+	[Export] private float _controllerSensitivityHorizontal = 5f;
+	[Export] private float _controllerSensitivityVertical = 2.5f;
 	[Export] private float _moveSpeed = 6.0f;
 	[Export] private float _accel = 14.0f;
 	// [Export] private float _gravity = 24.0f;
@@ -73,6 +75,8 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		_pitch -= recoilRadians;
 		ApplyLookRotation();
 	}
+	
+	
 
 	public override void _Ready()
 	{
@@ -122,10 +126,25 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 	}
 
+	public void ControllerLook(float dt)
+	{
+		// Controller look
+		var look = Input.GetVector("look_left", "look_right", "look_up", "look_down");
+		if (look.LengthSquared() > 0.01f)
+		{
+			_yaw -= look.X * _controllerSensitivityHorizontal * dt;
+			_pitch -= look.Y * _controllerSensitivityVertical * dt;
+		}
+		
+		ApplyLookRotation();
+		
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
 		var dt = (float)delta;
-		
+		ControllerLook(dt);
+	
 		Health += _healthRegenRate * _maxHealth * dt;
 		
 

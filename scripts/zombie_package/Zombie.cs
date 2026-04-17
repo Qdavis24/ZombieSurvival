@@ -28,9 +28,11 @@ public partial class Zombie : CharacterBody3D
     private float _bodyHealth;
     private float _speed;
 
-    private enum State { Chase, Attack, Dead }
+    public enum State { Chase, Attack, Dead }
     private State _state;
     private State _previousState;
+    
+    public State CurrentState => _state;
 
     public void Init(Node3D target, ZombieStats stats)
     {

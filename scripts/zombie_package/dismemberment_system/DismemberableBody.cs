@@ -12,13 +12,15 @@ public partial class DismemberableBody : Skeleton3D
 
     [Signal]
     public delegate void SimulationFinishedEventHandler();
-    
+
     [Signal]
     public delegate void DismemberedEventHandler();
 
     [Export] private float _dismemberedBodyPartImpulseScale = .25f;
     [Export] private int _maxDismemberments = 4;
+    [Export] private int _maxBloodParticles = 3;
     private int _currDismemberments;
+    private int _currBloodParticles;
 
     [ExportCategory("Limb Health Ratios")] [Export]
     private float _headHealthRatio;
@@ -38,8 +40,7 @@ public partial class DismemberableBody : Skeleton3D
     [Export] private float _lowerLegDamageMultiplier;
     [Export] private float _torsoDamageMultiplier;
 
-    [ExportCategory("Miscellaneous")] [Export]
-    private float _parasiticMaterialDropChance = .4f;
+    [ExportCategory("Miscellaneous")] 
     [Export] private Timer _simulationRunTimer;
     [Export] private PhysicalBoneSimulator3D _physicalBoneSimulator;
     [Export] private PackedScene _limbContainerPackedScene;
@@ -105,6 +106,7 @@ public partial class DismemberableBody : Skeleton3D
     public override void _PhysicsProcess(double delta)
     {
         _currDismemberments = 0;
+        _currBloodParticles = 0;
     }
 
     private void Die()
@@ -132,11 +134,16 @@ public partial class DismemberableBody : Skeleton3D
     private void OnBodyPartTookDamage(BodyPart bodyPart, Vector3 hitGlobalPos, Vector3 hitDir, float force,
         float amount)
     {
-        var blood = _blood.Instantiate<GpuParticles3D>();
-        var processMat = blood.ProcessMaterial as ParticleProcessMaterial;
-        processMat.Direction = hitDir;
-        Containers.Instance.VFX.AddChild(blood);
-        blood.GlobalPosition = hitGlobalPos;
+        if (_currBloodParticles < _maxBloodParticles)
+        {
+            _currBloodParticles++;
+            var blood = _blood.Instantiate<GpuParticles3D>();
+            var processMat = blood.ProcessMaterial as ParticleProcessMaterial;
+            processMat.Direction = hitDir;
+            Containers.Instance.VFX.AddChild(blood);
+            blood.GlobalPosition = hitGlobalPos;
+        }
+
 
         AudioManager.I.PlayZombieHit(bodyPart.ShotHitSound, hitGlobalPos, -8f);
 

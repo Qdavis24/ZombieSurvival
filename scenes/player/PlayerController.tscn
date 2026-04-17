@@ -26,8 +26,6 @@
 [ext_resource type="AudioStream" uid="uid://dwwhjn6ikqk6p" path="res://assets/sound/player/hitmoan2.wav" id="16_gkq8c"]
 [ext_resource type="AudioStream" uid="uid://g7sxc76lhyha" path="res://assets/sound/player/deathbell.mp3" id="17_mx0ws"]
 [ext_resource type="PackedScene" uid="uid://de6jft8suc321" path="res://scenes/player/PlayerHud.tscn" id="24_nn1ai"]
-[ext_resource type="AudioStream" uid="uid://cglthr2sqd28e" path="res://assets/sound/ui_click.wav" id="27_1qanr"]
-[ext_resource type="AudioStream" uid="uid://bidcytxbci8t0" path="res://assets/sound/inventory/inventory_add_added.wav" id="28_26d1a"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ajn8d"]
 random_pitch = 1.0594631
@@ -66,16 +64,17 @@ radius = 0.4
 height = 1.8
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6ev1f"]
-radius = 0.4
-height = 1.8
+radius = 0.96972656
+height = 1.9394531
 
-[node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "Inventory")]
+[node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "_camera", "Inventory")]
 collision_layer = 8193
 collision_mask = 8193
 script = ExtResource("1_etyb6")
 _healthRegenRate = 0.1
 _playerHud = NodePath("PlayerHud")
 _weaponManager = NodePath("WeaponManager")
+_camera = NodePath("Head/Camera3D")
 _footstepSound = SubResource("AudioStreamRandomizer_ajn8d")
 _jumpSound = SubResource("AudioStreamRandomizer_d8kh4")
 _hitSound = SubResource("AudioStreamRandomizer_qhhj6")
@@ -114,9 +113,3 @@ _grenadeThrowScene = ExtResource("8_wtdo7")
 [node name="PlayerHud" parent="." unique_id=171600604 instance=ExtResource("24_nn1ai")]
 
 [node name="Inventory" parent="." unique_id=949916564 instance=ExtResource("13_xpgqn")]
-_emptiedSound = ExtResource("27_1qanr")
-_emptySound = ExtResource("27_1qanr")
-_removedSound = ExtResource("28_26d1a")
-_fullSound = ExtResource("27_1qanr")
-_filledSound = ExtResource("27_1qanr")
-_addedSound = ExtResource("28_26d1a")

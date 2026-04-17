@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://6jkytum01jbk" path="res://scripts/player/weapons/grenade/GrenadeProjectile.cs" id="1_be2i6"]
 [ext_resource type="PackedScene" uid="uid://bglofbtwk3r2e" path="res://assets/models/player/weapons/grenade_projectile.glb" id="1_tw3rq"]
 [ext_resource type="PackedScene" uid="uid://wpwy380xp0yw" path="res://scenes/player/weapons/Explosion.tscn" id="2_bag52"]
-[ext_resource type="AudioStream" uid="uid://c7d4833mecl83" path="res://assets/sound/guns/grenadethrow/grenadebounce.wav" id="3_6tb33"]
+[ext_resource type="AudioStream" uid="uid://djpeda5gnkqdf" path="res://assets/sound/guns/grenadethrow/grenadebounce.wav" id="3_6tb33"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_be2i6"]
 bounce = 0.3
@@ -18,10 +18,13 @@ stream_0/stream = ExtResource("3_6tb33")
 radius = 0.10030295
 
 [node name="GrenadeProjectile" type="RigidBody3D" unique_id=1972303479]
+collision_layer = 9
+collision_mask = 9
 physics_material_override = SubResource("PhysicsMaterial_be2i6")
 continuous_cd = true
 contact_monitor = true
 max_contacts_reported = 4
+linear_damp = 0.5
 script = ExtResource("1_be2i6")
 _throwSpeed = 19.0
 _fuseTime = 2.0
@@ -31,10 +34,10 @@ _bounceSound = SubResource("AudioStreamRandomizer_14ncr")
 [node name="grenade_projectile" parent="." unique_id=461641730 instance=ExtResource("1_tw3rq")]
 transform = Transform3D(0.8443279, -0.5358268, 0, 0.5358268, 0.8443279, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="grenade" parent="grenade_projectile" index="0" unique_id=1153235754]
+[node name="grenade" parent="grenade_projectile" index="0" unique_id=462806630]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.002359e-17, -0.007793188, -0.0045142174)
 
-[node name="Scale Reference" parent="grenade_projectile" index="1" unique_id=842917342]
+[node name="Scale Reference" parent="grenade_projectile" index="1" unique_id=355058939]
 visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=240595665]
