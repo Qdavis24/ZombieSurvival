@@ -12,6 +12,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	[Export] private float _healthRegenRate;
 	[Export] private PlayerHud _playerHud;
 	[Export] private WeaponManager _weaponManager;
+	[Export] private CollisionShape3D _collisionShape3D;
 	[Export] private float _mouseSensitivity = 0.0020f;
 	[Export] private float _moveSpeed = 6.0f;
 	[Export] private float _accel = 14.0f;
@@ -186,6 +187,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	private void HandleDeath()
 	{
 		// Stop movement
+		_collisionShape3D.Disabled = true;
 		SetPhysicsProcess(false);
 		Velocity = Vector3.Zero;
 		
