@@ -90,6 +90,16 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		_health = _maxHealth;
 	}
 
+	public void ShowCrosshair()
+	{
+		_playerHud.ShowCrosshair();
+	}
+	
+	public void HideCrosshair()
+	{
+		_playerHud.HideCrosshair();
+	}
+
 	private void OnItemRemoved(ItemType type, int amount)
 	{
 		if (amount == 0)

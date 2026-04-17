@@ -12,14 +12,16 @@
 [ext_resource type="Texture2D" uid="uid://ds7gkrlq74gh2" path="res://scenes/ui/grenade.png" id="9_hpijl"]
 [ext_resource type="Script" uid="uid://djc05fynr5gvv" path="res://scripts/player/player_hud/PlayerPopup.cs" id="10_7vsir"]
 [ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="11_h88ne"]
+[ext_resource type="Texture2D" uid="uid://du8lydv02lq66" path="res://scenes/ui/circle_crosshair.png" id="13_a7gaw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g4ghg"]
 shader = ExtResource("2_fc5ru")
 shader_parameter/intensity = 0.0
 shader_parameter/hit_flash = 0.0
 
-[node name="PlayerHud" type="CanvasLayer" unique_id=171600604 node_paths=PackedStringArray("_healthIndicator", "_bloodSplatter", "_currentAmmoLabel", "_reserveAmmoLabel", "_currentGrenadesLabel", "_parasiticMaterialLabel", "_interactPopup", "_itemPopup")]
+[node name="PlayerHud" type="CanvasLayer" unique_id=171600604 node_paths=PackedStringArray("_crosshair", "_healthIndicator", "_bloodSplatter", "_currentAmmoLabel", "_reserveAmmoLabel", "_currentGrenadesLabel", "_parasiticMaterialLabel", "_interactPopup", "_itemPopup")]
 script = ExtResource("1_tbcmq")
+_crosshair = NodePath("Crosshair")
 _healthIndicator = NodePath("HitEffect")
 _bloodSplatter = NodePath("BloodSplatter")
 _currentAmmoLabel = NodePath("Counts/Ammo/MarginContainer/Ammo/HBoxContainer/CurrentAmmoLabel")
@@ -182,3 +184,20 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("11_h88ne")
 theme_override_font_sizes/font_size = 30
 horizontal_alignment = 2
+
+[node name="Crosshair" type="TextureRect" parent="." unique_id=1585072213]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 97.0
+offset_bottom = 97.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.06, 0.06)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("13_a7gaw")

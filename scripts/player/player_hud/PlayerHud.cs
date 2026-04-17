@@ -11,6 +11,7 @@ public partial class PlayerHud : CanvasLayer
         public int ItemAmount;
     };
 
+    [Export] private TextureRect _crosshair;
     [Export] private HealthIndicator _healthIndicator;
     [Export] private BloodSplatter _bloodSplatter;
     [Export] private Label _currentAmmoLabel;
@@ -46,6 +47,8 @@ public partial class PlayerHud : CanvasLayer
         EventBus.Instance.PlayerEnteredInteractableRange += OnPlayerEnteredInteractableRange;
         EventBus.Instance.PlayerExitedInteractableRange += OnPlayerExitedInteractableRange;
         _itemPopup.PopupFree += OnPopupFree;
+        
+        ShowCrosshair();
     }
     
 
@@ -55,6 +58,42 @@ public partial class PlayerHud : CanvasLayer
 
         EventBus.Instance.PlayerEnteredInteractableRange -= OnPlayerEnteredInteractableRange;
         EventBus.Instance.PlayerExitedInteractableRange -= OnPlayerExitedInteractableRange;
+    }
+
+    private Tween _crosshairTween;
+
+    public void ShowCrosshair()
+    {
+        if (_crosshair == null)
+            return;
+
+        _crosshair.Visible = true;
+
+        _crosshairTween?.Kill();
+        _crosshairTween = CreateTween();
+
+        _crosshair.Modulate = new Color(_crosshair.Modulate, _crosshair.Modulate.A);
+        _crosshairTween.TweenProperty(_crosshair, "modulate:a", 0.3f, 0.15f)
+            .SetTrans(Tween.TransitionType.Cubic)
+            .SetEase(Tween.EaseType.Out);
+    }
+
+    public void HideCrosshair()
+    {
+        if (_crosshair == null)
+            return;
+
+        _crosshairTween?.Kill();
+        _crosshairTween = CreateTween();
+
+        _crosshairTween.TweenProperty(_crosshair, "modulate:a", 0f, 0.15f)
+            .SetTrans(Tween.TransitionType.Cubic)
+            .SetEase(Tween.EaseType.Out);
+
+        _crosshairTween.Finished += () =>
+        {
+            _crosshair.Visible = false;
+        };
     }
 
     private void OnPopupFree()
