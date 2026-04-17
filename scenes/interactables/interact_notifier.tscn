@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://duhjv51umchr2" path="res://scripts/interactables/InteractNotifier.cs" id="1_xyljr"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_85cpn"]
-radius = 1.9979345
+radius = 2.8746786
 
 [node name="InteractNotifier" type="Node3D" unique_id=517015701 node_paths=PackedStringArray("_interactionRange")]
 script = ExtResource("1_xyljr")
