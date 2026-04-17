@@ -46,7 +46,7 @@ size = Vector2(0.5, 0.5)
 
 [node name="PistolMuzzleFlash" type="GPUParticles3D" unique_id=121254955 node_paths=PackedStringArray("_light", "_lightTimer")]
 emitting = false
-amount = 200
+amount = 50
 lifetime = 0.1
 one_shot = true
 explosiveness = 1.0

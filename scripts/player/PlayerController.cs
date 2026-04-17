@@ -91,19 +91,23 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 	private void OnItemRemoved(ItemType type, int amount)
 	{
-		if (type is ItemType.ParasiticMaterial)
+		if (amount == 0)
+			return;
+		if (type is ItemType.Money)
 		{
 			_playerHud.ShowPickup(type, -amount);
-			_playerHud.SetParasiticMaterial(Inventory.GetAmount(ItemType.ParasiticMaterial));
+			_playerHud.SetParasiticMaterial(Inventory.GetAmount(ItemType.Money));
 		}
 	}
 
 	private void OnItemAdded(ItemType type, int amount)
 	{
+		if (amount == 0)
+			return;
 		_playerHud.ShowPickup(type, amount);
-		if (type is ItemType.ParasiticMaterial)
+		if (type is ItemType.Money)
 		{
-			_playerHud.SetParasiticMaterial(Inventory.GetAmount(ItemType.ParasiticMaterial));
+			_playerHud.SetParasiticMaterial(Inventory.GetAmount(ItemType.Money));
 		}
 	}
 
