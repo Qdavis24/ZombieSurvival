@@ -7,10 +7,11 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oi6bh"]
 
 [node name="Spawner" type="StaticBody3D" unique_id=2072746930 node_paths=PackedStringArray("_smokeMesh")]
-collision_layer = 8192
-collision_mask = 8193
+collision_layer = 8320
+collision_mask = 8321
 script = ExtResource("1_ra5uc")
 _zombiePackedScene = ExtResource("2_oi6bh")
+_randomOffset = 1.0
 _smokeMesh = NodePath("MeshInstance3D")
 
 [node name="Timer" type="Timer" parent="." unique_id=1021909080]
