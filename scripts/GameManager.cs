@@ -77,7 +77,6 @@ public partial class GameManager : Node
         _isPaused = false;
         _gameInstance = _game.Instantiate<Game>();
         AddChild(_gameInstance);
-        _player = _gameInstance.Player;
         _isGamePlaying = true;
         Input.MouseMode = Input.MouseModeEnum.Captured;
         _uiManager.HudSetRound(1);
