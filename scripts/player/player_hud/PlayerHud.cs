@@ -11,6 +11,7 @@ public partial class PlayerHud : CanvasLayer
         public int ItemAmount;
     };
 
+    [Export] private TextureRect _crosshair;
     [Export] private HealthIndicator _healthIndicator;
     [Export] private BloodSplatter _bloodSplatter;
     [Export] private Label _currentAmmoLabel;
@@ -19,6 +20,8 @@ public partial class PlayerHud : CanvasLayer
     [Export] private Label _parasiticMaterialLabel;
     [Export] private PlayerPopup _interactPopup;
     [Export] private PlayerPopup _itemPopup;
+    [Export] private PackedScene _pointTextAnimation;
+    [Export] private int _maxVisibleMoneyPopups = 12;
 
     private Dictionary<ItemGroup, Color> _itemGroupColorMap = new()
     {
@@ -44,6 +47,8 @@ public partial class PlayerHud : CanvasLayer
         EventBus.Instance.PlayerEnteredInteractableRange += OnPlayerEnteredInteractableRange;
         EventBus.Instance.PlayerExitedInteractableRange += OnPlayerExitedInteractableRange;
         _itemPopup.PopupFree += OnPopupFree;
+        
+        ShowCrosshair();
     }
     
 
@@ -53,6 +58,42 @@ public partial class PlayerHud : CanvasLayer
 
         EventBus.Instance.PlayerEnteredInteractableRange -= OnPlayerEnteredInteractableRange;
         EventBus.Instance.PlayerExitedInteractableRange -= OnPlayerExitedInteractableRange;
+    }
+
+    private Tween _crosshairTween;
+
+    public void ShowCrosshair()
+    {
+        if (_crosshair == null)
+            return;
+
+        _crosshair.Visible = true;
+
+        _crosshairTween?.Kill();
+        _crosshairTween = CreateTween();
+
+        _crosshair.Modulate = new Color(_crosshair.Modulate, _crosshair.Modulate.A);
+        _crosshairTween.TweenProperty(_crosshair, "modulate:a", 0.3f, 0.15f)
+            .SetTrans(Tween.TransitionType.Cubic)
+            .SetEase(Tween.EaseType.Out);
+    }
+
+    public void HideCrosshair()
+    {
+        if (_crosshair == null)
+            return;
+
+        _crosshairTween?.Kill();
+        _crosshairTween = CreateTween();
+
+        _crosshairTween.TweenProperty(_crosshair, "modulate:a", 0f, 0.15f)
+            .SetTrans(Tween.TransitionType.Cubic)
+            .SetEase(Tween.EaseType.Out);
+
+        _crosshairTween.Finished += () =>
+        {
+            _crosshair.Visible = false;
+        };
     }
 
     private void OnPopupFree()
@@ -132,6 +173,26 @@ public partial class PlayerHud : CanvasLayer
         }
     }
 
+    public void ShowMoneyPickup(int amount)
+    {
+        if (_pointTextAnimation == null || _parasiticMaterialLabel == null)
+            return;
+
+        int visiblePopupCount = 0;
+        foreach (Node child in GetChildren())
+        {
+            if (child is PointTextAnimation)
+                visiblePopupCount++;
+        }
+
+        if (visiblePopupCount >= _maxVisibleMoneyPopups)
+            return;
+
+        var popup = _pointTextAnimation.Instantiate<PointTextAnimation>();
+        AddChild(popup);
+        popup.SetAmount(amount);
+    }
+    
     public void ReloadFailed()
     {
         if (_currentAmmoLabel == null || _reserveAmmoLabel == null)

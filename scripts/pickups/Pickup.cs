@@ -21,11 +21,15 @@ public partial class Pickup : RigidBody3D
 	{
 		if (body is IInventoryOwner inventoryOwner)
 		{
-			var result = inventoryOwner.Inventory.AddItem(_itemType, _itemAmount);
+			inventoryOwner.Inventory.AddItem(_itemType, _itemAmount);
 			AudioManager.I.Play3D(_pickupSound, GlobalPosition);
-			if(result.Amount == _itemAmount)
-				CallDeferred(MethodName.QueueFree);
-			_itemAmount -= result.Amount;
+			CallDeferred(MethodName.QueueFree);
+			
+			// var result = inventoryOwner.Inventory.AddItem(_itemType, _itemAmount);
+			// AudioManager.I.Play3D(_pickupSound, GlobalPosition);
+			// if(result.Amount == _itemAmount)
+			// 	CallDeferred(MethodName.QueueFree);
+			// _itemAmount -= result.Amount;
 		}
 	}
 

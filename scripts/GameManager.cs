@@ -10,9 +10,6 @@ public partial class GameManager : Node
 {
     [Export] private UiManager _uiManager;
     [Export] private PackedScene _game;
-    [Export] private SpawnManager _spawnManager;
-
-    [Export] private PlayerController _player;
     
     [Export] private AudioStream _layer1;
     [Export] private AudioStream _layer2;

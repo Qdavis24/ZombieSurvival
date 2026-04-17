@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://de6jft8suc321"]
 
 [ext_resource type="Script" uid="uid://8ekxc1y8cxhh" path="res://scripts/player/player_hud/PlayerHud.cs" id="1_tbcmq"]
+[ext_resource type="PackedScene" uid="uid://bqi1inji2exfo" path="res://scenes/player/PointTextAnimation.tscn" id="2_a7gaw"]
 [ext_resource type="Shader" uid="uid://dhk6778ekh32f" path="res://scenes/player/health_visual_shader.gdshader" id="2_fc5ru"]
 [ext_resource type="Script" uid="uid://dtutdnd7epe8x" path="res://scripts/player/player_hud/HealthIndicator.cs" id="3_a7gaw"]
 [ext_resource type="Texture2D" uid="uid://bsg165p8bjmje" path="res://assets/particle_textures/blood_particle_tex.png" id="4_rn047"]
@@ -11,14 +12,16 @@
 [ext_resource type="Texture2D" uid="uid://ds7gkrlq74gh2" path="res://scenes/ui/grenade.png" id="9_hpijl"]
 [ext_resource type="Script" uid="uid://djc05fynr5gvv" path="res://scripts/player/player_hud/PlayerPopup.cs" id="10_7vsir"]
 [ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="11_h88ne"]
+[ext_resource type="Texture2D" uid="uid://du8lydv02lq66" path="res://scenes/ui/circle_crosshair.png" id="13_a7gaw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g4ghg"]
 shader = ExtResource("2_fc5ru")
 shader_parameter/intensity = 0.0
 shader_parameter/hit_flash = 0.0
 
-[node name="PlayerHud" type="CanvasLayer" unique_id=171600604 node_paths=PackedStringArray("_healthIndicator", "_bloodSplatter", "_currentAmmoLabel", "_reserveAmmoLabel", "_currentGrenadesLabel", "_parasiticMaterialLabel", "_interactPopup", "_itemPopup")]
+[node name="PlayerHud" type="CanvasLayer" unique_id=171600604 node_paths=PackedStringArray("_crosshair", "_healthIndicator", "_bloodSplatter", "_currentAmmoLabel", "_reserveAmmoLabel", "_currentGrenadesLabel", "_parasiticMaterialLabel", "_interactPopup", "_itemPopup")]
 script = ExtResource("1_tbcmq")
+_crosshair = NodePath("Crosshair")
 _healthIndicator = NodePath("HitEffect")
 _bloodSplatter = NodePath("BloodSplatter")
 _currentAmmoLabel = NodePath("Counts/Ammo/MarginContainer/Ammo/HBoxContainer/CurrentAmmoLabel")
@@ -27,6 +30,7 @@ _currentGrenadesLabel = NodePath("Counts/Ammo/Grenade/current")
 _parasiticMaterialLabel = NodePath("Counts/ParasiticMat/ParasiticMatCount")
 _interactPopup = NodePath("InteractionIndicator")
 _itemPopup = NodePath("ItemIndicator")
+_pointTextAnimation = ExtResource("2_a7gaw")
 
 [node name="HitEffect" type="ColorRect" parent="." unique_id=319660820]
 material = SubResource("ShaderMaterial_g4ghg")
@@ -58,10 +62,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -171.00012
-offset_top = -241.0
-offset_right = -83.00012
-offset_bottom = -87.261536
+offset_left = -173.0
+offset_top = -208.0
+offset_right = -83.0
+offset_bottom = -92.66669
 grow_horizontal = 0
 grow_vertical = 0
 scale = Vector2(1.5, 1.5)
@@ -71,15 +75,18 @@ size_flags_vertical = 8
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="Counts/ParasiticMat" unique_id=1993950812]
+visible = false
 modulate = Color(1, 1, 0, 1)
 layout_mode = 2
 texture = ExtResource("6_dm2ga")
 
 [node name="ParasiticMatCount" type="Label" parent="Counts/ParasiticMat" unique_id=49754370]
 layout_mode = 2
+size_flags_horizontal = 3
 theme = ExtResource("7_jyy7t")
 theme_override_colors/font_color = Color(1, 1, 0, 1)
 text = "0"
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Ammo" type="VBoxContainer" parent="Counts" unique_id=663804056]
@@ -87,7 +94,7 @@ layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Counts/Ammo" unique_id=2051503874]
 layout_mode = 2
-theme_override_constants/margin_bottom = 7
+theme_override_constants/margin_bottom = 2
 
 [node name="Ammo" type="HBoxContainer" parent="Counts/Ammo/MarginContainer" unique_id=1291482840]
 layout_mode = 2
@@ -177,3 +184,20 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("11_h88ne")
 theme_override_font_sizes/font_size = 30
 horizontal_alignment = 2
+
+[node name="Crosshair" type="TextureRect" parent="." unique_id=1585072213]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 97.0
+offset_bottom = 97.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.06, 0.06)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("13_a7gaw")

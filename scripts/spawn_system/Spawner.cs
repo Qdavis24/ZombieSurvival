@@ -11,6 +11,7 @@ public partial class Spawner : Node3D
     [Export] public MapArea Area;
     [Export] private PackedScene _zombiePackedScene;
     [Export] private float _offset = 0f;
+    [Export] private float _randomOffset = 40f;
 
     [Export] private MeshInstance3D _smokeMesh;
 
@@ -29,9 +30,12 @@ public partial class Spawner : Node3D
         zomb.Dead += EmitSignalZombieDied;
         zomb.Init(_zombTarget, _zombStats);
         AddChild(zomb);
+        float randX = _offset + (float)GD.RandRange(-_randomOffset, _randomOffset);
+        float randZ = _offset + (float)GD.RandRange(-_randomOffset, _randomOffset);
+
         zomb.GlobalTransform = GlobalTransform * new Transform3D(
             Basis,
-            new Vector3(GD.Randf() * _offset, 0, GD.Randf() * _offset)
+            new Vector3(randX, 0, randZ)
         );
     }
 

@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bqi1inji2exfo"]
+
+[ext_resource type="Script" uid="uid://dvv813jtd0if2" path="res://scripts/player/player_hud/PointTextAnimation.cs" id="1_0s7f0"]
+[ext_resource type="Theme" uid="uid://djrvn0o5wdyef" path="res://scenes/ui/ammo_theme.tres" id="1_2jftb"]
+
+[node name="PointTextAnimation" type="Label" unique_id=1336990000]
+offset_left = 1831.0
+offset_top = 854.0
+offset_right = 1874.0
+offset_bottom = 885.0
+theme = ExtResource("1_2jftb")
+theme_override_colors/font_color = Color(0.89612997, 0.8961299, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Test"
+script = ExtResource("1_0s7f0")
+RiseDistance = 50.0
+Duration = 0.4

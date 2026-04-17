@@ -43,6 +43,7 @@ public partial class WeaponManager : Node
     private int _currentWeaponIndex = 0;
     private bool _isSwapping = false;
     private bool _isRocketLoaded = true;
+    private bool _crosshairHiddenByWeaponState = false;
 
     [Export] private PlayerController _playerController;
     [Export] private Camera _camera;
@@ -228,6 +229,26 @@ public partial class WeaponManager : Node
         EmitSignal(SignalName.AmmoChanged, _current.CurrentAmmo, reserve);
     }
 
+
+    private void UpdateCrosshairVisibility(bool isMovingForward)
+    {
+        bool shouldHideCrosshair = isMovingForward || _isSwapping || (_current?.IsReloading ?? false) || (_current?.IsAiming ?? false);
+
+        if (shouldHideCrosshair)
+        {
+            if (!_crosshairHiddenByWeaponState)
+            {
+                _playerController.HideCrosshair();
+                _crosshairHiddenByWeaponState = true;
+            }
+        }
+        else if (_crosshairHiddenByWeaponState)
+        {
+            _playerController.ShowCrosshair();
+            _crosshairHiddenByWeaponState = false;
+        }
+    }
+
     private AnimationPlayer GetWeaponAnimationPlayer(WeaponBase weapon)
     {
         return weapon?.FindChild("AnimationPlayer", true, false) as AnimationPlayer;
@@ -359,6 +380,9 @@ public partial class WeaponManager : Node
 
     public override void _Process(double delta)
     {
+        bool isMovingForward = Input.IsActionPressed("move_forward");
+        UpdateCrosshairVisibility(isMovingForward);
+
         // Swap weapon
         if (!_isSwapping && _weaponSlots != null && _weaponSlots.Length > 0)
         {
@@ -397,7 +421,6 @@ public partial class WeaponManager : Node
             float targetFov = _current != null ? _current.GetTargetFov() : _defaultHipFov;
             _camera.Fov = Mathf.MoveToward(_camera.Fov, targetFov, (float)(_fovLerpSpeed * delta));
 
-            bool isMovingForward = Input.IsActionPressed("move_forward");
             _current?.SetMovementState(isMovingForward);
             _camera.SetMovementState(isMovingForward);
 

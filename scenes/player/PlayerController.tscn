@@ -64,16 +64,17 @@ radius = 0.4
 height = 1.8
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6ev1f"]
-radius = 0.40966797
-height = 1.9394531
+radius = 0.4
+height = 1.8
 
-[node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "Inventory")]
-collision_layer = 8195
-collision_mask = 8195
+[node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "_collisionShape3D", "Inventory")]
+collision_layer = 8193
+collision_mask = 8193
 script = ExtResource("1_etyb6")
 _healthRegenRate = 0.1
 _playerHud = NodePath("PlayerHud")
 _weaponManager = NodePath("WeaponManager")
+_collisionShape3D = NodePath("CollisionShape")
 _footstepSound = SubResource("AudioStreamRandomizer_ajn8d")
 _jumpSound = SubResource("AudioStreamRandomizer_d8kh4")
 _hitSound = SubResource("AudioStreamRandomizer_qhhj6")
@@ -104,7 +105,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.75, 0)
 script = ExtResource("2_h2fbm")
 _weaponSocket = NodePath("../Head/Camera3D/WeaponSocket")
 _weaponScenes = Array[PackedScene]([ExtResource("5_anuhh"), ExtResource("4_08ru5"), ExtResource("6_60odj"), ExtResource("7_tfrk6")])
-_startingReserveAmmo = PackedInt32Array(48, 96, 24, 12)
+_startingReserveAmmo = PackedInt32Array(84, 200, 100, 10)
 _playerController = NodePath("..")
 _camera = NodePath("../Head/Camera3D")
 _grenadeThrowScene = ExtResource("8_wtdo7")

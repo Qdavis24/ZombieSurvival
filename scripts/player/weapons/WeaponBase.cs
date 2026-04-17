@@ -79,8 +79,8 @@ public partial class WeaponBase : Node3D
 
     protected AnimationPlayer Anim => _anim;
     protected float AnimBlendTime => _animBlendTime;
-    protected bool IsAiming => _isAiming;
-    protected bool IsReloading => _isReloading;
+    public bool IsAiming => _isAiming;
+    public bool IsReloading => _isReloading;
 
     protected void BeginReloadState()
     {

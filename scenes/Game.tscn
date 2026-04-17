@@ -66,7 +66,7 @@ transform = Transform3D(0.67181164, 0.64183605, -0.3697504, -0.07231336, 0.55362
 visible = false
 
 [node name="NavigationRegion3D" parent="." unique_id=1630901149 instance=ExtResource("3_r7sob")]
-transform = Transform3D(1, -2.8521754e-09, 1.4901161e-08, 6.0535967e-09, 0.9999998, 0, 0, -1.8626451e-09, 0.99999964, 0.01044549, 0.48714152, -0.0072605386)
+transform = Transform3D(1, -2.73576e-09, 2.6077032e-08, 9.778887e-09, 0.9999997, 0, 0, -3.7252903e-09, 0.9999994, 0.01044549, 0.48714146, -0.0072605377)
 
 [node name="Lights" type="Node3D" parent="." unique_id=805863230]
 transform = Transform3D(1, -1.1059456e-09, 1.1175871e-08, 4.1909516e-09, 0.9999999, 0, 0, -1.8626451e-09, 0.99999976, -3.2014214e-10, 0.4687974, 9.313226e-10)
@@ -121,6 +121,7 @@ transform = Transform3D(1, 6.0535967e-09, -1.1175871e-08, -7.1013346e-09, 1.0000
 light_color = Color(0.95829743, 0.9216825, 0, 1)
 light_energy = 0.6
 light_volumetric_fog_energy = 0.0
+light_bake_mode = 1
 omni_range = 15.912
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="Lights" unique_id=1906847374]
@@ -128,6 +129,7 @@ transform = Transform3D(1, 9.778887e-09, -1.1175871e-08, -1.0826625e-08, 1.00000
 light_color = Color(0.95829743, 0.9216825, 0, 1)
 light_energy = 0.6
 light_volumetric_fog_energy = 0.0
+light_bake_mode = 1
 omni_range = 15.912
 
 [node name="Interactables" type="Node3D" parent="." unique_id=1684070018]
@@ -140,7 +142,7 @@ transform = Transform3D(0.5829271, -0.7116979, 0.39202362, -0.05307764, 0.448091
 transform = Transform3D(0.22849877, -0.97339916, -0.016752811, 0.97238433, 0.22735363, 0.05270186, -0.047491163, -0.02833251, 0.99846816, 5.637163, 1.197041, 7.4536266)
 
 [node name="BoltCutters" parent="Interactables" unique_id=2031604991 instance=ExtResource("10_7ua8r")]
-transform = Transform3D(0.06181349, 0.99804413, 0.009185998, 0.03656175, 0.0069332207, -0.999306, -0.99741703, 0.062106535, -0.036061727, -3.4435196, 1.0687013, 8.969875)
+transform = Transform3D(0.06181349, 0.99804413, 0.009185996, 0.03656175, 0.0069332207, -0.9993061, -0.99741703, 0.062106535, -0.036061723, -3.4379728, 1.0665972, 8.836689)
 
 [node name="RiflePickup" parent="Interactables" unique_id=766928468 instance=ExtResource("12_r7sob")]
 transform = Transform3D(-0.013137562, 0.022975333, 0.99964875, 0.94328344, 0.33195218, 0.004767408, -0.33172643, 0.9430159, -0.026033252, -0.4810357, 1.2756097, -18.85477)
@@ -183,10 +185,10 @@ _startingNumZombiesRoundLimit = 10
 _startingZombieSpawnTimerInterval = 5.0
 
 [node name="BusSpawner" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="1" unique_id=942961392 instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.802733, 0.16430509, 7.2929525)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2468567, 0.16430509, 6.766305)
 
 [node name="RubbleSpawner" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="2" unique_id=2123943745 instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.483181, 0.40553248, -4.7351832)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.586996, 0.40553248, -3.7565413)
 
 [node name="DeadEndSpawner" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="3" unique_id=1877162586 instance=ExtResource("4_0wksg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.078809, 0.70167637, -17.211376)
@@ -201,7 +203,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.075966, 0.43281353, -21.9
 Area = 1
 
 [node name="TankSpawner" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(397079504, 1325009269) index="6" unique_id=518461937 instance=ExtResource("4_0wksg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.411651, 0.52650046, 12.132733)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.429976, 0.52650046, 12.132733)
 Area = 1
 
 [editable path="Interactables/ChainLinkFence"]
