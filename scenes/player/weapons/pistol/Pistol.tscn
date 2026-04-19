@@ -16,6 +16,7 @@ stream_1/stream = ExtResource("3_nimcv")
 [node name="Pistol" type="Node3D" unique_id=1586866769 node_paths=PackedStringArray("_muzzleFlash")]
 script = ExtResource("1_at3be")
 _hipSpreadDegrees = 0.8
+_force = 15.0
 _magazineSize = 7
 AmmoType = 3
 _muzzleFlash = NodePath("Rig/HumanArms/Skeleton3D/BoneAttachment3D/PistolMuzzleFlash")
@@ -25,22 +26,22 @@ _reloadSound = ExtResource("4_fbydl")
 [node name="Rig" parent="." unique_id=879494110 instance=ExtResource("2_2ru15")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.035, 0)
 
-[node name="ArmMesh" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(879494110, 320064356) index="0" unique_id=1809718475]
+[node name="ArmMesh" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(879494110, 368666699) index="0" unique_id=381539547]
 cast_shadow = 0
 
-[node name="PBarrell" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(879494110, 320064356) index="1" unique_id=1115719573]
+[node name="PBarrell" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(879494110, 368666699) index="1" unique_id=1791677088]
 cast_shadow = 0
 
-[node name="PHandle" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(879494110, 320064356) index="2" unique_id=2057930561]
+[node name="PHandle" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(879494110, 368666699) index="2" unique_id=262720308]
 cast_shadow = 0
 
-[node name="PMag" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(879494110, 320064356) index="3" unique_id=164749250]
+[node name="PMag" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(879494110, 368666699) index="3" unique_id=875760983]
 cast_shadow = 0
 
-[node name="PSlide" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(879494110, 320064356) index="4" unique_id=2114315449]
+[node name="PSlide" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(879494110, 368666699) index="4" unique_id=1542393440]
 cast_shadow = 0
 
-[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(879494110, 320064356) index="5" unique_id=136675663]
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(879494110, 368666699) index="5" unique_id=136675663]
 transform = Transform3D(3.725287e-09, 0.9999997, 1.642423e-05, -0.9999996, -1.4903453e-08, 1.3348037e-07, -2.2435753e-08, -1.6485472e-05, 0.99999976, 1.5132854, 1.449154, -0.14958747)
 bone_name = "MUZZLE"
 bone_idx = 41
@@ -48,7 +49,7 @@ bone_idx = 41
 [node name="PistolMuzzleFlash" parent="Rig/HumanArms/Skeleton3D/BoneAttachment3D" unique_id=121254955 instance=ExtResource("3_p313x")]
 transform = Transform3D(-1.4901257e-08, -1, 1.334807e-07, 0.99999994, 3.7256567e-09, -1.642424e-05, 1.6485481e-05, -2.2435701e-08, 1.0000002, -0.022845984, 0.13404524, -0.072690085)
 
-[node name="Scale Reference" parent="Rig" index="1" unique_id=2079100127]
+[node name="Scale Reference" parent="Rig" index="1" unique_id=2041545651]
 visible = false
 
 [editable path="Rig"]

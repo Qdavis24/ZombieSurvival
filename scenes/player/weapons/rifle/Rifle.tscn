@@ -15,6 +15,7 @@ stream_0/stream = ExtResource("2_jc7wx")
 script = ExtResource("1_cxf1s")
 _roundsPerMinute = 400.0
 _hipSpreadDegrees = 0.5
+_force = 20.0
 _magazineSize = 30
 _manualRecoil = true
 _animBlendTime = 0.22
@@ -27,45 +28,45 @@ _reloadSound = ExtResource("6_etkhb")
 [node name="Rig" parent="." unique_id=1243614659 instance=ExtResource("2_cxf1s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.035, 0)
 
-[node name="ArmMesh" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 326445719) index="0" unique_id=1934704952]
+[node name="ArmMesh" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 385019323) index="0" unique_id=963583522]
 cast_shadow = 0
 
-[node name="body" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 326445719) index="1" unique_id=1757252312]
+[node name="body" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 385019323) index="1" unique_id=1254958029]
 cast_shadow = 0
 
-[node name="mag" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 326445719) index="2" unique_id=1268036164]
+[node name="mag" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 385019323) index="2" unique_id=1019278403]
 cast_shadow = 0
 
-[node name="PBarrell" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 326445719) index="3" unique_id=452129971]
+[node name="PBarrell" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 385019323) index="3" unique_id=1320356298]
 visible = false
 cast_shadow = 0
 
-[node name="PHandle" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 326445719) index="4" unique_id=1884333579]
+[node name="PHandle" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 385019323) index="4" unique_id=1375351841]
 visible = false
 cast_shadow = 0
 
-[node name="PMag" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 326445719) index="5" unique_id=1197546931]
+[node name="PMag" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 385019323) index="5" unique_id=848344922]
 visible = false
 cast_shadow = 0
 
-[node name="PSlide" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 326445719) index="6" unique_id=1274445657]
+[node name="PSlide" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 385019323) index="6" unique_id=1502979866]
 visible = false
 cast_shadow = 0
 
-[node name="BoneAttachment3D2" type="BoneAttachment3D" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 326445719) index="7" unique_id=638777053]
+[node name="BoneAttachment3D2" type="BoneAttachment3D" parent="Rig/HumanArms/Skeleton3D" parent_id_path=PackedInt32Array(1243614659, 385019323) index="7" unique_id=638777053]
 transform = Transform3D(3.768946e-08, 0.9999999, 1.6346574e-05, -0.99999994, 9.202631e-08, 1.4377292e-07, 1.3154931e-08, -1.6339123e-05, 0.99999994, 2.1635847, 1.4437386, -0.14403468)
 bone_name = "MUZZLE"
 bone_idx = 42
 
 [node name="PistolMuzzleFlash" parent="Rig/HumanArms/Skeleton3D/BoneAttachment3D2" unique_id=121254955 instance=ExtResource("3_gfsj7")]
 
-[node name="AKREFERENCESIDE" parent="Rig" index="1" unique_id=504279868]
+[node name="AKREFERENCESIDE" parent="Rig" index="1" unique_id=1893133891]
 visible = false
 
-[node name="Torus" parent="Rig" index="2" unique_id=334688290]
+[node name="Torus" parent="Rig" index="2" unique_id=151415516]
 visible = false
 
-[node name="Scale Reference" parent="Rig" index="3" unique_id=1687738368]
+[node name="Scale Reference" parent="Rig" index="3" unique_id=1426080389]
 visible = false
 
 [editable path="Rig"]
