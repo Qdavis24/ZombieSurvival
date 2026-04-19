@@ -12,7 +12,7 @@ namespace ZombieSurvival.scripts.zombie_package.dismemberment_system;
 public partial class BodyPart : PhysicalBone3D, IDamageable
 {
     [Signal]
-    public delegate void DestroyedEventHandler(BodyPart bodyPart, Vector3 dir, float force, bool shouldDie,
+    public delegate void DestroyedEventHandler(BodyPart bodyPart, Vector3 hitPosition, Vector3 dir, float force, bool shouldDie,
         bool shouldDismember);
 
     [Signal]
@@ -80,7 +80,7 @@ public partial class BodyPart : PhysicalBone3D, IDamageable
         _health -= damage;
         if (_health <= 0f)
         {
-            EmitSignalDestroyed(this, hitDir, force, _shouldDie, ShouldDismember);
+            EmitSignalDestroyed(this, hitGlobalPosition, hitDir, force, _shouldDie, ShouldDismember);
         }
         
     }

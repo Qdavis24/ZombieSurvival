@@ -152,7 +152,7 @@ public partial class DismemberableBody : Skeleton3D
             Die();
     }
 
-    private void OnBodyPartDestroyed(BodyPart attachedBodyPart, Vector3 dir, float force, bool shouldDie,
+    private void OnBodyPartDestroyed(BodyPart attachedBodyPart, Vector3 hitGlobalPosition, Vector3 dir, float force, bool shouldDie,
         bool shouldDismember)
     {
         if (shouldDie && !_isDead)
@@ -163,7 +163,7 @@ public partial class DismemberableBody : Skeleton3D
             var rootDetachedBodyPart = SpawnDetachedBodyParts(attachedBodyPart.CollectChain());
             if (rootDetachedBodyPart != null)
             {
-                rootDetachedBodyPart.ApplyImpulse(new Vector3(dir.X, 1, dir.Y).Normalized() * force * _dismemberedBodyPartImpulseScale);
+                rootDetachedBodyPart.ApplyImpulse(new Vector3(dir.X, 1, dir.Y).Normalized() * force * _dismemberedBodyPartImpulseScale, hitGlobalPosition);
                 attachedBodyPart.MarkDestroyed();
             }
         }
