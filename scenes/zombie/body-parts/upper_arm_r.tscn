@@ -42,7 +42,7 @@ height = 0.32588196
 
 [node name="UpperArmR" type="RigidBody3D" unique_id=1483606116]
 collision_layer = 0
-collision_mask = 10
+collision_mask = 8202
 mass = 4.0
 angular_damp = 4.0
 
