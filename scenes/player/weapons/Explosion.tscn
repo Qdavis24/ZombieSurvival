@@ -135,7 +135,7 @@ top_radius = 0.1
 bottom_radius = 0.0
 radial_segments = 20
 
-[node name="Explosion" type="Area3D" unique_id=1710752080 node_paths=PackedStringArray("_flash", "_sparks", "_smoke", "_light")]
+[node name="Explosion" type="Area3D" unique_id=1710752080 node_paths=PackedStringArray("_flash", "_sparks", "_smoke", "_light", "_timer")]
 collision_layer = 9
 collision_mask = 9
 script = ExtResource("1_n44nq")
@@ -145,6 +145,7 @@ _flash = NodePath("ExplosionFlash")
 _sparks = NodePath("ExplosionDebris")
 _smoke = NodePath("ExplosionSmoke")
 _light = NodePath("OmniLight3D")
+_timer = NodePath("Timer")
 _duration = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1818941300]
@@ -171,6 +172,7 @@ process_material = SubResource("ParticleProcessMaterial_vx414")
 draw_pass_1 = SubResource("QuadMesh_xhyyr")
 
 [node name="ExplosionDebris" type="GPUParticles3D" parent="." unique_id=1986135339]
+emitting = false
 amount = 10
 one_shot = true
 explosiveness = 1.0

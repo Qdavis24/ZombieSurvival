@@ -11,15 +11,14 @@ public partial class Explosion : Area3D
     [Export] private GpuParticles3D _sparks;
     [Export] private GpuParticles3D _smoke;
     [Export] private OmniLight3D _light;
-    [Export] private float _duration = .3f;
+    [Export] private Timer _timer;
     
     private float _damage;
     private float _force;
 
     private int _totalBodiesHit;
     private bool _havePlayedSpecialGore;
-
-    private float _time;
+    
     
 
     // Called when the node enters the scene tree for the first time.
@@ -31,26 +30,22 @@ public partial class Explosion : Area3D
     
     public override async void _Ready()
     {
+        _timer.Timeout += OnTimeout;
+        _timer.Start();
         BodyEntered += OnBodyEntered;
-        _duration = (float) _flash.Lifetime;
         _flash.Emitting = true;
         _sparks.Emitting = true;
         _smoke.Emitting = true;
-        
-        _flash.Finished += () =>
-        {
-            BodyEntered -= OnBodyEntered;
-        };
         _smoke.Finished += QueueFree;
         
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
         AudioManager.I.PlayExplosion(_explosionSound, GlobalPosition);
     }
 
-    public override void _PhysicsProcess(double delta)
+    private void OnTimeout()
     {
-        _time += (float) delta;
-        _light.LightEnergy = Mathf.Lerp(1.0f, 0f, Mathf.Clamp(_time / _duration, 0f, 1f));
+        BodyEntered -= OnBodyEntered;
+        _light.LightEnergy = 0;
     }
 
 
