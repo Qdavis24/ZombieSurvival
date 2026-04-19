@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://ny45wnbu0k0r" path="res://scripts/player/weapons/Explosion.cs" id="1_n44nq"]
 [ext_resource type="AudioStream" uid="uid://wjpgf5qyaarm" path="res://assets/sound/guns/rpg/explosion1.wav" id="2_2st6p"]
-[ext_resource type="Texture2D" uid="uid://dss4k60mcfkhr" path="res://assets/particle_textures/scorch_01.png" id="2_js8jj"]
 [ext_resource type="AudioStream" uid="uid://j2puiep0bxyf" path="res://assets/sound/guns/rpg/explosion2.wav" id="3_2st6p"]
 [ext_resource type="AudioStream" uid="uid://bqpseia7vvqv4" path="res://assets/sound/shothits/specialexplosiongore.wav" id="4_poj2o"]
 [ext_resource type="AudioStream" uid="uid://ddc415cfw0jym" path="res://assets/sound/shothits/specialexplosiongore2.wav" id="5_38d5i"]
@@ -22,78 +21,164 @@ stream_1/stream = ExtResource("5_38d5i")
 [sub_resource type="SphereShape3D" id="SphereShape3D_tvel1"]
 radius = 2.4802146
 
-[sub_resource type="Curve" id="Curve_wtns8"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
+[sub_resource type="Gradient" id="Gradient_poj2o"]
+offsets = PackedFloat32Array(0, 0.52459013)
+colors = PackedColorArray(1, 0.53333336, 0, 1, 1, 0.078431375, 0, 1)
 
-[sub_resource type="CurveTexture" id="CurveTexture_nd350"]
-curve = SubResource("Curve_wtns8")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_38d5i"]
+gradient = SubResource("Gradient_poj2o")
 
-[sub_resource type="Gradient" id="Gradient_38d5i"]
-offsets = PackedFloat32Array(0, 0.38784412, 0.7907645)
-colors = PackedColorArray(1, 0.6117647, 0, 1, 1, 0.7607843, 0.047058824, 1, 1, 1, 1, 1)
+[sub_resource type="Curve" id="Curve_kaav3"]
+_data = [Vector2(0, 0.49438208), 0.0, 0.0, 0, 0, Vector2(0.114864886, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_kaav3"]
-gradient = SubResource("Gradient_38d5i")
-
-[sub_resource type="Curve" id="Curve_qje3w"]
-_data = [Vector2(0, 0.5794184), 0.0, 0.0, 0, 0, Vector2(0.994152, 0.9731544), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_oh15a"]
-curve = SubResource("Curve_qje3w")
+[sub_resource type="CurveTexture" id="CurveTexture_xhyyr"]
+curve = SubResource("Curve_kaav3")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_no1nk"]
 lifetime_randomness = 0.1
+direction = Vector3(0, 0, 0)
 spread = 180.0
-initial_velocity_min = 3.5
-initial_velocity_max = 4.0
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
 gravity = Vector3(0, 0, 0)
-damping_min = 4.71
-damping_max = 14.710001
-scale_curve = SubResource("CurveTexture_oh15a")
-color_ramp = SubResource("GradientTexture1D_kaav3")
-alpha_curve = SubResource("CurveTexture_nd350")
+damping_min = 6.6130004
+damping_max = 19.516
+scale_min = 0.5
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_xhyyr")
+color_ramp = SubResource("GradientTexture1D_38d5i")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8wo7"]
-transparency = 1
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tglo3"]
 blend_mode = 1
 vertex_color_use_as_albedo = true
-albedo_color = Color(1, 0.59607846, 0.24313726, 1)
-albedo_texture = ExtResource("2_js8jj")
 billboard_mode = 3
 billboard_keep_scale = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="QuadMesh" id="QuadMesh_5hvi3"]
-material = SubResource("StandardMaterial3D_l8wo7")
-size = Vector2(10, 10)
+[sub_resource type="SphereMesh" id="SphereMesh_2jrr7"]
+material = SubResource("StandardMaterial3D_tglo3")
+radial_segments = 20
+rings = 4
 
-[node name="Explosion" type="Area3D" unique_id=1710752080 node_paths=PackedStringArray("_flash")]
+[sub_resource type="Curve" id="Curve_xhyyr"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.6621622, 0.764045), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_tglo3"]
+curve = SubResource("Curve_xhyyr")
+
+[sub_resource type="Gradient" id="Gradient_2jrr7"]
+offsets = PackedFloat32Array(0, 0.5327869)
+colors = PackedColorArray(0.48962224, 0.48962224, 0.48962218, 1, 0.17283267, 0.17283267, 0.17283261, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rnv8s"]
+gradient = SubResource("Gradient_2jrr7")
+
+[sub_resource type="Curve" id="Curve_r2uhy"]
+_data = [Vector2(0, 0.123595595), 0.0, 0.0, 0, 0, Vector2(1e-05, 0.26966298), 0.0, 0.0, 0, 0, Vector2(0.30405408, 0.9887641), 0.0, 0.0, 0, 0, Vector2(0.7702703, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_v6rn7"]
+curve = SubResource("Curve_r2uhy")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vx414"]
+lifetime_randomness = 0.1
+emission_shape = 1
+emission_sphere_radius = 0.5
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 4.0
+gravity = Vector3(0, 5, 0)
+scale_min = 0.5
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_v6rn7")
+color_ramp = SubResource("GradientTexture1D_rnv8s")
+alpha_curve = SubResource("CurveTexture_tglo3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pum41"]
+transparency = 1
+vertex_color_use_as_albedo = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="SphereMesh" id="SphereMesh_0j7o8"]
+material = SubResource("StandardMaterial3D_pum41")
+radial_segments = 8
+rings = 4
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_poj2o"]
+lifetime_randomness = 0.1
+particle_flag_align_y = true
+direction = Vector3(0, 1, 0)
+spread = 90.0
+initial_velocity_min = 14.0
+initial_velocity_max = 16.0
+gravity = Vector3(0, -20, 0)
+scale_min = 0.099999994
+scale_max = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_38d5i"]
+blend_mode = 1
+albedo_color = Color(1, 0.41960785, 0, 1)
+emission_enabled = true
+emission = Color(1, 0.5176471, 0, 1)
+emission_energy_multiplier = 10.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kaav3"]
+material = SubResource("StandardMaterial3D_38d5i")
+top_radius = 0.1
+bottom_radius = 0.0
+radial_segments = 20
+
+[node name="Explosion" type="Area3D" unique_id=1710752080 node_paths=PackedStringArray("_flash", "_sparks", "_smoke", "_light")]
 collision_layer = 9
 collision_mask = 9
 script = ExtResource("1_n44nq")
 _explosionSound = SubResource("AudioStreamRandomizer_2st6p")
 _specialGoreSound = SubResource("AudioStreamRandomizer_kaav3")
 _flash = NodePath("ExplosionFlash")
+_sparks = NodePath("ExplosionDebris")
+_smoke = NodePath("ExplosionSmoke")
+_light = NodePath("OmniLight3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1818941300]
 shape = SubResource("SphereShape3D_tvel1")
 
 [node name="ExplosionFlash" type="GPUParticles3D" parent="." unique_id=867082671]
 emitting = false
-amount = 5
-lifetime = 0.2
+amount = 10
+lifetime = 0.6
 one_shot = true
 explosiveness = 1.0
+fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_no1nk")
-draw_pass_1 = SubResource("QuadMesh_5hvi3")
+draw_pass_1 = SubResource("SphereMesh_2jrr7")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="ExplosionFlash" unique_id=1546540937]
-light_color = Color(1, 1, 0.43529412, 1)
-omni_attenuation = 2.0
-
-[node name="Timer" type="Timer" parent="ExplosionFlash" unique_id=1184371043]
+[node name="ExplosionSmoke" type="GPUParticles3D" parent="." unique_id=1685544742]
+emitting = false
+amount = 10
+lifetime = 2.0
 one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_vx414")
+draw_pass_1 = SubResource("SphereMesh_0j7o8")
+
+[node name="ExplosionDebris" type="GPUParticles3D" parent="." unique_id=1986135339]
+emitting = false
+amount = 10
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_poj2o")
+draw_pass_1 = SubResource("CylinderMesh_kaav3")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1546540937]
+light_color = Color(1, 1, 0.5686275, 1)
+omni_attenuation = 2.0

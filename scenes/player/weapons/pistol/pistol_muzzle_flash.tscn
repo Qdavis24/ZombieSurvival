@@ -58,6 +58,7 @@ _lightTimer = NodePath("Timer")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=622532408]
 visible = false
+light_color = Color(1, 1, 0.70980394, 1)
 
 [node name="Timer" type="Timer" parent="." unique_id=1197797289]
 one_shot = true
