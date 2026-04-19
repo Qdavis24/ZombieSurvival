@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://j2puiep0bxyf" path="res://assets/sound/guns/rpg/explosion2.wav" id="3_2st6p"]
 [ext_resource type="AudioStream" uid="uid://bqpseia7vvqv4" path="res://assets/sound/shothits/specialexplosiongore.wav" id="4_poj2o"]
 [ext_resource type="AudioStream" uid="uid://ddc415cfw0jym" path="res://assets/sound/shothits/specialexplosiongore2.wav" id="5_38d5i"]
+[ext_resource type="Texture2D" uid="uid://d20703m4c1nds" path="res://assets/particle_textures/fire_01.png" id="6_kaav3"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2st6p"]
 streams_count = 2
@@ -44,24 +45,24 @@ initial_velocity_max = 10.0
 gravity = Vector3(0, 0, 0)
 damping_min = 6.6130004
 damping_max = 19.516
-scale_min = 0.5
-scale_max = 1.5
+scale_min = 1.5
+scale_max = 2.5
 scale_curve = SubResource("CurveTexture_xhyyr")
 color_ramp = SubResource("GradientTexture1D_38d5i")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tglo3"]
+transparency = 1
 blend_mode = 1
 vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("6_kaav3")
 billboard_mode = 3
 billboard_keep_scale = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="SphereMesh" id="SphereMesh_2jrr7"]
+[sub_resource type="QuadMesh" id="QuadMesh_2jrr7"]
 material = SubResource("StandardMaterial3D_tglo3")
-radial_segments = 20
-rings = 4
 
 [sub_resource type="Curve" id="Curve_xhyyr"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.6621622, 0.764045), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -98,30 +99,28 @@ scale_curve = SubResource("CurveTexture_v6rn7")
 color_ramp = SubResource("GradientTexture1D_rnv8s")
 alpha_curve = SubResource("CurveTexture_tglo3")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pum41"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kaav3"]
 transparency = 1
-vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("6_kaav3")
 billboard_mode = 3
 billboard_keep_scale = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="SphereMesh" id="SphereMesh_0j7o8"]
-material = SubResource("StandardMaterial3D_pum41")
-radial_segments = 8
-rings = 4
+[sub_resource type="QuadMesh" id="QuadMesh_xhyyr"]
+material = SubResource("StandardMaterial3D_kaav3")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_poj2o"]
 lifetime_randomness = 0.1
 particle_flag_align_y = true
 direction = Vector3(0, 1, 0)
-spread = 90.0
-initial_velocity_min = 14.0
-initial_velocity_max = 16.0
+spread = 55.0
+initial_velocity_min = 9.0
+initial_velocity_max = 10.0
 gravity = Vector3(0, -20, 0)
-scale_min = 0.099999994
-scale_max = 0.5
+scale_min = 0.049999997
+scale_max = 0.099999994
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_38d5i"]
 blend_mode = 1
@@ -146,6 +145,7 @@ _flash = NodePath("ExplosionFlash")
 _sparks = NodePath("ExplosionDebris")
 _smoke = NodePath("ExplosionSmoke")
 _light = NodePath("OmniLight3D")
+_duration = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1818941300]
 shape = SubResource("SphereShape3D_tvel1")
@@ -158,7 +158,7 @@ one_shot = true
 explosiveness = 1.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_no1nk")
-draw_pass_1 = SubResource("SphereMesh_2jrr7")
+draw_pass_1 = SubResource("QuadMesh_2jrr7")
 
 [node name="ExplosionSmoke" type="GPUParticles3D" parent="." unique_id=1685544742]
 emitting = false
@@ -168,10 +168,9 @@ one_shot = true
 explosiveness = 1.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_vx414")
-draw_pass_1 = SubResource("SphereMesh_0j7o8")
+draw_pass_1 = SubResource("QuadMesh_xhyyr")
 
 [node name="ExplosionDebris" type="GPUParticles3D" parent="." unique_id=1986135339]
-emitting = false
 amount = 10
 one_shot = true
 explosiveness = 1.0
@@ -182,3 +181,7 @@ draw_pass_1 = SubResource("CylinderMesh_kaav3")
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1546540937]
 light_color = Color(1, 1, 0.5686275, 1)
 omni_attenuation = 2.0
+
+[node name="Timer" type="Timer" parent="." unique_id=2079520304]
+wait_time = 0.2
+one_shot = true
