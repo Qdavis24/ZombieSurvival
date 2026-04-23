@@ -85,11 +85,7 @@ public partial class DifficultyManager : Node
         {
             // Round 2 will just be the starting amount, and use the total limit
             CurrentNumZombiesAliveLimit = _startingNumZombiesAliveLimit;
-            CurrentNumZombiesRoundLimit = Math.Clamp(
-                (int)(_startingNumZombiesRoundLimit * _zombieRoundTotalMultiplier),
-                0,
-                _maxNumZombiesRoundLimit
-            );
+            CurrentNumZombiesRoundLimit = 10;
         }
         else
         {
