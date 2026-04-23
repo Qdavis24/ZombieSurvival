@@ -13,12 +13,14 @@ public partial class RoundManager : Node
     [Signal]
     public delegate void RoundStartedEventHandler();
 
-    [Export] private float _roundEndGapTime = 2.0f;
-    [Export] private float _roundStartGapTime = 2.0f;
+    [Export] private float _timeTillRoundChangeIcon = 2.0f;
+    [Export] private float _initialRoundStartTimer = 2.0f;
+    [Export] private float _maxRoundStartTimer = 10.0f;
     [Export] private Node3D _player;
     [Export] private SpawnManager _spawnManager;
     [Export] private DifficultyManager _difficultyManager;
 
+    
     private int _currRound = 1;
 
     public override void _Ready()
@@ -33,11 +35,13 @@ public partial class RoundManager : Node
 
     private async void RoundOver()
     {
-        await ToSignal(GetTree().CreateTimer(_roundEndGapTime), SceneTreeTimer.SignalName.Timeout);
+        await ToSignal(GetTree().CreateTimer(_timeTillRoundChangeIcon), SceneTreeTimer.SignalName.Timeout);
         EmitSignal(nameof(RoundFinished), _currRound + 1);
 
         // Wait before starting next round
-        await ToSignal(GetTree().CreateTimer(_roundStartGapTime), SceneTreeTimer.SignalName.Timeout);
+        float t = Mathf.Clamp((float)_currRound / 10.0f, 0f, 1f);
+        float scaledGap = Mathf.Lerp(_initialRoundStartTimer, _maxRoundStartTimer, Mathf.Sqrt(t));
+        await ToSignal(GetTree().CreateTimer(scaledGap), SceneTreeTimer.SignalName.Timeout);
 
         _currRound++;
         _difficultyManager.ScaleDifficulty();
