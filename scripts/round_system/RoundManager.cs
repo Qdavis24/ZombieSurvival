@@ -26,9 +26,14 @@ public partial class RoundManager : Node
     public override void _Ready()
     {
         _spawnManager.InitTarget(_player);
+        // _spawnManager.InitStats(_difficultyManager.CurrentZombieSpeed, _difficultyManager.CurrentZombieHealth,
+        //     _difficultyManager.CurrentNumZombiesAliveLimit, _difficultyManager.CurrentNumZombiesRoundLimit,
+        //     _difficultyManager.CurrentZombieSpawnTimerInterval);
+        
+        // Init with total zombies for the round being equal to max amount of zombies alive (round 1 balance)
         _spawnManager.InitStats(_difficultyManager.CurrentZombieSpeed, _difficultyManager.CurrentZombieHealth,
-            _difficultyManager.CurrentNumZombiesAliveLimit, _difficultyManager.CurrentNumZombiesRoundLimit,
-            _difficultyManager.CurrentZombieSpawnTimerInterval);
+             _difficultyManager.CurrentNumZombiesAliveLimit, _difficultyManager.CurrentNumZombiesAliveLimit,
+             _difficultyManager.CurrentZombieSpawnTimerInterval);
 
         _spawnManager.SpawnersDepleted += RoundOver;
     }

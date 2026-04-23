@@ -6,15 +6,14 @@
 
 [node name="RoundManager" type="Node" unique_id=397079504 node_paths=PackedStringArray("_spawnManager", "_difficultyManager")]
 script = ExtResource("1_bkdqf")
-_roundStartGapTime = 5.0
+_initialRoundStartTimer = 0.5
 _spawnManager = NodePath("SpawnManager")
 _difficultyManager = NodePath("DifficultyManager")
 
 [node name="DifficultyManager" parent="." unique_id=1702326334 instance=ExtResource("2_q117e")]
 _zombieSpeedScaleAmount = 1.1
 _zombieHealthScaleAmount = 1.1
-_numZombiesAliveLimitScaleAmount = 1.5
-_numZombiesRoundLimitScaleAmount = 1.5
+_zombieSpawnTimerIntervalScaleAmount = 0.95
 _startingZombieSpeed = 3.0
 _startingZombieHealth = 50.0
 _startingNumZombiesAliveLimit = 5

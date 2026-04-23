@@ -169,11 +169,10 @@ transform = Transform3D(1, -1.1641532e-09, 3.7252903e-09, 2.3283064e-09, 0.99999
 _deathSound = null
 
 [node name="RoundManager" parent="." unique_id=397079504 node_paths=PackedStringArray("_player") instance=ExtResource("5_0wksg")]
-_roundStartGapTime = 2.0
 _player = NodePath("../PlayerController")
 
 [node name="DifficultyManager" parent="RoundManager" index="0" unique_id=1702326334]
-_zombieSpawnTimerIntervalScaleAmount = 0.5
+_zombieSpawnTimerIntervalScaleAmount = 0.8
 _maxZombieSpeed = 5.0
 _maxZombieHealth = 500.0
 _maxNumZombiesAliveLimit = 100

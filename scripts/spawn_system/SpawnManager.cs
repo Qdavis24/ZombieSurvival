@@ -103,6 +103,7 @@ public partial class SpawnManager : Node
         }
         
 
+        GD.Print($"Spawn interval set to: {_stats.ZombieSpawnTimerInterval}");
         Reset();
     }
 
