@@ -65,13 +65,13 @@ size = Vector3(20.14141, 12.617096, 8.682232)
 size = Vector3(8.2196045, 12.172043, 1.3147888)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kght8"]
-size = Vector3(8.0767975, 6.658081, 20.25415)
+size = Vector3(8.0767975, 4.8992996, 11.170685)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5ig55"]
-size = Vector3(5.4551086, 3, 2.2020264)
+size = Vector3(5.4551086, 3, 1.8950806)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bwfjc"]
-size = Vector3(7.6621094, 13.090759, 18.506409)
+size = Vector3(7.6621094, 6.6214294, 18.506409)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_va02t"]
 size = Vector3(6.3166656, 10.609314, 8.026794)
@@ -83,7 +83,7 @@ size = Vector3(1.1694336, 10.451294, 1.1776123)
 size = Vector3(22.500122, 21.224487, 11.176331)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_btq6w"]
-size = Vector3(5.701294, 4.6593018, 2.2910767)
+size = Vector3(5.701294, 1.3383484, 2.2910767)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lgcn6"]
 size = Vector3(2.3948975, 1.5991211, 6.0296936)
@@ -102,6 +102,9 @@ size = Vector3(23.061462, 21.226074, 30.411499)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_na14q"]
 size = Vector3(2.0175781, 2.069336, 1.1137085)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bks4y"]
+size = Vector3(2.420288, 2.772461, 2.1657715)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" unique_id=520281028]
 navigation_mesh = SubResource("NavigationMesh_eq5l7")
@@ -297,7 +300,11 @@ transform = Transform3D(0.11519949, -0.00016593972, -0.27700016, 0.008089321, 0.
 [node name="AdamsCarTypeAblue" parent="CarTypeABlue" unique_id=1071878447 instance=ExtResource("6_6qnwa")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CarTypeABlue" unique_id=244893691]
-transform = Transform3D(1, -1.2852252e-07, 8.940697e-08, 7.450581e-09, 1, 9.313226e-10, -8.940697e-08, 8.288771e-08, 1, -0.0024946928, 3.0396109, 0.4234619)
+transform = Transform3D(1, -1.2852252e-07, 8.940697e-08, 7.450581e-09, 1, 9.313226e-10, -8.940697e-08, 8.288771e-08, 1, -0.0024941564, 3.2425745, 4.0056615)
+shape = SubResource("BoxShape3D_kght8")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="CarTypeABlue" unique_id=2081006953]
+transform = Transform3D(1, -1.2852252e-07, 8.940697e-08, 7.450581e-09, 1, 9.313226e-10, -8.940697e-08, 8.288771e-08, 1, 0.85097456, 1.6518917, -3.2362914)
 shape = SubResource("BoxShape3D_kght8")
 
 [node name="JCarBlue" type="StaticBody3D" parent="." unique_id=1590859595]
@@ -306,7 +313,7 @@ transform = Transform3D(0.25915992, 0.030273508, 0.9653603, 0.0014902456, 0.9994
 [node name="CarBLUE" parent="JCarBlue" unique_id=914267895 instance=ExtResource("7_u6sxo")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="JCarBlue" unique_id=2003132497]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08207703, -0.6831665, 0.05267334)
+transform = Transform3D(1, 0, 4.4703484e-07, -2.8871e-08, 1, 1.21071935e-08, 0, 2.3283064e-10, 1, 0.08208084, -0.68316656, -0.10079956)
 shape = SubResource("BoxShape3D_5ig55")
 
 [node name="CarTypeABlue2" type="StaticBody3D" parent="." unique_id=286924453]
@@ -324,7 +331,7 @@ transform = Transform3D(0.29446083, 0.00097392715, 0.057375524, -0.0007364288, 0
 [node name="AdamsCarTypeAgrey" parent="CarTypeAGrey" unique_id=1405013958 instance=ExtResource("8_1lfyh")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CarTypeAGrey" unique_id=1833940377]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03466797, 5.760903, 0.0659678)
+transform = Transform3D(0.99999285, -2.264278e-08, 1.296401e-06, 1.17579475e-08, 0.99999976, -1.3969839e-09, 4.4703484e-08, -4.656613e-10, 0.99999243, -0.034671783, 2.5262375, 0.065971375)
 shape = SubResource("BoxShape3D_bwfjc")
 
 [node name="Building2" type="StaticBody3D" parent="." unique_id=1361504271]
@@ -464,7 +471,7 @@ collision_mask = 31
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1108513, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CarTypeBRed" unique_id=2134714919]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06732178, 1.8296509, -0.06539917)
+transform = Transform3D(0.9999979, 4.5634806e-08, 6.7055225e-07, -3.4458935e-08, 1, -2.5262125e-07, 4.61936e-07, -1.504086e-07, 0.9999956, 0.06732273, 0.7347108, -0.06539726)
 shape = SubResource("BoxShape3D_btq6w")
 
 [node name="CarTypeBRed2" type="StaticBody3D" parent="." unique_id=1352842147]
@@ -476,7 +483,7 @@ collision_mask = 31
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1108513, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CarTypeBRed2" unique_id=1437881922]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06732178, 1.8296509, -0.06539917)
+transform = Transform3D(1, 1.2805685e-09, -2.0861626e-07, 1.1501834e-07, 1, 1.1990778e-08, 0, -1.3096724e-09, 1, 0.06732559, 1.2641146, -0.06539631)
 shape = SubResource("BoxShape3D_btq6w")
 
 [node name="JTruckWhite" type="StaticBody3D" parent="." unique_id=1321479283]
@@ -572,3 +579,27 @@ transform = Transform3D(-0.0142464265, 0.0068453657, -0.9998749, 0.03664075, 0.9
 
 [node name="DeadGuy" parent="." unique_id=537797684 instance=ExtResource("25_v34e3")]
 transform = Transform3D(0.06522016, 0.0077777468, -1.3984584, 0.049451344, 1.3990896, 0.01008753, 1.3976047, -0.04986684, 0.064903036, 0.51209295, -0.0360094, -19.086517)
+
+[node name="CarGlitchSpotBlocker" type="StaticBody3D" parent="." unique_id=1904686947]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CarGlitchSpotBlocker" unique_id=1438574500]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.620323, 1.8920898, -24.085554)
+shape = SubResource("BoxShape3D_bks4y")
+
+[node name="CarGlitchSpotBlocker2" type="StaticBody3D" parent="." unique_id=2012717120]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CarGlitchSpotBlocker2" unique_id=596198940]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.317416, 0.88623047, -23.148481)
+shape = SubResource("BoxShape3D_bks4y")
+
+[node name="RpgBoxGlitchSpotBlocker" type="StaticBody3D" parent="." unique_id=665708775]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RpgBoxGlitchSpotBlocker" unique_id=1426869208]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.174726, 1.8920898, 12.264772)
+shape = SubResource("BoxShape3D_bks4y")
+
+[node name="TankGlitchSpotBlocker" type="StaticBody3D" parent="." unique_id=798228056]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TankGlitchSpotBlocker" unique_id=114095545]
+transform = Transform3D(0.8707336, 0, 0.49175504, 0, 1, 0, -0.49175504, 0, 0.8707336, -12.023769, 1.8920898, 3.0818622)
+shape = SubResource("BoxShape3D_bks4y")
