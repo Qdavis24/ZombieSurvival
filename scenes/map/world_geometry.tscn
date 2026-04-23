@@ -64,6 +64,9 @@ size = Vector3(20.14141, 12.617096, 8.682232)
 [sub_resource type="BoxShape3D" id="BoxShape3D_rg52m"]
 size = Vector3(8.2196045, 12.172043, 1.3147888)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_v34e3"]
+size = Vector3(1, 2.7392578, 1.9829102)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_kght8"]
 size = Vector3(8.0767975, 4.8992996, 11.170685)
 
@@ -293,6 +296,10 @@ shape = SubResource("BoxShape3D_rg52m")
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="Building1" unique_id=164992448]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12638712, 8.706544, 4.6694794)
 shape = SubResource("BoxShape3D_rg52m")
+
+[node name="LightCheeseBlocker" type="CollisionShape3D" parent="Building1" unique_id=1266651074]
+transform = Transform3D(1, 0, 3.5527137e-14, 0, 0.99999297, 0, 3.5527137e-14, 0, 0.99999297, -8.244377, 0.8696257, 5.673704)
+shape = SubResource("BoxShape3D_v34e3")
 
 [node name="CarTypeABlue" type="StaticBody3D" parent="." unique_id=1910819203]
 transform = Transform3D(0.11519949, -0.00016593972, -0.27700016, 0.008089321, 0.29987407, 0.0031845649, 0.276882, -0.008692011, 0.11515558, -0.43317944, -0.12087175, -0.016130798)
