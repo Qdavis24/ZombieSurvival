@@ -27,7 +27,7 @@ public partial class PerkManager : Node
     [Export] private PackedScene _sprintPerkScene;
 
     [ExportGroup("Stats")]
-    [Export] private float _healthPerkMaxHealth = 120f;
+    [Export] private float _healthPerkMaxHealth = 130f;
     [Export] private float _reloadSpeedMultiplier = 1.7f;
 
     private readonly HashSet<PerkType> _activePerks = new();

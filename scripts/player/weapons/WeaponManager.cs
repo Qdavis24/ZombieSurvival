@@ -359,26 +359,30 @@ public partial class WeaponManager : Node
         return _currentWeaponIndex;
     }
 
+    private void TryHandleWeaponSwapInput()
+    {
+        if (IsHandsBusy || _weaponSlots == null || _weaponSlots.Length == 0)
+            return;
+
+        if (Input.IsActionJustPressed("weapon_swap_down") || Input.IsActionJustPressed("weapon_swap_right"))
+        {
+            int nextIndex = FindNextUnlockedWeaponIndex(1);
+            SwapToWeaponIndex(nextIndex);
+        }
+
+        if (Input.IsActionJustPressed("weapon_swap_up") || Input.IsActionJustPressed("weapon_swap_left"))
+        {
+            int nextIndex = FindNextUnlockedWeaponIndex(-1);
+            SwapToWeaponIndex(nextIndex);
+        }
+    }
+
     public override void _Process(double delta)
     {
         bool isMovingForward = Input.IsActionPressed("move_forward");
         UpdateCrosshairVisibility(isMovingForward);
 
-        // Swap weapon
-        if (!IsHandsBusy && _weaponSlots != null && _weaponSlots.Length > 0)
-        {
-            if (Input.IsActionJustPressed("weapon_swap_down"))
-            {
-                int nextIndex = FindNextUnlockedWeaponIndex(1);
-                SwapToWeaponIndex(nextIndex);
-            }
-
-            if (Input.IsActionJustPressed("weapon_swap_up"))
-            {
-                int nextIndex = FindNextUnlockedWeaponIndex(-1);
-                SwapToWeaponIndex(nextIndex);
-            }
-        }
+        TryHandleWeaponSwapInput();
 
         if (!IsHandsBusy)
         {
