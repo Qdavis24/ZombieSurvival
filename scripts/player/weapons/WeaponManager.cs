@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Godot;
 using ZombieSurvival.scripts.inventory_system;
-using ZombieSurvival.scripts.player.weapons.grenade;
 
 namespace ZombieSurvival.scripts.player.weapons;
 
@@ -12,13 +11,7 @@ public partial class WeaponManager : Node
     public delegate void AmmoChangedEventHandler(int currentAmmo, int reserve);
 
     [Signal]
-    public delegate void GrenadesChangedEventHandler(int currentGrenades);
-
-    [Signal]
     public delegate void ReloadFailedEventHandler();
-    
-    [Signal]
-    public delegate void GrenadeThrowFailedEventHandler();
 
     private sealed class WeaponSlot
     {
@@ -37,7 +30,7 @@ public partial class WeaponManager : Node
         }
     }
 
-    private enum HandActionState
+    public enum HandActionState
     {
         Idle,
         SwappingWeapon,
@@ -59,22 +52,16 @@ public partial class WeaponManager : Node
     [Export] private float _defaultHipFov = 90f;
     [Export] private float _fovLerpSpeed = 80f;
 
-    [Export] private PackedScene _grenadeThrowScene;
-    [Export] private int _startingGrenadeCount = 8;
-
     private HitResolver _hitResolver;
 
     private WeaponBase _current;
-    private bool IsHandsBusy => _handActionState != HandActionState.Idle;
+    public bool IsHandsBusy => _handActionState != HandActionState.Idle;
 
     public override void _Ready()
     {
         _hitResolver = GetTree().CurrentScene.GetNodeOrNull<HitResolver>("HitResolver");
         _playerController.Inventory.ItemAdded += OnPlayerInventoryItemAdded;
         _playerController.Inventory.ItemRemoved += OnPlayerInventoryItemRemoved;
-        _playerController.Inventory.AddItem(ItemType.Grenades, _startingGrenadeCount);
-        
-        CallDeferred(nameof(RefreshHudGrenades));
 
         if (_weaponScenes != null && _weaponScenes.Length > 0)
         {
@@ -112,12 +99,6 @@ public partial class WeaponManager : Node
 
     private void OnPlayerInventoryItemAdded(ItemType itemType, int amount)
     {
-        if (itemType == ItemType.Grenades)
-        {
-            RefreshHudGrenades();
-            return;
-        }
-
         if (_weaponSlots == null) return;
         switch (itemType.GetGroup())
         {
@@ -138,21 +119,9 @@ public partial class WeaponManager : Node
 
     private void OnPlayerInventoryItemRemoved(ItemType itemType, int amount)
     {
-        if (itemType == ItemType.Grenades)
-        {
-            RefreshHudGrenades();
-            return;
-        }
-
         if (_weaponSlots == null) return;
         if (_weaponSlots[_currentWeaponIndex].AmmoType == itemType)
             RefreshHudAmmo();
-    }
-
-    private void RefreshHudGrenades()
-    {
-        var count = _playerController.Inventory.GetAmount(ItemType.Grenades);
-        EmitSignal(SignalName.GrenadesChanged, count);
     }
 
     private void Equip(int weaponIndex)
@@ -305,35 +274,19 @@ public partial class WeaponManager : Node
         }
     }
 
-    private async void TryStartGrenadeThrow()
+    public async Task PlayTemporaryHandAction(HandActionState actionState, Func<Task> action)
     {
         if (IsHandsBusy)
             return;
 
-        if (_playerController.Inventory.GetAmount(ItemType.Grenades) <= 0)
-        {
-            EmitSignal(SignalName.GrenadeThrowFailed);
-            return;
-        }
-
-        if (_grenadeThrowScene == null)
-            return;
-
-        _handActionState = HandActionState.ThrowingGrenade;
+        _handActionState = actionState;
 
         try
         {
-            _playerController.Inventory.ConsumeItem(ItemType.Grenades, 1);
             int previousWeaponIndex = _currentWeaponIndex;
 
             await StowCurrentWeapon();
-
-            var grenadeThrowNode = _grenadeThrowScene.Instantiate<Grenade>();
-            _weaponSocket.AddChild(grenadeThrowNode);
-
-            await grenadeThrowNode.ThrowGrenade();
-
-            grenadeThrowNode.QueueFree();
+            await action();
 
             Equip(previousWeaponIndex);
             await RaiseCurrentWeapon();
@@ -421,12 +374,6 @@ public partial class WeaponManager : Node
                 SwapToWeaponIndex(2);
             if (Input.IsActionJustPressed("weapon4"))
                 SwapToWeaponIndex(3);
-
-            if (IsHandsBusy)
-                return;
-
-            if (Input.IsActionJustPressed("throw_grenade"))
-                TryStartGrenadeThrow();
 
             if (IsHandsBusy)
                 return;

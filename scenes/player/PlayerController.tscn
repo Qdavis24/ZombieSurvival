@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://bhwaaq5eta4sp" path="res://scenes/inventory_system/Inventory.tscn" id="13_xpgqn"]
 [ext_resource type="AudioStream" uid="uid://d25cmo0hid2cr" path="res://assets/sound/player/hit4.wav" id="14_eutje"]
 [ext_resource type="AudioStream" uid="uid://g7sxc76lhyha" path="res://assets/sound/player/deathbell.mp3" id="17_mx0ws"]
+[ext_resource type="Script" uid="uid://bnokohfwvnoew" path="res://scripts/player/weapons/GrenadeManager.cs" id="24_6wns0"]
 [ext_resource type="PackedScene" uid="uid://de6jft8suc321" path="res://scenes/player/PlayerHud.tscn" id="24_nn1ai"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ajn8d"]
@@ -61,13 +62,14 @@ height = 1.8
 radius = 0.4
 height = 1.8
 
-[node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "_collisionShape3D", "Inventory")]
+[node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "_grenadeManager", "_collisionShape3D", "Inventory")]
 collision_layer = 8193
 collision_mask = 8193
 script = ExtResource("1_etyb6")
 _healthRegenRate = 0.1
 _playerHud = NodePath("PlayerHud")
 _weaponManager = NodePath("WeaponManager")
+_grenadeManager = NodePath("GrenadeManager")
 _collisionShape3D = NodePath("CollisionShape")
 _footstepSound = SubResource("AudioStreamRandomizer_ajn8d")
 _jumpSound = SubResource("AudioStreamRandomizer_d8kh4")
@@ -102,8 +104,14 @@ _weaponScenes = Array[PackedScene]([ExtResource("5_anuhh"), ExtResource("4_08ru5
 _startingReserveAmmo = PackedInt32Array(84, 200, 100, 10)
 _playerController = NodePath("..")
 _camera = NodePath("../Head/Camera3D")
-_grenadeThrowScene = ExtResource("8_wtdo7")
 
 [node name="PlayerHud" parent="." unique_id=171600604 instance=ExtResource("24_nn1ai")]
 
 [node name="Inventory" parent="." unique_id=949916564 instance=ExtResource("13_xpgqn")]
+
+[node name="GrenadeManager" type="Node" parent="." unique_id=913212744 node_paths=PackedStringArray("_playerController", "_weaponManager", "_weaponSocket")]
+script = ExtResource("24_6wns0")
+_playerController = NodePath("..")
+_weaponManager = NodePath("../WeaponManager")
+_weaponSocket = NodePath("../Head/Camera3D/WeaponSocket")
+_grenadeThrowScene = ExtResource("8_wtdo7")

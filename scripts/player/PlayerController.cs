@@ -12,6 +12,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	[Export] private float _healthRegenRate;
 	[Export] private PlayerHud _playerHud;
 	[Export] private WeaponManager _weaponManager;
+	[Export] private GrenadeManager _grenadeManager;
 	[Export] private CollisionShape3D _collisionShape3D;
 	[Export] private float _mouseSensitivity = 0.0020f;
 	[Export] private float _aimSensitivityMultiplier = 0.5f;
@@ -89,9 +90,9 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		Inventory.ItemAdded += OnItemAdded;
 		Inventory.ItemRemoved += OnItemRemoved;
 		_weaponManager.AmmoChanged += _playerHud.SetAmmo;
-		_weaponManager.GrenadesChanged += _playerHud.SetGrenades;
 		_weaponManager.ReloadFailed += _playerHud.ReloadFailed;
-		_weaponManager.GrenadeThrowFailed += _playerHud.GrenadeThrowFailed;
+		_grenadeManager.GrenadesChanged += _playerHud.SetGrenades;
+		_grenadeManager.GrenadeThrowFailed += _playerHud.GrenadeThrowFailed;
 		_health = _maxHealth;
 	}
 
