@@ -37,14 +37,21 @@ public partial class WeaponManager : Node
         }
     }
 
+    private enum HandActionState
+    {
+        Idle,
+        SwappingWeapon,
+        ThrowingGrenade
+    }
+
     [Export] private Node3D _weaponSocket;
     [Export] private PackedScene[] _weaponScenes;
     [Export] private int[] _startingReserveAmmo;
     private WeaponSlot[] _weaponSlots;
     private int _currentWeaponIndex = 0;
-    private bool _isSwapping = false;
     private bool _isRocketLoaded = true;
     private bool _crosshairHiddenByWeaponState = false;
+    private HandActionState _handActionState = HandActionState.Idle;
 
     [Export] private PlayerController _playerController;
     [Export] private Camera _camera;
@@ -54,12 +61,11 @@ public partial class WeaponManager : Node
 
     [Export] private PackedScene _grenadeThrowScene;
     [Export] private int _startingGrenadeCount = 8;
-    private bool _isThrowingGrenade = false;
-    private int _previousWeaponIndex = -1;
 
     private HitResolver _hitResolver;
 
     private WeaponBase _current;
+    private bool IsHandsBusy => _handActionState != HandActionState.Idle;
 
     public override void _Ready()
     {
@@ -233,7 +239,7 @@ public partial class WeaponManager : Node
 
     private void UpdateCrosshairVisibility(bool isMovingForward)
     {
-        bool shouldHideCrosshair = isMovingForward || _isSwapping || (_current?.IsReloading ?? false) || (_current?.IsAiming ?? false);
+        bool shouldHideCrosshair = isMovingForward || IsHandsBusy || (_current?.IsReloading ?? false) || (_current?.IsAiming ?? false);
 
         if (shouldHideCrosshair)
         {
@@ -301,7 +307,7 @@ public partial class WeaponManager : Node
 
     private async void TryStartGrenadeThrow()
     {
-        if (_isSwapping || _isThrowingGrenade)
+        if (IsHandsBusy)
             return;
 
         if (_playerController.Inventory.GetAmount(ItemType.Grenades) <= 0)
@@ -313,42 +319,54 @@ public partial class WeaponManager : Node
         if (_grenadeThrowScene == null)
             return;
 
-        _isThrowingGrenade = true;
-        _playerController.Inventory.ConsumeItem(ItemType.Grenades, 1);
-        _previousWeaponIndex = _currentWeaponIndex;
+        _handActionState = HandActionState.ThrowingGrenade;
 
-        await StowCurrentWeapon();
+        try
+        {
+            _playerController.Inventory.ConsumeItem(ItemType.Grenades, 1);
+            int previousWeaponIndex = _currentWeaponIndex;
 
-        var grenadeThrowNode = _grenadeThrowScene.Instantiate<Grenade>();
-        _weaponSocket.AddChild(grenadeThrowNode);
+            await StowCurrentWeapon();
 
-        await grenadeThrowNode.ThrowGrenade();
+            var grenadeThrowNode = _grenadeThrowScene.Instantiate<Grenade>();
+            _weaponSocket.AddChild(grenadeThrowNode);
 
-        grenadeThrowNode.QueueFree();
+            await grenadeThrowNode.ThrowGrenade();
 
-        Equip(_previousWeaponIndex);
-        await RaiseCurrentWeapon();
+            grenadeThrowNode.QueueFree();
 
-        _isThrowingGrenade = false;
+            Equip(previousWeaponIndex);
+            await RaiseCurrentWeapon();
+        }
+        finally
+        {
+            _handActionState = HandActionState.Idle;
+        }
     }
 
     private async void SwapToWeaponIndex(int newIndex)
     {
-        if (_isSwapping) return;
+        if (IsHandsBusy) return;
         if (_weaponSlots == null || _weaponSlots.Length == 0) return;
         if (newIndex < 0 || newIndex >= _weaponSlots.Length) return;
         if (_weaponSlots[newIndex] == null || !_weaponSlots[newIndex].Unlocked) return;
         if (newIndex == _currentWeaponIndex) return;
 
-        _isSwapping = true;
+        _handActionState = HandActionState.SwappingWeapon;
 
-        await StowCurrentWeapon();
+        try
+        {
+            await StowCurrentWeapon();
 
-        _currentWeaponIndex = newIndex;
-        Equip(_currentWeaponIndex);
-        await RaiseCurrentWeapon();
+            _currentWeaponIndex = newIndex;
+            Equip(_currentWeaponIndex);
+            await RaiseCurrentWeapon();
+        }
+        finally
+        {
+            _handActionState = HandActionState.Idle;
+        }
 
-        _isSwapping = false;
     }
 
     private int FindNextUnlockedWeaponIndex(int direction)
@@ -378,7 +396,7 @@ public partial class WeaponManager : Node
         UpdateCrosshairVisibility(isMovingForward);
 
         // Swap weapon
-        if (!_isSwapping && _weaponSlots != null && _weaponSlots.Length > 0)
+        if (!IsHandsBusy && _weaponSlots != null && _weaponSlots.Length > 0)
         {
             if (Input.IsActionJustPressed("weapon_swap_down"))
             {
@@ -393,7 +411,7 @@ public partial class WeaponManager : Node
             }
         }
 
-        if (!_isSwapping)
+        if (!IsHandsBusy)
         {
             if (Input.IsActionJustPressed("weapon1"))
                 SwapToWeaponIndex(0);
@@ -404,10 +422,13 @@ public partial class WeaponManager : Node
             if (Input.IsActionJustPressed("weapon4"))
                 SwapToWeaponIndex(3);
 
+            if (IsHandsBusy)
+                return;
+
             if (Input.IsActionJustPressed("throw_grenade"))
                 TryStartGrenadeThrow();
 
-            if (_isThrowingGrenade)
+            if (IsHandsBusy)
                 return;
 
             bool aimHeld = Input.IsActionPressed("aim");
