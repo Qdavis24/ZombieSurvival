@@ -34,7 +34,8 @@ public partial class WeaponManager : Node
     {
         Idle,
         SwappingWeapon,
-        ThrowingGrenade
+        ThrowingGrenade,
+        UsingPerk
     }
 
     [Export] private Node3D _weaponSocket;
@@ -55,6 +56,7 @@ public partial class WeaponManager : Node
     private HitResolver _hitResolver;
 
     private WeaponBase _current;
+    private float _reloadSpeedMultiplier = 1f;
     public bool IsHandsBusy => _handActionState != HandActionState.Idle;
 
     public override void _Ready()
@@ -144,6 +146,7 @@ public partial class WeaponManager : Node
         _current?.QueueFree();
 
         _current = slot.Scene.Instantiate<WeaponBase>();
+        _current.ReloadSpeedMultiplier = _reloadSpeedMultiplier;
         if (_current is RpgWeapon rpg)
         {
             rpg.SetRocketLoaded(_isRocketLoaded);
@@ -169,6 +172,14 @@ public partial class WeaponManager : Node
 
         RefreshHudAmmo();
         CallDeferred(nameof(RefreshHudAmmo));
+    }
+
+    public void SetReloadSpeedMultiplier(float reloadSpeedMultiplier)
+    {
+        _reloadSpeedMultiplier = Mathf.Max(0.01f, reloadSpeedMultiplier);
+
+        if (_current != null)
+            _current.ReloadSpeedMultiplier = _reloadSpeedMultiplier;
     }
 
     private void OnCurrentWeaponAmmoChanged(int currentAmmo)
@@ -286,10 +297,15 @@ public partial class WeaponManager : Node
             int previousWeaponIndex = _currentWeaponIndex;
 
             await StowCurrentWeapon();
-            await action();
-
-            Equip(previousWeaponIndex);
-            await RaiseCurrentWeapon();
+            try
+            {
+                await action();
+            }
+            finally
+            {
+                Equip(previousWeaponIndex);
+                await RaiseCurrentWeapon();
+            }
         }
         finally
         {

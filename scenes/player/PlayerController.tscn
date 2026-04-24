@@ -25,6 +25,10 @@
 [ext_resource type="AudioStream" uid="uid://g7sxc76lhyha" path="res://assets/sound/player/deathbell.mp3" id="17_mx0ws"]
 [ext_resource type="Script" uid="uid://bnokohfwvnoew" path="res://scripts/player/weapons/GrenadeManager.cs" id="24_6wns0"]
 [ext_resource type="PackedScene" uid="uid://de6jft8suc321" path="res://scenes/player/PlayerHud.tscn" id="24_nn1ai"]
+[ext_resource type="Script" uid="uid://caq583up32tku" path="res://scripts/player/PerkManager.cs" id="26_mx0ws"]
+[ext_resource type="PackedScene" uid="uid://bha624ttmsg0x" path="res://scenes/player/perks/HealthPerk.tscn" id="27_p5g1x"]
+[ext_resource type="PackedScene" uid="uid://3wje4uvxa6a7" path="res://scenes/player/perks/ReloadPerk.tscn" id="28_el833"]
+[ext_resource type="PackedScene" uid="uid://b7oigtssxtnjt" path="res://scenes/player/perks/SprintPerk.tscn" id="29_c73cq"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ajn8d"]
 random_pitch = 1.0594631
@@ -71,6 +75,7 @@ _playerHud = NodePath("PlayerHud")
 _weaponManager = NodePath("WeaponManager")
 _grenadeManager = NodePath("GrenadeManager")
 _collisionShape3D = NodePath("CollisionShape")
+_sprintMultiplier = 1.2
 _footstepSound = SubResource("AudioStreamRandomizer_ajn8d")
 _jumpSound = SubResource("AudioStreamRandomizer_d8kh4")
 _hitSound = SubResource("AudioStreamRandomizer_qhhj6")
@@ -115,3 +120,12 @@ _playerController = NodePath("..")
 _weaponManager = NodePath("../WeaponManager")
 _weaponSocket = NodePath("../Head/Camera3D/WeaponSocket")
 _grenadeThrowScene = ExtResource("8_wtdo7")
+
+[node name="PerkManager" type="Node" parent="." unique_id=1679212952 node_paths=PackedStringArray("_playerController", "_weaponManager", "_weaponSocket")]
+script = ExtResource("26_mx0ws")
+_playerController = NodePath("..")
+_weaponManager = NodePath("../WeaponManager")
+_weaponSocket = NodePath("../Head/Camera3D/WeaponSocket")
+_healthPerkScene = ExtResource("27_p5g1x")
+_reloadPerkScene = ExtResource("28_el833")
+_sprintPerkScene = ExtResource("29_c73cq")

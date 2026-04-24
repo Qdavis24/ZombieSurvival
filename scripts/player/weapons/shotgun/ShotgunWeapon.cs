@@ -20,7 +20,7 @@ public partial class ShotgunWeapon : WeaponBase
 	{
 		BeginReloadState();
 		_reloadCancelRequested = false;
-		Anim.Play("hip_reload_prep", AnimBlendTime);
+		PlayReloadAnimation("hip_reload_prep");
 	}
 
 	protected override void RequestReloadCancel()
@@ -34,12 +34,12 @@ public partial class ShotgunWeapon : WeaponBase
 		{
 			if (CurrentAmmo >= MagazineSize)
 			{
-				Anim.Play("hip_reload_end", AnimBlendTime);
+				PlayReloadAnimation("hip_reload_end");
 				AudioManager.I.Play3D(_reloadSound, GlobalPosition, -8f);
 			}
 			else
 			{
-				Anim.Play("hip_reload", AnimBlendTime);
+				PlayReloadAnimation("hip_reload");
 				AudioManager.I.Play3D(_reloadShellSound, GlobalPosition, -16f);
 			}
 
@@ -52,12 +52,12 @@ public partial class ShotgunWeapon : WeaponBase
 
 			if (_reloadCancelRequested || CurrentAmmo >= MagazineSize || !loaded)
 			{
-				Anim.Play("hip_reload_end", AnimBlendTime);
+				PlayReloadAnimation("hip_reload_end");
 				AudioManager.I.Play3D(_reloadSound, GlobalPosition, -8f);
 			}
 			else
 			{
-				Anim.Play("hip_reload", AnimBlendTime);
+				PlayReloadAnimation("hip_reload");
 				AudioManager.I.Play3D(_reloadShellSound, GlobalPosition, -16f);
 			}
 

@@ -76,6 +76,7 @@ public partial class WeaponBase : Node3D
 
     public int CurrentAmmo => _currentAmmo;
     public int MagazineSize => _magazineSize;
+    public float ReloadSpeedMultiplier { get; set; } = 1f;
 
     protected AnimationPlayer Anim => _anim;
     protected float AnimBlendTime => _animBlendTime;
@@ -248,12 +249,17 @@ public partial class WeaponBase : Node3D
     protected virtual void StartReload()
     {
         BeginReloadState();
-        _anim.Play("hip_reload", _animBlendTime);
+        PlayReloadAnimation("hip_reload");
         AudioManager.I.PlayUi(_reloadSound);
     }
 
     protected virtual void RequestReloadCancel()
     {
+    }
+
+    protected void PlayReloadAnimation(StringName animationName)
+    {
+        _anim.Play(animationName, _animBlendTime, Mathf.Max(0.01f, ReloadSpeedMultiplier));
     }
 
     private void Fire()

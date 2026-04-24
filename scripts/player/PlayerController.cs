@@ -19,6 +19,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	[Export] private float _controllerSensitivityHorizontal = 5f;
 	[Export] private float _controllerSensitivityVertical = 2.5f;
 	[Export] private float _moveSpeed = 6.0f;
+	[Export] private float _sprintMultiplier = 1.6f;
 	[Export] private float _accel = 14.0f;
 	// [Export] private float _gravity = 24.0f;
 	[Export] private float _gravity = 20.0f;
@@ -38,6 +39,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	
 	[Export] private float _maxHealth = 75f;
 	[Export] private float _health = 75f;
+	private bool _sprintEnabled;
 	private float Health
 	{
 		get => _health;
@@ -94,6 +96,23 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		_grenadeManager.GrenadesChanged += _playerHud.SetGrenades;
 		_grenadeManager.GrenadeThrowFailed += _playerHud.GrenadeThrowFailed;
 		_health = _maxHealth;
+		_playerHud.UpdateHealthIndicator(_health, _maxHealth);
+	}
+
+	public void SetMaxHealth(float maxHealth, bool healGainedAmount = true)
+	{
+		var oldMaxHealth = _maxHealth;
+		_maxHealth = Mathf.Max(1f, maxHealth);
+
+		if (healGainedAmount && _maxHealth > oldMaxHealth)
+			Health += _maxHealth - oldMaxHealth;
+		else
+			Health = Health;
+	}
+
+	public void SetSprintEnabled(bool enabled)
+	{
+		_sprintEnabled = enabled;
 	}
 
 	public void ShowCrosshair()
@@ -170,7 +189,8 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		var wishDir = (Transform.Basis * localDir).Normalized();
 
 		var horizontal = new Vector3(Velocity.X, 0f, Velocity.Z);
-		var target = wishDir * _moveSpeed;
+		var moveSpeed = GetMoveSpeed(input);
+		var target = wishDir * moveSpeed;
 
 		horizontal = horizontal.Lerp(target, _accel * dt);
 
@@ -202,6 +222,18 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 		Velocity = new Vector3(horizontal.X, yVel, horizontal.Z);
 		MoveAndSlide();
+	}
+
+	private float GetMoveSpeed(Vector2 input)
+	{
+		if (!_sprintEnabled)
+			return _moveSpeed;
+
+		if (!InputMap.HasAction("sprint") || !Input.IsActionPressed("sprint"))
+			return _moveSpeed;
+
+		bool movingForward = input.Y < 0f;
+		return movingForward ? _moveSpeed * _sprintMultiplier : _moveSpeed;
 	}
 
 	public void TakeDamage(float damage, Vector3 hitGlobalPosition, Vector3 hitDir, float force)
