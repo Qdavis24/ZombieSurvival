@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Godot;
 using ZombieSurvival.scripts.inventory_system;
 using ZombieSurvival.scripts.player.weapons.grenade;
@@ -254,6 +255,50 @@ public partial class WeaponManager : Node
         return weapon?.FindChild("AnimationPlayer", true, false) as AnimationPlayer;
     }
 
+    private void DisconnectCurrentWeapon()
+    {
+        if (_current == null)
+            return;
+
+        _current.Fired -= _camera.OnWeaponFired;
+        _current.Fired -= _playerController.OnWeaponFired;
+        _current.AmmoChanged -= OnCurrentWeaponAmmoChanged;
+        _current.ReloadFailed -= OnCurrentWeaponReloadFailed;
+    }
+
+    private async Task StowCurrentWeapon()
+    {
+        if (_current == null)
+            return;
+
+        var currentAnim = GetWeaponAnimationPlayer(_current);
+        if (currentAnim != null && currentAnim.HasAnimation("transition_swap"))
+        {
+            _current.SetAimState(false);
+            currentAnim.Play("transition_swap");
+            await ToSignal(currentAnim, AnimationPlayer.SignalName.AnimationFinished);
+        }
+
+        DisconnectCurrentWeapon();
+        _current.QueueFree();
+        _current = null;
+    }
+
+    private async Task RaiseCurrentWeapon()
+    {
+        if (_current == null)
+            return;
+
+        var currentAnim = GetWeaponAnimationPlayer(_current);
+        if (currentAnim != null && currentAnim.HasAnimation("transition_swap"))
+        {
+            currentAnim.Play("transition_swap");
+            currentAnim.Seek(currentAnim.CurrentAnimationLength, true);
+            currentAnim.Play("transition_swap", customSpeed: -1.0f, fromEnd: true);
+            await ToSignal(currentAnim, AnimationPlayer.SignalName.AnimationFinished);
+        }
+    }
+
     private async void TryStartGrenadeThrow()
     {
         if (_isSwapping || _isThrowingGrenade)
@@ -272,23 +317,7 @@ public partial class WeaponManager : Node
         _playerController.Inventory.ConsumeItem(ItemType.Grenades, 1);
         _previousWeaponIndex = _currentWeaponIndex;
 
-        if (_current != null)
-        {
-            var currentAnim = GetWeaponAnimationPlayer(_current);
-            if (currentAnim != null && currentAnim.HasAnimation("transition_swap"))
-            {
-                _current.SetAimState(false);
-                currentAnim.Play("transition_swap");
-                await ToSignal(currentAnim, AnimationPlayer.SignalName.AnimationFinished);
-            }
-
-            _current.Fired -= _camera.OnWeaponFired;
-            _current.Fired -= _playerController.OnWeaponFired;
-            _current.AmmoChanged -= OnCurrentWeaponAmmoChanged;
-            _current.ReloadFailed -= OnCurrentWeaponReloadFailed;
-            _current.QueueFree();
-            _current = null;
-        }
+        await StowCurrentWeapon();
 
         var grenadeThrowNode = _grenadeThrowScene.Instantiate<Grenade>();
         _weaponSocket.AddChild(grenadeThrowNode);
@@ -298,18 +327,7 @@ public partial class WeaponManager : Node
         grenadeThrowNode.QueueFree();
 
         Equip(_previousWeaponIndex);
-
-        if (_current != null)
-        {
-            var currentAnim = GetWeaponAnimationPlayer(_current);
-            if (currentAnim != null && currentAnim.HasAnimation("transition_swap"))
-            {
-                currentAnim.Play("transition_swap");
-                currentAnim.Seek(currentAnim.CurrentAnimationLength, true);
-                currentAnim.Play("transition_swap", customSpeed: -1.0f, fromEnd: true);
-                await ToSignal(currentAnim, AnimationPlayer.SignalName.AnimationFinished);
-            }
-        }
+        await RaiseCurrentWeapon();
 
         _isThrowingGrenade = false;
     }
@@ -324,35 +342,11 @@ public partial class WeaponManager : Node
 
         _isSwapping = true;
 
-        if (_current != null)
-        {
-            var currentAnim = GetWeaponAnimationPlayer(_current);
-            if (currentAnim != null && currentAnim.HasAnimation("transition_swap"))
-            {
-                _current.SetAimState(false);
-                // Stow animation
-                currentAnim.Play("transition_swap");
-                await ToSignal(currentAnim, AnimationPlayer.SignalName.AnimationFinished);
-            }
-        }
+        await StowCurrentWeapon();
 
         _currentWeaponIndex = newIndex;
         Equip(_currentWeaponIndex);
-
-        if (_current != null)
-        {
-            var newAnim = GetWeaponAnimationPlayer(_current);
-            if (newAnim != null && newAnim.HasAnimation("transition_swap"))
-            {
-                // Force the weapon into the stowed pose immediately so it doesn't flash idle
-                newAnim.Play("transition_swap");
-                newAnim.Seek(newAnim.CurrentAnimationLength, true);
-
-                // Animation of equip (playing stow animation backwards)
-                newAnim.Play("transition_swap", customSpeed: -1.0f, fromEnd: true);
-                await ToSignal(newAnim, AnimationPlayer.SignalName.AnimationFinished);
-            }
-        }
+        await RaiseCurrentWeapon();
 
         _isSwapping = false;
     }
