@@ -1,5 +1,31 @@
 [gd_resource type="AudioBusLayout" format=3 uid="uid://bx2u5suvigpa"]
 
+[sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_j3pel"]
+resource_name = "Distortion"
+mode = 1
+keep_hf_hz = 17976.0
+drive = 0.5
+
+[sub_resource type="AudioEffectStereoEnhance" id="AudioEffectStereoEnhance_j3pel"]
+resource_name = "StereoEnhance"
+
+[sub_resource type="AudioEffectEQ21" id="AudioEffectEQ21_j3pel"]
+resource_name = "EQ21"
+band_db/22_hz = -50.0
+band_db/32_hz = -26.6
+band_db/44_hz = -12.8
+band_db/2000_hz = -12.8
+band_db/2800_hz = -8.5
+band_db/4000_hz = -8.0
+band_db/5600_hz = -36.1
+band_db/8000_hz = -40.4
+band_db/11000_hz = -48.9
+band_db/16000_hz = -50.0
+band_db/22000_hz = -60.0
+
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_j3pel"]
+resource_name = "Limiter"
+
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_j3pel"]
 resource_name = "Reverb"
 room_size = 0.1
@@ -8,23 +34,38 @@ hipass = 0.5
 wet = 0.1
 
 [resource]
-bus/1/name = &"SFX"
+bus/0/volume_db = 0.16724968
+bus/1/name = &"Effects"
 bus/1/solo = false
 bus/1/mute = false
 bus/1/bypass_fx = false
 bus/1/volume_db = 0.0
 bus/1/send = &"Master"
-bus/2/name = &"Music"
+bus/1/effect/0/effect = SubResource("AudioEffectDistortion_j3pel")
+bus/1/effect/0/enabled = true
+bus/1/effect/1/effect = SubResource("AudioEffectStereoEnhance_j3pel")
+bus/1/effect/1/enabled = true
+bus/1/effect/2/effect = SubResource("AudioEffectEQ21_j3pel")
+bus/1/effect/2/enabled = true
+bus/1/effect/3/effect = SubResource("AudioEffectLimiter_j3pel")
+bus/1/effect/3/enabled = true
+bus/2/name = &"SFX"
 bus/2/solo = false
 bus/2/mute = false
 bus/2/bypass_fx = false
 bus/2/volume_db = 0.0
-bus/2/send = &"Master"
-bus/3/name = &"Explosion"
+bus/2/send = &"Effects"
+bus/3/name = &"Music"
 bus/3/solo = false
 bus/3/mute = false
 bus/3/bypass_fx = false
-bus/3/volume_db = -2.6102495
-bus/3/send = &"Master"
-bus/3/effect/0/effect = SubResource("AudioEffectReverb_j3pel")
-bus/3/effect/0/enabled = false
+bus/3/volume_db = 0.0
+bus/3/send = &"Effects"
+bus/4/name = &"Explosion"
+bus/4/solo = false
+bus/4/mute = false
+bus/4/bypass_fx = false
+bus/4/volume_db = -2.6102495
+bus/4/send = &"Effects"
+bus/4/effect/0/effect = SubResource("AudioEffectReverb_j3pel")
+bus/4/effect/0/enabled = false

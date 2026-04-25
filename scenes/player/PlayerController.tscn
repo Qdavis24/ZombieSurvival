@@ -67,10 +67,10 @@ height = 1.8
 radius = 0.4
 height = 1.8
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kpt3x"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bb0bp"]
 shader = ExtResource("17_bb0bp")
-shader_parameter/pixel_size = 5.00000019
-shader_parameter/color_levels = 14.0
+shader_parameter/pixel_size = 4.000000142499999
+shader_parameter/color_levels = 15.0000006175
 shader_parameter/scanline_strength = 0.0
 shader_parameter/vignette_strength = 0.08
 shader_parameter/brightness = 1.25
@@ -79,6 +79,12 @@ shader_parameter/exposure = 1.15
 shader_parameter/contrast = 1.08
 shader_parameter/saturation = 1.12
 shader_parameter/color_tint = Vector3(1.04, 1, 0.92)
+shader_parameter/dither_strength = 0.0
+shader_parameter/grain_strength = 0.0
+shader_parameter/chromatic_aberration = 1.0000000475
+shader_parameter/curvature = 0.01
+shader_parameter/scanline_count = 60.0
+shader_parameter/scanline_softness = 0.00999999977648
 
 [node name="PlayerController" type="CharacterBody3D" unique_id=1073413131 node_paths=PackedStringArray("_playerHud", "_weaponManager", "_grenadeManager", "_collisionShape3D", "Inventory")]
 collision_layer = 8193
@@ -116,16 +122,17 @@ script = ExtResource("2_08ru5")
 [node name="WeaponSocket" type="Node3D" parent="Head/Camera3D" unique_id=11148851]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.75, 0)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Head/Camera3D" unique_id=661637637]
+[node name="CanvasLayer" type="CanvasLayer" parent="Head/Camera3D" unique_id=732505372]
 
-[node name="ColorRect" type="ColorRect" parent="Head/Camera3D/CanvasLayer" unique_id=391195184]
-material = SubResource("ShaderMaterial_kpt3x")
+[node name="ColorRect" type="ColorRect" parent="Head/Camera3D/CanvasLayer" unique_id=1111529890]
+material = SubResource("ShaderMaterial_bb0bp")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="WeaponManager" type="Node" parent="." unique_id=649505302 node_paths=PackedStringArray("_weaponSocket", "_playerController", "_camera")]
 script = ExtResource("2_h2fbm")
