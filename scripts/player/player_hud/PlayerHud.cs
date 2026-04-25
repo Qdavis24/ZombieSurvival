@@ -73,7 +73,7 @@ public partial class PlayerHud : CanvasLayer
         _crosshairTween = CreateTween();
 
         _crosshair.Modulate = new Color(_crosshair.Modulate, _crosshair.Modulate.A);
-        _crosshairTween.TweenProperty(_crosshair, "modulate:a", 0.8f, 0.15f)
+        _crosshairTween.TweenProperty(_crosshair, "modulate:a", 0.7f, 0.15f)
             .SetTrans(Tween.TransitionType.Cubic)
             .SetEase(Tween.EaseType.Out);
     }

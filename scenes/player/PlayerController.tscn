@@ -68,9 +68,8 @@ radius = 0.4
 height = 1.8
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kpt3x"]
-render_priority = 0
 shader = ExtResource("17_bb0bp")
-shader_parameter/pixel_size = 4.0
+shader_parameter/pixel_size = 5.00000019
 shader_parameter/color_levels = 14.0
 shader_parameter/scanline_strength = 0.0
 shader_parameter/vignette_strength = 0.08
