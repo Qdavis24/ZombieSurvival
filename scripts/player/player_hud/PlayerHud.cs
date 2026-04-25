@@ -47,10 +47,10 @@ public partial class PlayerHud : CanvasLayer
         EventBus.Instance.PlayerEnteredInteractableRange += OnPlayerEnteredInteractableRange;
         EventBus.Instance.PlayerExitedInteractableRange += OnPlayerExitedInteractableRange;
         _itemPopup.PopupFree += OnPopupFree;
-        
+
         ShowCrosshair();
     }
-    
+
 
     public override void _ExitTree()
     {
@@ -73,7 +73,7 @@ public partial class PlayerHud : CanvasLayer
         _crosshairTween = CreateTween();
 
         _crosshair.Modulate = new Color(_crosshair.Modulate, _crosshair.Modulate.A);
-        _crosshairTween.TweenProperty(_crosshair, "modulate:a", 0.3f, 0.15f)
+        _crosshairTween.TweenProperty(_crosshair, "modulate:a", 0.8f, 0.15f)
             .SetTrans(Tween.TransitionType.Cubic)
             .SetEase(Tween.EaseType.Out);
     }
@@ -158,7 +158,7 @@ public partial class PlayerHud : CanvasLayer
             _notificationsBusy = true;
             var message = "";
             var color = Colors.Red;
-            
+
             if (amount > 0)
             {
                 message = $"Picked up {amount} {itemType}";
@@ -168,7 +168,7 @@ public partial class PlayerHud : CanvasLayer
             {
                 message = $"Consumed {amount} {itemType}";
             }
-            
+
             await _itemPopup.ShowNotification(message, color);
         }
     }
@@ -192,12 +192,12 @@ public partial class PlayerHud : CanvasLayer
         AddChild(popup);
         popup.SetAmount(amount);
     }
-    
+
     public void ReloadFailed()
     {
         if (_currentAmmoLabel == null || _reserveAmmoLabel == null)
             return;
-        
+
         AudioManager.I.PlayUiClick();
 
         // Immediately flash red
@@ -214,12 +214,12 @@ public partial class PlayerHud : CanvasLayer
             .SetTrans(Tween.TransitionType.Cubic)
             .SetEase(Tween.EaseType.Out);
     }
-    
+
     public void GrenadeThrowFailed()
     {
         if (_currentGrenadesLabel == null)
             return;
-        
+
         AudioManager.I.PlayUiClick();
 
         // Immediately flash red

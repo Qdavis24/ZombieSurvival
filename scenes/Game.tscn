@@ -27,7 +27,12 @@ background_mode = 2
 sky = SubResource("Sky_kqs1s")
 ssao_enabled = true
 glow_enabled = true
-volumetric_fog_enabled = true
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0, 0, 0, 1)
+fog_light_energy = 0.5
+fog_density = 3.59
+fog_depth_curve = 0.6597539
 volumetric_fog_emission = Color(0.08661275, 0.032505102, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bneo8"]
