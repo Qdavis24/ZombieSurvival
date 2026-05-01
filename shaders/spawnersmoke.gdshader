@@ -14,7 +14,7 @@ uniform vec2 noise_dir_2 = vec2(1.0, -1.0);
 uniform float noise_scale_1 = 0.1;
 uniform float noise_scale_2 = 0.1;
 
-uniform vec3 base_color : source_color = vec3(0, 0, 0);
+uniform vec3 base_color : source_color = vec3(10, 10, 10);
 uniform vec3 smoke_color : source_color = vec3(0.01, 0.01, 0.01);
 
 // NEW controls
