@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1tw5rdnrojb2"
-path.s3tc="res://.godot/imported/Floor_MapAssets.jpg-c2b0e422631a4185c677755c6d44ac37.s3tc.ctex"
+uid="uid://buibfhcsne7gl"
+path.s3tc="res://.godot/imported/BusNew_apartmentcar.png-ceb2725fb0d28f0a418eaa3969244476.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "fa38132f0b4ad565f3781100fc3a98e7"
+"md5": "b72b46639d400b1e06c30f7fce1cb76f"
 }
 
 [deps]
 
-source_file="res://assets/models/map/Floor_MapAssets.jpg"
-dest_files=["res://.godot/imported/Floor_MapAssets.jpg-c2b0e422631a4185c677755c6d44ac37.s3tc.ctex"]
+source_file="res://assets/models/map/BusNew_apartmentcar.png"
+dest_files=["res://.godot/imported/BusNew_apartmentcar.png-ceb2725fb0d28f0a418eaa3969244476.s3tc.ctex"]
 
 [params]
 

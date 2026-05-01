@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://c1gy0b231lik3" path="res://assets/models/map/jacesnewassets/truck_whiteglb.glb" id="12_mo16c"]
 [ext_resource type="PackedScene" uid="uid://84ytf3fku682" path="res://assets/models/map/Tank3.glb" id="13_1ysy5"]
 [ext_resource type="PackedScene" uid="uid://cbykyuu0if2d1" path="res://assets/models/map/Tank2.glb" id="14_4syck"]
-[ext_resource type="PackedScene" uid="uid://b7ejdewbwn8qh" path="res://assets/models/map/Bus.glb" id="15_62js3"]
+[ext_resource type="PackedScene" uid="uid://blj5vxrfihgnq" path="res://assets/models/map/BusNew.glb" id="15_v34e3"]
 [ext_resource type="PackedScene" uid="uid://duagvy72170jk" path="res://assets/models/map/BrokenBuilding.glb" id="16_2tjs3"]
 [ext_resource type="PackedScene" uid="uid://bgovebhuqvyeq" path="res://scenes/map/Assets/Lightpole.tscn" id="17_y111a"]
 [ext_resource type="PackedScene" uid="uid://cpuy8hqpdax45" path="res://scenes/store_system/shotgun_store.tscn" id="19_v34e3"]
@@ -527,8 +527,8 @@ transform = Transform3D(-0.53566986, 0.0001606585, -0.12472936, 0.00010511954, 0
 collision_layer = 31
 collision_mask = 31
 
-[node name="Bus" parent="Bus" unique_id=480129296 instance=ExtResource("15_62js3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.487769, 0, 0)
+[node name="BusNew" parent="Bus" unique_id=714607428 instance=ExtResource("15_v34e3")]
+transform = Transform3D(0.99999994, -7.275958e-12, 1.4901161e-08, 0, 0.9999999, 2.910383e-11, -1.4901161e-08, -2.910383e-11, 0.9999999, 4.487768, 2.9802322e-08, 1.9073486e-06)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Bus" unique_id=75753550]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.065971375, 3.7302246, -0.013046265)

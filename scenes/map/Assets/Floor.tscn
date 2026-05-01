@@ -1,8 +1,6 @@
 [gd_scene format=3 uid="uid://d3yi8gfkqi1j2"]
 
 [ext_resource type="PackedScene" uid="uid://dmmpxkut6ribh" path="res://assets/models/map/Floorv3.glb" id="1_64h3q"]
-[ext_resource type="PackedScene" uid="uid://c7d7ew1dgqq50" path="res://assets/models/map/Floor.glb" id="1_qnwxd"]
-[ext_resource type="PackedScene" uid="uid://dlxwuswgrhr2y" path="res://assets/models/map/Floor2.glb" id="2_7edaf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7edaf"]
 size = Vector3(43.34192, 1, 49.567627)
@@ -11,12 +9,6 @@ size = Vector3(43.34192, 1, 49.567627)
 
 [node name="Floorv3" parent="." unique_id=1779851370 instance=ExtResource("1_64h3q")]
 
-[node name="Floor" parent="." unique_id=194881730 instance=ExtResource("1_qnwxd")]
-visible = false
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=810607723]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.872009, -0.4855051, -5.748169)
 shape = SubResource("BoxShape3D_7edaf")
-
-[node name="Floor2" parent="." unique_id=1434388082 instance=ExtResource("2_7edaf")]
-visible = false
