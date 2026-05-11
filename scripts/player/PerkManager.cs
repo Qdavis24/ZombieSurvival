@@ -38,6 +38,14 @@ public partial class PerkManager : Node
         return _activePerks.Contains(perkType);
     }
 
+    public bool CanUsePerk(PerkType perkType)
+    {
+        return !_isUsingPerk
+               && !_weaponManager.IsHandsBusy
+               && !HasPerk(perkType)
+               && GetPerkScene(perkType) != null;
+    }
+
     public Task<bool> TryUseHealthPerk()
     {
         return TryUsePerk(PerkType.Health);
@@ -55,7 +63,7 @@ public partial class PerkManager : Node
 
     public async Task<bool> TryUsePerk(PerkType perkType)
     {
-        if (_isUsingPerk || _weaponManager.IsHandsBusy || HasPerk(perkType))
+        if (!CanUsePerk(perkType))
             return false;
 
         var perkScene = GetPerkScene(perkType);

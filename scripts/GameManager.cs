@@ -18,10 +18,13 @@ public partial class GameManager : Node
     private bool _isPaused = false;
     private bool _isGamePlaying = false;
     private bool _isAmmoVendingMenuOpen = false;
+    private bool _isPerkVendingMenuOpen = false;
 
     private Game _gameInstance;
     private AmmoVendingMachine _activeAmmoVendingMachine;
     private Node3D _activeAmmoVendingPlayer;
+    private PerkVendingMachine _activePerkVendingMachine;
+    private Node3D _activePerkVendingPlayer;
 
     private bool _test;
 
@@ -33,7 +36,10 @@ public partial class GameManager : Node
         _uiManager.QuitGame += OnQuitGame;
         _uiManager.AmmoVendingOptionPressed += OnAmmoVendingOptionPressed;
         _uiManager.AmmoVendingClosed += OnAmmoVendingClosed;
+        _uiManager.PerkVendingOptionPressed += OnPerkVendingOptionPressed;
+        _uiManager.PerkVendingClosed += OnPerkVendingClosed;
         EventBus.Instance.AmmoVendingMenuRequested += OnAmmoVendingMenuRequested;
+        EventBus.Instance.PerkVendingMenuRequested += OnPerkVendingMenuRequested;
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -43,6 +49,13 @@ public partial class GameManager : Node
             if (_isAmmoVendingMenuOpen)
             {
                 CloseAmmoVendingMenu();
+                GetViewport().SetInputAsHandled();
+                return;
+            }
+
+            if (_isPerkVendingMenuOpen)
+            {
+                ClosePerkVendingMenu();
                 GetViewport().SetInputAsHandled();
                 return;
             }
@@ -89,8 +102,11 @@ public partial class GameManager : Node
         AudioManager.I.StartCurrentSong();
         _isPaused = false;
         _isAmmoVendingMenuOpen = false;
+        _isPerkVendingMenuOpen = false;
         _activeAmmoVendingMachine = null;
         _activeAmmoVendingPlayer = null;
+        _activePerkVendingMachine = null;
+        _activePerkVendingPlayer = null;
         _gameInstance = _game.Instantiate<Game>();
         AddChild(_gameInstance);
         _isGamePlaying = true;
@@ -103,9 +119,13 @@ public partial class GameManager : Node
         AudioManager.I.MuteCurrentSong();
         _isPaused = false;
         _isAmmoVendingMenuOpen = false;
+        _isPerkVendingMenuOpen = false;
         _activeAmmoVendingMachine = null;
         _activeAmmoVendingPlayer = null;
+        _activePerkVendingMachine = null;
+        _activePerkVendingPlayer = null;
         _uiManager.HideAmmoVendingMenu();
+        _uiManager.HidePerkVendingMenu();
         _gameInstance.QueueFree();
         _isGamePlaying = false;
     }
@@ -120,7 +140,7 @@ public partial class GameManager : Node
 
     private void OnAmmoVendingMenuRequested(AmmoVendingMachine machine, Node3D player)
     {
-        if (!_isGamePlaying || _isPaused || _isAmmoVendingMenuOpen || machine == null || player == null)
+        if (!_isGamePlaying || _isPaused || _isAmmoVendingMenuOpen || _isPerkVendingMenuOpen || machine == null || player == null)
             return;
 
         _activeAmmoVendingMachine = machine;
@@ -155,6 +175,55 @@ public partial class GameManager : Node
         _activeAmmoVendingPlayer = null;
 
         _uiManager.HideAmmoVendingMenu();
+
+        if (_isGamePlaying)
+        {
+            Input.MouseMode = Input.MouseModeEnum.Captured;
+            _gameInstance.ProcessMode = ProcessModeEnum.Inherit;
+        }
+    }
+
+    private void OnPerkVendingMenuRequested(PerkVendingMachine machine, Node3D player)
+    {
+        if (!_isGamePlaying || _isPaused || _isAmmoVendingMenuOpen || _isPerkVendingMenuOpen || machine == null || player == null)
+            return;
+
+        _activePerkVendingMachine = machine;
+        _activePerkVendingPlayer = player;
+        _isPerkVendingMenuOpen = true;
+
+        Input.MouseMode = Input.MouseModeEnum.Visible;
+        _gameInstance.ProcessMode = ProcessModeEnum.Disabled;
+        _uiManager.ShowPerkVendingMenu(machine, player);
+    }
+
+    private async void OnPerkVendingOptionPressed(int optionIndex)
+    {
+        if (!_isPerkVendingMenuOpen || _activePerkVendingMachine == null || _activePerkVendingPlayer == null)
+            return;
+
+        var machine = _activePerkVendingMachine;
+        var player = _activePerkVendingPlayer;
+
+        ClosePerkVendingMenu();
+        await machine.TryPurchase(optionIndex, player);
+    }
+
+    private void OnPerkVendingClosed()
+    {
+        ClosePerkVendingMenu();
+    }
+
+    private void ClosePerkVendingMenu()
+    {
+        if (!_isPerkVendingMenuOpen)
+            return;
+
+        _isPerkVendingMenuOpen = false;
+        _activePerkVendingMachine = null;
+        _activePerkVendingPlayer = null;
+
+        _uiManager.HidePerkVendingMenu();
 
         if (_isGamePlaying)
         {

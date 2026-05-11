@@ -7,6 +7,8 @@ public partial class UiManager : Node
 	[Signal] public delegate void QuitGameEventHandler();
 	[Signal] public delegate void AmmoVendingOptionPressedEventHandler(int optionIndex);
 	[Signal] public delegate void AmmoVendingClosedEventHandler();
+	[Signal] public delegate void PerkVendingOptionPressedEventHandler(int optionIndex);
+	[Signal] public delegate void PerkVendingClosedEventHandler();
 	
 	[Export] private AudioStream _startMenuMusic;
 	
@@ -17,6 +19,7 @@ public partial class UiManager : Node
 	[Export] private Hud _hud;
 	[Export] private Popup _popup;
 	[Export] private AmmoVendingMenu _ammoVendingMenu;
+	[Export] private PerkVendingMenu _perkVendingMenu;
 	
 	
 	public override void _Ready()
@@ -29,6 +32,8 @@ public partial class UiManager : Node
 		_deathMenu.QuitButtonPressed += OnQuitGame;
 		_ammoVendingMenu.OptionPressed += OnAmmoVendingOptionPressed;
 		_ammoVendingMenu.Closed += OnAmmoVendingClosed;
+		_perkVendingMenu.OptionPressed += OnPerkVendingOptionPressed;
+		_perkVendingMenu.Closed += OnPerkVendingClosed;
 	}
 	
 	public void OnQuitGame()
@@ -74,9 +79,14 @@ public partial class UiManager : Node
 		_ammoVendingMenu.Visible = false;
 	}
 
-	public bool IsAmmoVendingMenuVisible()
+	public void ShowPerkVendingMenu(PerkVendingMachine machine, Node3D player)
 	{
-		return _ammoVendingMenu.Visible;
+		_perkVendingMenu.ShowOptions(machine, player);
+	}
+
+	public void HidePerkVendingMenu()
+	{
+		_perkVendingMenu.Visible = false;
 	}
 
 	private void OnAmmoVendingOptionPressed(int optionIndex)
@@ -87,6 +97,16 @@ public partial class UiManager : Node
 	private void OnAmmoVendingClosed()
 	{
 		EmitSignal(SignalName.AmmoVendingClosed);
+	}
+
+	private void OnPerkVendingOptionPressed(int optionIndex)
+	{
+		EmitSignal(SignalName.PerkVendingOptionPressed, optionIndex);
+	}
+
+	private void OnPerkVendingClosed()
+	{
+		EmitSignal(SignalName.PerkVendingClosed);
 	}
 	
 	public void HidePauseMenu()

@@ -1,12 +1,36 @@
 [gd_scene format=3 uid="uid://c0mo1nuvg1hy6"]
 
+[ext_resource type="Script" uid="uid://b0ewvvmofukdb" path="res://scripts/store_system/PerkVendingMachine.cs" id="1_0rabp"]
 [ext_resource type="PackedScene" uid="uid://i8mt5y078u4v" path="res://assets/models/vending_machines/PerkVendingMachine.glb" id="1_valrp"]
+[ext_resource type="Script" uid="uid://bgb4fbswv4ak4" path="res://scripts/store_system/PerkVendingOption.cs" id="2_5u1dt"]
 [ext_resource type="Script" uid="uid://s6b48eoedgcj" path="res://scripts/store_system/VendingMachineLight.cs" id="2_io22x"]
+[ext_resource type="PackedScene" uid="uid://eksdoewlbll1" path="res://scenes/interactables/interact_notifier.tscn" id="3_bhi4g"]
+[ext_resource type="AudioStream" uid="uid://cglthr2sqd28e" path="res://assets/sound/ui_click.wav" id="4_s3hve"]
+[ext_resource type="AudioStream" uid="uid://ow67mln4ganu" path="res://assets/sound/interactables/vending-machine.wav" id="5_3j32g"]
+
+[sub_resource type="Resource" id="Resource_r3bk8"]
+script = ExtResource("2_5u1dt")
+DisplayName = "Health"
+
+[sub_resource type="Resource" id="Resource_qn0e3"]
+script = ExtResource("2_5u1dt")
+DisplayName = "Reload"
+PerkType = 1
+
+[sub_resource type="Resource" id="Resource_jxaqt"]
+script = ExtResource("2_5u1dt")
+DisplayName = "Sprint"
+PerkType = 2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dq3vb"]
 size = Vector3(5.2048187, 8.971558, 4.7727203)
 
-[node name="PerkVendingMachine" type="StaticBody3D" unique_id=1751181128]
+[node name="PerkVendingMachine" type="StaticBody3D" unique_id=1751181128 node_paths=PackedStringArray("_interactNotifier")]
+script = ExtResource("1_0rabp")
+_interactNotifier = NodePath("InteractNotifier")
+_failedBuySound = ExtResource("4_s3hve")
+_successfulBuySound = ExtResource("5_3j32g")
+_options = Array[ExtResource("2_5u1dt")]([SubResource("Resource_r3bk8"), SubResource("Resource_qn0e3"), SubResource("Resource_jxaqt")])
 
 [node name="PerkVendingMachine" parent="." unique_id=953769344 instance=ExtResource("1_valrp")]
 
@@ -27,3 +51,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 light_color = Color(0, 0.8242067, 0.5796447, 1)
 light_specular = 0.0
 omni_range = 4.051
+
+[node name="InteractNotifier" parent="." unique_id=2006040355 instance=ExtResource("3_bhi4g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, 2.8776479)
+visible = false
+InteractPrompt = "press e to use perk vending machine"

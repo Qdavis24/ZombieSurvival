@@ -17,6 +17,9 @@ public partial class EventBus : Node
     [Signal]
     public delegate void AmmoVendingMenuRequestedEventHandler(AmmoVendingMachine machine, Node3D player);
 
+    [Signal]
+    public delegate void PerkVendingMenuRequestedEventHandler(PerkVendingMachine machine, Node3D player);
+
     public override void _Ready()
     {
         Instance = this;
