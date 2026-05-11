@@ -41,7 +41,6 @@ theme_override_font_sizes/font_size = 40
 text = "Quit To Main Menu"
 
 [node name="Options" type="Button" parent="Panel/HBoxContainer/VBoxContainer" unique_id=468963473]
-visible = false
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_vb6pq")
 theme_override_font_sizes/font_size = 40

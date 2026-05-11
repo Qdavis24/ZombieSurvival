@@ -20,6 +20,16 @@ public partial class UiManager : Node
 	[Export] private Popup _popup;
 	[Export] private AmmoVendingMenu _ammoVendingMenu;
 	[Export] private PerkVendingMenu _perkVendingMenu;
+	[Export] private OptionsMenu _optionsMenu;
+
+	private enum OptionsMenuSource
+	{
+		None,
+		Start,
+		Pause
+	}
+
+	private OptionsMenuSource _optionsMenuSource = OptionsMenuSource.None;
 	
 	
 	public override void _Ready()
@@ -27,13 +37,16 @@ public partial class UiManager : Node
 		_startMenu.Visible = true;
 		AudioManager.I.PlayMusic(_startMenuMusic);
 		_startMenu.StartGamePressed += OnStartGame;
+		_startMenu.OptionsPressed += OnStartMenuOptionsPressed;
 		
 		_pauseMenu.QuitButtonPressed += OnQuitGame;
+		_pauseMenu.OptionsButtonPressed += OnPauseMenuOptionsPressed;
 		_deathMenu.QuitButtonPressed += OnQuitGame;
 		_ammoVendingMenu.OptionPressed += OnAmmoVendingOptionPressed;
 		_ammoVendingMenu.Closed += OnAmmoVendingClosed;
 		_perkVendingMenu.OptionPressed += OnPerkVendingOptionPressed;
 		_perkVendingMenu.Closed += OnPerkVendingClosed;
+		_optionsMenu.Closed += OnOptionsMenuClosed;
 	}
 	
 	public void OnQuitGame()
@@ -42,6 +55,8 @@ public partial class UiManager : Node
 		_hud.Visible = false;
 		_pauseMenu.Visible = false;
 		_deathMenu.Visible = false;
+		_optionsMenu.Visible = false;
+		_optionsMenuSource = OptionsMenuSource.None;
 		_startMenu.Visible = true;
 		AudioManager.I.PlayMusic(_startMenuMusic);
 		EmitSignal(SignalName.QuitGame);
@@ -51,6 +66,8 @@ public partial class UiManager : Node
 	{
 		_startMenu.Visible = false;
 		_pauseMenu.Visible = false;
+		_optionsMenu.Visible = false;
+		_optionsMenuSource = OptionsMenuSource.None;
 		_hud.Init();
 		_hud.Visible = true;
 		AudioManager.I.StopMusic();
@@ -89,6 +106,16 @@ public partial class UiManager : Node
 		_perkVendingMenu.Visible = false;
 	}
 
+	public bool IsOptionsMenuVisible()
+	{
+		return _optionsMenu.Visible;
+	}
+
+	public void CloseOptionsMenu()
+	{
+		_optionsMenu.Close();
+	}
+
 	private void OnAmmoVendingOptionPressed(int optionIndex)
 	{
 		EmitSignal(SignalName.AmmoVendingOptionPressed, optionIndex);
@@ -107,6 +134,23 @@ public partial class UiManager : Node
 	private void OnPerkVendingClosed()
 	{
 		EmitSignal(SignalName.PerkVendingClosed);
+	}
+
+	private void OnStartMenuOptionsPressed()
+	{
+		_optionsMenuSource = OptionsMenuSource.Start;
+		_optionsMenu.Open();
+	}
+
+	private void OnPauseMenuOptionsPressed()
+	{
+		_optionsMenuSource = OptionsMenuSource.Pause;
+		_optionsMenu.Open();
+	}
+
+	private void OnOptionsMenuClosed()
+	{
+		_optionsMenuSource = OptionsMenuSource.None;
 	}
 	
 	public void HidePauseMenu()

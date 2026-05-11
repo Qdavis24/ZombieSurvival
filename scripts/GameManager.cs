@@ -46,6 +46,13 @@ public partial class GameManager : Node
     {
         if (@event.IsActionPressed("pause") && _isGamePlaying)
         {
+            if (_uiManager.IsOptionsMenuVisible())
+            {
+                _uiManager.CloseOptionsMenu();
+                GetViewport().SetInputAsHandled();
+                return;
+            }
+
             if (_isAmmoVendingMenuOpen)
             {
                 CloseAmmoVendingMenu();
