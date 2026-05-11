@@ -7,6 +7,10 @@ namespace ZombieSurvival.scripts.player.weapons;
 
 public partial class WeaponManager : Node
 {
+    private const float MagazineUpgradeMultiplier = 2f;
+    private const int PierceUpgradeHitCount = 3;
+    private const float FireRateUpgradeMultiplier = 1.5f;
+
     [Signal]
     public delegate void AmmoChangedEventHandler(int currentAmmo, int reserve);
 
@@ -20,6 +24,9 @@ public partial class WeaponManager : Node
         public int CurrentAmmo;
         public ItemType AmmoType;
         public ItemType WeaponType;
+        public bool MagSizeUpgraded;
+        public bool PierceUpgraded;
+        public bool FireRateUpgraded;
 
         public WeaponSlot(PackedScene scene, int currentAmmo, ItemType ammoType, ItemType weaponType)
         {
@@ -154,6 +161,7 @@ public partial class WeaponManager : Node
 
         _weaponSocket.AddChild(_current);
         _current.Initialize(_camera, _hitResolver, slot.CurrentAmmo);
+        ApplySlotUpgrades(slot, _current);
         _current.SetAmmoSource(
             needed =>
             {
@@ -172,6 +180,45 @@ public partial class WeaponManager : Node
 
         RefreshHudAmmo();
         CallDeferred(nameof(RefreshHudAmmo));
+    }
+
+    private void ApplySlotUpgrades(WeaponSlot slot, WeaponBase weapon)
+    {
+        if (slot == null || weapon == null)
+            return;
+
+        weapon.SetMagazineSizeMultiplier(slot.MagSizeUpgraded ? MagazineUpgradeMultiplier : 1f);
+        weapon.SetPierceHitCount(slot.PierceUpgraded ? PierceUpgradeHitCount : 1);
+        weapon.SetFireRateMultiplier(slot.FireRateUpgraded ? FireRateUpgradeMultiplier : 1f);
+    }
+
+    private void TryHandleUpgradeInput()
+    {
+        if (_current == null || _weaponSlots == null || _currentWeaponIndex < 0 || _currentWeaponIndex >= _weaponSlots.Length)
+            return;
+
+        var slot = _weaponSlots[_currentWeaponIndex];
+        if (slot == null)
+            return;
+
+        if (Input.IsActionJustPressed("upgrade_mag_size") && !slot.MagSizeUpgraded)
+        {
+            slot.MagSizeUpgraded = true;
+            _current.SetMagazineSizeMultiplier(MagazineUpgradeMultiplier);
+            RefreshHudAmmo();
+        }
+
+        if (Input.IsActionJustPressed("upgrade_pierce") && !slot.PierceUpgraded)
+        {
+            slot.PierceUpgraded = true;
+            _current.SetPierceHitCount(PierceUpgradeHitCount);
+        }
+
+        if (Input.IsActionJustPressed("upgrade_fire_rate") && !slot.FireRateUpgraded)
+        {
+            slot.FireRateUpgraded = true;
+            _current.SetFireRateMultiplier(FireRateUpgradeMultiplier);
+        }
     }
 
     public void SetReloadSpeedMultiplier(float reloadSpeedMultiplier)
@@ -397,6 +444,8 @@ public partial class WeaponManager : Node
 
             if (IsHandsBusy)
                 return;
+
+            TryHandleUpgradeInput();
 
             bool aimHeld = Input.IsActionPressed("aim");
             _current?.SetAimState(aimHeld);

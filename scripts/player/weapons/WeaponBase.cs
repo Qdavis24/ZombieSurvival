@@ -1,9 +1,14 @@
 using System;
 using Godot;
+using ZombieSurvival.scripts.damage_system;
 using ZombieSurvival.scripts.inventory_system;
 
 public partial class WeaponBase : Node3D
 {
+    private const float RayLength = 1000f;
+    private const uint HitCollisionMask = 8;
+    private const float PierceRayAdvance = 0.05f;
+
     [Signal] public delegate void FiredEventHandler(
         float shakeDuration,
         float shakeStrength,
@@ -56,6 +61,9 @@ public partial class WeaponBase : Node3D
     private bool _isReloading;
     private bool _canEmitReloadFailed = true;
     private int _currentAmmo;
+    private int _effectiveMagazineSize;
+    private float _fireRateMultiplier = 1f;
+    private int _pierceHitCount = 1;
     
     private Func<int, int> _consumeAmmo;
     private Func<int> _getAvailableAmmo;
@@ -64,6 +72,7 @@ public partial class WeaponBase : Node3D
     {
         _camera = camera;
         _hitResolver = hitResolver;
+        _effectiveMagazineSize = _magazineSize;
         _currentAmmo = currentAmmo;
         NotifyAmmoChanged();
     }
@@ -75,7 +84,7 @@ public partial class WeaponBase : Node3D
     }
 
     public int CurrentAmmo => _currentAmmo;
-    public int MagazineSize => _magazineSize;
+    public int MagazineSize => _effectiveMagazineSize > 0 ? _effectiveMagazineSize : _magazineSize;
     public float ReloadSpeedMultiplier { get; set; } = 1f;
 
     protected AnimationPlayer Anim => _anim;
@@ -91,7 +100,7 @@ public partial class WeaponBase : Node3D
 
     protected bool TryLoadOneRoundIntoMagazine()
     {
-        if (_currentAmmo >= _magazineSize)
+        if (_currentAmmo >= MagazineSize)
             return false;
 
         int granted = _consumeAmmo?.Invoke(1) ?? 0;
@@ -180,7 +189,23 @@ public partial class WeaponBase : Node3D
 
     private float GetShotInterval()
     {
-        return 60.0f / _roundsPerMinute;
+        return 60.0f / (_roundsPerMinute * _fireRateMultiplier);
+    }
+
+    public void SetMagazineSizeMultiplier(float multiplier)
+    {
+        float safeMultiplier = Mathf.Max(1f, multiplier);
+        _effectiveMagazineSize = Mathf.Max(1, Mathf.RoundToInt(_magazineSize * safeMultiplier));
+    }
+
+    public void SetPierceHitCount(int hitCount)
+    {
+        _pierceHitCount = Mathf.Max(1, hitCount);
+    }
+
+    public void SetFireRateMultiplier(float multiplier)
+    {
+        _fireRateMultiplier = Mathf.Max(0.01f, multiplier);
     }
 
     public void SetMovementState(bool isMoving)
@@ -222,7 +247,7 @@ public partial class WeaponBase : Node3D
     {
         if (_isReloading) return;
         if (_isShooting) return;
-        if (_currentAmmo >= _magazineSize) return;
+        if (_currentAmmo >= MagazineSize) return;
 
         int available = _getAvailableAmmo?.Invoke() ?? 0;
         if (available <= 0)
@@ -294,26 +319,95 @@ public partial class WeaponBase : Node3D
         {
             direction = ApplySpread(direction);
         }
-        
-        var to = from + direction * 1000f;
+
+        direction = direction.Normalized();
+
+        if (_pierceHitCount <= 1)
+        {
+            ResolveSingleRay(from, direction);
+            return;
+        }
+
+        ResolvePiercingRay(from, direction);
+    }
+
+    private void ResolveSingleRay(Vector3 from, Vector3 direction)
+    {
+        var to = from + direction * RayLength;
 
         var spaceState = GetWorld3D().DirectSpaceState;
         var query = PhysicsRayQueryParameters3D.Create(from, to);
-        query.CollisionMask = 8;
+        query.CollisionMask = HitCollisionMask;
         var result = spaceState.IntersectRay(query);
 
         if (result.Count > 0)
         {
-            if (_hitResolver == null)
-                throw new InvalidOperationException($"HitResolver is null on weapon '{Name}'. Ensure WeaponManager passes it into Initialize().");
+            HandleRayHit(result, direction);
+        }
+    }
+
+    private void ResolvePiercingRay(Vector3 from, Vector3 direction)
+    {
+        int damagedTargets = 0;
+        var currentFrom = from;
+        var excluded = new Godot.Collections.Array<Rid>();
+        var spaceState = GetWorld3D().DirectSpaceState;
+
+        while (damagedTargets < _pierceHitCount)
+        {
+            var to = currentFrom + direction * RayLength;
+            var query = PhysicsRayQueryParameters3D.Create(currentFrom, to);
+            query.CollisionMask = HitCollisionMask;
+            query.Exclude = excluded;
+
+            var result = spaceState.IntersectRay(query);
+            if (result.Count == 0)
+                return;
 
             var collider = (Node)result["collider"];
             var point = (Vector3)result["position"];
-            var normal = (Vector3)result["normal"];
 
-            var hitInfo = new HitInfo(collider, point, normal, direction, _damage, _force);
-            _hitResolver.HandleHit(hitInfo);
+            HandleRayHit(result, direction);
+
+            if (collider is not IDamageable)
+                return;
+
+            damagedTargets++;
+            ExcludeHitTarget(result, collider, excluded);
+
+            currentFrom = point + direction * PierceRayAdvance;
         }
+    }
+
+    private static void ExcludeHitTarget(Godot.Collections.Dictionary result, Node collider, Godot.Collections.Array<Rid> excluded)
+    {
+        if (result.ContainsKey("rid"))
+            excluded.Add((Rid)result["rid"]);
+
+        if (collider is CollisionObject3D collisionObject)
+            excluded.Add(collisionObject.GetRid());
+
+        if (collider.GetParent() is not PhysicalBoneSimulator3D physicalBoneSimulator)
+            return;
+
+        foreach (Node child in physicalBoneSimulator.GetChildren())
+        {
+            if (child is CollisionObject3D childCollisionObject)
+                excluded.Add(childCollisionObject.GetRid());
+        }
+    }
+
+    private void HandleRayHit(Godot.Collections.Dictionary result, Vector3 direction)
+    {
+        if (_hitResolver == null)
+            throw new InvalidOperationException($"HitResolver is null on weapon '{Name}'. Ensure WeaponManager passes it into Initialize().");
+
+        var collider = (Node)result["collider"];
+        var point = (Vector3)result["position"];
+        var normal = (Vector3)result["normal"];
+
+        var hitInfo = new HitInfo(collider, point, normal, direction, _damage, _force);
+        _hitResolver.HandleHit(hitInfo);
     }
     
     private void PlayIdleForAimState()
@@ -339,7 +433,7 @@ public partial class WeaponBase : Node3D
         if (animName != "hip_reload")
             return false;
 
-        int ammoNeeded = _magazineSize - _currentAmmo;
+        int ammoNeeded = MagazineSize - _currentAmmo;
         int granted = _consumeAmmo?.Invoke(ammoNeeded) ?? 0;
         _currentAmmo += granted;
         NotifyAmmoChanged();
