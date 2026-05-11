@@ -17,7 +17,7 @@
 script = ExtResource("2_s6t1m")
 DisplayName = "Pistol Ammo"
 AmmoScene = ExtResource("6_70gai")
-Price = 10
+Price = 500
 
 [sub_resource type="Resource" id="Resource_drygh"]
 script = ExtResource("2_s6t1m")
