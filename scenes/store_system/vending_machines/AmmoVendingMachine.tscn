@@ -1,12 +1,58 @@
 [gd_scene format=3 uid="uid://ygu1w6sifw7h"]
 
+[ext_resource type="Script" uid="uid://ce0nnujb75epn" path="res://scripts/store_system/AmmoVendingMachine.cs" id="1_eku1i"]
+[ext_resource type="Script" uid="uid://ct7v60pgigt34" path="res://scripts/store_system/AmmoVendingOption.cs" id="2_s6t1m"]
 [ext_resource type="PackedScene" uid="uid://b0ao8rgg24wc7" path="res://assets/models/vending_machines/AmmoVendingMachine.glb" id="3_eeu2s"]
 [ext_resource type="Script" uid="uid://s6b48eoedgcj" path="res://scripts/store_system/VendingMachineLight.cs" id="4_hsj7n"]
+[ext_resource type="PackedScene" uid="uid://eksdoewlbll1" path="res://scenes/interactables/interact_notifier.tscn" id="5_bfvmt"]
+[ext_resource type="PackedScene" uid="uid://cf2sltrg4llvi" path="res://scenes/pickups/pistol_ammo_pickup.tscn" id="6_70gai"]
+[ext_resource type="PackedScene" uid="uid://4d4f8uxcwn6i" path="res://scenes/pickups/shotgun_ammo_pickup.tscn" id="7_qf75f"]
+[ext_resource type="PackedScene" uid="uid://bpu6kxspd4sfv" path="res://scenes/pickups/rifle_ammo_pickup.tscn" id="8_vjffx"]
+[ext_resource type="PackedScene" uid="uid://dix7w1l67kmku" path="res://scenes/pickups/rpg_ammo_pickup.tscn" id="9_xruqs"]
+[ext_resource type="PackedScene" uid="uid://411dsn2w2u5l" path="res://scenes/pickups/grenade_pickup.tscn" id="10_fq0qd"]
+[ext_resource type="AudioStream" uid="uid://cglthr2sqd28e" path="res://assets/sound/ui_click.wav" id="11_dsuqo"]
+[ext_resource type="AudioStream" uid="uid://ow67mln4ganu" path="res://assets/sound/interactables/vending-machine.wav" id="12_d6dqi"]
+
+[sub_resource type="Resource" id="Resource_l4pdd"]
+script = ExtResource("2_s6t1m")
+DisplayName = "Pistol Ammo"
+AmmoScene = ExtResource("6_70gai")
+Price = 10
+
+[sub_resource type="Resource" id="Resource_drygh"]
+script = ExtResource("2_s6t1m")
+DisplayName = "Shotgun Shells"
+AmmoScene = ExtResource("7_qf75f")
+Price = 1000
+
+[sub_resource type="Resource" id="Resource_ynafi"]
+script = ExtResource("2_s6t1m")
+DisplayName = "Rifle Rounds"
+AmmoScene = ExtResource("8_vjffx")
+Price = 1500
+
+[sub_resource type="Resource" id="Resource_17el7"]
+script = ExtResource("2_s6t1m")
+DisplayName = "Rockets"
+AmmoScene = ExtResource("9_xruqs")
+Price = 3000
+
+[sub_resource type="Resource" id="Resource_lfw7f"]
+script = ExtResource("2_s6t1m")
+DisplayName = "Grenades"
+AmmoScene = ExtResource("10_fq0qd")
+Price = 2000
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8oudm"]
 size = Vector3(5.2048187, 8.971558, 4.7727203)
 
-[node name="AmmoVendingMachine" type="StaticBody3D" unique_id=743259229]
+[node name="AmmoVendingMachine" type="StaticBody3D" unique_id=743259229 node_paths=PackedStringArray("_interactNotifier", "_spawnMarker")]
+script = ExtResource("1_eku1i")
+_interactNotifier = NodePath("InteractNotifier")
+_spawnMarker = NodePath("SpawnMarker")
+_failedBuySound = ExtResource("11_dsuqo")
+_successfulBuySound = ExtResource("12_d6dqi")
+_options = Array[ExtResource("2_s6t1m")]([SubResource("Resource_l4pdd"), SubResource("Resource_drygh"), SubResource("Resource_ynafi"), SubResource("Resource_17el7"), SubResource("Resource_lfw7f")])
 
 [node name="AmmoVendingMachine" parent="." unique_id=929149237 instance=ExtResource("3_eeu2s")]
 
@@ -27,3 +73,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 light_color = Color(0.9999997, 0.58112574, 0.14541486, 1)
 light_specular = 0.0
 omni_range = 4.051
+
+[node name="InteractNotifier" parent="." unique_id=1549896209 instance=ExtResource("5_bfvmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, 2.2618003)
+visible = false
+InteractPrompt = "press e to use ammo vending machine"
+
+[node name="SpawnMarker" type="Marker3D" parent="." unique_id=1153474637]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 3.65)

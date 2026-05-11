@@ -8,8 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://dh0j7uwlkf840" path="res://scenes/ui/Hud.tscn" id="4_y1emd"]
 [ext_resource type="PackedScene" uid="uid://ceenxu0j8cvnk" path="res://scenes/ui/DeathMenu.tscn" id="5_y1emd"]
 [ext_resource type="PackedScene" uid="uid://dii0p3dtncfx3" path="res://scenes/ui/Popup.tscn" id="6_1k00l"]
+[ext_resource type="PackedScene" uid="uid://bx8keqf8rl6qb" path="res://scenes/ui/AmmoVendingMenu.tscn" id="7_4cd4b"]
 
-[node name="UiManager" type="Node" unique_id=823563542 node_paths=PackedStringArray("_startMenu", "_pauseMenu", "_deathMenu", "_hud", "_popup")]
+[node name="UiManager" type="Node" unique_id=823563542 node_paths=PackedStringArray("_startMenu", "_pauseMenu", "_deathMenu", "_hud", "_popup", "_ammoVendingMenu")]
 script = ExtResource("1_b44pn")
 _roundChangeSound = ExtResource("2_3v6dp")
 _startMenuMusic = ExtResource("2_68wcl")
@@ -18,6 +19,7 @@ _pauseMenu = NodePath("PauseMenu")
 _deathMenu = NodePath("DeathMenu")
 _hud = NodePath("Hud")
 _popup = NodePath("Popup")
+_ammoVendingMenu = NodePath("AmmoVendingMenu")
 
 [node name="PauseMenu" parent="." unique_id=1825430013 instance=ExtResource("3_77bur")]
 layer = 10
@@ -36,4 +38,7 @@ layer = 5
 visible = false
 
 [node name="Hud" parent="." unique_id=665882280 instance=ExtResource("4_y1emd")]
+visible = false
+
+[node name="AmmoVendingMenu" parent="." instance=ExtResource("7_4cd4b")]
 visible = false

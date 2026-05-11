@@ -5,6 +5,8 @@ public partial class UiManager : Node
 {
 	[Signal] public delegate void StartGameEventHandler();
 	[Signal] public delegate void QuitGameEventHandler();
+	[Signal] public delegate void AmmoVendingOptionPressedEventHandler(int optionIndex);
+	[Signal] public delegate void AmmoVendingClosedEventHandler();
 	
 	[Export] private AudioStream _startMenuMusic;
 	
@@ -14,6 +16,7 @@ public partial class UiManager : Node
 	[Export] private DeathMenu _deathMenu;
 	[Export] private Hud _hud;
 	[Export] private Popup _popup;
+	[Export] private AmmoVendingMenu _ammoVendingMenu;
 	
 	
 	public override void _Ready()
@@ -24,6 +27,8 @@ public partial class UiManager : Node
 		
 		_pauseMenu.QuitButtonPressed += OnQuitGame;
 		_deathMenu.QuitButtonPressed += OnQuitGame;
+		_ammoVendingMenu.OptionPressed += OnAmmoVendingOptionPressed;
+		_ammoVendingMenu.Closed += OnAmmoVendingClosed;
 	}
 	
 	public void OnQuitGame()
@@ -57,6 +62,31 @@ public partial class UiManager : Node
 	public void ShowDeathMenu()
 	{
 		_deathMenu.Visible = true;
+	}
+
+	public void ShowAmmoVendingMenu(AmmoVendingMachine machine)
+	{
+		_ammoVendingMenu.ShowOptions(machine.Options);
+	}
+
+	public void HideAmmoVendingMenu()
+	{
+		_ammoVendingMenu.Visible = false;
+	}
+
+	public bool IsAmmoVendingMenuVisible()
+	{
+		return _ammoVendingMenu.Visible;
+	}
+
+	private void OnAmmoVendingOptionPressed(int optionIndex)
+	{
+		EmitSignal(SignalName.AmmoVendingOptionPressed, optionIndex);
+	}
+
+	private void OnAmmoVendingClosed()
+	{
+		EmitSignal(SignalName.AmmoVendingClosed);
 	}
 	
 	public void HidePauseMenu()
