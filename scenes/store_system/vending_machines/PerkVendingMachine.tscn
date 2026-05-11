@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://c0mo1nuvg1hy6"]
+
+[ext_resource type="PackedScene" uid="uid://i8mt5y078u4v" path="res://assets/models/vending_machines/PerkVendingMachine.glb" id="1_valrp"]
+[ext_resource type="Script" uid="uid://s6b48eoedgcj" path="res://scripts/store_system/VendingMachineLight.cs" id="2_io22x"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dq3vb"]
+size = Vector3(5.2048187, 8.971558, 4.7727203)
+
+[node name="PerkVendingMachine" type="StaticBody3D" unique_id=1751181128]
+
+[node name="PerkVendingMachine" parent="." unique_id=953769344 instance=ExtResource("1_valrp")]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1519440651]
+transform = Transform3D(1, 0, 0, 0, 0.30865175, -0.9511751, 0, 0.9511751, 0.30865175, -0.6926418, -1.2156885, 3.6457152)
+light_color = Color(0.6925127, 1, 0.8098, 1)
+light_specular = 0.0
+light_bake_mode = 1
+spot_range = 3.575
+script = ExtResource("2_io22x")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1217733693]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13521576, 3.9857788, 0.16304779)
+shape = SubResource("BoxShape3D_dq3vb")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=2060808815]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+light_color = Color(0, 0.8242067, 0.5796447, 1)
+light_specular = 0.0
+omni_range = 4.051

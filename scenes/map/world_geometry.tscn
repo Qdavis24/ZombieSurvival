@@ -23,6 +23,8 @@
 [ext_resource type="PackedScene" uid="uid://t0phtwd422bv" path="res://scenes/store_system/grenade_store.tscn" id="22_1ysy5"]
 [ext_resource type="PackedScene" uid="uid://dfko4x0qoffn4" path="res://scenes/store_system/rpg_store.tscn" id="23_4syck"]
 [ext_resource type="PackedScene" uid="uid://ckrrq0g5ohg1l" path="res://scenes/interactables/chest/rpg_chest.tscn" id="24_62js3"]
+[ext_resource type="PackedScene" uid="uid://c0mo1nuvg1hy6" path="res://scenes/store_system/vending_machines/PerkVendingMachine.tscn" id="25_mo16c"]
+[ext_resource type="PackedScene" uid="uid://ygu1w6sifw7h" path="res://scenes/store_system/vending_machines/AmmoVendingMachine.tscn" id="25_ui5tt"]
 [ext_resource type="PackedScene" uid="uid://dojlsl6bbl6rp" path="res://scenes/map/Assets/DeadGuy.tscn" id="25_v34e3"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_eq5l7"]
@@ -188,7 +190,7 @@ shape = SubResource("BoxShape3D_otuoo")
 transform = Transform3D(-6.119594e-08, 0, 1.4, 0, 1.4, 0, -1.4, 0, -6.119594e-08, -25.081676, 0.1575185, -13.02096)
 
 [node name="ChainLink" type="MeshInstance3D" parent="Fence6" unique_id=661472555]
-transform = Transform3D(1.1670765, -1.1175871e-08, 1.3387762e-08, -6.868504e-09, -4.656613e-08, -1.319414, 3.7252903e-09, 1.1724977, -7.264316e-08, -0.0014053583, 1.1641407, -0.0013337135)
+transform = Transform3D(1.1670765, -1.1175867e-08, 1.3387762e-08, -6.868504e-09, -4.656613e-08, -1.319414, 3.7252903e-09, 1.1724977, -7.264316e-08, 0.6113539, 1.1641408, -0.0013332367)
 mesh = SubResource("PlaneMesh_i5lfh")
 skeleton = NodePath("")
 
@@ -200,7 +202,7 @@ shape = SubResource("BoxShape3D_otuoo")
 transform = Transform3D(-6.119594e-08, 0, 1.4, 0, 1.4, 0, -1.4, 0, -6.119594e-08, -25.081676, 0.1575185, -9.73369)
 
 [node name="ChainLink" type="MeshInstance3D" parent="Fence7" unique_id=517524960]
-transform = Transform3D(1.1670765, -1.1175871e-08, 1.3387762e-08, -6.868504e-09, -4.656613e-08, -1.319414, 3.7252903e-09, 1.1724977, -7.264316e-08, -0.0014053583, 1.1641407, -0.0013337135)
+transform = Transform3D(1.1670765, -1.1175867e-08, 1.3387762e-08, -6.868504e-09, -4.656613e-08, -1.319414, 3.7252903e-09, 1.1724977, -7.264316e-08, 0.61135435, 1.1641408, -0.0013332367)
 mesh = SubResource("PlaneMesh_i5lfh")
 skeleton = NodePath("")
 
@@ -568,18 +570,23 @@ collision_mask = 31
 
 [node name="ShotgunStore" parent="." unique_id=841175754 instance=ExtResource("19_v34e3")]
 transform = Transform3D(1, -2.6193447e-09, 2.9802322e-08, 1.1641532e-08, 0.99999964, 1.8626451e-09, 0, -5.5879354e-09, 0.9999993, -5.3855515, 0.21538818, -4.4648547)
+visible = false
 
 [node name="RifleStore" parent="." unique_id=552638651 instance=ExtResource("20_ui5tt")]
 transform = Transform3D(1, -2.386514e-09, 4.4703484e-08, 1.7229468e-08, 0.99999946, 1.8626451e-09, 0, -7.450581e-09, 0.9999989, 4.0603547, 0.23325658, -18.424837)
+visible = false
 
 [node name="PistolStore" parent="." unique_id=1733712993 instance=ExtResource("21_mo16c")]
 transform = Transform3D(-2.6077032e-08, -1.9208528e-09, -0.9999982, 0, 0.99999845, -7.741619e-09, 0.9999986, -3.7252903e-09, -2.9802322e-08, 7.035602, -0.057908326, 2.1512482)
+visible = false
 
 [node name="GrenadeStore" parent="." unique_id=1275132848 instance=ExtResource("22_1ysy5")]
 transform = Transform3D(0.04681232, 0.035317354, 0.99827904, 0.0055508465, 0.9993502, -0.03561555, -0.9988877, 0.007208526, 0.04658586, -23.39396, 0.10254073, -19.257618)
+visible = false
 
 [node name="RpgStore" parent="." unique_id=2038011024 instance=ExtResource("23_4syck")]
 transform = Transform3D(0.7156927, -8.731149e-10, -0.6984149, 7.450581e-09, 0.9999996, -1.8626451e-09, 0.6984151, -1.8626451e-09, 0.7156924, -17.55855, -0.045208067, 6.402077)
+visible = false
 
 [node name="RpgChest" parent="." unique_id=1753819895 instance=ExtResource("24_62js3")]
 transform = Transform3D(-0.0142464265, 0.0068453657, -0.9998749, 0.03664075, 0.9993078, 0.0063194446, 0.9992268, -0.03654614, -0.014487432, -19.386097, 0.48873353, 11.882218)
@@ -610,3 +617,14 @@ shape = SubResource("BoxShape3D_bks4y")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TankGlitchSpotBlocker" unique_id=114095545]
 transform = Transform3D(0.8707336, 0, 0.49175504, 0, 1, 0, -0.49175504, 0, 0.8707336, -12.023769, 1.8920898, 3.0818622)
 shape = SubResource("BoxShape3D_bks4y")
+
+[node name="VendingMachines" type="Node3D" parent="." unique_id=1921295392]
+
+[node name="PerkVendingMachine" parent="VendingMachines" unique_id=1751181128 instance=ExtResource("25_mo16c")]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 3.936511, 0, -18.352589)
+
+[node name="AmmoVendingMachine" parent="VendingMachines" unique_id=720135294 instance=ExtResource("25_ui5tt")]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, -5.2008014, 0, -4.2260222)
+
+[node name="AmmoVendingMachine2" parent="VendingMachines" unique_id=743259229 instance=ExtResource("25_ui5tt")]
+transform = Transform3D(-1.5298985e-08, 0, 0.35, 0, 0.35, 0, -0.35, 0, -1.5298985e-08, -24.282515, 0, -0.77828187)

@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://ygu1w6sifw7h"]
+
+[ext_resource type="PackedScene" uid="uid://b0ao8rgg24wc7" path="res://assets/models/vending_machines/AmmoVendingMachine.glb" id="3_eeu2s"]
+[ext_resource type="Script" uid="uid://s6b48eoedgcj" path="res://scripts/store_system/VendingMachineLight.cs" id="4_hsj7n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8oudm"]
+size = Vector3(5.2048187, 8.971558, 4.7727203)
+
+[node name="AmmoVendingMachine" type="StaticBody3D" unique_id=743259229]
+
+[node name="AmmoVendingMachine" parent="." unique_id=929149237 instance=ExtResource("3_eeu2s")]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=462531249]
+transform = Transform3D(1, 0, 0, 0, 0.30865175, -0.9511751, 0, 0.9511751, 0.30865175, -0.6926418, -1.2156885, 3.6457152)
+light_color = Color(1, 0.7725733, 0.6118042, 1)
+light_specular = 0.0
+light_bake_mode = 1
+spot_range = 3.575
+script = ExtResource("4_hsj7n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1375290077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13521576, 3.9857788, 0.16304779)
+shape = SubResource("BoxShape3D_8oudm")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1111362423]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+light_color = Color(0.9999997, 0.58112574, 0.14541486, 1)
+light_specular = 0.0
+omni_range = 4.051
