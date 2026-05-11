@@ -1,6 +1,22 @@
 [gd_scene format=3 uid="uid://dbv8vhnoc47ll"]
 
 [ext_resource type="Script" path="res://scripts/ui/OptionsMenu.cs" id="1_m0s1o"]
+[ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="2_bolds"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_options_panel"]
+bg_color = Color(0.03529412, 0.03529412, 0.043137256, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85490197, 0.043137256, 0, 0.85)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 18
+shadow_offset = Vector2(0, 8)
 
 [node name="OptionsMenu" type="CanvasLayer" node_paths=PackedStringArray("_masterSlider", "_musicSlider", "_sfxSlider", "_masterValueLabel", "_musicValueLabel", "_sfxValueLabel", "_closeButton")]
 layer = 12
@@ -14,6 +30,15 @@ _musicValueLabel = NodePath("Panel/MarginContainer/VBoxContainer/MusicRow/MusicV
 _sfxValueLabel = NodePath("Panel/MarginContainer/VBoxContainer/SfxRow/SfxValue")
 _closeButton = NodePath("Panel/MarginContainer/VBoxContainer/Close")
 
+[node name="Backdrop" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.56)
+
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
@@ -26,6 +51,7 @@ offset_right = 300.0
 offset_bottom = 175.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_options_panel")
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 1
@@ -45,6 +71,9 @@ theme_override_constants/separation = 18
 
 [node name="Title" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9607843, 0.85882354, 1)
+theme_override_fonts/font = ExtResource("2_bolds")
+theme_override_font_sizes/font_size = 42
 text = "Options"
 horizontal_alignment = 1
 
@@ -55,6 +84,9 @@ theme_override_constants/separation = 12
 [node name="MasterLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/MasterRow"]
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.94, 0.94, 1)
+theme_override_fonts/font = ExtResource("2_bolds")
+theme_override_font_sizes/font_size = 30
 text = "Master"
 
 [node name="MasterSlider" type="HSlider" parent="Panel/MarginContainer/VBoxContainer/MasterRow"]
@@ -68,6 +100,9 @@ value = 100.0
 [node name="MasterValue" type="Label" parent="Panel/MarginContainer/VBoxContainer/MasterRow"]
 custom_minimum_size = Vector2(54, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.94, 0.94, 1)
+theme_override_fonts/font = ExtResource("2_bolds")
+theme_override_font_sizes/font_size = 30
 text = "100%"
 horizontal_alignment = 2
 
@@ -78,6 +113,9 @@ theme_override_constants/separation = 12
 [node name="MusicLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/MusicRow"]
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.94, 0.94, 1)
+theme_override_fonts/font = ExtResource("2_bolds")
+theme_override_font_sizes/font_size = 30
 text = "Music"
 
 [node name="MusicSlider" type="HSlider" parent="Panel/MarginContainer/VBoxContainer/MusicRow"]
@@ -91,6 +129,9 @@ value = 100.0
 [node name="MusicValue" type="Label" parent="Panel/MarginContainer/VBoxContainer/MusicRow"]
 custom_minimum_size = Vector2(54, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.94, 0.94, 1)
+theme_override_fonts/font = ExtResource("2_bolds")
+theme_override_font_sizes/font_size = 30
 text = "100%"
 horizontal_alignment = 2
 
@@ -101,6 +142,9 @@ theme_override_constants/separation = 12
 [node name="SfxLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/SfxRow"]
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.94, 0.94, 1)
+theme_override_fonts/font = ExtResource("2_bolds")
+theme_override_font_sizes/font_size = 30
 text = "SFX"
 
 [node name="SfxSlider" type="HSlider" parent="Panel/MarginContainer/VBoxContainer/SfxRow"]
@@ -114,9 +158,14 @@ value = 100.0
 [node name="SfxValue" type="Label" parent="Panel/MarginContainer/VBoxContainer/SfxRow"]
 custom_minimum_size = Vector2(54, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.94, 0.94, 1)
+theme_override_fonts/font = ExtResource("2_bolds")
+theme_override_font_sizes/font_size = 30
 text = "100%"
 horizontal_alignment = 2
 
 [node name="Close" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_bolds")
+theme_override_font_sizes/font_size = 32
 text = "Back"

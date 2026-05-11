@@ -53,6 +53,13 @@ public partial class GameManager : Node
                 return;
             }
 
+            if (_uiManager.IsControlsMenuVisible())
+            {
+                _uiManager.CloseControlsMenu();
+                GetViewport().SetInputAsHandled();
+                return;
+            }
+
             if (_isAmmoVendingMenuOpen)
             {
                 CloseAmmoVendingMenu();

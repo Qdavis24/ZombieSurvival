@@ -21,6 +21,7 @@ public partial class UiManager : Node
 	[Export] private AmmoVendingMenu _ammoVendingMenu;
 	[Export] private PerkVendingMenu _perkVendingMenu;
 	[Export] private OptionsMenu _optionsMenu;
+	[Export] private ControlsMenu _controlsMenu;
 
 	private enum OptionsMenuSource
 	{
@@ -38,6 +39,7 @@ public partial class UiManager : Node
 		AudioManager.I.PlayMusic(_startMenuMusic);
 		_startMenu.StartGamePressed += OnStartGame;
 		_startMenu.OptionsPressed += OnStartMenuOptionsPressed;
+		_startMenu.ControlsPressed += OnStartMenuControlsPressed;
 		
 		_pauseMenu.QuitButtonPressed += OnQuitGame;
 		_pauseMenu.OptionsButtonPressed += OnPauseMenuOptionsPressed;
@@ -56,6 +58,7 @@ public partial class UiManager : Node
 		_pauseMenu.Visible = false;
 		_deathMenu.Visible = false;
 		_optionsMenu.Visible = false;
+		_controlsMenu.Visible = false;
 		_optionsMenuSource = OptionsMenuSource.None;
 		_startMenu.Visible = true;
 		AudioManager.I.PlayMusic(_startMenuMusic);
@@ -67,6 +70,7 @@ public partial class UiManager : Node
 		_startMenu.Visible = false;
 		_pauseMenu.Visible = false;
 		_optionsMenu.Visible = false;
+		_controlsMenu.Visible = false;
 		_optionsMenuSource = OptionsMenuSource.None;
 		_hud.Init();
 		_hud.Visible = true;
@@ -116,6 +120,16 @@ public partial class UiManager : Node
 		_optionsMenu.Close();
 	}
 
+	public bool IsControlsMenuVisible()
+	{
+		return _controlsMenu.Visible;
+	}
+
+	public void CloseControlsMenu()
+	{
+		_controlsMenu.Close();
+	}
+
 	private void OnAmmoVendingOptionPressed(int optionIndex)
 	{
 		EmitSignal(SignalName.AmmoVendingOptionPressed, optionIndex);
@@ -140,6 +154,11 @@ public partial class UiManager : Node
 	{
 		_optionsMenuSource = OptionsMenuSource.Start;
 		_optionsMenu.Open();
+	}
+
+	private void OnStartMenuControlsPressed()
+	{
+		_controlsMenu.Open();
 	}
 
 	private void OnPauseMenuOptionsPressed()
