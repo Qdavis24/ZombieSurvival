@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://blj5vxrfihgnq" path="res://assets/models/map/BusNew.glb" id="15_v34e3"]
 [ext_resource type="PackedScene" uid="uid://duagvy72170jk" path="res://assets/models/map/BrokenBuilding.glb" id="16_2tjs3"]
 [ext_resource type="PackedScene" uid="uid://bgovebhuqvyeq" path="res://scenes/map/Assets/Lightpole.tscn" id="17_y111a"]
+[ext_resource type="PackedScene" uid="uid://cp2yx1km60ltu" path="res://scenes/store_system/vending_machines/WeaponUpgradeBench.tscn" id="22_u6sxo"]
 [ext_resource type="PackedScene" uid="uid://ckrrq0g5ohg1l" path="res://scenes/interactables/chest/rpg_chest.tscn" id="24_62js3"]
 [ext_resource type="PackedScene" uid="uid://c0mo1nuvg1hy6" path="res://scenes/store_system/vending_machines/PerkVendingMachine.tscn" id="25_mo16c"]
 [ext_resource type="PackedScene" uid="uid://ygu1w6sifw7h" path="res://scenes/store_system/vending_machines/AmmoVendingMachine.tscn" id="25_ui5tt"]
@@ -603,3 +604,6 @@ transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, -5.2008014, 0, -4.22
 
 [node name="AmmoVendingMachine2" parent="VendingMachines" unique_id=743259229 instance=ExtResource("25_ui5tt")]
 transform = Transform3D(-1.5298985e-08, 0, 0.35, 0, 0.35, 0, -0.35, 0, -1.5298985e-08, -24.282515, 0, -0.77828187)
+
+[node name="WeaponUpgradeBench" parent="VendingMachines" unique_id=995416419 instance=ExtResource("22_u6sxo")]
+transform = Transform3D(0.20108911, 0, -0.22262785, 0, 0.29999998, 0, 0.22262785, 0, 0.20108911, -17.498116, 0, 6.3099265)

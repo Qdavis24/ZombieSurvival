@@ -1,9 +1,9 @@
-[gd_scene format=3 uid="uid://dsf67mswc4muw"]
+[gd_scene format=3 uid="uid://cqg3kvywp6bx0"]
 
-[ext_resource type="Script" path="res://scripts/ui/PerkVendingMenu.cs" id="1_qifrx"]
+[ext_resource type="Script" path="res://scripts/ui/WeaponUpgradeMenu.cs" id="1_weapon_upgrade"]
 [ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="2_bolds"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_store_panel"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_weapon_upgrade_panel"]
 bg_color = Color(0.03529412, 0.03529412, 0.043137256, 0.94)
 border_width_left = 2
 border_width_top = 2
@@ -18,10 +18,10 @@ shadow_color = Color(0, 0, 0, 0.55)
 shadow_size = 18
 shadow_offset = Vector2(0, 8)
 
-[node name="PerkVendingMenu" type="CanvasLayer" node_paths=PackedStringArray("_titleLabel", "_optionsContainer", "_closeButton")]
+[node name="WeaponUpgradeMenu" type="CanvasLayer" node_paths=PackedStringArray("_titleLabel", "_optionsContainer", "_closeButton")]
 layer = 11
 visible = false
-script = ExtResource("1_qifrx")
+script = ExtResource("1_weapon_upgrade")
 _titleLabel = NodePath("Panel/MarginContainer/VBoxContainer/Title")
 _optionsContainer = NodePath("Panel/MarginContainer/VBoxContainer/Options")
 _closeButton = NodePath("Panel/MarginContainer/VBoxContainer/Close")
@@ -47,7 +47,7 @@ offset_right = 340.0
 offset_bottom = 220.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_store_panel")
+theme_override_styles/panel = SubResource("StyleBoxFlat_weapon_upgrade_panel")
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 1
@@ -70,7 +70,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9607843, 0.85882354, 1)
 theme_override_fonts/font = ExtResource("2_bolds")
 theme_override_font_sizes/font_size = 46
-text = "Perk Vending Machine"
+text = "Weapon Upgrade Bench"
 horizontal_alignment = 1
 
 [node name="Options" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]

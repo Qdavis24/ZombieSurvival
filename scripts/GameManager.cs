@@ -19,12 +19,15 @@ public partial class GameManager : Node
     private bool _isGamePlaying = false;
     private bool _isAmmoVendingMenuOpen = false;
     private bool _isPerkVendingMenuOpen = false;
+    private bool _isWeaponUpgradeMenuOpen = false;
 
     private Game _gameInstance;
     private AmmoVendingMachine _activeAmmoVendingMachine;
     private Node3D _activeAmmoVendingPlayer;
     private PerkVendingMachine _activePerkVendingMachine;
     private Node3D _activePerkVendingPlayer;
+    private WeaponUpgradeBench _activeWeaponUpgradeBench;
+    private Node3D _activeWeaponUpgradePlayer;
 
     private bool _test;
 
@@ -38,8 +41,11 @@ public partial class GameManager : Node
         _uiManager.AmmoVendingClosed += OnAmmoVendingClosed;
         _uiManager.PerkVendingOptionPressed += OnPerkVendingOptionPressed;
         _uiManager.PerkVendingClosed += OnPerkVendingClosed;
+        _uiManager.WeaponUpgradeOptionPressed += OnWeaponUpgradeOptionPressed;
+        _uiManager.WeaponUpgradeClosed += OnWeaponUpgradeClosed;
         EventBus.Instance.AmmoVendingMenuRequested += OnAmmoVendingMenuRequested;
         EventBus.Instance.PerkVendingMenuRequested += OnPerkVendingMenuRequested;
+        EventBus.Instance.WeaponUpgradeMenuRequested += OnWeaponUpgradeMenuRequested;
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -70,6 +76,13 @@ public partial class GameManager : Node
             if (_isPerkVendingMenuOpen)
             {
                 ClosePerkVendingMenu();
+                GetViewport().SetInputAsHandled();
+                return;
+            }
+
+            if (_isWeaponUpgradeMenuOpen)
+            {
+                CloseWeaponUpgradeMenu();
                 GetViewport().SetInputAsHandled();
                 return;
             }
@@ -117,10 +130,13 @@ public partial class GameManager : Node
         _isPaused = false;
         _isAmmoVendingMenuOpen = false;
         _isPerkVendingMenuOpen = false;
+        _isWeaponUpgradeMenuOpen = false;
         _activeAmmoVendingMachine = null;
         _activeAmmoVendingPlayer = null;
         _activePerkVendingMachine = null;
         _activePerkVendingPlayer = null;
+        _activeWeaponUpgradeBench = null;
+        _activeWeaponUpgradePlayer = null;
         _gameInstance = _game.Instantiate<Game>();
         AddChild(_gameInstance);
         _isGamePlaying = true;
@@ -134,12 +150,16 @@ public partial class GameManager : Node
         _isPaused = false;
         _isAmmoVendingMenuOpen = false;
         _isPerkVendingMenuOpen = false;
+        _isWeaponUpgradeMenuOpen = false;
         _activeAmmoVendingMachine = null;
         _activeAmmoVendingPlayer = null;
         _activePerkVendingMachine = null;
         _activePerkVendingPlayer = null;
+        _activeWeaponUpgradeBench = null;
+        _activeWeaponUpgradePlayer = null;
         _uiManager.HideAmmoVendingMenu();
         _uiManager.HidePerkVendingMenu();
+        _uiManager.HideWeaponUpgradeMenu();
         _gameInstance.QueueFree();
         _isGamePlaying = false;
     }
@@ -154,7 +174,7 @@ public partial class GameManager : Node
 
     private void OnAmmoVendingMenuRequested(AmmoVendingMachine machine, Node3D player)
     {
-        if (!_isGamePlaying || _isPaused || _isAmmoVendingMenuOpen || _isPerkVendingMenuOpen || machine == null || player == null)
+        if (!_isGamePlaying || _isPaused || _isAmmoVendingMenuOpen || _isPerkVendingMenuOpen || _isWeaponUpgradeMenuOpen || machine == null || player == null)
             return;
 
         _activeAmmoVendingMachine = machine;
@@ -199,7 +219,7 @@ public partial class GameManager : Node
 
     private void OnPerkVendingMenuRequested(PerkVendingMachine machine, Node3D player)
     {
-        if (!_isGamePlaying || _isPaused || _isAmmoVendingMenuOpen || _isPerkVendingMenuOpen || machine == null || player == null)
+        if (!_isGamePlaying || _isPaused || _isAmmoVendingMenuOpen || _isPerkVendingMenuOpen || _isWeaponUpgradeMenuOpen || machine == null || player == null)
             return;
 
         _activePerkVendingMachine = machine;
@@ -238,6 +258,52 @@ public partial class GameManager : Node
         _activePerkVendingPlayer = null;
 
         _uiManager.HidePerkVendingMenu();
+
+        if (_isGamePlaying)
+        {
+            Input.MouseMode = Input.MouseModeEnum.Captured;
+            _gameInstance.ProcessMode = ProcessModeEnum.Inherit;
+        }
+    }
+
+    private void OnWeaponUpgradeMenuRequested(WeaponUpgradeBench bench, Node3D player)
+    {
+        if (!_isGamePlaying || _isPaused || _isAmmoVendingMenuOpen || _isPerkVendingMenuOpen || _isWeaponUpgradeMenuOpen || bench == null || player == null)
+            return;
+
+        _activeWeaponUpgradeBench = bench;
+        _activeWeaponUpgradePlayer = player;
+        _isWeaponUpgradeMenuOpen = true;
+
+        Input.MouseMode = Input.MouseModeEnum.Visible;
+        _gameInstance.ProcessMode = ProcessModeEnum.Disabled;
+        _uiManager.ShowWeaponUpgradeMenu(bench, player);
+    }
+
+    private void OnWeaponUpgradeOptionPressed(int optionIndex)
+    {
+        if (!_isWeaponUpgradeMenuOpen || _activeWeaponUpgradeBench == null || _activeWeaponUpgradePlayer == null)
+            return;
+
+        if (_activeWeaponUpgradeBench.TryPurchase(optionIndex, _activeWeaponUpgradePlayer))
+            _uiManager.ShowWeaponUpgradeMenu(_activeWeaponUpgradeBench, _activeWeaponUpgradePlayer);
+    }
+
+    private void OnWeaponUpgradeClosed()
+    {
+        CloseWeaponUpgradeMenu();
+    }
+
+    private void CloseWeaponUpgradeMenu()
+    {
+        if (!_isWeaponUpgradeMenuOpen)
+            return;
+
+        _isWeaponUpgradeMenuOpen = false;
+        _activeWeaponUpgradeBench = null;
+        _activeWeaponUpgradePlayer = null;
+
+        _uiManager.HideWeaponUpgradeMenu();
 
         if (_isGamePlaying)
         {

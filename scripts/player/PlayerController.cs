@@ -36,6 +36,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 	[ExportGroup("Player")] 
 	[Export] public Inventory Inventory { get; private set; }
+	[Export] private int _startingMoney = 5000;
 	
 	[Export] private float _maxHealth = 75f;
 	[Export] private float _health = 75f;
@@ -89,6 +90,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		
 		_yaw = Rotation.Y;
 		_pitch = _head.Rotation.X;
+		Inventory.AddItem(ItemType.Money, _startingMoney);
 		Inventory.ItemAdded += OnItemAdded;
 		Inventory.ItemRemoved += OnItemRemoved;
 		_weaponManager.AmmoChanged += _playerHud.SetAmmo;
@@ -97,6 +99,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		_grenadeManager.GrenadeThrowFailed += _playerHud.GrenadeThrowFailed;
 		_health = _maxHealth;
 		_playerHud.UpdateHealthIndicator(_health, _maxHealth);
+		_playerHud.SetParasiticMaterial(Inventory.GetAmount(ItemType.Money));
 	}
 
 	public void SetMaxHealth(float maxHealth, bool healGainedAmount = true)

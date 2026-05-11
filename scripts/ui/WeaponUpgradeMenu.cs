@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using Godot;
+using ZombieSurvival.scripts.player.weapons;
 
-public partial class PerkVendingMenu : CanvasLayer
+public partial class WeaponUpgradeMenu : CanvasLayer
 {
     [Signal] public delegate void OptionPressedEventHandler(int optionIndex);
     [Signal] public delegate void ClosedEventHandler();
@@ -32,14 +33,14 @@ public partial class PerkVendingMenu : CanvasLayer
         }
     }
 
-    public void ShowOptions(PerkVendingMachine machine, Node3D player)
+    public void ShowOptions(WeaponUpgradeBench bench, Node3D player)
     {
         ClearOptionButtons();
 
         if (_titleLabel != null)
-            _titleLabel.Text = "Perk Vending Machine";
+            _titleLabel.Text = "Weapon Upgrade Bench";
 
-        var options = machine?.Options;
+        var options = bench?.Options;
         if (_optionsContainer != null && options != null)
         {
             for (int i = 0; i < options.Count; i++)
@@ -49,11 +50,11 @@ public partial class PerkVendingMenu : CanvasLayer
                     continue;
 
                 var optionIndex = i;
-                var status = machine.GetPurchaseStatus(optionIndex, player);
+                var status = bench.GetPurchaseStatus(optionIndex, player);
                 var button = new Button
                 {
                     Text = GetButtonText(option, status),
-                    Disabled = status != PerkVendingMachine.PurchaseStatus.Available,
+                    Disabled = status != WeaponManager.WeaponUpgradeStatus.Available,
                     FocusMode = Control.FocusModeEnum.All
                 };
                 StoreMenuStyle.ApplyOptionButtonStyle(button);
@@ -76,14 +77,13 @@ public partial class PerkVendingMenu : CanvasLayer
         EmitSignal(SignalName.Closed);
     }
 
-    private static string GetButtonText(PerkVendingOption option, PerkVendingMachine.PurchaseStatus status)
+    private static string GetButtonText(WeaponUpgradeOption option, WeaponManager.WeaponUpgradeStatus status)
     {
         return status switch
         {
-            PerkVendingMachine.PurchaseStatus.Owned => $"{option.DisplayName} - Owned",
-            PerkVendingMachine.PurchaseStatus.NotEnoughPoints => $"{option.DisplayName} - {option.Price}",
-            PerkVendingMachine.PurchaseStatus.Busy => $"{option.DisplayName} - Unavailable",
-            PerkVendingMachine.PurchaseStatus.Invalid => $"{option.DisplayName} - Unavailable",
+            WeaponManager.WeaponUpgradeStatus.Locked => $"{option.DisplayName} - Locked",
+            WeaponManager.WeaponUpgradeStatus.Owned => $"{option.DisplayName} - Owned",
+            WeaponManager.WeaponUpgradeStatus.Invalid => $"{option.DisplayName} - Unavailable",
             _ => $"{option.DisplayName} - {option.Price}"
         };
     }

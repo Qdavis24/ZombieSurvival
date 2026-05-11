@@ -45,6 +45,15 @@ public partial class WeaponManager : Node
         UsingPerk
     }
 
+    public enum WeaponUpgradeStatus
+    {
+        Available,
+        Locked,
+        Owned,
+        NotEnoughPoints,
+        Invalid
+    }
+
     [Export] private Node3D _weaponSocket;
     [Export] private PackedScene[] _weaponScenes;
     [Export] private int[] _startingReserveAmmo;
@@ -190,6 +199,79 @@ public partial class WeaponManager : Node
         weapon.SetMagazineSizeMultiplier(slot.MagSizeUpgraded ? MagazineUpgradeMultiplier : 1f);
         weapon.SetPierceHitCount(slot.PierceUpgraded ? PierceUpgradeHitCount : 1);
         weapon.SetFireRateMultiplier(slot.FireRateUpgraded ? FireRateUpgradeMultiplier : 1f);
+    }
+
+    public WeaponUpgradeStatus GetUpgradeStatus(WeaponUpgradeTarget target)
+    {
+        var slot = GetUpgradeSlot(target);
+        if (slot == null)
+            return WeaponUpgradeStatus.Invalid;
+
+        if (!slot.Unlocked)
+            return WeaponUpgradeStatus.Locked;
+
+        return IsFullyUpgraded(slot)
+            ? WeaponUpgradeStatus.Owned
+            : WeaponUpgradeStatus.Available;
+    }
+
+    public bool TryUpgradeWeapon(WeaponUpgradeTarget target)
+    {
+        if (GetUpgradeStatus(target) != WeaponUpgradeStatus.Available)
+            return false;
+
+        var slotIndex = GetUpgradeSlotIndex(target);
+        if (slotIndex < 0)
+            return false;
+
+        var slot = _weaponSlots[slotIndex];
+        slot.MagSizeUpgraded = true;
+        slot.PierceUpgraded = true;
+        slot.FireRateUpgraded = true;
+
+        if (slotIndex == _currentWeaponIndex)
+        {
+            ApplySlotUpgrades(slot, _current);
+            RefreshHudAmmo();
+        }
+
+        return true;
+    }
+
+    private WeaponSlot GetUpgradeSlot(WeaponUpgradeTarget target)
+    {
+        var slotIndex = GetUpgradeSlotIndex(target);
+        return slotIndex >= 0 ? _weaponSlots[slotIndex] : null;
+    }
+
+    private int GetUpgradeSlotIndex(WeaponUpgradeTarget target)
+    {
+        if (_weaponSlots == null || _weaponSlots.Length == 0)
+            return -1;
+
+        if (target == WeaponUpgradeTarget.Pistol)
+            return _weaponSlots[0] != null ? 0 : -1;
+
+        var weaponType = target switch
+        {
+            WeaponUpgradeTarget.Shotgun => ItemType.Shotgun,
+            WeaponUpgradeTarget.Rifle => ItemType.Rifle,
+            _ => (ItemType)(-1)
+        };
+
+        for (int i = 0; i < _weaponSlots.Length; i++)
+        {
+            var slot = _weaponSlots[i];
+            if (slot != null && slot.WeaponType == weaponType)
+                return i;
+        }
+
+        return -1;
+    }
+
+    private static bool IsFullyUpgraded(WeaponSlot slot)
+    {
+        return slot.MagSizeUpgraded && slot.PierceUpgraded && slot.FireRateUpgraded;
     }
 
     private void TryHandleUpgradeInput()

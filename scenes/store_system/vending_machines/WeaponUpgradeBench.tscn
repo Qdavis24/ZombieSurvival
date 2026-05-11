@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://cp2yx1km60ltu"]
+
+[ext_resource type="Script" uid="uid://ccape5wy5igap" path="res://scripts/store_system/WeaponUpgradeBench.cs" id="1_bench"]
+[ext_resource type="PackedScene" uid="uid://i8mt5y078u4v" path="res://assets/models/vending_machines/PerkVendingMachine.glb" id="2_model"]
+[ext_resource type="Script" uid="uid://bb5r3ttcj5mk0" path="res://scripts/store_system/WeaponUpgradeOption.cs" id="3_option"]
+[ext_resource type="PackedScene" uid="uid://o1wbuinrs4av" path="res://scenes/store_system/upgrade_bench_model.tscn" id="5_7cblx"]
+[ext_resource type="PackedScene" uid="uid://eksdoewlbll1" path="res://scenes/interactables/interact_notifier.tscn" id="5_notifier"]
+[ext_resource type="AudioStream" uid="uid://cglthr2sqd28e" path="res://assets/sound/ui_click.wav" id="6_fail"]
+[ext_resource type="AudioStream" uid="uid://ow67mln4ganu" path="res://assets/sound/interactables/vending-machine.wav" id="7_success"]
+
+[sub_resource type="Resource" id="Resource_pistol_upgrade"]
+script = ExtResource("3_option")
+DisplayName = "Pistol Upgrade"
+
+[sub_resource type="Resource" id="Resource_shotgun_upgrade"]
+script = ExtResource("3_option")
+DisplayName = "Shotgun Upgrade"
+Target = 1
+Price = 4000
+
+[sub_resource type="Resource" id="Resource_rifle_upgrade"]
+script = ExtResource("3_option")
+DisplayName = "Rifle Upgrade"
+Target = 2
+Price = 4000
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_weapon_upgrade"]
+size = Vector3(5.2048187, 8.971558, 4.7727203)
+
+[node name="WeaponUpgradeBench" type="StaticBody3D" unique_id=445266743 node_paths=PackedStringArray("_interactNotifier")]
+script = ExtResource("1_bench")
+_interactNotifier = NodePath("InteractNotifier")
+_failedBuySound = ExtResource("6_fail")
+_successfulBuySound = ExtResource("7_success")
+_options = Array[ExtResource("3_option")]([SubResource("Resource_pistol_upgrade"), SubResource("Resource_shotgun_upgrade"), SubResource("Resource_rifle_upgrade")])
+
+[node name="UpgradeBenchModel" parent="." unique_id=841175754 instance=ExtResource("5_7cblx")]
+transform = Transform3D(3.3, 0, 0, 0, 3.3, 0, 0, 0, 3.3, 0, 0, 0)
+
+[node name="PerkVendingMachine" parent="." unique_id=672928276 instance=ExtResource("2_model")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1200968282]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13521576, 3.9857788, 0.16304779)
+shape = SubResource("BoxShape3D_weapon_upgrade")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=493250078]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+visible = false
+light_color = Color(0, 0.8242067, 0.5796447, 1)
+light_specular = 0.0
+omni_range = 4.051
+
+[node name="InteractNotifier" parent="." unique_id=491494651 instance=ExtResource("5_notifier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, 2.8776479)
+visible = false
+InteractPrompt = "press e to use weapon upgrade bench"

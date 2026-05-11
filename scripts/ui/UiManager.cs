@@ -9,6 +9,8 @@ public partial class UiManager : Node
 	[Signal] public delegate void AmmoVendingClosedEventHandler();
 	[Signal] public delegate void PerkVendingOptionPressedEventHandler(int optionIndex);
 	[Signal] public delegate void PerkVendingClosedEventHandler();
+	[Signal] public delegate void WeaponUpgradeOptionPressedEventHandler(int optionIndex);
+	[Signal] public delegate void WeaponUpgradeClosedEventHandler();
 	
 	[Export] private AudioStream _startMenuMusic;
 	
@@ -20,6 +22,7 @@ public partial class UiManager : Node
 	[Export] private Popup _popup;
 	[Export] private AmmoVendingMenu _ammoVendingMenu;
 	[Export] private PerkVendingMenu _perkVendingMenu;
+	[Export] private WeaponUpgradeMenu _weaponUpgradeMenu;
 	[Export] private OptionsMenu _optionsMenu;
 	[Export] private ControlsMenu _controlsMenu;
 
@@ -48,6 +51,8 @@ public partial class UiManager : Node
 		_ammoVendingMenu.Closed += OnAmmoVendingClosed;
 		_perkVendingMenu.OptionPressed += OnPerkVendingOptionPressed;
 		_perkVendingMenu.Closed += OnPerkVendingClosed;
+		_weaponUpgradeMenu.OptionPressed += OnWeaponUpgradeOptionPressed;
+		_weaponUpgradeMenu.Closed += OnWeaponUpgradeClosed;
 		_optionsMenu.Closed += OnOptionsMenuClosed;
 	}
 	
@@ -59,6 +64,7 @@ public partial class UiManager : Node
 		_deathMenu.Visible = false;
 		_optionsMenu.Visible = false;
 		_controlsMenu.Visible = false;
+		_weaponUpgradeMenu.Visible = false;
 		_optionsMenuSource = OptionsMenuSource.None;
 		_startMenu.Visible = true;
 		AudioManager.I.PlayMusic(_startMenuMusic);
@@ -71,6 +77,7 @@ public partial class UiManager : Node
 		_pauseMenu.Visible = false;
 		_optionsMenu.Visible = false;
 		_controlsMenu.Visible = false;
+		_weaponUpgradeMenu.Visible = false;
 		_optionsMenuSource = OptionsMenuSource.None;
 		_hud.Init();
 		_hud.Visible = true;
@@ -108,6 +115,16 @@ public partial class UiManager : Node
 	public void HidePerkVendingMenu()
 	{
 		_perkVendingMenu.Visible = false;
+	}
+
+	public void ShowWeaponUpgradeMenu(WeaponUpgradeBench bench, Node3D player)
+	{
+		_weaponUpgradeMenu.ShowOptions(bench, player);
+	}
+
+	public void HideWeaponUpgradeMenu()
+	{
+		_weaponUpgradeMenu.Visible = false;
 	}
 
 	public bool IsOptionsMenuVisible()
@@ -148,6 +165,16 @@ public partial class UiManager : Node
 	private void OnPerkVendingClosed()
 	{
 		EmitSignal(SignalName.PerkVendingClosed);
+	}
+
+	private void OnWeaponUpgradeOptionPressed(int optionIndex)
+	{
+		EmitSignal(SignalName.WeaponUpgradeOptionPressed, optionIndex);
+	}
+
+	private void OnWeaponUpgradeClosed()
+	{
+		EmitSignal(SignalName.WeaponUpgradeClosed);
 	}
 
 	private void OnStartMenuOptionsPressed()

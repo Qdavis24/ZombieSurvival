@@ -51,9 +51,9 @@ public partial class AmmoVendingMenu : CanvasLayer
                 var button = new Button
                 {
                     Text = $"{option.DisplayName} - {option.Price}",
-                    CustomMinimumSize = new Vector2(360f, 44f),
                     FocusMode = Control.FocusModeEnum.All
                 };
+                StoreMenuStyle.ApplyOptionButtonStyle(button);
 
                 button.Pressed += () => EmitSignal(SignalName.OptionPressed, optionIndex);
                 _optionsContainer.AddChild(button);
