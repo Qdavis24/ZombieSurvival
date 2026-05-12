@@ -17,6 +17,9 @@ public partial class Zombie : CharacterBody3D
     [Export] private NavigationAgent3D _navAgent;
     [Export] private CollisionShape3D _collisionShape;
     [Export] private float _attackRange = 1f;
+    [Export] private float _gravity = 20f;
+    [Export] private float _floorStickVelocity = 0.5f;
+    [Export] private float _floorSnapLength = 0.35f;
 
     [ExportGroup("Sounds")] 
     [Export] private AudioStream _groanSound;
@@ -47,6 +50,7 @@ public partial class Zombie : CharacterBody3D
         _dismemberableBody.Dead += Die;
         _dismemberableBody.SimulationFinished += QueueFree;
         _dismemberableBody.Dismembered += OnDismembered;
+        FloorSnapLength = _floorSnapLength;
         SetState(State.Chase);
         SetupGroanTimer(); // audio
     }
@@ -71,7 +75,7 @@ public partial class Zombie : CharacterBody3D
         switch (_state)
         {
             case State.Chase:
-                MoveTowardTarget(targetPosition);
+                MoveTowardTarget(targetPosition, (float)delta);
                 break;
             case State.Attack:
                 FaceTarget(targetPosition);
@@ -106,13 +110,21 @@ public partial class Zombie : CharacterBody3D
         }
     }
 
-    private void MoveTowardTarget(Vector3 targetPosition)
+    private void MoveTowardTarget(Vector3 targetPosition, float delta)
     {
         _navAgent.SetTargetPosition(targetPosition);
         var nextPoint = _navAgent.GetNextPathPosition();
-        var dir = (nextPoint - GlobalTransform.Origin).Normalized();
-        FaceDirection(dir);
-        Velocity = dir * _speed;
+        var toNextPoint = nextPoint - GlobalTransform.Origin;
+        var horizontal = new Vector3(toNextPoint.X, 0f, toNextPoint.Z);
+        var horizontalDir = horizontal.LengthSquared() > 0.001f ? horizontal.Normalized() : Vector3.Zero;
+
+        if (horizontalDir.LengthSquared() > 0.001f)
+            FaceDirection(horizontalDir);
+
+        var yVelocity = Velocity.Y;
+        yVelocity = IsOnFloor() ? -_floorStickVelocity : yVelocity - (_gravity * delta);
+
+        Velocity = new Vector3(horizontalDir.X * _speed, yVelocity, horizontalDir.Z * _speed);
         MoveAndSlide();
     }
 

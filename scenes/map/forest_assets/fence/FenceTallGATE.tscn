@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bms5lsufdmncy"]
+
+[ext_resource type="PackedScene" uid="uid://b10rgnca73eid" path="res://assets/forest_map/models/fence/FenceGate.glb" id="5_vn17q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_35cgt"]
+size = Vector3(2.6672363, 16.58136, 12.546982)
+
+[node name="FenceGate" type="StaticBody3D" unique_id=413533109]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=337677015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.26550293, 7.79068, -0.39059353)
+visible = false
+shape = SubResource("BoxShape3D_35cgt")
+
+[node name="FenceGate2" parent="." unique_id=1608949112 instance=ExtResource("5_vn17q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7181339, 0, 25.495375)

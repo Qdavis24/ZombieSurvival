@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://cbomw3chjh371"]
+
+[ext_resource type="PackedScene" uid="uid://dakg5gle13idv" path="res://assets/forest_map/models/fence/Fence2.glb" id="1_1bk1m"]
+[ext_resource type="PackedScene" uid="uid://bla43eos7tthq" path="res://assets/forest_map/models/fence/FenceMetal1.glb" id="2_tfif4"]
+[ext_resource type="PackedScene" uid="uid://bogf2v1adho6t" path="res://assets/forest_map/models/fence/FenceTallColumn.glb" id="3_1bk1m"]
+[ext_resource type="PackedScene" uid="uid://ck7eud4ov6gsu" path="res://assets/forest_map/models/fence/FenceShortColumn.glb" id="3_wj0hg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_35cgt"]
+size = Vector3(2.6672363, 7.0318604, 12.161911)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jf5w8"]
+size = Vector3(3.185791, 6.6434326, 15.95993)
+
+[node name="FenceGate" type="StaticBody3D" unique_id=413533109]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=337677015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.26550293, 3.0159302, -12.62393)
+shape = SubResource("BoxShape3D_35cgt")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=578401572]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.46520996, 2.8217163, 14.125151)
+shape = SubResource("BoxShape3D_jf5w8")
+
+[node name="Right" type="Node3D" parent="." unique_id=414039802]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.79730606, 0, -13.963886)
+
+[node name="Fence22" parent="Right" unique_id=1057760735 instance=ExtResource("1_1bk1m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0653095, 0, 9.653109)
+
+[node name="FenceMetal12" parent="Right" unique_id=350603238 instance=ExtResource("2_tfif4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0653095, 0, 9.653109)
+
+[node name="FenceTallColumn2" parent="Right" unique_id=1049179850 instance=ExtResource("3_1bk1m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3393207, 0, 23.20234)
+
+[node name="Left" type="Node3D" parent="." unique_id=1352569861]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 13.421652)
+
+[node name="Fence22" parent="Left" unique_id=383309901 instance=ExtResource("1_1bk1m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0653095, 0, 9.653109)
+
+[node name="FenceMetal12" parent="Left" unique_id=1053028431 instance=ExtResource("2_tfif4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0653095, 0, 9.653109)
+
+[node name="FenceTallColumn2" parent="Left" unique_id=2025302280 instance=ExtResource("3_1bk1m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3393207, 0, 23.20234)
+
+[node name="FenceShortColumn2" parent="Left" unique_id=235512661 instance=ExtResource("3_wj0hg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.104578, 0, -3.6871338)

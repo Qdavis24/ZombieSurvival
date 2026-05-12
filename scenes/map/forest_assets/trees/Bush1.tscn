@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bgkhkhk5wvhkx"]
+
+[ext_resource type="PackedScene" uid="uid://drduafoda7a2x" path="res://assets/forest_map/models/bush_01.tscn" id="1_r70vb"]
+
+[node name="Bush1" type="Node3D" unique_id=1182370739]
+
+[node name="bush02" parent="." unique_id=1757395796 instance=ExtResource("1_r70vb")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)

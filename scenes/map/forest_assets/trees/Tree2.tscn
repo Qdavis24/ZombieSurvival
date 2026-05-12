@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://b1inu6r4bfn24"]
+
+[ext_resource type="PackedScene" uid="uid://6xfcjbqreurq" path="res://assets/forest_map/models/tree10.fbx" id="1_bbltx"]
+[ext_resource type="Shader" uid="uid://s7800fdripnr" path="res://shaders/psx_normalized_UNSHADED.gdshader" id="2_5e1iq"]
+[ext_resource type="Texture2D" uid="uid://d3ql01cneuw78" path="res://assets/forest_map/models/tree10.png" id="3_1r5q3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vr05p"]
+render_priority = 0
+shader = ExtResource("2_5e1iq")
+shader_parameter/albedo_tex = ExtResource("3_1r5q3")
+shader_parameter/alpha_scissor = 0.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_sku8o"]
+height = 13.48291
+
+[node name="Tree2" type="StaticBody3D" unique_id=1948924596]
+
+[node name="tree10" parent="." unique_id=1464981774 instance=ExtResource("1_bbltx")]
+
+[node name="tree10" parent="tree10" index="0" unique_id=526939204]
+surface_material_override/0 = SubResource("ShaderMaterial_vr05p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1134662125]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.741455, 0)
+shape = SubResource("CylinderShape3D_sku8o")
+
+[editable path="tree10"]

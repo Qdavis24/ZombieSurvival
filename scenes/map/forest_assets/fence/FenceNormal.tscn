@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dq27tevr2060w"]
+
+[ext_resource type="PackedScene" uid="uid://dakg5gle13idv" path="res://assets/forest_map/models/fence/Fence2.glb" id="1_ol85l"]
+[ext_resource type="PackedScene" uid="uid://bla43eos7tthq" path="res://assets/forest_map/models/fence/FenceMetal1.glb" id="2_s855r"]
+[ext_resource type="PackedScene" uid="uid://ck7eud4ov6gsu" path="res://assets/forest_map/models/fence/FenceShortColumn.glb" id="3_i4f7c"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_35cgt"]
+size = Vector3(2.6672363, 7.0318604, 14.306091)
+
+[node name="FenceNormal" type="StaticBody3D" unique_id=413533109]
+
+[node name="Fence22" parent="." unique_id=1799208961 instance=ExtResource("1_ol85l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0653095, 0, 9.653109)
+
+[node name="FenceMetal12" parent="." unique_id=1256390242 instance=ExtResource("2_s855r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0653095, 0, 9.653109)
+
+[node name="FenceShortColumn2" parent="." unique_id=1499843361 instance=ExtResource("3_i4f7c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0653095, 0, 9.653109)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=337677015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.26550293, 3.0159302, 0.45425415)
+shape = SubResource("BoxShape3D_35cgt")

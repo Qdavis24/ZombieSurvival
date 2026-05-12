@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c65glarc4voaa"]
+
+[ext_resource type="PackedScene" uid="uid://c1psh40r6qjfh" path="res://assets/forest_map/models/graves/Grave1.glb" id="1_qh20g"]
+[ext_resource type="Shader" uid="uid://b8u001nk4f7v2" path="res://shaders/psx_normalized.gdshader" id="2_0ur7l"]
+[ext_resource type="Texture2D" uid="uid://bme2bmh01d4tn" path="res://assets/forest_map/models/graves/Grave1_GravesDiff256.png" id="3_s3ctn"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_8kugc"]
+data = PackedVector3Array(-3.2805998, -0.0002, 0, -3.2805998, -12.248199, -32.5358, -3.2805998, -0.0002, -38.4179, -3.2805998, -0.0002, 0, -3.2805998, -12.248199, 0, -3.2805998, -12.248199, -32.5358, -3.2805998, 12.2483, 0, -3.2805998, -0.0002, 0, -3.2805998, -0.0002, -38.4179, -3.2805998, 12.2483, 0, -3.2805998, -0.0002, -38.4179, -3.2805998, 12.2483, -32.5358, -3.2805998, -12.248199, 0, 3.2805998, -12.248199, -32.5358, -3.2805998, -12.248199, -32.5358, -3.2805998, -12.248199, 0, 3.2805998, -12.248199, 0, 3.2805998, -12.248199, -32.5358, 3.2805998, -0.0002, 0, 3.2805998, 12.2483, -32.5358, 3.2805998, -0.0002, -38.4179, 3.2805998, -0.0002, 0, 3.2805998, 12.2483, 0, 3.2805998, 12.2483, -32.5358, 3.2805998, -12.248199, 0, 3.2805998, -0.0002, 0, 3.2805998, -0.0002, -38.4179, 3.2805998, -12.248199, 0, 3.2805998, -0.0002, -38.4179, 3.2805998, -12.248199, -32.5358, 3.2805998, 12.2483, 0, -3.2805998, 12.2483, -32.5358, 3.2805998, 12.2483, -32.5358, 3.2805998, 12.2483, 0, -3.2805998, 12.2483, 0, -3.2805998, 12.2483, -32.5358, 3.2805998, -0.0002, -38.4179, -3.2805998, 12.2483, -32.5358, -3.2805998, -0.0002, -38.4179, 3.2805998, -0.0002, -38.4179, 3.2805998, 12.2483, -32.5358, -3.2805998, 12.2483, -32.5358, 3.2805998, -12.248199, -32.5358, 3.2805998, -0.0002, -38.4179, -3.2805998, -0.0002, -38.4179, 3.2805998, -12.248199, -32.5358, -3.2805998, -0.0002, -38.4179, -3.2805998, -12.248199, -32.5358)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_onmaq"]
+render_priority = 0
+shader = ExtResource("2_0ur7l")
+shader_parameter/albedo_tex = ExtResource("3_s3ctn")
+shader_parameter/alpha_scissor = 0.5
+
+[node name="Grave1" type="StaticBody3D" unique_id=1246920913]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=360985024]
+transform = Transform3D(-0.10033377, -7.933931e-08, -7.933931e-08, 7.933931e-08, 0, -0.10033377, 7.933931e-08, -0.10033377, 6.273785e-14, -0.017290115, 0, 0.13671589)
+shape = SubResource("ConcavePolygonShape3D_8kugc")
+
+[node name="Grave12" parent="." unique_id=1317154442 instance=ExtResource("1_qh20g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.165939, 0, 4.2759066)
+
+[node name="Grave1" parent="Grave12" index="0" unique_id=1551657699]
+surface_material_override/0 = SubResource("ShaderMaterial_onmaq")
+
+[editable path="Grave12"]

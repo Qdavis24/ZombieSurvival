@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://batavt1d4wtrt"]
+
+[ext_resource type="PackedScene" uid="uid://cf57dcp5xk6fc" path="res://assets/forest_map/models/graves/Grave2.glb" id="1_d2g0h"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_00k5c"]
+size = Vector3(3.7626343, 5.9786377, 3.8045654)
+
+[node name="Grave2" type="StaticBody3D" unique_id=92846018]
+
+[node name="Grave22" parent="." unique_id=1772156842 instance=ExtResource("1_d2g0h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.802805, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=648725521]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.46151733, 2.4893188, -0.33551025)
+shape = SubResource("BoxShape3D_00k5c")

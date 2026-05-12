@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://b0425wpnrnn13"]
+
+[ext_resource type="PackedScene" uid="uid://dwsytvlvqks5g" path="res://assets/forest_map/models/FloorEarlyTex.glb" id="1_ebu0c"]
+[ext_resource type="Shader" uid="uid://b8u001nk4f7v2" path="res://shaders/psx_normalized.gdshader" id="2_fedxe"]
+[ext_resource type="Texture2D" uid="uid://cfolhfvttgb00" path="res://assets/forest_map/models/FloorEarlyTex_FloorForest.png" id="3_iqwmd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wn5w5"]
+render_priority = 0
+shader = ExtResource("2_fedxe")
+shader_parameter/albedo_tex = ExtResource("3_iqwmd")
+shader_parameter/alpha_scissor = 0.5
+
+[node name="FloorEarlyTex" unique_id=502021892 instance=ExtResource("1_ebu0c")]
+
+[node name="Cube" parent="." index="0" unique_id=868912245]
+surface_material_override/0 = SubResource("ShaderMaterial_wn5w5")
