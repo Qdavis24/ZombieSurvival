@@ -3,7 +3,7 @@ using System;
 
 public partial class UiManager : Node
 {
-	[Signal] public delegate void StartGameEventHandler();
+	[Signal] public delegate void StartGameEventHandler(int levelIndex);
 	[Signal] public delegate void QuitGameEventHandler();
 	[Signal] public delegate void AmmoVendingOptionPressedEventHandler(int optionIndex);
 	[Signal] public delegate void AmmoVendingClosedEventHandler();
@@ -71,7 +71,7 @@ public partial class UiManager : Node
 		EmitSignal(SignalName.QuitGame);
 	}
 
-	public void OnStartGame()
+	public void OnStartGame(int levelIndex)
 	{
 		_startMenu.Visible = false;
 		_pauseMenu.Visible = false;
@@ -82,7 +82,7 @@ public partial class UiManager : Node
 		_hud.Init();
 		_hud.Visible = true;
 		AudioManager.I.StopMusic();
-		EmitSignal(SignalName.StartGame);
+		EmitSignal(SignalName.StartGame, levelIndex);
 	}
 
 	public void ShowPauseMenu()

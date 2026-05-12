@@ -9,7 +9,7 @@ namespace ZombieSurvival.scripts;
 public partial class GameManager : Node
 {
     [Export] private UiManager _uiManager;
-    [Export] private PackedScene _game;
+    [Export] private Godot.Collections.Array<LevelDefinition> _levels = new();
     
     [Export] private AudioStream _layer1;
     [Export] private AudioStream _layer2;
@@ -123,8 +123,15 @@ public partial class GameManager : Node
         _uiManager.HudSetRound(round);
     }
 
-    private void OnStartGame()
+    private void OnStartGame(int levelIndex)
     {
+        var selectedLevel = GetLevelDefinition(levelIndex);
+        if (selectedLevel?.GameScene == null)
+        {
+            GD.PrintErr($"{nameof(GameManager)}: invalid level selection '{levelIndex}'.");
+            return;
+        }
+
         AudioManager.I.RandomizeSong();
         AudioManager.I.StartCurrentSong();
         _isPaused = false;
@@ -137,11 +144,22 @@ public partial class GameManager : Node
         _activePerkVendingPlayer = null;
         _activeWeaponUpgradeBench = null;
         _activeWeaponUpgradePlayer = null;
-        _gameInstance = _game.Instantiate<Game>();
+        _gameInstance = selectedLevel.GameScene.Instantiate<Game>();
         AddChild(_gameInstance);
         _isGamePlaying = true;
         Input.MouseMode = Input.MouseModeEnum.Captured;
         _uiManager.HudSetRound(1);
+    }
+
+    private LevelDefinition GetLevelDefinition(int levelIndex)
+    {
+        if (_levels == null || _levels.Count == 0)
+            return null;
+
+        if (levelIndex < 0 || levelIndex >= _levels.Count)
+            return null;
+
+        return _levels[levelIndex];
     }
 
     private void OnQuitGame()

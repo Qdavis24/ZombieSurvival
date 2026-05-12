@@ -608,11 +608,14 @@ font_color = Color(0.85490507, 0.04420513, 2.8878452e-07, 1)
 shadow_size = 12
 shadow_color = Color(0, 0, 0, 0.5372549)
 
-[node name="StartMenu" type="CanvasLayer" unique_id=1584193192 node_paths=PackedStringArray("_startGameButton", "_optionsButton", "_controlsButton")]
+[node name="StartMenu" type="CanvasLayer" unique_id=1584193192 node_paths=PackedStringArray("_startGameButton", "_previousLevelButton", "_nextLevelButton", "_optionsButton", "_controlsButton", "_selectedLevelLabel")]
 script = ExtResource("1_y4veo")
 _startGameButton = NodePath("Panel/VBoxContainer/HBoxContainer/VBoxContainer/Button")
+_previousLevelButton = NodePath("Panel/VBoxContainer/LevelCarousel/PreviousLevel")
+_nextLevelButton = NodePath("Panel/VBoxContainer/LevelCarousel/NextLevel")
 _optionsButton = NodePath("Panel/VBoxContainer/HBoxContainer/VBoxContainer/Button2")
 _controlsButton = NodePath("Panel/VBoxContainer/HBoxContainer/VBoxContainer/Controls")
+_selectedLevelLabel = NodePath("Panel/VBoxContainer/LevelCarousel/SelectedLevel")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=442801764]
 position = Vector2(964.55566, 539.00006)
@@ -650,6 +653,43 @@ horizontal_alignment = 1
 [node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer" unique_id=1714411362]
 layout_mode = 2
 theme_override_constants/margin_top = 20
+
+[node name="LevelCarousel" type="HBoxContainer" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(430, 0)
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="PreviousLevel" type="Button" parent="Panel/VBoxContainer/LevelCarousel"]
+custom_minimum_size = Vector2(85, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85490197, 0.043137256, 0, 1)
+theme_override_fonts/font = ExtResource("4_pridf")
+theme_override_font_sizes/font_size = 64
+text = "<"
+
+[node name="SelectedLevel" type="Label" parent="Panel/VBoxContainer/LevelCarousel"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85490197, 0.043137256, 0, 1)
+theme_override_fonts/font = ExtResource("4_pridf")
+theme_override_font_sizes/font_size = 64
+text = "Downtown"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NextLevel" type="Button" parent="Panel/VBoxContainer/LevelCarousel"]
+custom_minimum_size = Vector2(85, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85490197, 0.043137256, 0, 1)
+theme_override_fonts/font = ExtResource("4_pridf")
+theme_override_font_sizes/font_size = 64
+text = ">"
+
+[node name="CarouselBottomMargin" type="MarginContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 24
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1880373054]
 layout_mode = 2

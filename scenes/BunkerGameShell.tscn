@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://dd1w2bvwpcub5"]
+
+[ext_resource type="Script" uid="uid://j7nqumogkvom" path="res://scripts/Game.cs" id="1_game"]
+[ext_resource type="PackedScene" uid="uid://cfjp3bppwm4i8" path="res://scenes/player/PlayerController.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://cvt0aomoxtces" path="res://scenes/round_system/round_system.tscn" id="3_round"]
+[ext_resource type="PackedScene" uid="uid://dnuwr0qeacme6" path="res://scenes/spawn_system/spawner.tscn" id="4_spawner"]
+
+[sub_resource type="Environment" id="Environment_shell"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.025, 1)
+ambient_light_source = 1
+ambient_light_color = Color(0.4, 0.4, 0.4, 1)
+ambient_light_energy = 0.8
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_shell"]
+vertices = PackedVector3Array(-24, 0.5, -24, 24, 0.5, -24, 24, 0.5, 24, -24, 0.5, 24)
+polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(0, 2, 3)]
+agent_height = 1.8
+agent_radius = 0.7
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_shell"]
+size = Vector2(48, 48)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(48, 0.2, 48)
+
+[node name="Game" type="Node3D" node_paths=PackedStringArray("Player", "RoundManager")]
+script = ExtResource("1_game")
+Player = NodePath("PlayerController")
+RoundManager = NodePath("RoundManager")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_shell")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.70710677, -0.35355338, 0.61237246, 0, 0.8660254, 0.5, -0.70710677, -0.35355338, 0.61237246, 0, 8, 0)
+light_energy = 1.5
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_shell")
+
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Floor"]
+mesh = SubResource("PlaneMesh_shell")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_floor")
+
+[node name="PlayerController" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
+
+[node name="RoundManager" parent="." node_paths=PackedStringArray("_player") instance=ExtResource("3_round")]
+_player = NodePath("../PlayerController")
+
+[node name="SpawnerNorth" parent="RoundManager/SpawnManager" instance=ExtResource("4_spawner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -16)
+
+[node name="SpawnerEast" parent="RoundManager/SpawnManager" instance=ExtResource("4_spawner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.2, 0)
+
+[node name="SpawnerWest" parent="RoundManager/SpawnManager" instance=ExtResource("4_spawner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0.2, 0)
+
+[editable path="RoundManager"]
+[editable path="RoundManager/SpawnManager"]
