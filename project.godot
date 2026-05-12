@@ -213,3 +213,14 @@ test_sprint_perk={
 [physics]
 
 3d/physics_engine="Jolt Physics"
+
+[shader_globals]
+
+global_color_levels={
+"type": "float",
+"value": 12.0
+}
+global_brightness={
+"type": "float",
+"value": 1.5
+}

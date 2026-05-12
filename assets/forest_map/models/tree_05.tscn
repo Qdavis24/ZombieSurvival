@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://buto2t4jvrde0"]
+
+[ext_resource type="PackedScene" uid="uid://b1vrp52eh3oqn" path="res://assets/forest_map/models/tree05.fbx" id="1_kccma"]
+[ext_resource type="Shader" uid="uid://s7800fdripnr" path="res://shaders/psx_normalized_UNSHADED.gdshader" id="2_fi2vs"]
+[ext_resource type="Texture2D" uid="uid://kvxy0gu4bg18" path="res://assets/forest_map/models/tree05.png" id="3_fi2vs"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iuked"]
+render_priority = 0
+shader = ExtResource("2_fi2vs")
+shader_parameter/albedo_tex = ExtResource("3_fi2vs")
+shader_parameter/alpha_scissor = 1.0
+
+[node name="tree05" unique_id=616287729 instance=ExtResource("1_kccma")]
+
+[node name="tree05" parent="." index="0" unique_id=1790861450]
+surface_material_override/0 = SubResource("ShaderMaterial_iuked")

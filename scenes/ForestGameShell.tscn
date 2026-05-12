@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://dcqvvbyn44yke"]
 
 [ext_resource type="Script" uid="uid://j7nqumogkvom" path="res://scripts/Game.cs" id="1_game"]
+[ext_resource type="PackedScene" uid="uid://bgkhkhk5wvhkx" path="res://scenes/map/forest_assets/Bush1.tscn" id="2_jkify"]
 [ext_resource type="PackedScene" uid="uid://cfjp3bppwm4i8" path="res://scenes/player/PlayerController.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://bvtubrdnwas4f" path="res://scenes/map/forest_assets/Tree1.tscn" id="2_yprbd"]
 [ext_resource type="PackedScene" uid="uid://cvt0aomoxtces" path="res://scenes/round_system/round_system.tscn" id="3_round"]
 [ext_resource type="PackedScene" uid="uid://dnuwr0qeacme6" path="res://scenes/spawn_system/spawner.tscn" id="4_spawner"]
 
@@ -13,8 +15,8 @@ ambient_light_color = Color(0.4, 0.4, 0.4, 1)
 ambient_light_energy = 0.8
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_shell"]
-vertices = PackedVector3Array(-24, 0.5, -24, 24, 0.5, -24, 24, 0.5, 24, -24, 0.5, 24)
-polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(0, 2, 3)]
+vertices = PackedVector3Array(-23.25, 0.44897366, -3.75, -9.75, 0.44897366, -3.75, -9.75, 0.44897366, -5.75, -9, 0.69897366, -6, -9, 0.44897366, -23.25, -23.25, 0.44897366, -23.25, -8.25, 0.69897366, -5.75, -8.25, 3.4489737, 1.75, -5.25, 3.4489737, 1.75, -5.25, 0.69897366, -5.75, -4.5, 0.69897366, -6, -4.5, 0.44897366, -23.25, -3.75, 0.44897366, 0, -2, 0.44897366, 0, -1.75, 0.44897366, -1, -0.5, 0.44897366, -2, -3.75, 0.44897366, -5.75, 1, 0.44897366, -1.75, 2, 0.44897366, 0, 23.25, 0.44897366, 0, 23.25, 0.44897366, -23.25, -23.25, 0.44897366, 2.75, -9.75, 0.44897366, 2.75, -0.25, 12.948974, -0.25, -0.25, 12.948974, 0.25, 0.25, 12.948974, 0.25, 0.25, 12.948974, -0.25, -1, 0.44897366, 1.75, -3.75, 0.44897366, 4.75, -4.25, 0.44897366, 5, -1.75, 0.44897366, 8, -0.5, 0.44897366, 6.75, 0.5, 0.44897366, 6.75, 0.5, 0.44897366, 2, 1.75, 0.44897366, 7.75, 1.75, 0.44897366, 1, 2.25, 0.44897366, 9, 23.25, 0.44897366, 9, -5.25, 0.69897366, 4.75, -5.25, 1.1989737, 3.75, -8.25, 1.1989737, 3.75, -8.5, 0.69897366, 5, -1.25, 0.44897366, 10.75, -2.25, 0.44897366, 9.5, -9.5, 0.44897366, 5, -23.25, 0.44897366, 23.25, 0, 0.44897366, 23.25, 0, 0.44897366, 11.25, 1.25, 0.44897366, 10.75, 23.25, 0.44897366, 23.25)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(4, 0, 5), PackedInt32Array(9, 8, 6), PackedInt32Array(6, 8, 7), PackedInt32Array(6, 3, 9), PackedInt32Array(9, 3, 10), PackedInt32Array(10, 3, 4), PackedInt32Array(10, 4, 11), PackedInt32Array(14, 13, 12), PackedInt32Array(14, 12, 15), PackedInt32Array(15, 12, 16), PackedInt32Array(18, 17, 19), PackedInt32Array(19, 17, 20), PackedInt32Array(20, 17, 11), PackedInt32Array(15, 16, 17), PackedInt32Array(17, 16, 11), PackedInt32Array(16, 10, 11), PackedInt32Array(0, 1, 21), PackedInt32Array(21, 1, 22), PackedInt32Array(26, 25, 23), PackedInt32Array(23, 25, 24), PackedInt32Array(13, 27, 12), PackedInt32Array(12, 27, 28), PackedInt32Array(29, 28, 30), PackedInt32Array(30, 28, 31), PackedInt32Array(31, 28, 32), PackedInt32Array(32, 28, 27), PackedInt32Array(32, 27, 33), PackedInt32Array(33, 35, 32), PackedInt32Array(32, 35, 34), PackedInt32Array(35, 18, 34), PackedInt32Array(34, 18, 36), PackedInt32Array(36, 18, 37), PackedInt32Array(37, 18, 19), PackedInt32Array(39, 38, 40), PackedInt32Array(40, 38, 41), PackedInt32Array(43, 42, 44), PackedInt32Array(44, 42, 46), PackedInt32Array(44, 46, 21), PackedInt32Array(21, 46, 45), PackedInt32Array(38, 29, 41), PackedInt32Array(41, 29, 30), PackedInt32Array(41, 30, 43), PackedInt32Array(46, 42, 47), PackedInt32Array(21, 22, 44), PackedInt32Array(44, 41, 43), PackedInt32Array(46, 47, 48), PackedInt32Array(48, 36, 46), PackedInt32Array(46, 36, 37), PackedInt32Array(46, 37, 49)]
 agent_height = 1.8
 agent_radius = 0.7
 
@@ -24,44 +26,71 @@ size = Vector2(48, 48)
 [sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
 size = Vector3(48, 0.2, 48)
 
-[node name="Game" type="Node3D" node_paths=PackedStringArray("Player", "RoundManager")]
+[node name="Game" type="Node3D" unique_id=523841868 node_paths=PackedStringArray("Player", "RoundManager")]
 script = ExtResource("1_game")
 Player = NodePath("PlayerController")
 RoundManager = NodePath("RoundManager")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1758952261]
 environment = SubResource("Environment_shell")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2065029781]
 transform = Transform3D(0.70710677, -0.35355338, 0.61237246, 0, 0.8660254, 0.5, -0.70710677, -0.35355338, 0.61237246, 0, 8, 0)
 light_energy = 1.5
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=210752674]
 navigation_mesh = SubResource("NavigationMesh_shell")
 
-[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D"]
+[node name="Bush1" parent="NavigationRegion3D" unique_id=220641994 instance=ExtResource("2_jkify")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Floor"]
+[node name="Tree1" parent="NavigationRegion3D" unique_id=1604310485 instance=ExtResource("2_yprbd")]
+
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D" unique_id=2034356726]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Floor" unique_id=2036527706]
 mesh = SubResource("PlaneMesh_shell")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor" unique_id=559241050]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 shape = SubResource("BoxShape3D_floor")
 
-[node name="PlayerController" parent="." instance=ExtResource("2_player")]
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D" unique_id=1355023015]
+transform = Transform3D(1, 0, 0, 0, 0.32320732, -0.94632816, 0, 0.94632816, 0.32320732, -6.755247, 0.9402329, -2.4757938)
+use_collision = true
+size = Vector3(4.35791, 10.722626, 1)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D" unique_id=1176935048]
+transform = Transform3D(1, 0, 0, 0, -0.33285245, -0.94297886, 0, 0.94297886, -0.33285245, -6.755247, 0.059153795, 4.051959)
+use_collision = true
+size = Vector3(4.35791, 3.798767, 1)
+
+[node name="PlayerController" parent="." unique_id=585845239 instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
 
-[node name="RoundManager" parent="." node_paths=PackedStringArray("_player") instance=ExtResource("3_round")]
+[node name="RoundManager" parent="." unique_id=1895383868 node_paths=PackedStringArray("_player") instance=ExtResource("3_round")]
 _player = NodePath("../PlayerController")
 
-[node name="SpawnerNorth" parent="RoundManager/SpawnManager" instance=ExtResource("4_spawner")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -16)
+[node name="DifficultyManager" parent="RoundManager" index="0" unique_id=1702326334]
+_zombieSpawnTimerIntervalScaleAmount = 0.8
+_maxZombieSpeed = 5.0
+_maxZombieHealth = 500.0
+_maxNumZombiesAliveLimit = 100
+_maxNumZombiesRoundLimit = 700
+_zombieSpawnTimerIntervalLimit = 1.0
+_startingZombieSpeed = 1.0
+_startingZombieHealth = 500.0
+_startingNumZombiesRoundLimit = 10
+_startingZombieSpawnTimerInterval = 3.0
 
-[node name="SpawnerEast" parent="RoundManager/SpawnManager" instance=ExtResource("4_spawner")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.2, 0)
+[node name="SpawnerNorth" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(1895383868, 1325009269) index="1" unique_id=1660346555 instance=ExtResource("4_spawner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17565757, -16)
 
-[node name="SpawnerWest" parent="RoundManager/SpawnManager" instance=ExtResource("4_spawner")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0.2, 0)
+[node name="SpawnerEast" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(1895383868, 1325009269) index="2" unique_id=1264660024 instance=ExtResource("4_spawner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.48514533, 0)
+
+[node name="SpawnerWest" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(1895383868, 1325009269) index="3" unique_id=1031863374 instance=ExtResource("4_spawner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0.01769948, 0)
 
 [editable path="RoundManager"]
 [editable path="RoundManager/SpawnManager"]

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://drduafoda7a2x"]
+
+[ext_resource type="PackedScene" uid="uid://bevuravoijax5" path="res://assets/forest_map/models/bush01.fbx" id="1_ckxyu"]
+[ext_resource type="Shader" uid="uid://s7800fdripnr" path="res://shaders/psx_normalized_UNSHADED.gdshader" id="2_e0xv6"]
+[ext_resource type="Texture2D" uid="uid://d21cfdcq48scc" path="res://assets/forest_map/models/bush01.png" id="3_e0xv6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qh8ai"]
+render_priority = 0
+shader = ExtResource("2_e0xv6")
+shader_parameter/albedo_tex = ExtResource("3_e0xv6")
+shader_parameter/alpha_scissor = 0.5
+
+[node name="bush01" unique_id=1757395796 instance=ExtResource("1_ckxyu")]
+
+[node name="bush01" parent="." index="0" unique_id=2009911524]
+surface_material_override/0 = SubResource("ShaderMaterial_qh8ai")

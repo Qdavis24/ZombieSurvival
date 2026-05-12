@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bvtubrdnwas4f"]
+
+[ext_resource type="PackedScene" uid="uid://buto2t4jvrde0" path="res://assets/forest_map/models/tree_05.tscn" id="1_1vwlb"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_cemwb"]
+height = 13.55127
+radius = 1.0297852
+
+[node name="Tree1" type="StaticBody3D" unique_id=1604310485]
+
+[node name="tree06" parent="." unique_id=616287729 instance=ExtResource("1_1vwlb")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=959795430]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.775635, 0)
+shape = SubResource("CylinderShape3D_cemwb")
