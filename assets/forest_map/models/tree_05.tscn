@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://buto2t4jvrde0"]
 
 [ext_resource type="PackedScene" uid="uid://b1vrp52eh3oqn" path="res://assets/forest_map/models/tree05.fbx" id="1_kccma"]
-[ext_resource type="Shader" uid="uid://s7800fdripnr" path="res://shaders/psx_normalized_UNSHADED.gdshader" id="2_fi2vs"]
+[ext_resource type="Shader" uid="uid://b8u001nk4f7v2" path="res://shaders/psx_normalized.gdshader" id="2_fi2vs"]
 [ext_resource type="Texture2D" uid="uid://kvxy0gu4bg18" path="res://assets/forest_map/models/tree05.png" id="3_fi2vs"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iuked"]
