@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://eksdoewlbll1" path="res://scenes/interactables/interact_notifier.tscn" id="3_bhi4g"]
 [ext_resource type="AudioStream" uid="uid://cglthr2sqd28e" path="res://assets/sound/ui_click.wav" id="4_s3hve"]
 [ext_resource type="AudioStream" uid="uid://ow67mln4ganu" path="res://assets/sound/interactables/vending-machine.wav" id="5_3j32g"]
+[ext_resource type="Shader" uid="uid://b8u001nk4f7v2" path="res://shaders/psx_normalized.gdshader" id="6_8lwfc"]
+[ext_resource type="Texture2D" uid="uid://ds8hyvya8xktv" path="res://assets/models/vending_machines/PerkVendingMachine_texture5.png" id="7_xschc"]
 
 [sub_resource type="Resource" id="Resource_r3bk8"]
 script = ExtResource("2_5u1dt")
@@ -22,6 +24,12 @@ script = ExtResource("2_5u1dt")
 DisplayName = "Sprint"
 PerkType = 2
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e8224"]
+render_priority = 0
+shader = ExtResource("6_8lwfc")
+shader_parameter/albedo_tex = ExtResource("7_xschc")
+shader_parameter/alpha_scissor = 0.5
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_dq3vb"]
 size = Vector3(5.2048187, 8.971558, 4.7727203)
 
@@ -33,6 +41,9 @@ _successfulBuySound = ExtResource("5_3j32g")
 _options = Array[ExtResource("2_5u1dt")]([SubResource("Resource_r3bk8"), SubResource("Resource_qn0e3"), SubResource("Resource_jxaqt")])
 
 [node name="PerkVendingMachine" parent="." unique_id=953769344 instance=ExtResource("1_valrp")]
+
+[node name="Cube" parent="PerkVendingMachine" index="0" unique_id=2133763990]
+surface_material_override/1 = SubResource("ShaderMaterial_e8224")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1519440651]
 transform = Transform3D(1, 0, 0, 0, 0.30865175, -0.9511751, 0, 0.9511751, 0.30865175, -0.6926418, -1.2156885, 3.6457152)
@@ -56,3 +67,5 @@ omni_range = 4.051
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, 2.8776479)
 visible = false
 InteractPrompt = "press e to use perk vending machine"
+
+[editable path="PerkVendingMachine"]

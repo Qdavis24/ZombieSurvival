@@ -11,7 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://dix7w1l67kmku" path="res://scenes/pickups/rpg_ammo_pickup.tscn" id="9_xruqs"]
 [ext_resource type="PackedScene" uid="uid://411dsn2w2u5l" path="res://scenes/pickups/grenade_pickup.tscn" id="10_fq0qd"]
 [ext_resource type="AudioStream" uid="uid://cglthr2sqd28e" path="res://assets/sound/ui_click.wav" id="11_dsuqo"]
+[ext_resource type="Shader" uid="uid://b8u001nk4f7v2" path="res://shaders/psx_normalized.gdshader" id="11_ldje4"]
 [ext_resource type="AudioStream" uid="uid://ow67mln4ganu" path="res://assets/sound/interactables/vending-machine.wav" id="12_d6dqi"]
+[ext_resource type="Texture2D" uid="uid://ds8hyvya8xktv" path="res://assets/models/vending_machines/PerkVendingMachine_texture5.png" id="12_tiv3s"]
 
 [sub_resource type="Resource" id="Resource_l4pdd"]
 script = ExtResource("2_s6t1m")
@@ -43,6 +45,12 @@ DisplayName = "Grenades"
 AmmoScene = ExtResource("10_fq0qd")
 Price = 2000
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gdlto"]
+render_priority = 0
+shader = ExtResource("11_ldje4")
+shader_parameter/albedo_tex = ExtResource("12_tiv3s")
+shader_parameter/alpha_scissor = 0.0
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_8oudm"]
 size = Vector3(5.2048187, 8.971558, 4.7727203)
 
@@ -55,6 +63,9 @@ _successfulBuySound = ExtResource("12_d6dqi")
 _options = Array[ExtResource("2_s6t1m")]([SubResource("Resource_l4pdd"), SubResource("Resource_drygh"), SubResource("Resource_ynafi"), SubResource("Resource_17el7"), SubResource("Resource_lfw7f")])
 
 [node name="AmmoVendingMachine" parent="." unique_id=929149237 instance=ExtResource("3_eeu2s")]
+
+[node name="Cube" parent="AmmoVendingMachine" index="0" unique_id=1699232546]
+surface_material_override/1 = SubResource("ShaderMaterial_gdlto")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=462531249]
 transform = Transform3D(1, 0, 0, 0, 0.30865175, -0.9511751, 0, 0.9511751, 0.30865175, -0.6926418, -1.2156885, 3.6457152)
@@ -81,3 +92,5 @@ InteractPrompt = "press e to use ammo vending machine"
 
 [node name="SpawnMarker" type="Marker3D" parent="." unique_id=1153474637]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 3.65)
+
+[editable path="AmmoVendingMachine"]

@@ -140,7 +140,7 @@ transform = Transform3D(1, -1.1641532e-09, 3.7252903e-09, 2.3283064e-09, 0.99999
 transform = Transform3D(0.014752537, 0.16548774, -0.9861, 0.97238487, 0.22735377, 0.052701898, 0.23291515, -0.95964706, -0.15756364, 8.690342, 1.8057463, -3.8539138)
 
 [node name="BoltCutters" parent="Interactables" unique_id=275217808 instance=ExtResource("4_r1x80")]
-transform = Transform3D(0.06181349, 0.99804413, 0.009185996, 0.03656175, 0.0069332244, -0.99930656, -0.99741703, 0.062106535, -0.036061723, 5.478098, 1.7601132, 4.3197517)
+transform = Transform3D(0.06181349, 0.99804413, 0.009185996, 0.03656175, 0.006933228, -0.99930704, -0.99741703, 0.062106535, -0.036061723, 1.765303, 2.299822, 12.50496)
 
 [node name="RiflePickup" parent="Interactables" unique_id=766928468 instance=ExtResource("5_n5dy1")]
 transform = Transform3D(-0.25316906, 0.7099737, 0.6571464, 0.943284, 0.33195215, 0.0047674105, -0.21475676, 0.62108296, -0.7537466, -4.529766, 1.7015531, 10.197706)
@@ -293,6 +293,7 @@ size = Vector3(8.592705, 8.366577, 1)
 
 [node name="ForestFloor" parent="NavigationRegion3D" unique_id=1798834730 instance=ExtResource("4_tl3en")]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+collision_layer = 65535
 
 [node name="Grave1" parent="NavigationRegion3D" unique_id=1246920913 instance=ExtResource("5_f0rvc")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 5.909831, 0.39890027, 9.5874815)
