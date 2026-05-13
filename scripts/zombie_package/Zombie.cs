@@ -10,8 +10,8 @@ public partial class Zombie : CharacterBody3D
     public delegate void DeadEventHandler();
 
     [ExportCategory("Miscellaneous")] 
-    [Export] private int _deathMoneyReward = 10;
-    [Export] private int _dismemberMoneyRewared = 5;
+    [Export] private int _deathMoneyReward = 20;
+    [Export] private int _dismemberMoneyRewared = 10;
     [Export] private float _rotationLerpSpeed = 10f;
     [Export] private DismemberableBody _dismemberableBody;
     [Export] private NavigationAgent3D _navAgent;

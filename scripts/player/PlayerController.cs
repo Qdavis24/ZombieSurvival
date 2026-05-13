@@ -36,7 +36,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 	[ExportGroup("Player")] 
 	[Export] public Inventory Inventory { get; private set; }
-	[Export] private int _startingMoney = 5000;
+	[Export] private int _startingMoney = 500;
 	
 	[Export] private float _maxHealth = 75f;
 	[Export] private float _health = 75f;
