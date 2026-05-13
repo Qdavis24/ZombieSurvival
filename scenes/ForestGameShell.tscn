@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cy4limapklvh5" path="res://scenes/map/forest_assets/fence/Rock.tscn" id="5_17kij"]
 [ext_resource type="PackedScene" uid="uid://c65glarc4voaa" path="res://scenes/map/forest_assets/graves/Grave1.tscn" id="5_f0rvc"]
 [ext_resource type="PackedScene" uid="uid://osnvcnyafbyf" path="res://scenes/interactables/guns/rifle_pickup.tscn" id="5_n5dy1"]
-[ext_resource type="Script" uid="uid://c44r8ukitq0jd" path="res://scripts/interactables/doors/chain_link_fence/ChainLinkFence.cs" id="5_tj5ev"]
+[ext_resource type="Script" uid="uid://sfl8eygm784e" path="res://scripts/interactables/doors/chain_link_fence/HideChainLinkFence.cs" id="5_tj5ev"]
 [ext_resource type="PackedScene" uid="uid://4o15o4j6tk3n" path="res://scenes/map/forest_assets/graves/MausLarge.tscn" id="5_tlkk5"]
 [ext_resource type="PackedScene" uid="uid://tlhj7eprx5qx" path="res://scenes/map/forest_assets/fence/FenceLarge.tscn" id="5_txiac"]
 [ext_resource type="PackedScene" uid="uid://cf7xv8xobkd5w" path="res://scenes/map/forest_assets/trees/Tree3.tscn" id="5_yxhvg"]
@@ -140,15 +140,16 @@ transform = Transform3D(1, -1.1641532e-09, 3.7252903e-09, 2.3283064e-09, 0.99999
 transform = Transform3D(0.014752537, 0.16548774, -0.9861, 0.97238487, 0.22735377, 0.052701898, 0.23291515, -0.95964706, -0.15756364, 8.690342, 1.8057463, -3.8539138)
 
 [node name="BoltCutters" parent="Interactables" unique_id=275217808 instance=ExtResource("4_r1x80")]
-transform = Transform3D(0.06181349, 0.99804413, 0.009185996, 0.03656175, 0.006933224, -0.9993065, -0.99741703, 0.062106535, -0.036061723, 5.1641064, 1.7601131, 4.3197517)
+transform = Transform3D(0.06181349, 0.99804413, 0.009185996, 0.03656175, 0.0069332244, -0.99930656, -0.99741703, 0.062106535, -0.036061723, 5.478098, 1.7601132, 4.3197517)
 
 [node name="RiflePickup" parent="Interactables" unique_id=766928468 instance=ExtResource("5_n5dy1")]
 transform = Transform3D(-0.25316906, 0.7099737, 0.6571464, 0.943284, 0.33195215, 0.0047674105, -0.21475676, 0.62108296, -0.7537466, -4.529766, 1.7015531, 10.197706)
 
-[node name="ChainLinkFence" type="StaticBody3D" parent="Interactables" unique_id=1757120054 node_paths=PackedStringArray("_interactNotifier", "_invisibleWall", "_lockMesh")]
+[node name="ChainLinkFence" type="StaticBody3D" parent="Interactables" unique_id=1757120054 node_paths=PackedStringArray("_interactNotifier", "_fenceObjectToHide", "_invisibleWall", "_lockMesh")]
 transform = Transform3D(1, -2.5029294e-09, 3.7252903e-08, 1.1525121e-08, 0.9999998, 1.8626454e-09, 0, -7.450581e-09, 0.9999989, -0.08912943, 1.1754078, 4.1789145)
 script = ExtResource("5_tj5ev")
 _interactNotifier = NodePath("InteractNotifier")
+_fenceObjectToHide = NodePath("FenceGateOnly")
 _invisibleWall = NodePath("CollisionShape3D")
 _lockedSound = ExtResource("6_681dd")
 _lockBreakSound = ExtResource("7_wgks6")
@@ -302,7 +303,7 @@ transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 1.8031378, 0.2654493, 1
 [node name="Grave7" parent="NavigationRegion3D/Grave2" unique_id=1709606563 instance=ExtResource("16_kmmsm")]
 transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 0, 0.41961193, -12.365078)
 
-[node name="FenceNormal" type="StaticBody3D" parent="NavigationRegion3D" unique_id=2033778706]
+[node name="FenceNormal" type="Node3D" parent="NavigationRegion3D" unique_id=523364013]
 transform = Transform3D(-1.3113417e-08, 0, 0.3, 0, 0.3, 0, -0.3, 0, -1.3113417e-08, -8.257238, 0.67120504, 5.939462)
 
 [node name="Fence22" parent="NavigationRegion3D/FenceNormal" unique_id=1799208961 instance=ExtResource("17_pkxp8")]
