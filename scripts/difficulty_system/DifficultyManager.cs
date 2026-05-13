@@ -49,14 +49,11 @@ public partial class DifficultyManager : Node
         CurrentZombieHealth = Math.Clamp(CurrentZombieHealth * _zombieHealthScaleAmount, 0, _maxZombieHealth);
         CurrentZombieSpeed = Math.Clamp(CurrentZombieSpeed * _zombieSpeedScaleAmount, 0, _maxZombieSpeed);
         
-        var previousSpawnTimerInterval = CurrentZombieSpawnTimerInterval;
         CurrentZombieSpawnTimerInterval = Math.Clamp(
             CurrentZombieSpawnTimerInterval * _zombieSpawnTimerIntervalScaleAmount,
             _zombieSpawnTimerIntervalLimit,
             float.MaxValue
         );
-
-        GD.Print($"Round {CurrentRound} spawn timer interval: {previousSpawnTimerInterval} -> {CurrentZombieSpawnTimerInterval} | scale: {_zombieSpawnTimerIntervalScaleAmount} | min: {_zombieSpawnTimerIntervalLimit}");
 
         if (CurrentRound > 3)
         {
