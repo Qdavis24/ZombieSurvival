@@ -42,6 +42,7 @@ public partial class RoundManager : Node
     {
         await ToSignal(GetTree().CreateTimer(_timeTillRoundChangeIcon), SceneTreeTimer.SignalName.Timeout);
         EmitSignal(nameof(RoundFinished), _currRound + 1);
+        AudioManager.I.RotateCombatSongIfReady();
 
         // Wait before starting next round
         float t = Mathf.Clamp((float)_currRound / 10.0f, 0f, 1f);

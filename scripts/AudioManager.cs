@@ -23,14 +23,14 @@ public partial class AudioManager : Node
 	private const string SfxBus = "SFX";
 	private const string MusicBus = "Music";
 	private const string ExplosionBus = "Explosion";
-	
-	private int _maxZombieHitSounds = 4;
+
+	private int _maxZombieHitSounds = 1;
 	private int _currentZombieHitSounds = 0;
-	
+
 	private float _tween = 0.5f; // fades for layers
-	
+
 	private AudioStream _uiClickStream = GD.Load<AudioStream>("res://assets/sound/ui_click.wav");
-	
+
 	private MusicSong _song1 = new()
 	{
 		Layer1 = GD.Load<AudioStream>("res://assets/sound/music/beat1/layer1.ogg"),
@@ -51,14 +51,14 @@ public partial class AudioManager : Node
 		Layer2 = GD.Load<AudioStream>("res://assets/sound/music/beat3/layer2.ogg"),
 		Layer3 = GD.Load<AudioStream>("res://assets/sound/music/beat3/layer3.ogg"),
 	};
-	
+
 	private MusicSong _song4 = new()
 	{
 		Layer1 = GD.Load<AudioStream>("res://assets/sound/music/beat4/layer1.ogg"),
 		Layer2 = GD.Load<AudioStream>("res://assets/sound/music/beat4/layer2.ogg"),
 		Layer3 = GD.Load<AudioStream>("res://assets/sound/music/beat4/layer3.ogg"),
 	};
-	
+
 	private MusicSong _song5 = new()
 	{
 		Layer1 = GD.Load<AudioStream>("res://assets/sound/music/beat5/layer1.ogg"),
@@ -69,12 +69,18 @@ public partial class AudioManager : Node
 	private MusicSong[] _songs;
 	private int  _currentSong = 0;
 	private float  _musicVol = -8f;
+	[Export] private float _combatSongAutoRotateSeconds = 360f;
+	[Export] private float _combatSongFadeSeconds = 2f;
+	[Export] private float _combatSongFadeOutSeconds = 3f;
+	private double _combatSongStartedAtSeconds = -1.0;
 
 	private AudioStreamPlayer _musicPlayer;
-	
+
 	private AudioStreamPlayer _layer1;
 	private AudioStreamPlayer _layer2;
 	private AudioStreamPlayer _layer3;
+	private Tween _musicLayerTween;
+	private int _currentMusicLayer;
 
 	public void NextSong()
 	{
@@ -116,14 +122,12 @@ public partial class AudioManager : Node
 		_currentSong = GD.RandRange(0, _songs.Length-1);
 	}
 
-	public void StartCurrentSong()
+	public async void StartCurrentSong()
 	{
 		if (_songs == null || _songs.Length == 0)
 			return;
 
-		StopMusicLayer(ref _layer1);
-		StopMusicLayer(ref _layer2);
-		StopMusicLayer(ref _layer3);
+		await FadeOutCurrentCombatSong();
 
 		var song = _songs[_currentSong];
 		if (song == null)
@@ -133,14 +137,75 @@ public partial class AudioManager : Node
 		InitLayer2(song.Layer2);
 		InitLayer3(song.Layer3);
 
-		PlayLayer1();
+		_currentMusicLayer = 0;
+		SetMusicLayer(1, _combatSongFadeSeconds);
+		_combatSongStartedAtSeconds = Time.GetTicksMsec() / 1000.0;
+	}
+
+	public void RotateCombatSongIfReady()
+	{
+		if (!IsCombatSongReadyToRotate())
+			return;
+
+		SelectRandomDifferentSong();
+		StartCurrentSong();
+	}
+
+	private bool IsCombatSongReadyToRotate()
+	{
+		if (_songs == null || _songs.Length <= 1 || _combatSongStartedAtSeconds < 0.0)
+			return false;
+
+		var elapsedSeconds = Time.GetTicksMsec() / 1000.0 - _combatSongStartedAtSeconds;
+		return elapsedSeconds >= _combatSongAutoRotateSeconds;
+	}
+
+	private void SelectRandomDifferentSong()
+	{
+		if (_songs == null || _songs.Length <= 1)
+			return;
+
+		var nextSong = GD.RandRange(0, _songs.Length - 2);
+		if (nextSong >= _currentSong)
+			nextSong++;
+
+		_currentSong = nextSong;
+	}
+
+	private async System.Threading.Tasks.Task FadeOutCurrentCombatSong()
+	{
+		if (_layer1 == null && _layer2 == null && _layer3 == null)
+			return;
+
+		if (_musicLayerTween != null && GodotObject.IsInstanceValid(_musicLayerTween))
+			_musicLayerTween.Kill();
+
+		if (_combatSongFadeOutSeconds > 0f)
+		{
+			var fadeTween = CreateTween();
+			fadeTween.SetParallel(true);
+
+			if (_layer1 != null)
+				fadeTween.TweenProperty(_layer1, "volume_db", -80f, _combatSongFadeOutSeconds);
+			if (_layer2 != null)
+				fadeTween.TweenProperty(_layer2, "volume_db", -80f, _combatSongFadeOutSeconds);
+			if (_layer3 != null)
+				fadeTween.TweenProperty(_layer3, "volume_db", -80f, _combatSongFadeOutSeconds);
+
+			await ToSignal(fadeTween, Tween.SignalName.Finished);
+		}
+
+		StopMusicLayer(ref _layer1);
+		StopMusicLayer(ref _layer2);
+		StopMusicLayer(ref _layer3);
+		_currentMusicLayer = 0;
 	}
 
 	private void StopMusicLayer(ref AudioStreamPlayer layer)
 	{
 		if (layer == null)
 			return;
-		
+
 		layer.Stop();
 		layer.QueueFree();
 		layer = null;
@@ -172,7 +237,7 @@ public partial class AudioManager : Node
 			_footstepPlaying = false;
 		};
 	}
-	
+
 	public void PlayZombieHit(AudioStream stream, Vector3 pos, float volumeDb = -6f)
 	{
 		if (stream == null) return;
@@ -243,7 +308,7 @@ public partial class AudioManager : Node
 		p.Finished += () => p.QueueFree();
 		p.Play();
 	}
-	
+
 	public void PlayUi(AudioStream stream, float volumeDb = -6f, float pitch = 1f)
 	{
 		if (stream == null) return;
@@ -387,8 +452,8 @@ public partial class AudioManager : Node
 		_musicPlayer.QueueFree();
 		_musicPlayer = null;
 	}
-	
-	
+
+
 	public AudioStreamPlayer? PlayMusicLayer(AudioStream stream, float volumeDb = -6f)
 	{
 		if (stream == null) return null;
@@ -438,30 +503,40 @@ public partial class AudioManager : Node
 
 	public void PlayLayer1()
 	{
-		if (_layer1 == null) return;
-
-		var tween = CreateTween();
-		tween.TweenProperty(_layer1, "volume_db", _musicVol, _tween);
-		tween.TweenProperty(_layer2, "volume_db", -80f, _tween);
-		tween.TweenProperty(_layer3, "volume_db", -80f, _tween);
+		SetMusicLayer(1);
 	}
 	public void PlayLayer2()
 	{
-		if (_layer2 == null) return;
-
-		var tween = CreateTween();
-		tween.TweenProperty(_layer1, "volume_db", _musicVol, _tween);
-		tween.TweenProperty(_layer2, "volume_db", _musicVol, _tween);
-		tween.TweenProperty(_layer3, "volume_db", -80f, _tween);
+		SetMusicLayer(2);
 	}
 	public void PlayLayer3()
 	{
-		if (_layer3 == null) return;
+		SetMusicLayer(3);
+	}
 
-		var tween = CreateTween();
-		tween.TweenProperty(_layer1, "volume_db", _musicVol, _tween);
-		tween.TweenProperty(_layer2, "volume_db", _musicVol, _tween);
-		tween.TweenProperty(_layer3, "volume_db", _musicVol, _tween);
+	public void SetMusicLayer(int layer)
+	{
+		SetMusicLayer(layer, _tween);
+	}
+
+	private void SetMusicLayer(int layer, float fadeSeconds)
+	{
+		if (_layer1 == null || _layer2 == null || _layer3 == null)
+			return;
+
+		layer = Mathf.Clamp(layer, 1, 3);
+		if (layer == _currentMusicLayer)
+			return;
+
+		if (_musicLayerTween != null && GodotObject.IsInstanceValid(_musicLayerTween))
+			_musicLayerTween.Kill();
+
+		_musicLayerTween = CreateTween();
+		_musicLayerTween.SetParallel(true);
+		_musicLayerTween.TweenProperty(_layer1, "volume_db", _musicVol, fadeSeconds);
+		_musicLayerTween.TweenProperty(_layer2, "volume_db", layer >= 2 ? _musicVol : -80f, fadeSeconds);
+		_musicLayerTween.TweenProperty(_layer3, "volume_db", layer >= 3 ? _musicVol : -80f, fadeSeconds);
+		_currentMusicLayer = layer;
 	}
 
 	public override void _Ready()

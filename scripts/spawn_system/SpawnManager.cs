@@ -13,6 +13,7 @@ public partial class SpawnManager : Node
     public delegate void SpawnersDepletedEventHandler();
 
     [Export] private Timer _spawnInterval;
+    [Export] private float _musicLayerChangeCooldown = 1.5f;
 
     private List<Spawner> _spawners = new();
 
@@ -24,23 +25,20 @@ public partial class SpawnManager : Node
         set
         {
             _numZombiesAlive = value;
-            // *** layer sound control ***
-            if (_numZombiesAlive == 0)
-            {
-                AudioManager.I.PlayLayer1();
-            } else if (_numZombiesAlive >= 5 && _numZombiesAlive <= 15)
-            {
-                AudioManager.I.PlayLayer2();
-            } else if (_numZombiesAlive > 15)
-            {
-                AudioManager.I.PlayLayer3();
-            }
+            UpdateMusicLayer();
         }
     }
 
     private SpawnerStats _stats;
 
     private Node3D _zombTarget;
+    private double _lastMusicLayerChangeSeconds = -999.0;
+    private int _currentMusicLayer = 1;
+
+    public override void _Process(double delta)
+    {
+        UpdateMusicLayer();
+    }
 
     public override void _Ready()
     {
@@ -78,6 +76,35 @@ public partial class SpawnManager : Node
             _spawnInterval.Stop();
             EmitSignalSpawnersDepleted();
         }
+    }
+
+    private void UpdateMusicLayer()
+    {
+        var desiredLayer = GetDesiredMusicLayer();
+        if (desiredLayer == _currentMusicLayer)
+            return;
+
+        var nowSeconds = Time.GetTicksMsec() / 1000.0;
+        if (nowSeconds - _lastMusicLayerChangeSeconds < _musicLayerChangeCooldown)
+            return;
+
+        AudioManager.I.SetMusicLayer(desiredLayer);
+        _currentMusicLayer = desiredLayer;
+        _lastMusicLayerChangeSeconds = nowSeconds;
+    }
+
+    private int GetDesiredMusicLayer()
+    {
+        if (_numZombiesAlive < 4)
+            return 1;
+
+        if (_numZombiesAlive >= 5 && _numZombiesAlive <= 15)
+            return 2;
+
+        if (_numZombiesAlive > 15)
+            return 3;
+
+        return _currentMusicLayer;
     }
 
 
