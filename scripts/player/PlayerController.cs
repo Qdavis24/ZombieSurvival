@@ -40,6 +40,10 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	
 	[Export] private float _maxHealth = 75f;
 	[Export] private float _health = 75f;
+	[Export] private float _damageReductionDuration = 0.75f;
+	[Export(PropertyHint.Range, "0,1,0.05")] private float _damageReductionMultiplier = 0.3f;
+	private float _damageReductionTimer;
+	private bool _isDead;
 	private bool _sprintEnabled;
 	private float Health
 	{
@@ -182,6 +186,9 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	{
 		var dt = (float)delta;
 		ControllerLook(dt);
+
+		if (_damageReductionTimer > 0f)
+			_damageReductionTimer = Mathf.Max(0f, _damageReductionTimer - dt);
 	
 		Health += _healthRegenRate * _maxHealth * dt;
 		
@@ -241,8 +248,17 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 	public void TakeDamage(float damage, Vector3 hitGlobalPosition, Vector3 hitDir, float force)
 	{
-		if (damage > 100f) return;
-		Health -= damage;
+		if (_isDead || damage > 100f)
+			return;
+
+		var appliedDamage = _damageReductionTimer > 0f
+			? damage * _damageReductionMultiplier
+			: damage;
+
+		Health -= appliedDamage;
+		if (_damageReductionTimer <= 0f)
+			_damageReductionTimer = _damageReductionDuration;
+
 		AudioManager.I.Play3D(_hitSound, GlobalPosition, -15f);
 
 		if (Health <= 0)
@@ -253,6 +269,11 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 	private void HandleDeath()
 	{
+		if (_isDead)
+			return;
+
+		_isDead = true;
+
 		// Stop movement
 		_collisionShape3D.Disabled = true;
 		SetPhysicsProcess(false);
