@@ -24,24 +24,28 @@ Price = 500
 [sub_resource type="Resource" id="Resource_drygh"]
 script = ExtResource("2_s6t1m")
 DisplayName = "Shotgun Shells"
+AmmoType = 5
 AmmoScene = ExtResource("7_qf75f")
 Price = 1000
 
 [sub_resource type="Resource" id="Resource_ynafi"]
 script = ExtResource("2_s6t1m")
 DisplayName = "Rifle Rounds"
+AmmoType = 4
 AmmoScene = ExtResource("8_vjffx")
 Price = 1500
 
 [sub_resource type="Resource" id="Resource_17el7"]
 script = ExtResource("2_s6t1m")
 DisplayName = "Rockets"
+AmmoType = 6
 AmmoScene = ExtResource("9_xruqs")
 Price = 3000
 
 [sub_resource type="Resource" id="Resource_lfw7f"]
 script = ExtResource("2_s6t1m")
 DisplayName = "Grenades"
+AmmoType = 7
 AmmoScene = ExtResource("10_fq0qd")
 Price = 2000
 

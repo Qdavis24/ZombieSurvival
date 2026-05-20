@@ -97,9 +97,9 @@ public partial class UiManager : Node
 		_deathMenu.Visible = true;
 	}
 
-	public void ShowAmmoVendingMenu(AmmoVendingMachine machine)
+	public void ShowAmmoVendingMenu(AmmoVendingMachine machine, Node3D player)
 	{
-		_ammoVendingMenu.ShowOptions(machine.Options);
+		_ammoVendingMenu.ShowOptions(machine, player);
 	}
 
 	public void HideAmmoVendingMenu()

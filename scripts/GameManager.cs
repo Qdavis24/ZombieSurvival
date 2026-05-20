@@ -201,7 +201,7 @@ public partial class GameManager : Node
 
         Input.MouseMode = Input.MouseModeEnum.Visible;
         _gameInstance.ProcessMode = ProcessModeEnum.Disabled;
-        _uiManager.ShowAmmoVendingMenu(machine);
+        _uiManager.ShowAmmoVendingMenu(machine, player);
     }
 
     private void OnAmmoVendingOptionPressed(int optionIndex)
@@ -209,7 +209,8 @@ public partial class GameManager : Node
         if (!_isAmmoVendingMenuOpen || _activeAmmoVendingMachine == null || _activeAmmoVendingPlayer == null)
             return;
 
-        _activeAmmoVendingMachine.TryPurchase(optionIndex, _activeAmmoVendingPlayer);
+        if (_activeAmmoVendingMachine.TryPurchase(optionIndex, _activeAmmoVendingPlayer))
+            _uiManager.ShowAmmoVendingMenu(_activeAmmoVendingMachine, _activeAmmoVendingPlayer);
     }
 
     private void OnAmmoVendingClosed()

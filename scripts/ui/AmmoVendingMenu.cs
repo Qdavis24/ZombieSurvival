@@ -32,13 +32,14 @@ public partial class AmmoVendingMenu : CanvasLayer
         }
     }
 
-    public void ShowOptions(IReadOnlyList<AmmoVendingOption> options)
+    public void ShowOptions(AmmoVendingMachine machine, Node3D player)
     {
         ClearOptionButtons();
 
         if (_titleLabel != null)
             _titleLabel.Text = "Ammo Vending Machine";
 
+        var options = machine?.Options;
         if (_optionsContainer != null && options != null)
         {
             for (int i = 0; i < options.Count; i++)
@@ -48,9 +49,11 @@ public partial class AmmoVendingMenu : CanvasLayer
                     continue;
 
                 var optionIndex = i;
+                var status = machine.GetPurchaseStatus(optionIndex, player);
                 var button = new Button
                 {
-                    Text = $"{option.DisplayName} - {option.Price}",
+                    Text = GetButtonText(option, status),
+                    Disabled = status != AmmoVendingMachine.PurchaseStatus.Available,
                     FocusMode = Control.FocusModeEnum.All
                 };
                 StoreMenuStyle.ApplyOptionButtonStyle(button);
@@ -79,5 +82,15 @@ public partial class AmmoVendingMenu : CanvasLayer
             button.QueueFree();
 
         _optionButtons.Clear();
+    }
+
+    private static string GetButtonText(AmmoVendingOption option, AmmoVendingMachine.PurchaseStatus status)
+    {
+        return status switch
+        {
+            AmmoVendingMachine.PurchaseStatus.Locked => $"{option.DisplayName} - Locked",
+            AmmoVendingMachine.PurchaseStatus.Invalid => $"{option.DisplayName} - Unavailable",
+            _ => $"{option.DisplayName} - {option.Price}"
+        };
     }
 }
