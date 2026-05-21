@@ -3,10 +3,7 @@
 [ext_resource type="Script" uid="uid://djavsc2rmyqdj" path="res://scripts/GameManager.cs" id="1_elqb8"]
 [ext_resource type="PackedScene" uid="uid://brmqkfto14n3c" path="res://scenes/Game.tscn" id="2_rvslj"]
 [ext_resource type="PackedScene" uid="uid://0keac7gcsnat" path="res://scenes/ui/UiManager.tscn" id="3_0bbpv"]
-[ext_resource type="AudioStream" uid="uid://dv3l8j7quf0pj" path="res://assets/sound/music/beat1/layer1.ogg" id="3_nxtc6"]
-[ext_resource type="AudioStream" uid="uid://b3h6euorm47sl" path="res://assets/sound/music/beat1/layer2.ogg" id="4_jlsqs"]
 [ext_resource type="PackedScene" uid="uid://cyvl6eqd24usj" path="res://scenes/hit_resolver/HitResolver.tscn" id="4_rarhs"]
-[ext_resource type="AudioStream" uid="uid://cpco4yenfia2g" path="res://assets/sound/music/beat1/layer3.ogg" id="5_q8u5g"]
 [ext_resource type="Script" path="res://scripts/LevelDefinition.cs" id="6_leveldef"]
 [ext_resource type="PackedScene" path="res://scenes/BunkerGameShell.tscn" id="7_bunker"]
 [ext_resource type="PackedScene" path="res://scenes/ForestGameShell.tscn" id="8_forest"]
@@ -14,25 +11,25 @@
 [sub_resource type="Resource" id="Resource_downtown"]
 script = ExtResource("6_leveldef")
 DisplayName = "Downtown"
+MusicSet = 1
 GameScene = ExtResource("2_rvslj")
 
 [sub_resource type="Resource" id="Resource_bunker"]
 script = ExtResource("6_leveldef")
 DisplayName = "Bunker"
+MusicSet = 0
 GameScene = ExtResource("7_bunker")
 
 [sub_resource type="Resource" id="Resource_forest"]
 script = ExtResource("6_leveldef")
 DisplayName = "Forest"
+MusicSet = 2
 GameScene = ExtResource("8_forest")
 
 [node name="Main" type="Node" unique_id=1676837023 node_paths=PackedStringArray("_uiManager")]
 script = ExtResource("1_elqb8")
 _uiManager = NodePath("UiManager")
 _levels = Array[ExtResource("6_leveldef")]([SubResource("Resource_downtown"), SubResource("Resource_bunker"), SubResource("Resource_forest")])
-_layer1 = ExtResource("3_nxtc6")
-_layer2 = ExtResource("4_jlsqs")
-_layer3 = ExtResource("5_q8u5g")
 
 [node name="UiManager" parent="." unique_id=1223429807 instance=ExtResource("3_0bbpv")]
 

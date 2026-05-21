@@ -10,10 +10,6 @@ public partial class GameManager : Node
 {
     [Export] private UiManager _uiManager;
     [Export] private Godot.Collections.Array<LevelDefinition> _levels = new();
-    
-    [Export] private AudioStream _layer1;
-    [Export] private AudioStream _layer2;
-    [Export] private AudioStream _layer3;
 
     private bool _isPaused = false;
     private bool _isGamePlaying = false;
@@ -132,8 +128,7 @@ public partial class GameManager : Node
             return;
         }
 
-        AudioManager.I.RandomizeSong();
-        AudioManager.I.StartCurrentSong();
+        AudioManager.I.StartCombatMusic(selectedLevel.MusicSet);
         _isPaused = false;
         _isAmmoVendingMenuOpen = false;
         _isPerkVendingMenuOpen = false;

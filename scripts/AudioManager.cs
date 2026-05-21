@@ -31,43 +31,10 @@ public partial class AudioManager : Node
 
 	private AudioStream _uiClickStream = GD.Load<AudioStream>("res://assets/sound/ui_click.wav");
 
-	private MusicSong _song1 = new()
-	{
-		Layer1 = GD.Load<AudioStream>("res://assets/sound/music/beat1/layer1.ogg"),
-		Layer2 = GD.Load<AudioStream>("res://assets/sound/music/beat1/layer2.ogg"),
-		Layer3 = GD.Load<AudioStream>("res://assets/sound/music/beat1/layer3.ogg"),
-	};
-
-	private MusicSong _song2 = new()
-	{
-		Layer1 = GD.Load<AudioStream>("res://assets/sound/music/beat2/layer1.ogg"),
-		Layer2 = GD.Load<AudioStream>("res://assets/sound/music/beat2/layer2.ogg"),
-		Layer3 = GD.Load<AudioStream>("res://assets/sound/music/beat2/layer3.ogg"),
-	};
-
-	private MusicSong _song3 = new()
-	{
-		Layer1 = GD.Load<AudioStream>("res://assets/sound/music/beat3/layer1.ogg"),
-		Layer2 = GD.Load<AudioStream>("res://assets/sound/music/beat3/layer2.ogg"),
-		Layer3 = GD.Load<AudioStream>("res://assets/sound/music/beat3/layer3.ogg"),
-	};
-
-	private MusicSong _song4 = new()
-	{
-		Layer1 = GD.Load<AudioStream>("res://assets/sound/music/beat4/layer1.ogg"),
-		Layer2 = GD.Load<AudioStream>("res://assets/sound/music/beat4/layer2.ogg"),
-		Layer3 = GD.Load<AudioStream>("res://assets/sound/music/beat4/layer3.ogg"),
-	};
-
-	private MusicSong _song5 = new()
-	{
-		Layer1 = GD.Load<AudioStream>("res://assets/sound/music/beat5/layer1.ogg"),
-		Layer2 = GD.Load<AudioStream>("res://assets/sound/music/beat5/layer2.ogg"),
-		Layer3 = GD.Load<AudioStream>("res://assets/sound/music/beat5/layer3.ogg"),
-	};
-
-	private MusicSong[] _songs;
-	private int  _currentSong = 0;
+	private MusicSong[] _citySongs;
+	private MusicSong[] _forestSongs;
+	private MusicSong[] _songs = [];
+	private int  _currentSong = -1;
 	private float  _musicVol = -8f;
 	[Export] private float _combatSongAutoRotateSeconds = 360f;
 	[Export] private float _combatSongFadeSeconds = 2f;
@@ -82,9 +49,40 @@ public partial class AudioManager : Node
 	private Tween _musicLayerTween;
 	private int _currentMusicLayer;
 
+	private static MusicSong LoadSong(string layer1Path, string layer2Path, string layer3Path)
+	{
+		return new MusicSong
+		{
+			Layer1 = GD.Load<AudioStream>(layer1Path),
+			Layer2 = GD.Load<AudioStream>(layer2Path),
+			Layer3 = GD.Load<AudioStream>(layer3Path)
+		};
+	}
+
+	private static MusicSong LoadCitySong(string folderName)
+	{
+		return LoadSong(
+			$"res://assets/sound/music/{folderName}/layer1.ogg",
+			$"res://assets/sound/music/{folderName}/layer2.ogg",
+			$"res://assets/sound/music/{folderName}/layer3.ogg");
+	}
+
+	private static MusicSong LoadForestSong(string songName)
+	{
+		return LoadSong(
+			$"res://assets/sound/music/forest_beats/{songName}Layer1.ogg",
+			$"res://assets/sound/music/forest_beats/{songName}Layer2.ogg",
+			$"res://assets/sound/music/forest_beats/{songName}Layer3.ogg");
+	}
+
+	public bool HasCombatSongs()
+	{
+		return _songs != null && _songs.Length > 0;
+	}
+
 	public void NextSong()
 	{
-		if (_songs == null || _songs.Length == 0)
+		if (!HasCombatSongs())
 			return;
 
 		_currentSong = (_currentSong + 1) % _songs.Length;
@@ -93,7 +91,7 @@ public partial class AudioManager : Node
 
 	public void PrevSong()
 	{
-		if (_songs == null || _songs.Length == 0)
+		if (!HasCombatSongs())
 			return;
 
 		_currentSong--;
@@ -105,27 +103,62 @@ public partial class AudioManager : Node
 
 	public int GetCurrentSong()
 	{
+		if (!HasCombatSongs())
+			return -1;
+
 		return _currentSong;
 	}
 
 	public void MuteCurrentSong()
 	{
+		if (_layer1 == null && _layer2 == null && _layer3 == null)
+			return;
+
 		var tween = CreateTween();
-		tween.TweenProperty(_layer1, "volume_db", -80f, 1f);
-		tween.TweenProperty(_layer2, "volume_db", -80f, 1f);
-		tween.TweenProperty(_layer3, "volume_db", -80f, 1f);
+		tween.SetParallel(true);
+		if (_layer1 != null)
+			tween.TweenProperty(_layer1, "volume_db", -80f, 1f);
+		if (_layer2 != null)
+			tween.TweenProperty(_layer2, "volume_db", -80f, 1f);
+		if (_layer3 != null)
+			tween.TweenProperty(_layer3, "volume_db", -80f, 1f);
 	}
 
 	public void RandomizeSong()
 	{
+		if (!HasCombatSongs())
+		{
+			_currentSong = -1;
+			return;
+		}
+
 		GD.Randomize();
 		_currentSong = GD.RandRange(0, _songs.Length-1);
 	}
 
+	public async void StartCombatMusic(CombatMusicSet musicSet)
+	{
+		_songs = GetSongsForSet(musicSet);
+
+		if (!HasCombatSongs())
+		{
+			_currentSong = -1;
+			_combatSongStartedAtSeconds = -1.0;
+			await FadeOutCurrentCombatSong();
+			return;
+		}
+
+		RandomizeSong();
+		StartCurrentSong();
+	}
+
 	public async void StartCurrentSong()
 	{
-		if (_songs == null || _songs.Length == 0)
+		if (!HasCombatSongs())
 			return;
+
+		if (_currentSong < 0 || _currentSong >= _songs.Length)
+			_currentSong = 0;
 
 		await FadeOutCurrentCombatSong();
 
@@ -153,7 +186,7 @@ public partial class AudioManager : Node
 
 	private bool IsCombatSongReadyToRotate()
 	{
-		if (_songs == null || _songs.Length <= 1 || _combatSongStartedAtSeconds < 0.0)
+		if (!HasCombatSongs() || _songs.Length <= 1 || _combatSongStartedAtSeconds < 0.0)
 			return false;
 
 		var elapsedSeconds = Time.GetTicksMsec() / 1000.0 - _combatSongStartedAtSeconds;
@@ -162,7 +195,7 @@ public partial class AudioManager : Node
 
 	private void SelectRandomDifferentSong()
 	{
-		if (_songs == null || _songs.Length <= 1)
+		if (!HasCombatSongs() || _songs.Length <= 1)
 			return;
 
 		var nextSong = GD.RandRange(0, _songs.Length - 2);
@@ -170,6 +203,16 @@ public partial class AudioManager : Node
 			nextSong++;
 
 		_currentSong = nextSong;
+	}
+
+	private MusicSong[] GetSongsForSet(CombatMusicSet musicSet)
+	{
+		return musicSet switch
+		{
+			CombatMusicSet.City => _citySongs,
+			CombatMusicSet.Forest => _forestSongs,
+			_ => []
+		};
 	}
 
 	private async System.Threading.Tasks.Task FadeOutCurrentCombatSong()
@@ -454,7 +497,7 @@ public partial class AudioManager : Node
 	}
 
 
-	public AudioStreamPlayer? PlayMusicLayer(AudioStream stream, float volumeDb = -6f)
+	public AudioStreamPlayer PlayMusicLayer(AudioStream stream, float volumeDb = -6f)
 	{
 		if (stream == null) return null;
 
@@ -521,7 +564,7 @@ public partial class AudioManager : Node
 
 	private void SetMusicLayer(int layer, float fadeSeconds)
 	{
-		if (_layer1 == null || _layer2 == null || _layer3 == null)
+		if (!HasCombatSongs() || _layer1 == null || _layer2 == null || _layer3 == null)
 			return;
 
 		layer = Mathf.Clamp(layer, 1, 3);
@@ -541,6 +584,24 @@ public partial class AudioManager : Node
 
 	public override void _Ready()
 	{
-		_songs = [_song1, _song2, _song3, _song4, _song5];
+		_citySongs =
+		[
+			LoadCitySong("beat1"),
+			LoadCitySong("beat2"),
+			LoadCitySong("beat3"),
+			LoadCitySong("beat4"),
+			LoadCitySong("beat5")
+		];
+
+		_forestSongs =
+		[
+			LoadForestSong("Lost"),
+			LoadForestSong("Lurking"),
+			LoadForestSong("Plague"),
+			LoadForestSong("Surounded"),
+			LoadForestSong("Voodoo")
+		];
+
+		_songs = [];
 	}
 }

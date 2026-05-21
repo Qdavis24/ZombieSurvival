@@ -49,6 +49,12 @@ public partial class PauseMenu : CanvasLayer
 	
 	public void SetCurrentSong()
 	{
+		if (!AudioManager.I.HasCombatSongs())
+		{
+			_curr.Text = "--";
+			return;
+		}
+
 		var curr = AudioManager.I.GetCurrentSong() + 1;
 		_curr.Text = "#" + curr;
 	}
