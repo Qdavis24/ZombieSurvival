@@ -38,7 +38,7 @@ public partial class AudioManager : Node
 	private int  _currentSong = -1;
 	private float  _musicVol = -8f;
 	private float _currentSongVolumeDb = -8f;
-	[Export] private float _combatSongAutoRotateSeconds = 360f;
+	[Export] private float _combatSongAutoRotateSeconds = 300f;
 	[Export] private float _combatSongFadeSeconds = 2f;
 	[Export] private float _combatSongFadeOutSeconds = 3f;
 	private double _combatSongStartedAtSeconds = -1.0;

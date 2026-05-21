@@ -7,7 +7,7 @@ using ZombieSurvival.scripts.player.weapons;
 public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamageable
 {
 	[Signal] public delegate void PlayerDiedEventHandler();
-	
+
 	private Node3D _head;
 	[Export] private float _healthRegenRate;
 	[Export] private PlayerHud _playerHud;
@@ -25,7 +25,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	[Export] private float _gravity = 20.0f;
 	[Export] private float _jumpVelocity = 6.0f;
 
-	[ExportGroup("Sounds")] 
+	[ExportGroup("Sounds")]
 	[Export] private AudioStream _footstepSound;
 	[Export] private AudioStream _jumpSound;
 	[Export] private AudioStream _hitSound;
@@ -34,14 +34,14 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	private float _yaw; // left and right
 	private float _pitch; // up and down
 
-	[ExportGroup("Player")] 
+	[ExportGroup("Player")]
 	[Export] public Inventory Inventory { get; private set; }
 	[Export] private int _startingMoney = 500;
-	
+
 	[Export] private float _maxHealth = 75f;
 	[Export] private float _health = 75f;
 	[Export] private float _damageReductionDuration = 0.75f;
-	[Export(PropertyHint.Range, "0,1,0.05")] private float _damageReductionMultiplier = 0.3f;
+	[Export(PropertyHint.Range, "0,1,0.05")] private float _damageReductionMultiplier = 0.60f;
 	private float _damageReductionTimer;
 	private bool _isDead;
 	private bool _sprintEnabled;
@@ -85,13 +85,13 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		_pitch -= recoilRadians;
 		ApplyLookRotation();
 	}
-	
-	
+
+
 
 	public override void _Ready()
 	{
 		_head = GetNode<Node3D>("Head");
-		
+
 		_yaw = Rotation.Y;
 		_pitch = _head.Rotation.X;
 		Inventory.AddItem(ItemType.Money, _startingMoney);
@@ -126,7 +126,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	{
 		_playerHud.ShowCrosshair();
 	}
-	
+
 	public void HideCrosshair()
 	{
 		_playerHud.HideCrosshair();
@@ -177,9 +177,9 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 			_yaw -= look.X * _controllerSensitivityHorizontal * multiplier * dt;
 			_pitch -= look.Y * _controllerSensitivityVertical * multiplier * dt;
 		}
-		
+
 		ApplyLookRotation();
-		
+
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -189,9 +189,9 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 		if (_damageReductionTimer > 0f)
 			_damageReductionTimer = Mathf.Max(0f, _damageReductionTimer - dt);
-	
+
 		Health += _healthRegenRate * _maxHealth * dt;
-		
+
 
 		var input = Input.GetVector("move_left", "move_right", "move_forward", "move_back");
 
@@ -211,13 +211,13 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 			if (Input.IsActionJustPressed("jump"))
 			{
 				yVel = _jumpVelocity;
-			
-				AudioManager.I.Play3D(_jumpSound, GlobalPosition, -15f);	
+
+				AudioManager.I.Play3D(_jumpSound, GlobalPosition, -15f);
 			}
 			else
 			{
 				yVel = 0f;
-			
+
 				// Only play footstep when moving on the ground
 				if (wishDir.Length() > 0.1f)
 				{
@@ -278,7 +278,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		_collisionShape3D.Disabled = true;
 		SetPhysicsProcess(false);
 		Velocity = Vector3.Zero;
-		
+
 		AudioManager.I.PlayUi(_deathSound, -12f);
 
 		var tween = CreateTween();
