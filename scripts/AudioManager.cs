@@ -348,6 +348,23 @@ public partial class AudioManager : Node
 		p.Play();
 	}
 
+	public void PlaySfx(AudioStream stream, float volumeDb = -6f, float pitch = 1f)
+	{
+		if (stream == null) return;
+
+		var p = new AudioStreamPlayer
+		{
+			Stream = stream,
+			VolumeDb = volumeDb,
+			PitchScale = pitch,
+			Bus = SfxBus
+		};
+
+		AddChild(p);
+		p.Finished += () => p.QueueFree();
+		p.Play();
+	}
+
 	public void PlayFollowing(AudioStream stream, Node3D target, float volumeDb = -6f, float pitch = 1f)
 	{
 		if (stream == null || target == null) return;

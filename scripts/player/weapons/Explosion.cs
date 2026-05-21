@@ -39,7 +39,7 @@ public partial class Explosion : Area3D
         _smoke.Finished += QueueFree;
         
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-        AudioManager.I.PlayExplosion(_explosionSound, GlobalPosition);
+        AudioManager.I.PlayExplosion(_explosionSound, GlobalPosition, -5f);
     }
 
     private void OnTimeout()

@@ -308,7 +308,7 @@ public partial class WeaponBase : Node3D
         var from = _camera.GlobalTransform.Origin;
         var direction = -_camera.GlobalTransform.Basis.Z;
 
-        AudioManager.I.Play3D(_gunshotSound, from);
+        AudioManager.I.PlaySfx(_gunshotSound, -5f);
         ResolveShot(from, direction);
     }
 
