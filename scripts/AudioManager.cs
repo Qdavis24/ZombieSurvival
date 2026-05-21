@@ -11,6 +11,7 @@ public partial class AudioManager : Node
 		public AudioStream Layer1;
 		public AudioStream Layer2;
 		public AudioStream Layer3;
+		public float VolumeOffsetDb;
 
 		public AudioStream[] Layers => [Layer1, Layer2, Layer3];
 	}
@@ -36,6 +37,7 @@ public partial class AudioManager : Node
 	private MusicSong[] _songs = [];
 	private int  _currentSong = -1;
 	private float  _musicVol = -8f;
+	private float _currentSongVolumeDb = -8f;
 	[Export] private float _combatSongAutoRotateSeconds = 360f;
 	[Export] private float _combatSongFadeSeconds = 2f;
 	[Export] private float _combatSongFadeOutSeconds = 3f;
@@ -49,30 +51,42 @@ public partial class AudioManager : Node
 	private Tween _musicLayerTween;
 	private int _currentMusicLayer;
 
-	private static MusicSong LoadSong(string layer1Path, string layer2Path, string layer3Path)
+	private static MusicSong LoadSong(string layer1Path, string layer2Path, string layer3Path, float volumeOffsetDb = 0f)
 	{
 		return new MusicSong
 		{
 			Layer1 = GD.Load<AudioStream>(layer1Path),
 			Layer2 = GD.Load<AudioStream>(layer2Path),
-			Layer3 = GD.Load<AudioStream>(layer3Path)
+			Layer3 = GD.Load<AudioStream>(layer3Path),
+			VolumeOffsetDb = volumeOffsetDb
 		};
 	}
 
-	private static MusicSong LoadCitySong(string folderName)
+	private static MusicSong LoadCitySong(string folderName, float volumeOffsetDb = 0f)
 	{
 		return LoadSong(
 			$"res://assets/sound/music/{folderName}/layer1.ogg",
 			$"res://assets/sound/music/{folderName}/layer2.ogg",
-			$"res://assets/sound/music/{folderName}/layer3.ogg");
+			$"res://assets/sound/music/{folderName}/layer3.ogg",
+			volumeOffsetDb);
 	}
 
-	private static MusicSong LoadForestSong(string songName)
+	private static MusicSong LoadForestSong(string songName, float volumeOffsetDb = 0f)
 	{
 		return LoadSong(
 			$"res://assets/sound/music/forest_beats/{songName}Layer1.ogg",
 			$"res://assets/sound/music/forest_beats/{songName}Layer2.ogg",
-			$"res://assets/sound/music/forest_beats/{songName}Layer3.ogg");
+			$"res://assets/sound/music/forest_beats/{songName}Layer3.ogg",
+			volumeOffsetDb);
+	}
+
+	private static MusicSong LoadForestSongWithFirstTwoLayersSwapped(string songName, float volumeOffsetDb = 0f)
+	{
+		return LoadSong(
+			$"res://assets/sound/music/forest_beats/{songName}Layer2.ogg",
+			$"res://assets/sound/music/forest_beats/{songName}Layer1.ogg",
+			$"res://assets/sound/music/forest_beats/{songName}Layer3.ogg",
+			volumeOffsetDb);
 	}
 
 	public bool HasCombatSongs()
@@ -166,6 +180,7 @@ public partial class AudioManager : Node
 		if (song == null)
 			return;
 
+		_currentSongVolumeDb = _musicVol + song.VolumeOffsetDb;
 		InitLayer1(song.Layer1);
 		InitLayer2(song.Layer2);
 		InitLayer3(song.Layer3);
@@ -576,9 +591,9 @@ public partial class AudioManager : Node
 
 		_musicLayerTween = CreateTween();
 		_musicLayerTween.SetParallel(true);
-		_musicLayerTween.TweenProperty(_layer1, "volume_db", _musicVol, fadeSeconds);
-		_musicLayerTween.TweenProperty(_layer2, "volume_db", layer >= 2 ? _musicVol : -80f, fadeSeconds);
-		_musicLayerTween.TweenProperty(_layer3, "volume_db", layer >= 3 ? _musicVol : -80f, fadeSeconds);
+		_musicLayerTween.TweenProperty(_layer1, "volume_db", _currentSongVolumeDb, fadeSeconds);
+		_musicLayerTween.TweenProperty(_layer2, "volume_db", layer >= 2 ? _currentSongVolumeDb : -80f, fadeSeconds);
+		_musicLayerTween.TweenProperty(_layer3, "volume_db", layer >= 3 ? _currentSongVolumeDb : -80f, fadeSeconds);
 		_currentMusicLayer = layer;
 	}
 
@@ -595,11 +610,11 @@ public partial class AudioManager : Node
 
 		_forestSongs =
 		[
-			LoadForestSong("Lost"),
-			LoadForestSong("Lurking"),
-			LoadForestSong("Plague"),
-			LoadForestSong("Surounded"),
-			LoadForestSong("Voodoo")
+			LoadForestSong("Lost", -5f),
+			LoadForestSongWithFirstTwoLayersSwapped("Lurking", -5f),
+			LoadForestSong("Plague", -3f),
+			LoadForestSong("Surounded", -3f),
+			LoadForestSong("Voodoo", -5f)
 		];
 
 		_songs = [];
