@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bhp4jwo0ymtfh"]
+
+[ext_resource type="PackedScene" uid="uid://ch08lxsihximi" path="res://assets/bunker_map/models/wall_box_1.glb" id="1_w5v8l"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vhp03"]
+size = Vector3(0.49633026, 0.66552734, 0.24945068)
+
+[node name="WallBox1" type="StaticBody3D" unique_id=1953822904]
+
+[node name="wall_box_12" parent="." unique_id=595174322 instance=ExtResource("1_w5v8l")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1821237327]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.003643036, -0.0031738281, 0.12295532)
+shape = SubResource("BoxShape3D_vhp03")
+
+[editable path="wall_box_12"]

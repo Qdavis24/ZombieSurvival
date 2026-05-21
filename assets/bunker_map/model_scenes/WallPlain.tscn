@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://34nrb2qqvlfp"]
+
+[ext_resource type="PackedScene" uid="uid://bc16noi3podqk" path="res://assets/bunker_map/models/wall_1_plain.glb" id="1_qqbjg"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_i51cb"]
+data = PackedVector3Array(2, -0.06, 0, 2.03, -0.03, -3, 2, -0.06, -3, 2, -0.06, 0, 2.03, -0.03, 0, 2.03, -0.03, -3, -2, -0.06, -3, -2.03, -0.03, 0, -2, -0.06, 0, -2, -0.06, -3, -2.03, -0.03, -3, -2.03, -0.03, 0, 2, -0.06, 0, -2, -0.06, -3, -2, -0.06, 0, 2, -0.06, 0, 2, -0.06, -3, -2, -0.06, -3, 2, 0.06, -3, 2.03, 0.03, 0, 2, 0.06, 0, 2, 0.06, -3, 2.03, 0.03, -3, 2.03, 0.03, 0, -2, 0.06, 0, -2.03, 0.03, -3, -2, 0.06, -3, -2, 0.06, 0, -2.03, 0.03, 0, -2.03, 0.03, -3, -2, 0.06, 0, 2, 0.06, -3, 2, 0.06, 0, -2, 0.06, 0, -2, 0.06, -3, 2, 0.06, -3)
+
+[node name="WallPlain" type="StaticBody3D" unique_id=842035355]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=578179316]
+transform = Transform3D(1, 0, 0, 0, -3.5762787e-07, -0.99999994, 0, 0.99999994, -3.5762787e-07, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_i51cb")
+
+[node name="wall_1_plain2" parent="." unique_id=670102300 instance=ExtResource("1_qqbjg")]
+
+[editable path="wall_1_plain2"]

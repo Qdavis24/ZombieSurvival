@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://c57mptr4kk1ha"]
+
+[ext_resource type="PackedScene" uid="uid://dok5agbsbae0b" path="res://assets/bunker_map/models/pipe_2.glb" id="1_66pg2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a441m"]
+radius = 0.19921875
+height = 3.9975586
+
+[node name="Pipe2" type="StaticBody3D" unique_id=1174556588]
+
+[node name="pipe_22" parent="." unique_id=2029096837 instance=ExtResource("1_66pg2")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2144536908]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4978027, 0)
+shape = SubResource("CapsuleShape3D_a441m")
+
+[editable path="pipe_22"]

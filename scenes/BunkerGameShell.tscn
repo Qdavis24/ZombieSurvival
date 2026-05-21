@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dd1w2bvwpcub5"]
 
 [ext_resource type="Script" uid="uid://j7nqumogkvom" path="res://scripts/Game.cs" id="1_game"]
+[ext_resource type="PackedScene" uid="uid://bu5pbg0pmdq5y" path="res://assets/bunker_map/Bunker.tscn" id="2_8b04y"]
 [ext_resource type="PackedScene" uid="uid://cfjp3bppwm4i8" path="res://scenes/player/PlayerController.tscn" id="2_player"]
 [ext_resource type="PackedScene" uid="uid://cvt0aomoxtces" path="res://scenes/round_system/round_system.tscn" id="3_round"]
 [ext_resource type="PackedScene" uid="uid://dnuwr0qeacme6" path="res://scenes/spawn_system/spawner.tscn" id="4_spawner"]
@@ -13,55 +14,41 @@ ambient_light_color = Color(0.4, 0.4, 0.4, 1)
 ambient_light_energy = 0.8
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_shell"]
-vertices = PackedVector3Array(-24, 0.5, -24, 24, 0.5, -24, 24, 0.5, 24, -24, 0.5, 24)
-polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(0, 2, 3)]
-agent_height = 1.8
-agent_radius = 0.7
+vertices = PackedVector3Array(-13.983944, 1.3189363, -20.29543, -13.983944, 1.3189363, -17.79543, -10.983944, 1.3189363, -17.79543, -10.983944, 1.3189363, -20.29543, -6.483944, 1.3189363, -5.795429, -3.483944, 1.3189363, -5.795429, -3.483944, 1.3189363, -7.295429, -6.733944, 1.3189363, -7.545429, -10.983944, 1.3189363, -17.04543, -13.983944, 1.3189363, -17.04543, -13.983944, 1.3189363, -11.045429, -10.733944, 1.3189363, -10.795429, -15.733944, 1.3189363, -10.795429, -15.483944, 1.3189363, -7.545429, -3.733944, 1.3189363, -10.795429, -21.983944, 1.3189363, 7.704571, -21.733944, 1.3189363, 8.204571, -18.733944, 1.3189363, 8.204571, -21.733944, 1.3189363, 4.204571, -23.483944, 1.5689363, 4.454571, -23.483944, 1.3189363, 7.704571, -17.733944, 1.3189363, -7.295429, -19.733944, 1.5689363, -9.795429, -21.483944, 1.5689363, -7.545429, -18.733944, 1.3189363, -5.545429, -17.483944, 1.5689363, -10.795429, 4.516056, 1.3189363, 0.20457077, 6.266056, 1.3189363, 0.20457077, 6.266056, 1.3189363, -3.0454292, 4.266056, 1.3189363, -3.2954292, 2.266056, 1.5689363, -9.795429, 0.01605606, 1.5689363, -10.795429, -0.23394394, 1.3189363, -7.545429, 1.0160561, 1.3189363, -6.295429, 4.266056, 1.5689363, -6.545429, 3.266056, 1.5689363, -8.795429, 1.0160561, 1.5689363, 1.7045708, 4.266056, 1.3189363, 1.9545708, -12.733944, 5.3189363, 9.954571, -2.483944, 5.3189363, 9.954571, -2.483944, 5.3189363, -5.295429, -12.733944, 5.3189363, -5.545429, -12.483944, 1.3189363, -4.795429, -12.483944, 1.3189363, 9.454571, -2.983944, 1.3189363, 9.454571, -2.983944, 1.3189363, -4.795429, 20.766056, 10.318936, -4.045429, 20.766056, 10.318936, 0.9545708, 29.766056, 10.318936, 0.9545708, 29.766056, 10.318936, -4.045429, 25.266056, 2.5689363, -2.2954292, 26.016056, 2.5689363, -2.5454292, 26.016056, 2.5689363, -3.0454292, 13.57375, 2.5689363, -2.7569675, 13.31963, 2.5689363, -3.0454292, 26.016056, 2.5689363, 0.20457077, 26.016056, 2.5689363, -1.5454292, 25.266056, 2.5689363, -1.7954292, 13.31963, 2.5689363, 0.20457077, 13.57375, 2.5689363, -2.564659, 26.766056, 2.5689363, -2.2954292, 37.016056, 2.5689363, -3.0454292, 26.516056, 2.5689363, -1.5454292, 37.016056, 2.5689363, 0.20457077, 0.01605606, 1.3189363, 12.204571, -1.7339439, 1.5689363, 12.204571, -1.9839439, 1.3189363, 15.454571, 0.26605606, 1.5689363, 15.454571, 2.016056, 1.5689363, 14.704571, 1.0160561, 1.3189363, 11.204571, 4.016056, 1.5689363, 12.204571, -34.233944, 5.3189363, 3.7045708, -34.233944, 5.3189363, 8.704571, -23.983944, 5.3189363, 8.704571, -23.983944, 5.3189363, 3.7045708, -33.983944, 1.3189363, 3.9545708, -33.983944, 1.3189363, 8.454571, -24.983944, 1.3189363, 8.454571, -24.983944, 1.3189363, 3.9545708, -18.483944, 1.3189363, 11.204571, -21.483944, 1.3189363, 12.204571, -17.733944, 1.3189363, 15.454571, -7.983944, 1.3189363, 15.454571, -8.233944, 1.5689363, 12.204571, -17.483944, 1.3189363, 12.204571, -19.483944, 1.3189363, 14.704571, -3.483944, 1.3189363, 11.954571, -3.483944, 1.3189363, 10.454571, -6.483944, 1.3189363, 10.454571, -6.733944, 1.5689363, 12.204571)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(12, 10, 13), PackedInt32Array(13, 10, 11), PackedInt32Array(13, 11, 7), PackedInt32Array(6, 7, 14), PackedInt32Array(14, 7, 11), PackedInt32Array(16, 15, 17), PackedInt32Array(17, 15, 18), PackedInt32Array(20, 19, 15), PackedInt32Array(15, 19, 18), PackedInt32Array(24, 23, 21), PackedInt32Array(21, 23, 22), PackedInt32Array(25, 12, 22), PackedInt32Array(22, 12, 21), PackedInt32Array(21, 12, 13), PackedInt32Array(23, 24, 18), PackedInt32Array(18, 24, 17), PackedInt32Array(27, 26, 28), PackedInt32Array(28, 26, 29), PackedInt32Array(35, 34, 30), PackedInt32Array(30, 34, 33), PackedInt32Array(30, 33, 32), PackedInt32Array(30, 32, 31), PackedInt32Array(37, 36, 26), PackedInt32Array(26, 36, 29), PackedInt32Array(29, 36, 33), PackedInt32Array(33, 34, 29), PackedInt32Array(32, 6, 31), PackedInt32Array(31, 6, 14), PackedInt32Array(39, 38, 40), PackedInt32Array(40, 38, 41), PackedInt32Array(45, 44, 42), PackedInt32Array(42, 44, 43), PackedInt32Array(49, 48, 46), PackedInt32Array(46, 48, 47), PackedInt32Array(51, 50, 52), PackedInt32Array(52, 50, 53), PackedInt32Array(52, 53, 54), PackedInt32Array(54, 53, 28), PackedInt32Array(56, 55, 57), PackedInt32Array(57, 55, 59), PackedInt32Array(59, 55, 58), PackedInt32Array(59, 58, 27), PackedInt32Array(59, 27, 28), PackedInt32Array(28, 53, 59), PackedInt32Array(59, 53, 50), PackedInt32Array(59, 50, 57), PackedInt32Array(51, 52, 60), PackedInt32Array(60, 52, 61), PackedInt32Array(55, 56, 62), PackedInt32Array(62, 60, 55), PackedInt32Array(55, 60, 63), PackedInt32Array(63, 60, 61), PackedInt32Array(67, 66, 68), PackedInt32Array(68, 66, 64), PackedInt32Array(64, 66, 65), PackedInt32Array(36, 37, 69), PackedInt32Array(69, 37, 70), PackedInt32Array(64, 69, 68), PackedInt32Array(68, 69, 70), PackedInt32Array(74, 73, 71), PackedInt32Array(71, 73, 72), PackedInt32Array(78, 77, 75), PackedInt32Array(75, 77, 76), PackedInt32Array(17, 79, 16), PackedInt32Array(16, 79, 80), PackedInt32Array(85, 84, 81), PackedInt32Array(81, 84, 83), PackedInt32Array(81, 83, 82), PackedInt32Array(84, 85, 79), PackedInt32Array(79, 85, 80), PackedInt32Array(87, 86, 88), PackedInt32Array(88, 86, 89), PackedInt32Array(65, 66, 86), PackedInt32Array(86, 66, 89), PackedInt32Array(89, 66, 82), PackedInt32Array(82, 83, 89)]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_shell"]
-size = Vector2(48, 48)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
-size = Vector3(48, 0.2, 48)
-
-[node name="Game" type="Node3D" node_paths=PackedStringArray("Player", "RoundManager")]
+[node name="Game" type="Node3D" unique_id=619435550 node_paths=PackedStringArray("Player", "RoundManager")]
 script = ExtResource("1_game")
 Player = NodePath("PlayerController")
 RoundManager = NodePath("RoundManager")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2093836616]
 environment = SubResource("Environment_shell")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1667917262]
 transform = Transform3D(0.70710677, -0.35355338, 0.61237246, 0, 0.8660254, 0.5, -0.70710677, -0.35355338, 0.61237246, 0, 8, 0)
 light_energy = 1.5
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1971780629]
 navigation_mesh = SubResource("NavigationMesh_shell")
 
-[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D"]
+[node name="Bunker" parent="NavigationRegion3D" unique_id=1952487660 instance=ExtResource("2_8b04y")]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 2.7261496, 0.94893646, -1.4458218)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Floor"]
-mesh = SubResource("PlaneMesh_shell")
+[node name="PlayerController" parent="." unique_id=1179543978 instance=ExtResource("2_player")]
+transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 22.804369, 2.4405472, -1.1775436)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
-shape = SubResource("BoxShape3D_floor")
-
-[node name="PlayerController" parent="." instance=ExtResource("2_player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
-
-[node name="RoundManager" parent="." node_paths=PackedStringArray("_player") instance=ExtResource("3_round")]
+[node name="RoundManager" parent="." unique_id=1398174596 node_paths=PackedStringArray("_player") instance=ExtResource("3_round")]
 _player = NodePath("../PlayerController")
 
-[node name="SpawnerNorth" parent="RoundManager/SpawnManager" instance=ExtResource("4_spawner")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -16)
+[node name="SpawnerNorth" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(1398174596, 1325009269) index="1" unique_id=1447900549 instance=ExtResource("4_spawner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.882988, 1.1254015, -16)
 
-[node name="SpawnerEast" parent="RoundManager/SpawnManager" instance=ExtResource("4_spawner")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.2, 0)
+[node name="SpawnerEast" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(1398174596, 1325009269) index="2" unique_id=182107723 instance=ExtResource("4_spawner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.961155, 2.2659738, -1.2866395)
 
-[node name="SpawnerWest" parent="RoundManager/SpawnManager" instance=ExtResource("4_spawner")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0.2, 0)
+[node name="SpawnerWest" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(1398174596, 1325009269) index="3" unique_id=445794516 instance=ExtResource("4_spawner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.640827, 1.2, 7.6337442)
 
 [editable path="RoundManager"]
 [editable path="RoundManager/SpawnManager"]

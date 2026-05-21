@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c5h582ndcvhl7"]
+
+[ext_resource type="PackedScene" uid="uid://dng0c2ypmpx7q" path="res://assets/bunker_map/models/blast_door_1_frame.glb" id="1_kjycb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_phawe"]
+size = Vector3(3.1069336, 2.4841309, 0.47058105)
+
+[node name="BlastDoor1Frame" type="StaticBody3D" unique_id=588476503]
+
+[node name="blast_door_1_frame2" parent="." unique_id=10666031 instance=ExtResource("1_kjycb")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=767211713]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5559082, 1.2642822, -0.053771973)
+shape = SubResource("BoxShape3D_phawe")
+
+[editable path="blast_door_1_frame2"]
