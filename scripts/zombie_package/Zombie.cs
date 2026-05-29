@@ -31,10 +31,25 @@ public partial class Zombie : CharacterBody3D
     private float _bodyHealth;
     private float _speed;
 
+    // Repath on an interval instead of every frame: a query per zombie per frame is
+    // expensive with a horde, and frequent repaths made the agent oscillate on
+    // NavigationLinks. The interval bounds path staleness and still reacts to dynamic
+    // nav changes (e.g. doors opening).
+    private float _repathTimer;
+    private const float RepathInterval = 0.15f;
+
+    // While crossing a NavigationLink (the navmesh gap at a door) we stop chasing the
+    // player and commit to the link's exit, so player movement can't interrupt the
+    // crossing and make the agent stutter mid-gap.
+    private bool _crossingLink;
+    private Vector3 _linkExit;
+    private float _crossingTime;
+    private const float MaxCrossingTime = 3f; // safety: never get stuck in crossing mode
+
     public enum State { Chase, Attack, Dead }
     private State _state;
     private State _previousState;
-    
+
     public State CurrentState => _state;
 
     public void Init(Node3D target, ZombieStats stats)
@@ -53,6 +68,7 @@ public partial class Zombie : CharacterBody3D
         FloorSnapLength = _floorSnapLength;
         SetState(State.Chase);
         SetupGroanTimer(); // audio
+        _navAgent.LinkReached += OnLinkReached;
     }
 
     private void OnDismembered()
@@ -112,7 +128,27 @@ public partial class Zombie : CharacterBody3D
 
     private void MoveTowardTarget(Vector3 targetPosition, float delta)
     {
-        _navAgent.SetTargetPosition(targetPosition);
+        if (_crossingLink)
+        {
+            // Committed to the link: ignore the player, just finish the crossing.
+            _crossingTime += delta;
+            var toExit = _linkExit - GlobalPosition;
+            if (new Vector2(toExit.X, toExit.Z).Length() < 0.6f || _crossingTime > MaxCrossingTime)
+            {
+                _crossingLink = false;
+                _repathTimer = 0f; // repath to the player on the next frame
+            }
+        }
+        else
+        {
+            _repathTimer -= delta;
+            if (_repathTimer <= 0f)
+            {
+                _repathTimer = RepathInterval;
+                _navAgent.SetTargetPosition(targetPosition);
+            }
+        }
+
         var nextPoint = _navAgent.GetNextPathPosition();
         var toNextPoint = nextPoint - GlobalTransform.Origin;
         var horizontal = new Vector3(toNextPoint.X, 0f, toNextPoint.Z);
@@ -126,6 +162,15 @@ public partial class Zombie : CharacterBody3D
 
         Velocity = new Vector3(horizontalDir.X * _speed, yVelocity, horizontalDir.Z * _speed);
         MoveAndSlide();
+    }
+
+    // Fired when the agent steps onto a NavigationLink. Freeze chasing and commit to
+    // the link's exit so the gap crossing can't be interrupted by the player moving.
+    private void OnLinkReached(Godot.Collections.Dictionary details)
+    {
+        _linkExit = details["link_exit_position"].AsVector3();
+        _crossingLink = true;
+        _crossingTime = 0f;
     }
 
     private void FaceTarget(Vector3 targetPosition)

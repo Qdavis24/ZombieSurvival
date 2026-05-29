@@ -66,7 +66,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.536743e-07, 0, -5.7657633)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -11.699795, 0, -5.9551287)
 
 [node name="WallPlain" parent="TunnelJunction3Way5" unique_id=1699261999 instance=ExtResource("7_bclpu")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.3080616, 0, 1.9073486e-06)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.1624937, 0, 1.9073486e-06)
 
 [node name="TunnelStraight" parent="TunnelJunction3Way5" unique_id=923820777 instance=ExtResource("4_6edxl")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.7368774, 0, 9.536743e-07)
@@ -118,7 +118,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.9
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.7938256)
 
 [node name="FloorPiece" parent="innerroom/Node3D3" unique_id=1338803850 instance=ExtResource("9_jofy4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9685493, 0, 6.788573)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9685493, -0.0034244703, 6.788573)
 
 [node name="FloorPiece2" parent="innerroom/Node3D3" unique_id=1426803352 instance=ExtResource("9_jofy4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9685493, 2.9853451, 6.788573)
