@@ -8,6 +8,7 @@ public partial class AudioManager : Node
 
 	private sealed class MusicSong
 	{
+		public string Name;
 		public AudioStream Layer1;
 		public AudioStream Layer2;
 		public AudioStream Layer3;
@@ -42,6 +43,7 @@ public partial class AudioManager : Node
 	[Export] private float _combatSongAutoRotateSeconds = 300f;
 	[Export] private float _combatSongFadeSeconds = 2f;
 	[Export] private float _combatSongFadeOutSeconds = 3f;
+	private bool _useInstantCombatMusicTransitions;
 	private double _combatSongStartedAtSeconds = -1.0;
 
 	private AudioStreamPlayer _musicPlayer;
@@ -52,10 +54,11 @@ public partial class AudioManager : Node
 	private Tween _musicLayerTween;
 	private int _currentMusicLayer;
 
-	private static MusicSong LoadSong(string layer1Path, string layer2Path, string layer3Path, float volumeOffsetDb = 0f)
+	private static MusicSong LoadSong(string name, string layer1Path, string layer2Path, string layer3Path, float volumeOffsetDb = 0f)
 	{
 		return new MusicSong
 		{
+			Name = name,
 			Layer1 = GD.Load<AudioStream>(layer1Path),
 			Layer2 = GD.Load<AudioStream>(layer2Path),
 			Layer3 = GD.Load<AudioStream>(layer3Path),
@@ -66,6 +69,7 @@ public partial class AudioManager : Node
 	private static MusicSong LoadCitySong(string folderName, float volumeOffsetDb = 0f)
 	{
 		return LoadSong(
+			folderName,
 			$"res://assets/sound/music/{folderName}/layer1.ogg",
 			$"res://assets/sound/music/{folderName}/layer2.ogg",
 			$"res://assets/sound/music/{folderName}/layer3.ogg",
@@ -75,6 +79,7 @@ public partial class AudioManager : Node
 	private static MusicSong LoadForestSong(string songName, float volumeOffsetDb = 0f)
 	{
 		return LoadSong(
+			songName,
 			$"res://assets/sound/music/forest_beats/{songName}Layer1.ogg",
 			$"res://assets/sound/music/forest_beats/{songName}Layer2.ogg",
 			$"res://assets/sound/music/forest_beats/{songName}Layer3.ogg",
@@ -84,6 +89,7 @@ public partial class AudioManager : Node
 	private static MusicSong LoadForestSongWithFirstTwoLayersSwapped(string songName, float volumeOffsetDb = 0f)
 	{
 		return LoadSong(
+			songName,
 			$"res://assets/sound/music/forest_beats/{songName}Layer2.ogg",
 			$"res://assets/sound/music/forest_beats/{songName}Layer1.ogg",
 			$"res://assets/sound/music/forest_beats/{songName}Layer3.ogg",
@@ -93,6 +99,7 @@ public partial class AudioManager : Node
 	private static MusicSong LoadBunkerSong(string songName, float volumeOffsetDb = 0f)
 	{
 		return LoadSong(
+			songName,
 			$"res://assets/sound/music/bunker_beats/{songName}Layer1.ogg",
 			$"res://assets/sound/music/bunker_beats/{songName}Layer2.ogg",
 			$"res://assets/sound/music/bunker_beats/{songName}Layer3.ogg",
@@ -104,16 +111,16 @@ public partial class AudioManager : Node
 		return _songs != null && _songs.Length > 0;
 	}
 
-	public void NextSong()
+	public void NextSong(int initialLayer = 1)
 	{
 		if (!HasCombatSongs())
 			return;
 
 		_currentSong = (_currentSong + 1) % _songs.Length;
-		StartCurrentSong();
+		StartCurrentSong(initialLayer);
 	}
 
-	public void PrevSong()
+	public void PrevSong(int initialLayer = 1)
 	{
 		if (!HasCombatSongs())
 			return;
@@ -122,7 +129,7 @@ public partial class AudioManager : Node
 		if (_currentSong < 0)
 			_currentSong = _songs.Length - 1;
 
-		StartCurrentSong();
+		StartCurrentSong(initialLayer);
 	}
 
 	public int GetCurrentSong()
@@ -131,6 +138,31 @@ public partial class AudioManager : Node
 			return -1;
 
 		return _currentSong;
+	}
+
+	public int GetCombatSongCount()
+	{
+		return HasCombatSongs() ? _songs.Length : 0;
+	}
+
+	public string GetCurrentSongName()
+	{
+		return HasCurrentSong() ? _songs[_currentSong].Name : "";
+	}
+
+	public float GetCurrentSongVolumeOffsetDb()
+	{
+		return HasCurrentSong() ? _songs[_currentSong].VolumeOffsetDb : 0f;
+	}
+
+	public float GetCurrentSongVolumeDb()
+	{
+		return _musicVol + GetCurrentSongVolumeOffsetDb();
+	}
+
+	public void SetInstantCombatMusicTransitions(bool enabled)
+	{
+		_useInstantCombatMusicTransitions = enabled;
 	}
 
 	public void MuteCurrentSong()
@@ -176,7 +208,23 @@ public partial class AudioManager : Node
 		StartCurrentSong();
 	}
 
-	public async void StartCurrentSong()
+	public async void StartCombatMusicSong(CombatMusicSet musicSet, int songIndex, int initialLayer = 1)
+	{
+		_songs = GetSongsForSet(musicSet);
+
+		if (!HasCombatSongs())
+		{
+			_currentSong = -1;
+			_combatSongStartedAtSeconds = -1.0;
+			await FadeOutCurrentCombatSong();
+			return;
+		}
+
+		_currentSong = Mathf.Clamp(songIndex, 0, _songs.Length - 1);
+		StartCurrentSong(initialLayer);
+	}
+
+	public async void StartCurrentSong(int initialLayer = 1)
 	{
 		if (!HasCombatSongs())
 			return;
@@ -196,7 +244,7 @@ public partial class AudioManager : Node
 		InitLayer3(song.Layer3);
 
 		_currentMusicLayer = 0;
-		SetMusicLayer(1, _combatSongFadeSeconds);
+		SetMusicLayer(initialLayer, GetCombatMusicFadeSeconds(_combatSongFadeSeconds));
 		_combatSongStartedAtSeconds = Time.GetTicksMsec() / 1000.0;
 	}
 
@@ -241,6 +289,11 @@ public partial class AudioManager : Node
 		};
 	}
 
+	private bool HasCurrentSong()
+	{
+		return HasCombatSongs() && _currentSong >= 0 && _currentSong < _songs.Length;
+	}
+
 	private async System.Threading.Tasks.Task FadeOutCurrentCombatSong()
 	{
 		if (_layer1 == null && _layer2 == null && _layer3 == null)
@@ -249,17 +302,18 @@ public partial class AudioManager : Node
 		if (_musicLayerTween != null && GodotObject.IsInstanceValid(_musicLayerTween))
 			_musicLayerTween.Kill();
 
-		if (_combatSongFadeOutSeconds > 0f)
+		var fadeOutSeconds = GetCombatMusicFadeSeconds(_combatSongFadeOutSeconds);
+		if (fadeOutSeconds > 0f)
 		{
 			var fadeTween = CreateTween();
 			fadeTween.SetParallel(true);
 
 			if (_layer1 != null)
-				fadeTween.TweenProperty(_layer1, "volume_db", -80f, _combatSongFadeOutSeconds);
+				fadeTween.TweenProperty(_layer1, "volume_db", -80f, fadeOutSeconds);
 			if (_layer2 != null)
-				fadeTween.TweenProperty(_layer2, "volume_db", -80f, _combatSongFadeOutSeconds);
+				fadeTween.TweenProperty(_layer2, "volume_db", -80f, fadeOutSeconds);
 			if (_layer3 != null)
-				fadeTween.TweenProperty(_layer3, "volume_db", -80f, _combatSongFadeOutSeconds);
+				fadeTween.TweenProperty(_layer3, "volume_db", -80f, fadeOutSeconds);
 
 			await ToSignal(fadeTween, Tween.SignalName.Finished);
 		}
@@ -602,7 +656,12 @@ public partial class AudioManager : Node
 
 	public void SetMusicLayer(int layer)
 	{
-		SetMusicLayer(layer, _tween);
+		SetMusicLayer(layer, GetCombatMusicFadeSeconds(_tween));
+	}
+
+	private float GetCombatMusicFadeSeconds(float fadeSeconds)
+	{
+		return _useInstantCombatMusicTransitions ? 0f : fadeSeconds;
 	}
 
 	private void SetMusicLayer(int layer, float fadeSeconds)
@@ -647,11 +706,11 @@ public partial class AudioManager : Node
 
 		_bunkerSongs =
 		[
-			LoadBunkerSong("Barricade", -4f),
-			LoadBunkerSong("Military", -4f),
-			LoadBunkerSong("Outbreak"),
-			LoadBunkerSong("Scrape", -2f),
-			LoadBunkerSong("Undying", -4f)
+			LoadBunkerSong("Barricade", -6f),
+			LoadBunkerSong("Military", -6f),
+			LoadBunkerSong("Outbreak", -2f),
+			LoadBunkerSong("Scrape", -4f),
+			LoadBunkerSong("Undying", -6f)
 		];
 
 		_songs = [];
