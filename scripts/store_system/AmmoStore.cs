@@ -95,7 +95,6 @@ public partial class AmmoStore : Node3D
 
         _totalAmmoUponBuying = ammoPerPickup * _storeSellAmount;
 
-        // textMesh.Text = $"{_totalAmmoUponBuying} {_storeType}\nfor {_storeBuyAmount}\nParasitic Material";
         textMesh.FontSize = 30;
         textMesh.Text = $"{_storeType}";
     }

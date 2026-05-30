@@ -25,8 +25,6 @@ public partial class GameManager : Node
     private WeaponUpgradeBench _activeWeaponUpgradeBench;
     private Node3D _activeWeaponUpgradePlayer;
 
-    private bool _test;
-
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -98,20 +96,6 @@ public partial class GameManager : Node
                 _gameInstance.ProcessMode = ProcessModeEnum.Inherit; // Resume game node time
             }
         }
-
-        // if (@event.IsActionPressed("interact") && _isGamePlaying)
-        // {
-        //     if (_test)
-        //     {
-        //         _uiManager.ShowSuccessfulPickup("d");
-        //         _test = false;
-        //     }
-        //     else
-        //     {
-        //         _uiManager.ShowPickup("d");
-        //         _test = true;
-        //     }
-        // }
     }
 
     public void SetRound(int round)

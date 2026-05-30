@@ -24,7 +24,6 @@ public partial class VendingMachineLight : SpotLight3D
     public override void _Ready()
     {
         _rng.Randomize();
-        GD.Print("[VendingMachineLight] Ready on: " + Name);
         LightEnergy = BaseEnergy;
         _stepTimer = 0.0f;
         _glitchTimer = 0.0f;

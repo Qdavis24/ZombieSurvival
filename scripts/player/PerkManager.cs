@@ -148,16 +148,4 @@ public partial class PerkManager : Node
 
         EmitSignal(SignalName.PerkApplied, Variant.From(perkType));
     }
-
-    public override void _Process(double delta)
-    {
-        if (Input.IsActionJustPressed("test_health_perk"))
-            _ = TryUseHealthPerk();
-
-        if (Input.IsActionJustPressed("test_reload_perk"))
-            _ = TryUseReloadPerk();
-
-        if (Input.IsActionJustPressed("test_sprint_perk"))
-            _ = TryUseSprintPerk();
-    }
 }
