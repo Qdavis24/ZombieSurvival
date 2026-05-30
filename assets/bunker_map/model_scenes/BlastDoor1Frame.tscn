@@ -32,7 +32,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50177, 1.2642822, -0.05377
 shape = SubResource("BoxShape3D_phawe")
 
 [node name="InteractNotifier" parent="." unique_id=767211715 instance=ExtResource("3_notif")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.534493, 0, 0)
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -1.534493, 0.267205, 0)
 InteractPrompt = "press e to use military keycard"
 Type = 1
 

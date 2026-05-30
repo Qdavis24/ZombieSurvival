@@ -135,8 +135,7 @@ public partial class Zombie : CharacterBody3D
             var toExit = _linkExit - GlobalPosition;
             if (new Vector2(toExit.X, toExit.Z).Length() < 0.6f || _crossingTime > MaxCrossingTime)
             {
-                _crossingLink = false;
-                _repathTimer = 0f; // repath to the player on the next frame
+                EndLinkCrossing();
             }
         }
         else
@@ -158,7 +157,9 @@ public partial class Zombie : CharacterBody3D
             FaceDirection(horizontalDir);
 
         var yVelocity = Velocity.Y;
-        yVelocity = IsOnFloor() ? -_floorStickVelocity : yVelocity - (_gravity * delta);
+        yVelocity = _crossingLink
+            ? 0f
+            : IsOnFloor() ? -_floorStickVelocity : yVelocity - (_gravity * delta);
 
         Velocity = new Vector3(horizontalDir.X * _speed, yVelocity, horizontalDir.Z * _speed);
         MoveAndSlide();
@@ -171,6 +172,20 @@ public partial class Zombie : CharacterBody3D
         _linkExit = details["link_exit_position"].AsVector3();
         _crossingLink = true;
         _crossingTime = 0f;
+        SetCollisionShapeDisabled(true);
+    }
+
+    private void EndLinkCrossing()
+    {
+        _crossingLink = false;
+        _repathTimer = 0f; // repath to the player on the next frame
+        SetCollisionShapeDisabled(false);
+    }
+
+    private void SetCollisionShapeDisabled(bool disabled)
+    {
+        if (_collisionShape == null || !IsInstanceValid(_collisionShape)) return;
+        _collisionShape.SetDeferred(CollisionShape3D.PropertyName.Disabled, disabled);
     }
 
     private void FaceTarget(Vector3 targetPosition)
