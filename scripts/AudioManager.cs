@@ -34,6 +34,7 @@ public partial class AudioManager : Node
 
 	private MusicSong[] _citySongs;
 	private MusicSong[] _forestSongs;
+	private MusicSong[] _bunkerSongs;
 	private MusicSong[] _songs = [];
 	private int  _currentSong = -1;
 	private float  _musicVol = -8f;
@@ -86,6 +87,15 @@ public partial class AudioManager : Node
 			$"res://assets/sound/music/forest_beats/{songName}Layer2.ogg",
 			$"res://assets/sound/music/forest_beats/{songName}Layer1.ogg",
 			$"res://assets/sound/music/forest_beats/{songName}Layer3.ogg",
+			volumeOffsetDb);
+	}
+
+	private static MusicSong LoadBunkerSong(string songName, float volumeOffsetDb = 0f)
+	{
+		return LoadSong(
+			$"res://assets/sound/music/bunker_beats/{songName}Layer1.ogg",
+			$"res://assets/sound/music/bunker_beats/{songName}Layer2.ogg",
+			$"res://assets/sound/music/bunker_beats/{songName}Layer3.ogg",
 			volumeOffsetDb);
 	}
 
@@ -226,6 +236,7 @@ public partial class AudioManager : Node
 		{
 			CombatMusicSet.City => _citySongs,
 			CombatMusicSet.Forest => _forestSongs,
+			CombatMusicSet.Bunker => _bunkerSongs,
 			_ => []
 		};
 	}
@@ -632,6 +643,15 @@ public partial class AudioManager : Node
 			LoadForestSong("Plague", -3f),
 			LoadForestSong("Surounded", -3f),
 			LoadForestSong("Voodoo", -5f)
+		];
+
+		_bunkerSongs =
+		[
+			LoadBunkerSong("Barricade", -4f),
+			LoadBunkerSong("Military", -4f),
+			LoadBunkerSong("Outbreak"),
+			LoadBunkerSong("Scrape", -2f),
+			LoadBunkerSong("Undying", -4f)
 		];
 
 		_songs = [];

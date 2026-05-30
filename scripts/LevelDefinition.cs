@@ -4,7 +4,8 @@ public enum CombatMusicSet
 {
     None,
     City,
-    Forest
+    Forest,
+    Bunker
 }
 
 [GlobalClass]
