@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cfjp3bppwm4i8" path="res://scenes/player/PlayerController.tscn" id="2_player"]
 [ext_resource type="PackedScene" uid="uid://cvt0aomoxtces" path="res://scenes/round_system/round_system.tscn" id="3_round"]
 [ext_resource type="PackedScene" uid="uid://dnuwr0qeacme6" path="res://scenes/spawn_system/spawner.tscn" id="4_spawner"]
+[ext_resource type="Script" uid="uid://dap4ajww787w8" path="res://scripts/interactables/doors/bunker_door/BunkerDoorNavigationLinks.cs" id="5_door_links"]
 
 [sub_resource type="Environment" id="Environment_shell"]
 background_mode = 1
@@ -36,20 +37,48 @@ navigation_mesh = SubResource("NavigationMesh_shell")
 [node name="Bunker" parent="NavigationRegion3D" unique_id=1952487660 instance=ExtResource("2_8b04y")]
 transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 2.600415, 1.0910432, -1.5793784)
 
-[node name="NavigationLink3D" type="NavigationLink3D" parent="NavigationRegion3D" unique_id=1792757540]
+[node name="RightSideNavLink3D" type="NavigationLink3D" parent="NavigationRegion3D" unique_id=1792757540]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.180609, 1.3556768, -3.795597)
+enabled = false
 start_position = Vector3(0, 0.2, 0)
 end_position = Vector3(0, 0, -3)
 
-[node name="NavigationLink3D2" type="NavigationLink3D" parent="NavigationRegion3D" unique_id=837396764]
+[node name="LeftSideNavLink3D" type="NavigationLink3D" parent="NavigationRegion3D" unique_id=837396764]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.180609, 1.3549843, 11.427343)
+enabled = false
 end_position = Vector3(0, 0, -3)
+
+[node name="BlastDoorNavLink3D" type="NavigationLink3D" parent="NavigationRegion3D" unique_id=554044428]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -22.311962, 1.3549843, 5.946462)
+enabled = false
+end_position = Vector3(0, 0, -4)
+
+[node name="BunkerDoorNavigationLinks" type="Node" parent="." unique_id=1913937588 node_paths=PackedStringArray("_rightSideDoor", "_rightSideLink", "_leftSideDoor", "_leftSideLink", "_blastDoor", "_blastDoorLink")]
+script = ExtResource("5_door_links")
+_rightSideDoor = NodePath("../NavigationRegion3D/Bunker/innerroom/RightSideDoorway4")
+_rightSideLink = NodePath("../NavigationRegion3D/RightSideNavLink3D")
+_leftSideDoor = NodePath("../NavigationRegion3D/Bunker/innerroom/LeftSideDoorway4")
+_leftSideLink = NodePath("../NavigationRegion3D/LeftSideNavLink3D")
+_blastDoor = NodePath("../NavigationRegion3D/Bunker/BlastDoor1Frame")
+_blastDoorLink = NodePath("../NavigationRegion3D/BlastDoorNavLink3D")
 
 [node name="PlayerController" parent="." unique_id=1179543978 instance=ExtResource("2_player")]
 transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, 22.804369, 2.4405472, -1.1775436)
 
 [node name="RoundManager" parent="." unique_id=1398174596 node_paths=PackedStringArray("_player") instance=ExtResource("3_round")]
 _player = NodePath("../PlayerController")
+
+[node name="DifficultyManager" parent="RoundManager" index="0" unique_id=1702326334]
+_zombieSpawnTimerIntervalScaleAmount = 0.8
+_maxZombieSpeed = 5.0
+_maxZombieHealth = 500.0
+_maxNumZombiesAliveLimit = 100
+_maxNumZombiesRoundLimit = 700
+_zombieSpawnTimerIntervalLimit = 1.0
+_startingZombieSpeed = 1.0
+_startingZombieHealth = 500.0
+_startingNumZombiesRoundLimit = 10
+_startingZombieSpawnTimerInterval = 5.0
 
 [node name="SpawnerNorth" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(1398174596, 1325009269) index="1" unique_id=1447900549 instance=ExtResource("4_spawner")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.882988, 1.1254015, -16)
@@ -59,6 +88,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.961155, 2.2659738, -1.2866
 
 [node name="SpawnerWest" parent="RoundManager/SpawnManager" parent_id_path=PackedInt32Array(1398174596, 1325009269) index="3" unique_id=445794516 instance=ExtResource("4_spawner")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.640827, 1.2, 7.6337442)
+Area = 1
 
 [editable path="RoundManager"]
 [editable path="RoundManager/SpawnManager"]

@@ -82,11 +82,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.9470334, 2.9851465, 0)
 [node name="Lamp2" parent="innerroom" unique_id=269908370 instance=ExtResource("8_bclpu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.9470334, 2.9851465, 5.926259)
 
-[node name="Doorway4" parent="innerroom" unique_id=1070400680 instance=ExtResource("8_2obxs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.95684, 0, 8.795009)
+[node name="LeftSideDoorway4" parent="innerroom" unique_id=1070400680 instance=ExtResource("8_2obxs")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -5.95684, 0, 8.795009)
+_unlocksMapArea = true
+_mapAreaDoorUnlocks = 1
 
-[node name="Doorway5" parent="innerroom" unique_id=36266303 instance=ExtResource("8_2obxs")]
+[node name="RightSideDoorway4" parent="innerroom" unique_id=36266303 instance=ExtResource("8_2obxs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.966648, 0, -3.0110874)
+_unlocksMapArea = true
+_mapAreaDoorUnlocks = 1
 
 [node name="WallPlain" parent="innerroom" unique_id=1170465228 instance=ExtResource("7_bclpu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.956602, 0, -3.0110874)

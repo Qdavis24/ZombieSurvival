@@ -1,16 +1,50 @@
 [gd_scene format=3 uid="uid://c5h582ndcvhl7"]
 
 [ext_resource type="PackedScene" uid="uid://dng0c2ypmpx7q" path="res://assets/bunker_map/models/blast_door_1_frame.glb" id="1_kjycb"]
+[ext_resource type="Script" uid="uid://ces3xy34iad3v" path="res://scripts/interactables/doors/bunker_door/BunkerDoor.cs" id="2_bnkdr"]
+[ext_resource type="PackedScene" uid="uid://eksdoewlbll1" path="res://scenes/interactables/interact_notifier.tscn" id="3_notif"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_phawe"]
-size = Vector3(3.1069336, 2.4841309, 0.47058105)
+size = Vector3(2.015747, 2.4841309, 0.47058105)
 
-[node name="BlastDoor1Frame" type="StaticBody3D" unique_id=588476503]
+[sub_resource type="BoxShape3D" id="BoxShape3D_vul22"]
+size = Vector3(0.7010498, 2.9707031, 0.4698639)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g7to6"]
+size = Vector3(2.1066895, 0.5805664, 1)
+
+[node name="BlastDoor1Frame" type="StaticBody3D" unique_id=588476503 node_paths=PackedStringArray("_interactNotifier", "_pivotPoint", "_doorMesh", "_doorCollision")]
+script = ExtResource("2_bnkdr")
+_interactNotifier = NodePath("InteractNotifier")
+_pivotPoint = NodePath("PivotPoint")
+_doorMesh = NodePath("blast_door_1_frame2/blast_door_1_frame/blast_door_1")
+_doorCollision = NodePath("PivotPoint/DOOR")
+_openAngleDegrees = 100.0
 
 [node name="blast_door_1_frame2" parent="." unique_id=10666031 instance=ExtResource("1_kjycb")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=767211713]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5559082, 1.2642822, -0.053771973)
+[node name="PivotPoint" type="AnimatableBody3D" parent="." unique_id=767211714]
+sync_to_physics = false
+
+[node name="DOOR" type="CollisionShape3D" parent="PivotPoint" unique_id=767211713]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50177, 1.2642822, -0.053771973)
 shape = SubResource("BoxShape3D_phawe")
+
+[node name="InteractNotifier" parent="." unique_id=767211715 instance=ExtResource("3_notif")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.534493, 0, 0)
+InteractPrompt = "press e to open blast door"
+Type = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1925152126]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1494751, 0.98535156, -0.048980713)
+shape = SubResource("BoxShape3D_vul22")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=970331175]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8737888, 0.98535156, -0.03754425)
+shape = SubResource("BoxShape3D_vul22")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="." unique_id=855735628]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5197637, 2.351989, 0)
+shape = SubResource("BoxShape3D_g7to6")
 
 [editable path="blast_door_1_frame2"]

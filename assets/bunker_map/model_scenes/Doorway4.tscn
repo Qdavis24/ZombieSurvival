@@ -1,6 +1,11 @@
 [gd_scene format=3 uid="uid://be68atdo3u80k"]
 
 [ext_resource type="PackedScene" uid="uid://001rvks0r5iy" path="res://assets/bunker_map/models/doorway_4_plain.glb" id="1_7abym"]
+[ext_resource type="Script" uid="uid://ces3xy34iad3v" path="res://scripts/interactables/doors/bunker_door/BunkerDoor.cs" id="2_bnkdr"]
+[ext_resource type="PackedScene" uid="uid://eksdoewlbll1" path="res://scenes/interactables/interact_notifier.tscn" id="3_notif"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dggrh"]
+size = Vector3(1.1942749, 2.149414, 0.23779297)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7abym"]
 size = Vector3(1.444458, 3.5216064, 0.17492676)
@@ -8,9 +13,28 @@ size = Vector3(1.444458, 3.5216064, 0.17492676)
 [sub_resource type="BoxShape3D" id="BoxShape3D_4htws"]
 size = Vector3(1.444458, 0.8786926, 0.17492676)
 
-[node name="Doorway4" type="StaticBody3D" unique_id=833604334]
+[sub_resource type="BoxShape3D" id="BoxShape3D_a71o8"]
+size = Vector3(1.5927734, 3.477539, 0.43816376)
+
+[node name="Doorway4" type="StaticBody3D" unique_id=833604334 node_paths=PackedStringArray("_interactNotifier", "_pivotPoint", "_doorMesh", "_doorCollision")]
+script = ExtResource("2_bnkdr")
+_interactNotifier = NodePath("InteractNotifier")
+_pivotPoint = NodePath("PivotPoint")
+_doorMesh = NodePath("doorway_4_plain2/doorway_4_plain/door_8")
+_doorCollision = NodePath("PivotPoint/DOOR")
 
 [node name="doorway_4_plain2" parent="." unique_id=83697709 instance=ExtResource("1_7abym")]
+
+[node name="PivotPoint" type="AnimatableBody3D" parent="." unique_id=222222222]
+sync_to_physics = false
+
+[node name="DOOR" type="CollisionShape3D" parent="PivotPoint" unique_id=649975216]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0062561035, 1.0942383, 0.020263672)
+shape = SubResource("BoxShape3D_dggrh")
+
+[node name="InteractNotifier" parent="." unique_id=222222223 instance=ExtResource("3_notif")]
+InteractPrompt = "press e to open door"
+Type = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=879694019]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3002416, 1.2608032, -0.008117676)
@@ -23,5 +47,9 @@ shape = SubResource("BoxShape3D_7abym")
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="." unique_id=24233166]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02908206, 2.5822601, -0.008117676)
 shape = SubResource("BoxShape3D_4htws")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="." unique_id=1820690734]
+transform = Transform3D(0.9472439, 0, 0.32051384, 0, 1, 0, -0.32051384, 0, 0.9472439, 1.4052503, 1.2387695, -0.40423396)
+shape = SubResource("BoxShape3D_a71o8")
 
 [editable path="doorway_4_plain2"]
