@@ -106,6 +106,16 @@ public partial class AudioManager : Node
 			volumeOffsetDb);
 	}
 
+	private static MusicSong LoadBunkerSongWithFirstTwoLayersSwapped(string songName, float volumeOffsetDb = 0f)
+	{
+		return LoadSong(
+			songName,
+			$"res://assets/sound/music/bunker_beats/{songName}Layer2.ogg",
+			$"res://assets/sound/music/bunker_beats/{songName}Layer1.ogg",
+			$"res://assets/sound/music/bunker_beats/{songName}Layer3.ogg",
+			volumeOffsetDb);
+	}
+
 	public bool HasCombatSongs()
 	{
 		return _songs != null && _songs.Length > 0;
@@ -707,7 +717,7 @@ public partial class AudioManager : Node
 		_bunkerSongs =
 		[
 			LoadBunkerSong("Barricade", -6f),
-			LoadBunkerSong("Military", -6f),
+			LoadBunkerSongWithFirstTwoLayersSwapped("Military", -6f),
 			LoadBunkerSong("Outbreak", -2f),
 			LoadBunkerSong("Scrape", -4f),
 			LoadBunkerSong("Undying", -6f)
