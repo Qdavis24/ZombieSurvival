@@ -33,7 +33,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0062561035, 1.0942383, 0.02
 shape = SubResource("BoxShape3D_dggrh")
 
 [node name="InteractNotifier" parent="." unique_id=222222223 instance=ExtResource("3_notif")]
-InteractPrompt = "press e to open door"
+InteractPrompt = "press e to use bolt cutters"
 Type = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=879694019]

@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bgekd7uia5mmt"]
+
+[ext_resource type="PackedScene" uid="uid://de3xh4oq1m2wp" path="res://assets/bunker_map/models/computer_1.glb" id="1_rkrtc"]
+[ext_resource type="PackedScene" uid="uid://c7ljndu7oohrj" path="res://assets/bunker_map/models/chair_wooden_1.glb" id="2_wcy3s"]
+[ext_resource type="PackedScene" uid="uid://blw4ffp3aynp2" path="res://assets/bunker_map/models/military_radio_1.glb" id="3_aprr5"]
+[ext_resource type="PackedScene" uid="uid://w8t4e661alxm" path="res://assets/bunker_map/models/table_large_3.glb" id="4_1h5sa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e6lxg"]
+size = Vector3(1.590332, 1.164978, 1.1575928)
+
+[node name="DeskAssembled" type="StaticBody3D" unique_id=1259843380]
+
+[node name="computer_12" parent="." unique_id=879081630 instance=ExtResource("1_rkrtc")]
+transform = Transform3D(0.7902813, 0, 0.12432005, 0, 0.8, 0, -0.12432005, 0, 0.7902813, -0.2435968, 0.9668617, -0.3822124)
+
+[node name="chair_wooden_12" parent="." unique_id=1961394155 instance=ExtResource("2_wcy3s")]
+transform = Transform3D(0.9663402, 0, -0.2572677, 0, 1, 0, 0.2572677, 0, 0.9663402, 0, 0, 0.34322006)
+
+[node name="military_radio_12" parent="." unique_id=507313889 instance=ExtResource("3_aprr5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45314956, 0.96944666, -0.17599374)
+
+[node name="table_large_32" parent="." unique_id=80418440 instance=ExtResource("4_1h5sa")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=408017176]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.018878698, 0.55410767, 0.13156262)
+shape = SubResource("BoxShape3D_e6lxg")

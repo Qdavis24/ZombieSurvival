@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://20y1huc7t142"]
+
+[ext_resource type="PackedScene" uid="uid://bx2as678e2fsh" path="res://assets/bunker_map/models/trash_1.glb" id="1_acahm"]
+
+[node name="Trash6" type="Node3D" unique_id=503077134]
+
+[node name="trash_12" parent="." unique_id=885415744 instance=ExtResource("1_acahm")]
+
+[editable path="trash_12"]

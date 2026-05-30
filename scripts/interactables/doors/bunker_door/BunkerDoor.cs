@@ -1,4 +1,5 @@
 using Godot;
+using ZombieSurvival.scripts.inventory_system;
 using ZombieSurvival.scripts.shared;
 
 public partial class BunkerDoor : Node3D
@@ -10,6 +11,7 @@ public partial class BunkerDoor : Node3D
     [Export] private Node3D _doorMesh;
     [Export] private Node3D _doorCollision;
     [Export] private float _openAngleDegrees = -140f;
+    [Export] private ItemType _requiredItem = ItemType.BoltCutters;
     [Export] private bool _unlocksMapArea;
     [Export] private MapArea _mapAreaDoorUnlocks;
 
@@ -69,6 +71,9 @@ public partial class BunkerDoor : Node3D
     private void OnInteracted(Node3D player)
     {
         if (_opened) return;
+        if (player is not IInventoryOwner inventoryOwner) return;
+        if (inventoryOwner.Inventory.GetAmount(_requiredItem) < 1) return;
+
         _opened = true;
         OpenDoor();
         _interactNotifier.Disable();
