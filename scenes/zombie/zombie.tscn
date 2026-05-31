@@ -542,7 +542,7 @@ _animationPlayer = NodePath("AnimationPlayer")
 [node name="Armature" type="Node3D" parent="." unique_id=1601233901]
 transform = Transform3D(0.049773708, 0, -0.9987605, 0, 1, 0, 0.9987605, 0, 0.049773708, 0, 0, 0)
 
-[node name="Skeleton3D" type="Skeleton3D" parent="Armature" unique_id=1679921595 node_paths=PackedStringArray("_simulationRunTimer", "_physicalBoneSimulator")]
+[node name="Skeleton3D" type="Skeleton3D" parent="Armature" unique_id=1679921595 node_paths=PackedStringArray("_simulationRunTimer", "_physicalBoneSimulator", "_skin")]
 bones/0/name = "torso"
 bones/0/parent = -1
 bones/0/rest = Transform3D(0.9965558, -0.082924634, 9.085998e-05, 0.08291534, 0.99642664, -0.01609681, 0.0012442867, 0.016048903, 0.9998704, 0.00029297173, 0.99391204, 0.0107459305)
@@ -643,6 +643,7 @@ _lowerLegDamageMultiplier = 0.5
 _torsoDamageMultiplier = 0.6
 _simulationRunTimer = NodePath("simulationRunTimer")
 _physicalBoneSimulator = NodePath("PhysicalBoneSimulator3D")
+_skin = NodePath("body")
 _limbContainerPackedScene = ExtResource("3_vwmx8")
 _blood = ExtResource("4_bxjsn")
 

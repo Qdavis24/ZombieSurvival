@@ -43,6 +43,7 @@ public partial class DismemberableBody : Skeleton3D
     [ExportCategory("Miscellaneous")] 
     [Export] private Timer _simulationRunTimer;
     [Export] private PhysicalBoneSimulator3D _physicalBoneSimulator;
+    [Export] private Skin _skin;
     [Export] private PackedScene _limbContainerPackedScene;
     [Export] private PackedScene _blood;
 
@@ -196,6 +197,7 @@ public partial class DismemberableBody : Skeleton3D
             var currDetachedBodyPart = destroyedAttachedBodyParts[i].BodyPartPackedScene.Instantiate<RigidBody3D>();
             limbContainer.AddChild(currDetachedBodyPart);
             currDetachedBodyPart.GlobalTransform = boneGlobalTransform;
+            ApplySkinMaterial(currDetachedBodyPart);
             detachedBodyParts.Add(currDetachedBodyPart);
 
             if (i > 0)
@@ -205,5 +207,16 @@ public partial class DismemberableBody : Skeleton3D
         SetBonePoseScale(destroyedAttachedBodyParts[0].BoneIdx,
             Vector3.One * 0.01f); // shrink armature at root bone to "remove" the mesh
         return detachedBodyParts[0];
+    }
+
+    private void ApplySkinMaterial(Node node)
+    {
+        if (_skin?.SelectedMaterial == null) return;
+
+        if (node is MeshInstance3D mesh)
+            mesh.SetSurfaceOverrideMaterial(0, _skin.SelectedMaterial);
+
+        foreach (var child in node.GetChildren())
+            ApplySkinMaterial(child);
     }
 }

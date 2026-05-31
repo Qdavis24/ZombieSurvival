@@ -4,6 +4,7 @@ using System;
 public partial class Skin : MeshInstance3D
 {
     [Export] private Material[] _materials = Array.Empty<Material>();
+    public Material SelectedMaterial { get; private set; }
 
     public override void _Ready()
     {
@@ -26,6 +27,7 @@ public partial class Skin : MeshInstance3D
         if (selectedMaterial == null)
             return;
 
+        SelectedMaterial = selectedMaterial;
         SetSurfaceOverrideMaterial(0, selectedMaterial);
     }
 }
