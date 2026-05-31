@@ -2,6 +2,8 @@ using Godot;
 using System;
 using System.Numerics;
 using ZombieSurvival.scripts.damage_system;
+using ZombieSurvival.scripts.zombie_package;
+using ZombieSurvival.scripts.zombie_package.dismemberment_system;
 using Vector3 = Godot.Vector3;
 
 public partial class HitResolver : Node
@@ -10,10 +12,12 @@ public partial class HitResolver : Node
 
     public void HandleHit(HitInfo hit)
     {
-        Node firsHit = hit.Collider;
         if (hit.Collider is IDamageable damageObject)
         {
             damageObject.TakeDamage(hit.Damage, hit.Point, hit.Direction, hit.Force);
+
+            var headshot = hit.Collider is BodyPart { Type: Limb.Head };
+            EventBus.Instance?.EmitSignal(EventBus.SignalName.EnemyHit, headshot);
             return;
         }
 

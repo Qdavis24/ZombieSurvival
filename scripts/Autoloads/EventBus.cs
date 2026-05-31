@@ -15,6 +15,9 @@ public partial class EventBus : Node
     public delegate void MapAreaUnlockedEventHandler(int mapArea);
 
     [Signal]
+    public delegate void EnemyHitEventHandler(bool headshot);
+
+    [Signal]
     public delegate void AmmoVendingMenuRequestedEventHandler(AmmoVendingMachine machine, Node3D player);
 
     [Signal]

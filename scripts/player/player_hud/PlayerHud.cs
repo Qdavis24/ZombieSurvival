@@ -35,6 +35,8 @@ public partial class PlayerHud : CanvasLayer
     private Queue<PickupNotification> _itemNotifications = new();
     private bool _notificationsBusy;
 
+    private HitMarker _hitMarker;
+
 
     public override void _Ready()
     {
@@ -46,7 +48,11 @@ public partial class PlayerHud : CanvasLayer
 
         EventBus.Instance.PlayerEnteredInteractableRange += OnPlayerEnteredInteractableRange;
         EventBus.Instance.PlayerExitedInteractableRange += OnPlayerExitedInteractableRange;
+        EventBus.Instance.EnemyHit += OnEnemyHit;
         _itemPopup.PopupFree += OnPopupFree;
+
+        _hitMarker = new HitMarker();
+        AddChild(_hitMarker);
 
         ShowCrosshair();
     }
@@ -58,7 +64,10 @@ public partial class PlayerHud : CanvasLayer
 
         EventBus.Instance.PlayerEnteredInteractableRange -= OnPlayerEnteredInteractableRange;
         EventBus.Instance.PlayerExitedInteractableRange -= OnPlayerExitedInteractableRange;
+        EventBus.Instance.EnemyHit -= OnEnemyHit;
     }
+
+    private void OnEnemyHit(bool headshot) => _hitMarker?.Flash(headshot);
 
     private Tween _crosshairTween;
 

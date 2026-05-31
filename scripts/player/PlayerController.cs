@@ -3,6 +3,7 @@ using System;
 using ZombieSurvival.scripts.damage_system;
 using ZombieSurvival.scripts.inventory_system;
 using ZombieSurvival.scripts.player.weapons;
+using ZombieSurvival.scripts.zombie_package;
 
 public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamageable
 {
@@ -208,7 +209,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 		if (IsOnFloor())
 		{
-			if (Input.IsActionJustPressed("jump"))
+			if (Input.IsActionJustPressed("jump") && !IsStandingOnZombie())
 			{
 				yVel = _jumpVelocity;
 
@@ -232,6 +233,18 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 
 		Velocity = new Vector3(horizontal.X, yVel, horizontal.Z);
 		MoveAndSlide();
+	}
+
+	private bool IsStandingOnZombie()
+	{
+		for (var i = 0; i < GetSlideCollisionCount(); i++)
+		{
+			var collision = GetSlideCollision(i);
+			if (collision.GetCollider() is Zombie && collision.GetNormal().Dot(Vector3.Up) > 0.7f)
+				return true;
+		}
+
+		return false;
 	}
 
 	private float GetMoveSpeed(Vector2 input)
