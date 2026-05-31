@@ -25,6 +25,10 @@ public partial class GameManager : Node
     private WeaponUpgradeBench _activeWeaponUpgradeBench;
     private Node3D _activeWeaponUpgradePlayer;
 
+    private int _currentRound = 1;
+    private int _kills;
+    private int _headshots;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -37,6 +41,7 @@ public partial class GameManager : Node
         _uiManager.PerkVendingClosed += OnPerkVendingClosed;
         _uiManager.WeaponUpgradeOptionPressed += OnWeaponUpgradeOptionPressed;
         _uiManager.WeaponUpgradeClosed += OnWeaponUpgradeClosed;
+        EventBus.Instance.ZombieKilled += OnZombieKilled;
         EventBus.Instance.AmmoVendingMenuRequested += OnAmmoVendingMenuRequested;
         EventBus.Instance.PerkVendingMenuRequested += OnPerkVendingMenuRequested;
         EventBus.Instance.WeaponUpgradeMenuRequested += OnWeaponUpgradeMenuRequested;
@@ -100,7 +105,14 @@ public partial class GameManager : Node
 
     public void SetRound(int round)
     {
+        _currentRound = round;
         _uiManager.HudSetRound(round);
+    }
+
+    private void OnZombieKilled(bool headshot)
+    {
+        _kills++;
+        if (headshot) _headshots++;
     }
 
     private void OnStartGame(int levelIndex)
@@ -126,6 +138,9 @@ public partial class GameManager : Node
         _gameInstance = selectedLevel.GameScene.Instantiate<Game>();
         AddChild(_gameInstance);
         _isGamePlaying = true;
+        _currentRound = 1;
+        _kills = 0;
+        _headshots = 0;
         Input.MouseMode = Input.MouseModeEnum.Captured;
         _uiManager.HudSetRound(1);
     }
@@ -165,7 +180,7 @@ public partial class GameManager : Node
     {
         _isGamePlaying = false;
         Input.MouseMode = Input.MouseModeEnum.Visible;
-        _uiManager.PlayerDied();
+        _uiManager.PlayerDied(_currentRound, _kills, _headshots);
         _gameInstance.CallDeferred(Node.MethodName.SetProcessMode, (int)ProcessModeEnum.Disabled);
     }
 

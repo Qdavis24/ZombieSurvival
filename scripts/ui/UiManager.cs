@@ -210,9 +210,10 @@ public partial class UiManager : Node
 		_hud.SetRound(round);
 	}
 
-	public void PlayerDied()
+	public void PlayerDied(int round, int kills, int headshots)
 	{
 		_pauseMenu.Visible = false;
+		_deathMenu.SetStats(round, kills, headshots);
 		_deathMenu.Visible = true;
 	}
 }

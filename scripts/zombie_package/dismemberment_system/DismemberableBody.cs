@@ -110,10 +110,11 @@ public partial class DismemberableBody : Skeleton3D
         _currBloodParticles = 0;
     }
 
-    private void Die()
+    private void Die(bool fromHeadshot = false)
     {
         if (_isDead) return;
         _isDead = true;
+        EventBus.Instance?.EmitSignal(EventBus.SignalName.ZombieKilled, fromHeadshot);
         _physicalBoneSimulator.PhysicalBonesStartSimulation();
         _simulationRunTimer.Start();
         EmitSignalDead();
@@ -150,14 +151,14 @@ public partial class DismemberableBody : Skeleton3D
 
         _health -= amount;
         if (_health <= 0f && !_isDead)
-            Die();
+            Die(bodyPart.Type == Limb.Head);
     }
 
     private void OnBodyPartDestroyed(BodyPart attachedBodyPart, Vector3 hitGlobalPosition, Vector3 dir, float force, bool shouldDie,
         bool shouldDismember)
     {
         if (shouldDie && !_isDead)
-            Die();
+            Die(attachedBodyPart.Type == Limb.Head);
 
         if (shouldDismember)
         {

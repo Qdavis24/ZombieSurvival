@@ -18,6 +18,9 @@ public partial class EventBus : Node
     public delegate void EnemyHitEventHandler(bool headshot);
 
     [Signal]
+    public delegate void ZombieKilledEventHandler(bool headshot);
+
+    [Signal]
     public delegate void AmmoVendingMenuRequestedEventHandler(AmmoVendingMachine machine, Node3D player);
 
     [Signal]
