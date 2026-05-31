@@ -647,8 +647,8 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer" unique_id=942268879]
 layout_mode = 2
-text = "Zombie
-Survival"
+text = "Fall of
+Shooty"
 label_settings = SubResource("LabelSettings_y35d7")
 horizontal_alignment = 1
 
@@ -656,13 +656,13 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_constants/margin_top = 20
 
-[node name="LevelCarousel" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="LevelCarousel" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1315275235]
 custom_minimum_size = Vector2(430, 0)
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="PreviousLevel" type="Button" parent="Panel/VBoxContainer/LevelCarousel"]
+[node name="PreviousLevel" type="Button" parent="Panel/VBoxContainer/LevelCarousel" unique_id=1392676747]
 custom_minimum_size = Vector2(85, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85490197, 0.043137256, 0, 1)
@@ -670,7 +670,7 @@ theme_override_fonts/font = ExtResource("4_pridf")
 theme_override_font_sizes/font_size = 64
 text = "<"
 
-[node name="SelectedLevel" type="Label" parent="Panel/VBoxContainer/LevelCarousel"]
+[node name="SelectedLevel" type="Label" parent="Panel/VBoxContainer/LevelCarousel" unique_id=1825152205]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -681,7 +681,7 @@ text = "Downtown"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NextLevel" type="Button" parent="Panel/VBoxContainer/LevelCarousel"]
+[node name="NextLevel" type="Button" parent="Panel/VBoxContainer/LevelCarousel" unique_id=312051965]
 custom_minimum_size = Vector2(85, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85490197, 0.043137256, 0, 1)
@@ -689,7 +689,7 @@ theme_override_fonts/font = ExtResource("4_pridf")
 theme_override_font_sizes/font_size = 64
 text = ">"
 
-[node name="CarouselBottomMargin" type="MarginContainer" parent="Panel/VBoxContainer"]
+[node name="CarouselBottomMargin" type="MarginContainer" parent="Panel/VBoxContainer" unique_id=579686088]
 layout_mode = 2
 theme_override_constants/margin_top = 24
 
@@ -711,14 +711,14 @@ text = " Start Game "
 layout_mode = 2
 theme_override_constants/margin_top = 20
 
-[node name="Controls" type="Button" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Controls" type="Button" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=348059319]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85490197, 0.043137256, 0, 1)
 theme_override_fonts/font = ExtResource("4_pridf")
 theme_override_font_sizes/font_size = 40
 text = " Controls"
 
-[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=344141455]
 layout_mode = 2
 theme_override_constants/margin_top = 20
 
@@ -729,22 +729,22 @@ theme_override_fonts/font = ExtResource("4_pridf")
 theme_override_font_sizes/font_size = 40
 text = " Options"
 
-[node name="MarginContainerAch" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="MarginContainerAch" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1517326451]
 layout_mode = 2
 theme_override_constants/margin_top = 20
 
-[node name="Achievements" type="Button" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Achievements" type="Button" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=533704595]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85490197, 0.043137256, 0, 1)
 theme_override_fonts/font = ExtResource("4_pridf")
 theme_override_font_sizes/font_size = 40
 text = " Achievements"
 
-[node name="MarginContainer3" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1861672979]
 layout_mode = 2
 theme_override_constants/margin_top = 20
 
-[node name="Quit" type="Button" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=345378053]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85490197, 0.043137256, 0, 1)
 theme_override_fonts/font = ExtResource("4_pridf")

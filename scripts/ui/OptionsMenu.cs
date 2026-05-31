@@ -36,6 +36,8 @@ public partial class OptionsMenu : CanvasLayer
     [Export] private CheckButton _fullscreenCheck;
 
     private bool _loading;
+    private bool _startupFullscreen = true;
+    private int _startupResolutionIndex = DefaultResolutionIndex;
 
     public override void _Ready()
     {
@@ -59,7 +61,14 @@ public partial class OptionsMenu : CanvasLayer
 
         if (_closeButton != null)
             _closeButton.Pressed += Close;
+
+        // Apply the saved window mode once, after the window is fully initialised.
+        // The project boots windowed, so we only ever transition *into* the target
+        // state (reliable cross-platform) instead of fighting a boot-fullscreen.
+        Callable.From(ApplyStartupVideo).CallDeferred();
     }
+
+    private void ApplyStartupVideo() => ApplyVideo(_startupFullscreen, _startupResolutionIndex);
 
     public override void _UnhandledInput(InputEvent @event)
     {
@@ -133,7 +142,9 @@ public partial class OptionsMenu : CanvasLayer
             _resolutionOption.Selected = resolutionIndex;
             _resolutionOption.Disabled = fullscreen;
         }
-        ApplyVideo(fullscreen, resolutionIndex);
+        // Applied deferred from _Ready once the window exists (see ApplyStartupVideo).
+        _startupFullscreen = fullscreen;
+        _startupResolutionIndex = resolutionIndex;
 
         _loading = false;
         if (err == Error.Ok)
