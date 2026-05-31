@@ -1,6 +1,20 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://3wcxru0aj5h"]
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://3wcxru0aj5h"]
 
+[ext_resource type="Shader" path="res://shaders/zombie_psx.gdshader" id="1_shader"]
 [ext_resource type="Texture2D" uid="uid://bakqeav50vj1p" path="res://assets/textures/zombie_tex-v4.png" id="1_0q133"]
 
 [resource]
-albedo_texture = ExtResource("1_0q133")
+render_priority = 0
+shader = ExtResource("1_shader")
+shader_parameter/albedo_tex = ExtResource("1_0q133")
+shader_parameter/color_levels = 24.0
+shader_parameter/color_brightness = 0.82
+shader_parameter/saturation = 0.68
+shader_parameter/grime_strength = 0.35
+shader_parameter/grime_scale = 18.0
+shader_parameter/grime_color = Color(0.12, 0.09, 0.05, 1)
+shader_parameter/virtual_texture_resolution_enabled = true
+shader_parameter/virtual_texture_size = Vector2(256, 256)
+shader_parameter/vertex_wobble_enabled = true
+shader_parameter/vertex_snap_resolution = Vector2(320, 240)
+shader_parameter/alpha_scissor = 0.5
