@@ -15,6 +15,7 @@ public partial class StartMenu : CanvasLayer
 	[Export] private Button _nextLevelButton;
 	[Export] private Button _optionsButton;
 	[Export] private Button _controlsButton;
+	[Export] private Button _quitButton;
 	[Export] private Label _selectedLevelLabel;
 
 	private readonly string[] _levelNames = { "Downtown", "Bunker", "Forest" };
@@ -27,7 +28,14 @@ public partial class StartMenu : CanvasLayer
 		_nextLevelButton.Pressed += OnNextLevelPressed;
 		_optionsButton.Pressed += OnOptionsPressed;
 		_controlsButton.Pressed += OnControlsPressed;
+		_quitButton.Pressed += OnQuitPressed;
 		UpdateSelectedLevelLabel();
+	}
+
+	private void OnQuitPressed()
+	{
+		AudioManager.I.PlayUiClick();
+		GetTree().Quit();
 	}
 
 	private void OnStartGamePressed()

@@ -6,9 +6,22 @@ public partial class OptionsMenu : CanvasLayer
 
     private const string SettingsPath = "user://audio_settings.cfg";
     private const string AudioSection = "audio";
+    private const string InputSection = "input";
+    private const string VideoSection = "video";
     private const float MutedDb = -80f;
+    private const float MinSensitivity = 0.1f;
+    private const float MaxSensitivity = 3.0f;
+    private const float DefaultSensitivity = 1.0f;
+    private const int DefaultResolutionIndex = 2;
 
     private static readonly string[] SfxBuses = ["SFX", "Explosion"];
+    private static readonly Vector2I[] Resolutions =
+    {
+        new(1280, 720), new(1600, 900), new(1920, 1080), new(2560, 1440),
+    };
+
+    // Read by PlayerController when it spawns; OptionsMenu._Ready loads it at startup.
+    public static float MouseSensitivityMultiplier { get; private set; } = DefaultSensitivity;
 
     [Export] private HSlider _masterSlider;
     [Export] private HSlider _musicSlider;
@@ -17,6 +30,10 @@ public partial class OptionsMenu : CanvasLayer
     [Export] private Label _musicValueLabel;
     [Export] private Label _sfxValueLabel;
     [Export] private Button _closeButton;
+    [Export] private HSlider _sensitivitySlider;
+    [Export] private Label _sensitivityValueLabel;
+    [Export] private OptionButton _resolutionOption;
+    [Export] private CheckButton _fullscreenCheck;
 
     private bool _loading;
 
@@ -27,12 +44,18 @@ public partial class OptionsMenu : CanvasLayer
         ConfigureSlider(_masterSlider);
         ConfigureSlider(_musicSlider);
         ConfigureSlider(_sfxSlider);
+        ConfigureSensitivitySlider();
+        PopulateResolutions();
 
         LoadSettings();
 
         _masterSlider.ValueChanged += OnMasterValueChanged;
         _musicSlider.ValueChanged += OnMusicValueChanged;
         _sfxSlider.ValueChanged += OnSfxValueChanged;
+
+        if (_sensitivitySlider != null) _sensitivitySlider.ValueChanged += OnSensitivityChanged;
+        if (_resolutionOption != null) _resolutionOption.ItemSelected += OnResolutionSelected;
+        if (_fullscreenCheck != null) _fullscreenCheck.Toggled += OnFullscreenToggled;
 
         if (_closeButton != null)
             _closeButton.Pressed += Close;
@@ -93,6 +116,24 @@ public partial class OptionsMenu : CanvasLayer
             SetSliderValue(_musicSlider, GetBusValue("Music"));
             SetSliderValue(_sfxSlider, GetBusValue("SFX"));
         }
+
+        // Sensitivity + video load with sensible defaults whether or not the file existed.
+        var sensitivity = Mathf.Clamp((float)config.GetValue(InputSection, "mouse_sensitivity", DefaultSensitivity),
+            MinSensitivity, MaxSensitivity);
+        MouseSensitivityMultiplier = sensitivity;
+        if (_sensitivitySlider != null) _sensitivitySlider.Value = sensitivity;
+        UpdateSensitivityLabel(sensitivity);
+
+        var fullscreen = (bool)config.GetValue(VideoSection, "fullscreen", true);
+        var resolutionIndex = Mathf.Clamp((int)config.GetValue(VideoSection, "resolution_index", DefaultResolutionIndex),
+            0, Resolutions.Length - 1);
+        if (_fullscreenCheck != null) _fullscreenCheck.ButtonPressed = fullscreen;
+        if (_resolutionOption != null)
+        {
+            _resolutionOption.Selected = resolutionIndex;
+            _resolutionOption.Disabled = fullscreen;
+        }
+        ApplyVideo(fullscreen, resolutionIndex);
 
         _loading = false;
         if (err == Error.Ok)
@@ -204,6 +245,79 @@ public partial class OptionsMenu : CanvasLayer
         config.SetValue(AudioSection, "master", GetSliderValue(_masterSlider));
         config.SetValue(AudioSection, "music", GetSliderValue(_musicSlider));
         config.SetValue(AudioSection, "sfx", GetSliderValue(_sfxSlider));
+        if (_sensitivitySlider != null)
+            config.SetValue(InputSection, "mouse_sensitivity", (float)_sensitivitySlider.Value);
+        if (_fullscreenCheck != null)
+            config.SetValue(VideoSection, "fullscreen", _fullscreenCheck.ButtonPressed);
+        if (_resolutionOption != null)
+            config.SetValue(VideoSection, "resolution_index", _resolutionOption.Selected);
         config.Save(SettingsPath);
+    }
+
+    private void ConfigureSensitivitySlider()
+    {
+        if (_sensitivitySlider == null)
+            return;
+
+        _sensitivitySlider.MinValue = MinSensitivity;
+        _sensitivitySlider.MaxValue = MaxSensitivity;
+        _sensitivitySlider.Step = 0.05;
+    }
+
+    private void PopulateResolutions()
+    {
+        if (_resolutionOption == null)
+            return;
+
+        _resolutionOption.Clear();
+        foreach (var r in Resolutions)
+            _resolutionOption.AddItem($"{r.X} x {r.Y}");
+    }
+
+    private void OnSensitivityChanged(double value)
+    {
+        var multiplier = (float)value;
+        MouseSensitivityMultiplier = multiplier;
+        UpdateSensitivityLabel(multiplier);
+        EventBus.Instance?.EmitSignal(EventBus.SignalName.MouseSensitivityChanged, multiplier);
+        SaveSettings();
+    }
+
+    private void OnResolutionSelected(long index)
+    {
+        if (_fullscreenCheck == null || !_fullscreenCheck.ButtonPressed)
+            ApplyVideo(false, (int)index);
+        SaveSettings();
+    }
+
+    private void OnFullscreenToggled(bool pressed)
+    {
+        if (_resolutionOption != null)
+            _resolutionOption.Disabled = pressed;
+        ApplyVideo(pressed, _resolutionOption?.Selected ?? DefaultResolutionIndex);
+        SaveSettings();
+    }
+
+    private static void ApplyVideo(bool fullscreen, int resolutionIndex)
+    {
+        if (fullscreen)
+        {
+            DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
+            return;
+        }
+
+        resolutionIndex = Mathf.Clamp(resolutionIndex, 0, Resolutions.Length - 1);
+        var size = Resolutions[resolutionIndex];
+        DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+        DisplayServer.WindowSetSize(size);
+
+        var screenSize = DisplayServer.ScreenGetSize(DisplayServer.WindowGetCurrentScreen());
+        DisplayServer.WindowSetPosition((screenSize - size) / 2);
+    }
+
+    private void UpdateSensitivityLabel(float value)
+    {
+        if (_sensitivityValueLabel != null)
+            _sensitivityValueLabel.Text = value.ToString("0.00");
     }
 }

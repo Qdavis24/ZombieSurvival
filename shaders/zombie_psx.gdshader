@@ -6,7 +6,7 @@ render_mode diffuse_lambert, specular_disabled;
 global uniform float global_brightness;
 
 // Unique per zombie skin.
-uniform sampler2D albedo_tex : source_color, filter_nearest;
+uniform sampler2D albedo_tex : source_color, filter_nearest; // filter_nearest_mipmap;
 uniform float color_levels : hint_range(2.0, 64.0, 1.0) = 24.0;
 uniform float color_brightness : hint_range(0.0, 2.0, 0.01) = 0.82;
 uniform float saturation : hint_range(0.0, 2.0, 0.01) = 0.68;

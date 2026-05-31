@@ -17,6 +17,7 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	[Export] private CollisionShape3D _collisionShape3D;
 	[Export] private float _mouseSensitivity = 0.0020f;
 	[Export] private float _aimSensitivityMultiplier = 0.5f;
+	private float _sensitivityMultiplier = 1f;
 	[Export] private float _controllerSensitivityHorizontal = 5f;
 	[Export] private float _controllerSensitivityVertical = 2.5f;
 	[Export] private float _moveSpeed = 6.0f;
@@ -105,7 +106,19 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 		_health = _maxHealth;
 		_playerHud.UpdateHealthIndicator(_health, _maxHealth);
 		_playerHud.SetParasiticMaterial(Inventory.GetAmount(ItemType.Money));
+
+		_sensitivityMultiplier = OptionsMenu.MouseSensitivityMultiplier;
+		if (EventBus.Instance != null)
+			EventBus.Instance.MouseSensitivityChanged += OnMouseSensitivityChanged;
 	}
+
+	public override void _ExitTree()
+	{
+		if (EventBus.Instance != null)
+			EventBus.Instance.MouseSensitivityChanged -= OnMouseSensitivityChanged;
+	}
+
+	private void OnMouseSensitivityChanged(float multiplier) => _sensitivityMultiplier = multiplier;
 
 	public void SetMaxHealth(float maxHealth, bool healGainedAmount = true)
 	{
@@ -161,8 +174,8 @@ public partial class PlayerController : CharacterBody3D, IInventoryOwner, IDamag
 	{
 		if (Input.MouseMode == Input.MouseModeEnum.Captured && @event is InputEventMouseMotion mouseMotion)
 		{
-			_yaw -= mouseMotion.Relative.X * _mouseSensitivity;
-			_pitch -= mouseMotion.Relative.Y * _mouseSensitivity;
+			_yaw -= mouseMotion.Relative.X * _mouseSensitivity * _sensitivityMultiplier;
+			_pitch -= mouseMotion.Relative.Y * _mouseSensitivity * _sensitivityMultiplier;
 			ApplyLookRotation();
 		}
 
