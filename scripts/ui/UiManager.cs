@@ -25,6 +25,7 @@ public partial class UiManager : Node
 	[Export] private WeaponUpgradeMenu _weaponUpgradeMenu;
 	[Export] private OptionsMenu _optionsMenu;
 	[Export] private ControlsMenu _controlsMenu;
+	[Export] private AchievementsMenu _achievementsMenu;
 
 	private enum OptionsMenuSource
 	{
@@ -43,6 +44,7 @@ public partial class UiManager : Node
 		_startMenu.StartGamePressed += OnStartGame;
 		_startMenu.OptionsPressed += OnStartMenuOptionsPressed;
 		_startMenu.ControlsPressed += OnStartMenuControlsPressed;
+		_startMenu.AchievementsPressed += OnStartMenuAchievementsPressed;
 		
 		_pauseMenu.QuitButtonPressed += OnQuitGame;
 		_pauseMenu.OptionsButtonPressed += OnPauseMenuOptionsPressed;
@@ -186,6 +188,11 @@ public partial class UiManager : Node
 	private void OnStartMenuControlsPressed()
 	{
 		_controlsMenu.Open();
+	}
+
+	private void OnStartMenuAchievementsPressed()
+	{
+		_achievementsMenu.Open();
 	}
 
 	private void OnPauseMenuOptionsPressed()

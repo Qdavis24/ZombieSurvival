@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://iasmqfuiu3ll"]
+
+[ext_resource type="Script" uid="uid://duwa1ypb8cepg" path="res://scripts/ui/AchievementsMenu.cs" id="1_achm"]
+[ext_resource type="FontFile" uid="uid://ctk43yfkttyxu" path="res://scenes/ui/BoldsPixels.ttf" id="2_bolds"]
+
+[sub_resource type="StyleBoxFlat" id="panel_style"]
+bg_color = Color(0.03529412, 0.03529412, 0.043137256, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85490197, 0.043137256, 0, 0.85)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 18
+shadow_offset = Vector2(0, 8)
+
+[node name="AchievementsMenu" type="CanvasLayer" unique_id=332667229 node_paths=PackedStringArray("_list", "_totalsLabel", "_closeButton")]
+layer = 12
+visible = false
+script = ExtResource("1_achm")
+_list = NodePath("Panel/MarginContainer/VBoxContainer/Scroll/List")
+_totalsLabel = NodePath("Panel/MarginContainer/VBoxContainer/Totals")
+_closeButton = NodePath("Panel/MarginContainer/VBoxContainer/Close")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=110609858]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Panel" type="Panel" parent="." unique_id=1537233442]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -380.0
+offset_top = -330.0
+offset_right = 380.0
+offset_bottom = 330.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("panel_style")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=249417313]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 34
+theme_override_constants/margin_top = 26
+theme_override_constants/margin_right = 34
+theme_override_constants/margin_bottom = 26
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=1807811146]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=758483035]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9607843, 0.85882354, 1)
+theme_override_fonts/font = ExtResource("2_bolds")
+theme_override_font_sizes/font_size = 42
+text = "Achievements"
+horizontal_alignment = 1
+
+[node name="Totals" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=2087288181]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.8, 0.35, 1)
+theme_override_fonts/font = ExtResource("2_bolds")
+theme_override_font_sizes/font_size = 24
+text = "Kills: 0     Headshots: 0     Best Round: 0"
+horizontal_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=1007570405]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="List" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/Scroll" unique_id=1358801217]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="Close" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=1847839625]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_bolds")
+theme_override_font_sizes/font_size = 32
+text = "Back"

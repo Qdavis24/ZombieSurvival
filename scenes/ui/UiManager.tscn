@@ -13,8 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://dbv8vhnoc47ll" path="res://scenes/ui/OptionsMenu.tscn" id="9_pnhx8"]
 [ext_resource type="PackedScene" uid="uid://0xnsr7h78a8w" path="res://scenes/ui/ControlsMenu.tscn" id="10_8qraa"]
 [ext_resource type="PackedScene" uid="uid://cqg3kvywp6bx0" path="res://scenes/ui/WeaponUpgradeMenu.tscn" id="11_upgrade"]
+[ext_resource type="PackedScene" uid="uid://b8achmenu0001" path="res://scenes/ui/AchievementsMenu.tscn" id="12_achm"]
 
-[node name="UiManager" type="Node" unique_id=823563542 node_paths=PackedStringArray("_startMenu", "_pauseMenu", "_deathMenu", "_hud", "_popup", "_ammoVendingMenu", "_perkVendingMenu", "_weaponUpgradeMenu", "_optionsMenu", "_controlsMenu")]
+[node name="UiManager" type="Node" unique_id=823563542 node_paths=PackedStringArray("_startMenu", "_pauseMenu", "_deathMenu", "_hud", "_popup", "_ammoVendingMenu", "_perkVendingMenu", "_weaponUpgradeMenu", "_optionsMenu", "_controlsMenu", "_achievementsMenu")]
 script = ExtResource("1_b44pn")
 _roundChangeSound = ExtResource("2_3v6dp")
 _startMenuMusic = ExtResource("2_68wcl")
@@ -28,6 +29,7 @@ _perkVendingMenu = NodePath("PerkVendingMenu")
 _weaponUpgradeMenu = NodePath("WeaponUpgradeMenu")
 _optionsMenu = NodePath("OptionsMenu")
 _controlsMenu = NodePath("ControlsMenu")
+_achievementsMenu = NodePath("AchievementsMenu")
 
 [node name="PauseMenu" parent="." unique_id=1825430013 instance=ExtResource("3_77bur")]
 layer = 10
@@ -61,4 +63,7 @@ visible = false
 visible = false
 
 [node name="ControlsMenu" parent="." instance=ExtResource("10_8qraa")]
+visible = false
+
+[node name="AchievementsMenu" parent="." instance=ExtResource("12_achm")]
 visible = false

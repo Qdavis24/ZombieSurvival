@@ -9,12 +9,15 @@ public partial class StartMenu : CanvasLayer
 	public delegate void OptionsPressedEventHandler();
 	[Signal]
 	public delegate void ControlsPressedEventHandler();
+	[Signal]
+	public delegate void AchievementsPressedEventHandler();
 
 	[Export] private Button _startGameButton;
 	[Export] private Button _previousLevelButton;
 	[Export] private Button _nextLevelButton;
 	[Export] private Button _optionsButton;
 	[Export] private Button _controlsButton;
+	[Export] private Button _achievementsButton;
 	[Export] private Button _quitButton;
 	[Export] private Label _selectedLevelLabel;
 
@@ -28,8 +31,15 @@ public partial class StartMenu : CanvasLayer
 		_nextLevelButton.Pressed += OnNextLevelPressed;
 		_optionsButton.Pressed += OnOptionsPressed;
 		_controlsButton.Pressed += OnControlsPressed;
+		_achievementsButton.Pressed += OnAchievementsPressed;
 		_quitButton.Pressed += OnQuitPressed;
 		UpdateSelectedLevelLabel();
+	}
+
+	private void OnAchievementsPressed()
+	{
+		EmitSignal(SignalName.AchievementsPressed);
+		AudioManager.I.PlayUiClick();
 	}
 
 	private void OnQuitPressed()

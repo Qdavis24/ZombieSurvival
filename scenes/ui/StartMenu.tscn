@@ -608,13 +608,14 @@ font_color = Color(0.85490507, 0.04420513, 2.8878452e-07, 1)
 shadow_size = 12
 shadow_color = Color(0, 0, 0, 0.5372549)
 
-[node name="StartMenu" type="CanvasLayer" unique_id=1584193192 node_paths=PackedStringArray("_startGameButton", "_previousLevelButton", "_nextLevelButton", "_optionsButton", "_controlsButton", "_quitButton", "_selectedLevelLabel")]
+[node name="StartMenu" type="CanvasLayer" unique_id=1584193192 node_paths=PackedStringArray("_startGameButton", "_previousLevelButton", "_nextLevelButton", "_optionsButton", "_controlsButton", "_achievementsButton", "_quitButton", "_selectedLevelLabel")]
 script = ExtResource("1_y4veo")
 _startGameButton = NodePath("Panel/VBoxContainer/HBoxContainer/VBoxContainer/Button")
 _previousLevelButton = NodePath("Panel/VBoxContainer/LevelCarousel/PreviousLevel")
 _nextLevelButton = NodePath("Panel/VBoxContainer/LevelCarousel/NextLevel")
 _optionsButton = NodePath("Panel/VBoxContainer/HBoxContainer/VBoxContainer/Button2")
 _controlsButton = NodePath("Panel/VBoxContainer/HBoxContainer/VBoxContainer/Controls")
+_achievementsButton = NodePath("Panel/VBoxContainer/HBoxContainer/VBoxContainer/Achievements")
 _quitButton = NodePath("Panel/VBoxContainer/HBoxContainer/VBoxContainer/Quit")
 _selectedLevelLabel = NodePath("Panel/VBoxContainer/LevelCarousel/SelectedLevel")
 
@@ -727,6 +728,17 @@ theme_override_colors/font_color = Color(0.85490197, 0.043137256, 0, 1)
 theme_override_fonts/font = ExtResource("4_pridf")
 theme_override_font_sizes/font_size = 40
 text = " Options"
+
+[node name="MarginContainerAch" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+
+[node name="Achievements" type="Button" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85490197, 0.043137256, 0, 1)
+theme_override_fonts/font = ExtResource("4_pridf")
+theme_override_font_sizes/font_size = 40
+text = " Achievements"
 
 [node name="MarginContainer3" type="MarginContainer" parent="Panel/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2

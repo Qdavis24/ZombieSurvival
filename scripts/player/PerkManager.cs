@@ -147,5 +147,6 @@ public partial class PerkManager : Node
         }
 
         EmitSignal(SignalName.PerkApplied, Variant.From(perkType));
+        EventBus.Instance?.EmitSignal(EventBus.SignalName.PerkPurchased, (int)perkType);
     }
 }

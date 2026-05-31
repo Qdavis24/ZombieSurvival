@@ -106,6 +106,7 @@ public partial class GameManager : Node
     public void SetRound(int round)
     {
         _currentRound = round;
+        EventBus.Instance?.EmitSignal(EventBus.SignalName.RoundReached, round);
         _uiManager.HudSetRound(round);
     }
 
@@ -141,6 +142,7 @@ public partial class GameManager : Node
         _currentRound = 1;
         _kills = 0;
         _headshots = 0;
+        EventBus.Instance?.EmitSignal(EventBus.SignalName.GameStarted, levelIndex);
         Input.MouseMode = Input.MouseModeEnum.Captured;
         _uiManager.HudSetRound(1);
     }

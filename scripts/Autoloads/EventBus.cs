@@ -24,6 +24,15 @@ public partial class EventBus : Node
     public delegate void MouseSensitivityChangedEventHandler(float multiplier);
 
     [Signal]
+    public delegate void GameStartedEventHandler(int levelIndex);
+
+    [Signal]
+    public delegate void RoundReachedEventHandler(int round);
+
+    [Signal]
+    public delegate void PerkPurchasedEventHandler(int perkType);
+
+    [Signal]
     public delegate void AmmoVendingMenuRequestedEventHandler(AmmoVendingMachine machine, Node3D player);
 
     [Signal]
