@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://06u77t235vy0" path="res://assets/sound/pickups/KeycardPickup.wav" id="2_imldb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o8xqe"]
-size = Vector3(0.18804932, 0.049224854, 0.18507004)
+size = Vector3(0.10520172, 0.056373596, 0.18507004)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_o8xqe"]
 radius = 0.2766276
@@ -180,6 +180,7 @@ bind/46/bone = -1
 bind/46/pose = Transform3D(0, -1, -2.8212997e-07, 1, 0, 0, 0, -2.8212997e-07, 1, 1.4988214, -1.0035443, 2.9257478e-07)
 
 [node name="PistolAmmoPickup" type="RigidBody3D" unique_id=8043454 node_paths=PackedStringArray("_despawnTimer", "_pickupRange")]
+continuous_cd = true
 script = ExtResource("1_imldb")
 _despawnTimer = NodePath("Timer")
 _pickupRange = NodePath("Area3D")
@@ -188,7 +189,7 @@ _itemAmount = 1000
 _pickupSound = ExtResource("2_imldb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1003042136]
-transform = Transform3D(0.981222, 0, -0.19288161, 0, 1, 0, 0.19288161, 0, 0.981222, 0.027818859, 0.03968811, 0.00853226)
+transform = Transform3D(0.981222, 0, -0.19288161, 0, 1, 0, 0.19288161, 0, 0.981222, 0.026175654, 0.03611374, 0.00820925)
 shape = SubResource("BoxShape3D_o8xqe")
 
 [node name="Timer" type="Timer" parent="." unique_id=562180321]

@@ -51,6 +51,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_rqjhi")
 
 [node name="RpgAmmoPickup" type="RigidBody3D" unique_id=8043454 node_paths=PackedStringArray("_despawnTimer", "_pickupRange")]
+continuous_cd = true
 script = ExtResource("1_6cdv6")
 _despawnTimer = NodePath("Timer")
 _pickupRange = NodePath("Area3D")

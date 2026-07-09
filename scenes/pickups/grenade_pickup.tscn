@@ -52,6 +52,7 @@ radius = 0.061035156
 height = 0.21569824
 
 [node name="GrenadePickup" type="RigidBody3D" unique_id=539123650 node_paths=PackedStringArray("_despawnTimer", "_pickupRange")]
+continuous_cd = true
 script = ExtResource("1_240fw")
 _despawnTimer = NodePath("Timer")
 _pickupRange = NodePath("Area3D")

@@ -49,6 +49,7 @@ size = Vector3(0.18804932, 0.049224854, 0.4346161)
 radius = 0.2766276
 
 [node name="RifleAmmoPickup" type="RigidBody3D" unique_id=8043454 node_paths=PackedStringArray("_despawnTimer", "_pickupRange")]
+continuous_cd = true
 script = ExtResource("1_he3tk")
 _despawnTimer = NodePath("Timer")
 _pickupRange = NodePath("Area3D")
