@@ -30,8 +30,6 @@ height = 0.02
 radius = 0.2766276
 
 [node name="ShotgunAmmoPickup" type="RigidBody3D" unique_id=279052207 node_paths=PackedStringArray("_despawnTimer", "_pickupRange")]
-collision_layer = 16
-collision_mask = 16
 continuous_cd = true
 script = ExtResource("1_a0evs")
 _despawnTimer = NodePath("Timer")
