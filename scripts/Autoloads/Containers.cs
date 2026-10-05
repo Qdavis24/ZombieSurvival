@@ -16,4 +16,12 @@ public partial class Containers : Node
 		Limbs = GetNode("Limbs");
 		Projectiles = GetNode("Projectiles");
 	}
+
+	// Frees everything spawned during a run so it doesn't carry over into the next one.
+	public void Clear()
+	{
+		foreach (var container in new[] { VFX, Limbs, Projectiles })
+			foreach (var child in container.GetChildren())
+				child.QueueFree();
+	}
 }

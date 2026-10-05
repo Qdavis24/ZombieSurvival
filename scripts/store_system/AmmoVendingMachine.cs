@@ -94,10 +94,9 @@ public partial class AmmoVendingMachine : StaticBody3D
     private void SpawnAmmo(PackedScene ammoScene)
     {
         var ammo = ammoScene.Instantiate<Pickup>();
-        Containers.Instance.VFX.AddChild(ammo);
-
         var spawnTransform = _spawnMarker?.GlobalTransform ?? GlobalTransform;
-        ammo.GlobalPosition = spawnTransform.Origin;
+        Containers.Instance.VFX.AddChild(ammo);
+        ammo.GlobalTransform = spawnTransform;
         ammo.ApplyImpulse(spawnTransform.Basis.Z * 1f);
     }
 

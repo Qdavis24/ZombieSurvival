@@ -696,6 +696,8 @@ public partial class AudioManager : Node
 
 	public override void _Ready()
 	{
+		// Music and UI sounds keep playing while the tree is paused.
+		ProcessMode = ProcessModeEnum.Always;
 		_citySongs =
 		[
 			LoadCitySong("beat1"),

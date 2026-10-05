@@ -103,12 +103,14 @@ transform = Transform3D(-0.26615882, 0, -0.13841775, 0, 0.29999998, 0, 0.1384177
 [node name="BoltCutters" parent="NavigationRegion3D/Keys" unique_id=990301005 instance=ExtResource("10_tgnw6")]
 transform = Transform3D(0.7191283, 0.69417834, 0.031127037, 0.036561757, 0.0069332207, -0.9993062, -0.69391376, 0.7197679, -0.020394564, -20.218636, 2.2272065, 14.092392)
 
-[node name="BunkerDoorNavigationLinks" type="Node" parent="." unique_id=1913937588 node_paths=PackedStringArray("_rightSideDoor", "_rightSideLink", "_leftSideDoor", "_leftSideLink", "_blastDoor", "_blastDoorLink")]
+[node name="BunkerDoorNavigationLinks" type="Node" parent="." unique_id=1913937588 node_paths=PackedStringArray("_rightSideDoor", "_rightSideLink", "_rightSideLink2", "_leftSideDoor", "_leftSideLink", "_leftSideLink2", "_blastDoor", "_blastDoorLink")]
 script = ExtResource("5_door_links")
 _rightSideDoor = NodePath("../NavigationRegion3D/Bunker/innerroom/RightSideDoorway4")
 _rightSideLink = NodePath("../NavigationRegion3D/RightSideNavLink3D")
+_rightSideLink2 = NodePath("../NavigationRegion3D/RightSideNavLink3D2")
 _leftSideDoor = NodePath("../NavigationRegion3D/Bunker/innerroom/LeftSideDoorway4")
 _leftSideLink = NodePath("../NavigationRegion3D/LeftSideNavLink3D")
+_leftSideLink2 = NodePath("../NavigationRegion3D/LeftSideNavLink3D2")
 _blastDoor = NodePath("../NavigationRegion3D/Bunker/BlastDoor1Frame")
 _blastDoorLink = NodePath("../NavigationRegion3D/BlastDoorNavLink3D")
 

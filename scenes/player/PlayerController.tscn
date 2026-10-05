@@ -98,6 +98,7 @@ _jumpSound = SubResource("AudioStreamRandomizer_d8kh4")
 _hitSound = SubResource("AudioStreamRandomizer_qhhj6")
 _deathSound = ExtResource("17_mx0ws")
 Inventory = NodePath("Inventory")
+_startingMoney = 0
 _damageReductionMultiplier = 0.3
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1270238325]

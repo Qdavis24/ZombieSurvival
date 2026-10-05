@@ -431,3 +431,8 @@ transform = Transform3D(0.7692308, 0, 0, 0, 0.7692308, 0, 0, 0, 0.7692308, -4.77
 
 [node name="WaterBarrel17" parent="DECORATIONS" unique_id=2020493814 instance=ExtResource("17_g60ml")]
 transform = Transform3D(0.7692308, 0, 0, 0, 0.7692308, 0, 0, 0, 0.7692308, -4.7698326, -2.7509833e-07, 10.709872)
+
+[editable path="TunnelJunction3Way2"]
+[editable path="TunnelJunction3Way2/tunnel_junction_three_way2"]
+[editable path="TunnelJunction3Way2/TunnelStraight"]
+[editable path="TunnelJunction3Way2/TunnelStraight/tunnel_straight2"]

@@ -32,6 +32,9 @@ public partial class GameManager : Node
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        // Keep running while the tree is paused so input (unpause) and UI still work.
+        // The game instance opts back into pausing in OnStartGame.
+        ProcessMode = ProcessModeEnum.Always;
         Input.MouseMode = Input.MouseModeEnum.Visible;
         _uiManager.StartGame += OnStartGame;
         _uiManager.QuitGame += OnQuitGame;
@@ -92,15 +95,21 @@ public partial class GameManager : Node
             {
                 Input.MouseMode = Input.MouseModeEnum.Visible;
                 _uiManager.ShowPauseMenu();
-                _gameInstance.ProcessMode = ProcessModeEnum.Disabled; // Pause game node time
+                SetGameplayPaused(true);
             }
             else
             {
                 Input.MouseMode = Input.MouseModeEnum.Captured;
                 _uiManager.HidePauseMenu();
-                _gameInstance.ProcessMode = ProcessModeEnum.Inherit; // Resume game node time
+                SetGameplayPaused(false);
             }
         }
+    }
+
+    // Pauses the whole tree, including spawned nodes in Containers that live outside the game instance.
+    private void SetGameplayPaused(bool paused)
+    {
+        GetTree().Paused = paused;
     }
 
     public void SetRound(int round)
@@ -126,6 +135,8 @@ public partial class GameManager : Node
         }
 
         AudioManager.I.StartCombatMusic(selectedLevel.MusicSet);
+        SetGameplayPaused(false);
+        Containers.Instance.Clear();
         _isPaused = false;
         _isAmmoVendingMenuOpen = false;
         _isPerkVendingMenuOpen = false;
@@ -137,6 +148,7 @@ public partial class GameManager : Node
         _activeWeaponUpgradeBench = null;
         _activeWeaponUpgradePlayer = null;
         _gameInstance = selectedLevel.GameScene.Instantiate<Game>();
+        _gameInstance.ProcessMode = ProcessModeEnum.Pausable; // Would otherwise inherit Always from this node
         AddChild(_gameInstance);
         _isGamePlaying = true;
         _currentRound = 1;
@@ -175,15 +187,17 @@ public partial class GameManager : Node
         _uiManager.HidePerkVendingMenu();
         _uiManager.HideWeaponUpgradeMenu();
         _gameInstance.QueueFree();
+        Containers.Instance.Clear();
+        SetGameplayPaused(false);
         _isGamePlaying = false;
     }
-    
+
     public void PlayerDied()
     {
         _isGamePlaying = false;
         Input.MouseMode = Input.MouseModeEnum.Visible;
         _uiManager.PlayerDied(_currentRound, _kills, _headshots);
-        _gameInstance.CallDeferred(Node.MethodName.SetProcessMode, (int)ProcessModeEnum.Disabled);
+        Callable.From(() => SetGameplayPaused(true)).CallDeferred();
     }
 
     private void OnAmmoVendingMenuRequested(AmmoVendingMachine machine, Node3D player)
@@ -196,7 +210,7 @@ public partial class GameManager : Node
         _isAmmoVendingMenuOpen = true;
 
         Input.MouseMode = Input.MouseModeEnum.Visible;
-        _gameInstance.ProcessMode = ProcessModeEnum.Disabled;
+        SetGameplayPaused(true);
         _uiManager.ShowAmmoVendingMenu(machine, player);
     }
 
@@ -228,7 +242,7 @@ public partial class GameManager : Node
         if (_isGamePlaying)
         {
             Input.MouseMode = Input.MouseModeEnum.Captured;
-            _gameInstance.ProcessMode = ProcessModeEnum.Inherit;
+            SetGameplayPaused(false);
         }
     }
 
@@ -242,7 +256,7 @@ public partial class GameManager : Node
         _isPerkVendingMenuOpen = true;
 
         Input.MouseMode = Input.MouseModeEnum.Visible;
-        _gameInstance.ProcessMode = ProcessModeEnum.Disabled;
+        SetGameplayPaused(true);
         _uiManager.ShowPerkVendingMenu(machine, player);
     }
 
@@ -277,7 +291,7 @@ public partial class GameManager : Node
         if (_isGamePlaying)
         {
             Input.MouseMode = Input.MouseModeEnum.Captured;
-            _gameInstance.ProcessMode = ProcessModeEnum.Inherit;
+            SetGameplayPaused(false);
         }
     }
 
@@ -291,7 +305,7 @@ public partial class GameManager : Node
         _isWeaponUpgradeMenuOpen = true;
 
         Input.MouseMode = Input.MouseModeEnum.Visible;
-        _gameInstance.ProcessMode = ProcessModeEnum.Disabled;
+        SetGameplayPaused(true);
         _uiManager.ShowWeaponUpgradeMenu(bench, player);
     }
 
@@ -323,7 +337,7 @@ public partial class GameManager : Node
         if (_isGamePlaying)
         {
             Input.MouseMode = Input.MouseModeEnum.Captured;
-            _gameInstance.ProcessMode = ProcessModeEnum.Inherit;
+            SetGameplayPaused(false);
         }
     }
 }
